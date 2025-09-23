@@ -15,7 +15,7 @@ export interface AddOn {
   id: string;
   name: string;
   price: number;
-  category: 'meat' | 'egg' | 'sauce' | 'other';
+  category: 'meat' | 'egg' | 'sauce' | 'other' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette';
 }
 
 export interface BasketItem {

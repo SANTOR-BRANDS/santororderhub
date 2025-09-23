@@ -192,31 +192,55 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                 <span className="text-xs text-muted-foreground">(Required - Choose one or more)</span>
               </Label>
               <div className="space-y-2">
-                {SAUCES.map((sauce) => (
-                  <div key={sauce.id} className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id={sauce.id}
-                        checked={selectedSauces.includes(sauce.id)}
-                        onCheckedChange={(checked) => {
-                          if (checked) {
-                            setSelectedSauces(prev => [...prev, sauce.id]);
-                          } else {
-                            setSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-                          }
-                        }}
-                      />
-                      <Label htmlFor={sauce.id}>
-                        {sauce.name}
-                      </Label>
-                    </div>
-                    {sauce.price > 0 && (
+                {SAUCES.map((sauce) => {
+                  const isFreeSauce = sauce.price === 0;
+                  const isNoSauce = sauce.id === 'no-sauce';
+                  const hasFreeSauceSelected = selectedSauces.some(id => 
+                    SAUCES.find(s => s.id === id)?.price === 0
+                  );
+                  const hasNoSauceSelected = selectedSauces.includes('no-sauce');
+                  
+                  // Disable logic
+                  const isDisabled = isNoSauce 
+                    ? hasFreeSauceSelected && !hasNoSauceSelected
+                    : hasNoSauceSelected || (isFreeSauce && hasFreeSauceSelected && !selectedSauces.includes(sauce.id));
+                  
+                  return (
+                    <div key={sauce.id} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id={sauce.id}
+                          checked={selectedSauces.includes(sauce.id)}
+                          disabled={isDisabled}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              if (isNoSauce) {
+                                // If selecting "No Sauce", clear all other sauces
+                                setSelectedSauces([sauce.id]);
+                              } else if (isFreeSauce) {
+                                // If selecting a free sauce, remove "No Sauce" and other free sauces
+                                setSelectedSauces(prev => 
+                                  [...prev.filter(id => SAUCES.find(s => s.id === id)?.price !== 0 || id === sauce.id), sauce.id]
+                                );
+                              } else {
+                                // Paid sauce - just add it
+                                setSelectedSauces(prev => [...prev, sauce.id]);
+                              }
+                            } else {
+                              setSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                            }
+                          }}
+                        />
+                        <Label htmlFor={sauce.id} className={isDisabled ? 'text-muted-foreground' : ''}>
+                          {sauce.name}
+                        </Label>
+                      </div>
                       <span className="text-sm text-muted-foreground">
                         +฿{sauce.price}
                       </span>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -226,6 +250,9 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                 <Label className="text-base font-semibold mb-3 capitalize">
                   {category === 'meat' ? 'Extra Meat' : 
                    category === 'egg' ? 'Egg Options' : 
+                   category === 'thai-omelette' ? 'Thai Style Omelette 🍳' :
+                   category === 'creamy-omelette' ? 'Creamy Omelette 🍳' :
+                   category === 'soft-omelette' ? 'Soft Omelette 🍳' :
                    category === 'other' ? 'Add-ons' : category}
                 </Label>
                 <div className="space-y-2">
