@@ -119,9 +119,10 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col">
-        <ScrollArea className="flex-1 max-h-[80vh]">
-          <div className="p-6">
+      <DialogContent className="max-w-md max-h-[90vh] p-0">
+        <div className="max-h-[90vh] overflow-hidden">
+          <ScrollArea className="max-h-[85vh] overflow-y-auto">
+            <div className="p-6">
             <DialogHeader className="mb-6">
               {/* Dish Image Placeholder */}
               <div className={cn(
@@ -305,8 +306,9 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                 Add to Basket
               </Button>
             </div>
-          </div>
-        </ScrollArea>
+            </div>
+          </ScrollArea>
+        </div>
       </DialogContent>
     </Dialog>
   );
