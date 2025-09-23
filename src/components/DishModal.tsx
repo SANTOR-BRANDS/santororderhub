@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Dish, AddOn, SPICY_LEVELS, SAUCES, BasketItem } from '@/types/menu';
 import { addOns } from '@/data/menuData';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -16,21 +11,23 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { Plus, Minus } from 'lucide-react';
-
 interface DishModalProps {
   dish: Dish | null;
   isOpen: boolean;
   onClose: () => void;
   onAddToBasket: (item: BasketItem) => void;
 }
-
-const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => {
+const DishModal = ({
+  dish,
+  isOpen,
+  onClose,
+  onAddToBasket
+}: DishModalProps) => {
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]);
   const [spicyLevel, setSpicyLevel] = useState<number | undefined>(undefined);
   const [selectedSauces, setSelectedSauces] = useState<string[]>([]);
   const [needsCutlery, setNeedsCutlery] = useState(false);
   const [quantity, setQuantity] = useState(1);
-
   useEffect(() => {
     if (dish && isOpen) {
       setSelectedAddOns([]);
@@ -40,27 +37,21 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
       setQuantity(1);
     }
   }, [dish, isOpen]);
-
   if (!dish) return null;
-
   const getThemeStyles = () => {
-    return dish.restaurant === 'restory'
-      ? {
-          accent: 'restory',
-          bg: 'bg-restory/5',
-          border: 'border-restory/20',
-          button: 'bg-restory text-restory-foreground hover:bg-restory-secondary',
-        }
-      : {
-          accent: 'nirvana-accent',
-          bg: 'bg-nirvana-accent/5',
-          border: 'border-nirvana-accent/20',
-          button: 'bg-nirvana-accent text-nirvana-primary hover:bg-nirvana-accent/90',
-        };
+    return dish.restaurant === 'restory' ? {
+      accent: 'restory',
+      bg: 'bg-restory/5',
+      border: 'border-restory/20',
+      button: 'bg-restory text-restory-foreground hover:bg-restory-secondary'
+    } : {
+      accent: 'nirvana-accent',
+      bg: 'bg-nirvana-accent/5',
+      border: 'border-nirvana-accent/20',
+      button: 'bg-nirvana-accent text-nirvana-primary hover:bg-nirvana-accent/90'
+    };
   };
-
   const theme = getThemeStyles();
-
   const filteredAddOns = addOns.filter(addon => {
     if (addon.category === 'meat') {
       if (addon.id === 'extra-chicken' && !dish.name.toLowerCase().includes('chicken')) return false;
@@ -70,15 +61,9 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
     if (addon.id === 'extra-rice' && dish.name.toLowerCase().includes('noodle')) return false;
     return true;
   });
-
   const toggleAddOn = (addon: AddOn) => {
-    setSelectedAddOns(prev => 
-      prev.find(a => a.id === addon.id)
-        ? prev.filter(a => a.id !== addon.id)
-        : [...prev, addon]
-    );
+    setSelectedAddOns(prev => prev.find(a => a.id === addon.id) ? prev.filter(a => a.id !== addon.id) : [...prev, addon]);
   };
-
   const getTotalPrice = () => {
     const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
     const saucesTotal = selectedSauces.reduce((sum, sauceId) => {
@@ -87,16 +72,13 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
     }, 0);
     return (dish.price + addOnsTotal + saucesTotal) * quantity;
   };
-
   const canAddToBasket = () => {
     const hasSauce = selectedSauces.length > 0;
     const hasSpicyLevel = !dish.spicyRequired || spicyLevel !== undefined;
     return hasSauce && hasSpicyLevel;
   };
-
   const handleAddToBasket = () => {
     if (!canAddToBasket()) return;
-
     const basketItem: BasketItem = {
       id: `${dish.id}-${Date.now()}`,
       dish,
@@ -104,31 +86,24 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
       spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
       sauce: selectedSauces.join(', '),
       needsCutlery,
-      quantity,
+      quantity
     };
-
     onAddToBasket(basketItem);
     onClose();
   };
-
   const addOnsByCategory = filteredAddOns.reduce((acc, addon) => {
     if (!acc[addon.category]) acc[addon.category] = [];
     acc[addon.category].push(addon);
     return acc;
   }, {} as Record<string, AddOn[]>);
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+  return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md max-h-[90vh] p-0">
         <div className="max-h-[90vh] overflow-hidden">
           <ScrollArea className="max-h-[85vh] overflow-y-auto">
             <div className="p-6">
             <DialogHeader className="mb-6">
               {/* Dish Image Placeholder */}
-              <div className={cn(
-                'w-full h-48 rounded-lg mb-4 flex items-center justify-center',
-                theme.bg, theme.border
-              )}>
+              <div className={cn('w-full h-48 rounded-lg mb-4 flex items-center justify-center', theme.bg, theme.border)}>
                 <div className="text-center text-muted-foreground">
                   <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
                     🍽️
@@ -142,11 +117,9 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                 {dish.isSpecial && <span className="ml-2">⭐</span>}
               </DialogTitle>
               
-              {dish.description && (
-                <p className="text-sm text-muted-foreground mt-2">
+              {dish.description && <p className="text-sm text-muted-foreground mt-2">
                   {dish.description}
-                </p>
-              )}
+                </p>}
               
               <div className="flex items-center justify-between mt-4">
                 <Badge variant="secondary" className="capitalize">
@@ -159,19 +132,13 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
             </DialogHeader>
 
             {/* Spicy Level - Mandatory for certain dishes */}
-            {dish.spicyRequired && (
-              <div className="mb-6">
+            {dish.spicyRequired && <div className="mb-6">
                 <Label className="text-base font-semibold mb-3 flex items-center gap-2">
                   Spicy Level <span className="text-red-500">*</span>
                   <span className="text-xs text-muted-foreground">(Required)</span>
                 </Label>
-                <RadioGroup
-                  value={spicyLevel?.toString()}
-                  onValueChange={(value) => setSpicyLevel(Number(value))}
-                  className="gap-2"
-                >
-                  {SPICY_LEVELS.map((level) => (
-                    <div key={level.level} className="flex items-center space-x-2">
+                <RadioGroup value={spicyLevel?.toString()} onValueChange={value => setSpicyLevel(Number(value))} className="gap-2">
+                  {SPICY_LEVELS.map(level => <div key={level.level} className="flex items-center space-x-2">
                       <RadioGroupItem value={level.level.toString()} id={`spicy-${level.level}`} />
                       <Label htmlFor={`spicy-${level.level}`} className="flex items-center gap-2">
                         <span>({level.level})</span>
@@ -179,11 +146,9 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                         <span>{level.label}</span>
                         {level.level === 2 && <Badge variant="outline" className="text-xs">✨</Badge>}
                       </Label>
-                    </div>
-                  ))}
+                    </div>)}
                 </RadioGroup>
-              </div>
-            )}
+              </div>}
 
             {/* Sauce Selection - Mandatory */}
             <div className="mb-6">
@@ -192,45 +157,32 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                 <span className="text-xs text-muted-foreground">(Required - Choose one or more)</span>
               </Label>
               <div className="space-y-2">
-                {SAUCES.map((sauce) => {
+                {SAUCES.map(sauce => {
                   const isFreeSauce = sauce.price === 0;
                   const isNoSauce = sauce.id === 'no-sauce';
-                  const hasFreeSauceSelected = selectedSauces.some(id => 
-                    SAUCES.find(s => s.id === id)?.price === 0
-                  );
+                  const hasFreeSauceSelected = selectedSauces.some(id => SAUCES.find(s => s.id === id)?.price === 0);
                   const hasNoSauceSelected = selectedSauces.includes('no-sauce');
-                  
+
                   // Disable logic
-                  const isDisabled = isNoSauce 
-                    ? hasFreeSauceSelected && !hasNoSauceSelected
-                    : hasNoSauceSelected || (isFreeSauce && hasFreeSauceSelected && !selectedSauces.includes(sauce.id));
-                  
-                  return (
-                    <div key={sauce.id} className="flex items-center justify-between">
+                  const isDisabled = isNoSauce ? hasFreeSauceSelected && !hasNoSauceSelected : hasNoSauceSelected || isFreeSauce && hasFreeSauceSelected && !selectedSauces.includes(sauce.id);
+                  return <div key={sauce.id} className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id={sauce.id}
-                          checked={selectedSauces.includes(sauce.id)}
-                          disabled={isDisabled}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              if (isNoSauce) {
-                                // If selecting "No Sauce", clear all other sauces
-                                setSelectedSauces([sauce.id]);
-                              } else if (isFreeSauce) {
-                                // If selecting a free sauce, remove "No Sauce" and other free sauces
-                                setSelectedSauces(prev => 
-                                  [...prev.filter(id => SAUCES.find(s => s.id === id)?.price !== 0 || id === sauce.id), sauce.id]
-                                );
-                              } else {
-                                // Paid sauce - just add it
-                                setSelectedSauces(prev => [...prev, sauce.id]);
-                              }
-                            } else {
-                              setSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-                            }
-                          }}
-                        />
+                        <Checkbox id={sauce.id} checked={selectedSauces.includes(sauce.id)} disabled={isDisabled} onCheckedChange={checked => {
+                        if (checked) {
+                          if (isNoSauce) {
+                            // If selecting "No Sauce", clear all other sauces
+                            setSelectedSauces([sauce.id]);
+                          } else if (isFreeSauce) {
+                            // If selecting a free sauce, remove "No Sauce" and other free sauces
+                            setSelectedSauces(prev => [...prev.filter(id => SAUCES.find(s => s.id === id)?.price !== 0 || id === sauce.id), sauce.id]);
+                          } else {
+                            // Paid sauce - just add it
+                            setSelectedSauces(prev => [...prev, sauce.id]);
+                          }
+                        } else {
+                          setSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                        }
+                      }} />
                         <Label htmlFor={sauce.id} className={isDisabled ? 'text-muted-foreground' : ''}>
                           {sauce.name}
                         </Label>
@@ -238,32 +190,20 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                       <span className="text-sm text-muted-foreground">
                         +฿{sauce.price}
                       </span>
-                    </div>
-                  );
+                    </div>;
                 })}
               </div>
             </div>
 
             {/* Add-ons */}
-            {Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
-              <div key={category} className="mb-6">
+            {Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => <div key={category} className="mb-6">
                 <Label className="text-base font-semibold mb-3 capitalize">
-                  {category === 'meat' ? 'Extra Meat' : 
-                   category === 'egg' ? 'Egg Options' : 
-                   category === 'thai-omelette' ? 'Thai Style Omelette 🍳' :
-                   category === 'creamy-omelette' ? 'Creamy Omelette 🍳' :
-                   category === 'soft-omelette' ? 'Soft Omelette 🍳' :
-                   category === 'other' ? 'Add-ons' : category}
+                  {category === 'meat' ? 'Extra Meat' : category === 'egg' ? 'Egg Options' : category === 'thai-omelette' ? 'Thai Style Omelette 🍳' : category === 'creamy-omelette' ? 'Creamy Omelette 🍳' : category === 'soft-omelette' ? 'Soft Omelette 🍳' : category === 'other' ? 'Add-ons' : category}
                 </Label>
                 <div className="space-y-2">
-                  {categoryAddOns.map((addon) => (
-                    <div key={addon.id} className="flex items-center justify-between">
+                  {categoryAddOns.map(addon => <div key={addon.id} className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id={addon.id}
-                          checked={selectedAddOns.some(a => a.id === addon.id)}
-                          onCheckedChange={() => toggleAddOn(addon)}
-                        />
+                        <Checkbox id={addon.id} checked={selectedAddOns.some(a => a.id === addon.id)} onCheckedChange={() => toggleAddOn(addon)} />
                         <Label htmlFor={addon.id} className="text-sm">
                           {addon.name}
                         </Label>
@@ -271,23 +211,15 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                       <span className="text-sm text-muted-foreground">
                         +฿{addon.price}
                       </span>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
-              </div>
-            ))}
+              </div>)}
 
             {/* Cutlery */}
             <div className="mb-6">
               <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="cutlery"
-                          checked={needsCutlery}
-                          onCheckedChange={(checked) => setNeedsCutlery(checked === true)}
-                        />
-                <Label htmlFor="cutlery" className="text-sm">
-                  Need cutlery? (Help save the environment by choosing No if you don't need it)
-                </Label>
+                        <Checkbox id="cutlery" checked={needsCutlery} onCheckedChange={checked => setNeedsCutlery(checked === true)} />
+                <Label htmlFor="cutlery" className="text-sm">I need cutlery</Label>
               </div>
             </div>
 
@@ -298,20 +230,11 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
               <div className="flex items-center justify-between">
                 <Label className="text-base font-semibold">Quantity</Label>
                 <div className="flex items-center gap-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    disabled={quantity <= 1}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => setQuantity(Math.max(1, quantity - 1))} disabled={quantity <= 1}>
                     <Minus className="h-4 w-4" />
                   </Button>
                   <span className="font-semibold w-8 text-center">{quantity}</span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setQuantity(quantity + 1)}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => setQuantity(quantity + 1)}>
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
@@ -324,12 +247,7 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                 </span>
               </div>
 
-              <Button
-                onClick={handleAddToBasket}
-                disabled={!canAddToBasket()}
-                className={cn('w-full', theme.button)}
-                size="lg"
-              >
+              <Button onClick={handleAddToBasket} disabled={!canAddToBasket()} className={cn('w-full', theme.button)} size="lg">
                 Add to Basket
               </Button>
             </div>
@@ -337,8 +255,6 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
           </ScrollArea>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
-
 export default DishModal;
