@@ -47,6 +47,26 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        santor: {
+          DEFAULT: "hsl(var(--santor-primary))",
+          foreground: "hsl(var(--santor-primary-foreground))",
+          secondary: "hsl(var(--santor-secondary))",
+          accent: "hsl(var(--santor-accent))",
+        },
+        restory: {
+          DEFAULT: "hsl(var(--restory-primary))",
+          foreground: "hsl(var(--restory-primary-foreground))",
+          secondary: "hsl(var(--restory-secondary))",
+          accent: "hsl(var(--restory-accent))",
+          background: "hsl(var(--restory-background))",
+        },
+        nirvana: {
+          DEFAULT: "hsl(var(--nirvana-primary))",
+          foreground: "hsl(var(--nirvana-primary-foreground))",
+          accent: "hsl(var(--nirvana-accent))",
+          secondary: "hsl(var(--nirvana-secondary))",
+          background: "hsl(var(--nirvana-background))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +77,20 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        'gradient-santor': 'var(--gradient-santor)',
+        'gradient-restory': 'var(--gradient-restory)',
+        'gradient-nirvana': 'var(--gradient-nirvana)',
+      },
+      boxShadow: {
+        'elegant': 'var(--shadow-elegant)',
+        'card': 'var(--shadow-card)',
+        'modal': 'var(--shadow-modal)',
+      },
+      transitionTimingFunction: {
+        'smooth': 'var(--transition-smooth)',
+        'bounce': 'var(--transition-bounce)',
       },
       borderRadius: {
         lg: "var(--radius)",
