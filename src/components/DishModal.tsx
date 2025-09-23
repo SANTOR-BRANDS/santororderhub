@@ -27,7 +27,7 @@ interface DishModalProps {
 const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => {
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]);
   const [spicyLevel, setSpicyLevel] = useState<number | undefined>(undefined);
-  const [selectedSauce, setSelectedSauce] = useState('');
+  const [selectedSauces, setSelectedSauces] = useState<string[]>([]);
   const [needsCutlery, setNeedsCutlery] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -35,7 +35,7 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
     if (dish && isOpen) {
       setSelectedAddOns([]);
       setSpicyLevel(dish.spicyRequired ? 2 : undefined); // Default to signature medium
-      setSelectedSauce('');
+      setSelectedSauces([]);
       setNeedsCutlery(false);
       setQuantity(1);
     }
@@ -81,12 +81,15 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
 
   const getTotalPrice = () => {
     const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
-    const saucePrice = SAUCES.find(s => s.id === selectedSauce)?.price || 0;
-    return (dish.price + addOnsTotal + saucePrice) * quantity;
+    const saucesTotal = selectedSauces.reduce((sum, sauceId) => {
+      const sauce = SAUCES.find(s => s.id === sauceId);
+      return sum + (sauce?.price || 0);
+    }, 0);
+    return (dish.price + addOnsTotal + saucesTotal) * quantity;
   };
 
   const canAddToBasket = () => {
-    const hasSauce = selectedSauce !== '';
+    const hasSauce = selectedSauces.length > 0;
     const hasSpicyLevel = !dish.spicyRequired || spicyLevel !== undefined;
     return hasSauce && hasSpicyLevel;
   };
@@ -99,7 +102,7 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
       dish,
       addOns: selectedAddOns,
       spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
-      sauce: selectedSauce,
+      sauce: selectedSauces.join(', '),
       needsCutlery,
       quantity,
     };
@@ -116,8 +119,8 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0">
-        <ScrollArea className="h-full">
+      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col">
+        <ScrollArea className="flex-1 max-h-[80vh]">
           <div className="p-6">
             <DialogHeader className="mb-6">
               {/* Dish Image Placeholder */}
@@ -184,18 +187,24 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
             {/* Sauce Selection - Mandatory */}
             <div className="mb-6">
               <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                Select Sauce <span className="text-red-500">*</span>
-                <span className="text-xs text-muted-foreground">(Required - Choose at least one)</span>
+                Select Sauces <span className="text-red-500">*</span>
+                <span className="text-xs text-muted-foreground">(Required - Choose one or more)</span>
               </Label>
-              <RadioGroup
-                value={selectedSauce}
-                onValueChange={setSelectedSauce}
-                className="gap-2"
-              >
+              <div className="space-y-2">
                 {SAUCES.map((sauce) => (
                   <div key={sauce.id} className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value={sauce.id} id={sauce.id} />
+                      <Checkbox
+                        id={sauce.id}
+                        checked={selectedSauces.includes(sauce.id)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setSelectedSauces(prev => [...prev, sauce.id]);
+                          } else {
+                            setSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                          }
+                        }}
+                      />
                       <Label htmlFor={sauce.id}>
                         {sauce.name}
                       </Label>
@@ -207,7 +216,7 @@ const DishModal = ({ dish, isOpen, onClose, onAddToBasket }: DishModalProps) => 
                     )}
                   </div>
                 ))}
-              </RadioGroup>
+              </div>
             </div>
 
             {/* Add-ons */}
