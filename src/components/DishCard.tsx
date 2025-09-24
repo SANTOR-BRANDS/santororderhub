@@ -20,18 +20,32 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
       onClick={() => onClick(dish)}
     >
       <CardContent className="p-0">
-        {/* Image Placeholder */}
-        <div className={cn(
-          'w-full h-48 rounded-t-lg flex items-center justify-center text-muted-foreground',
-          dish.restaurant === 'restory' 
-            ? 'bg-restory/10' 
-            : 'bg-nirvana-accent/10'
-        )}>
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
-              🍽️
+        {/* Dish Image */}
+        <div className="w-full h-48 rounded-t-lg overflow-hidden">
+          {dish.image ? (
+            <img 
+              src={dish.image} 
+              alt={dish.name}
+              className="w-full h-full object-cover transition-smooth hover:scale-105"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling!.classList.remove('hidden');
+              }}
+            />
+          ) : null}
+          <div className={cn(
+            'w-full h-full flex items-center justify-center text-muted-foreground',
+            dish.restaurant === 'restory' 
+              ? 'bg-restory/10' 
+              : 'bg-nirvana-accent/10',
+            dish.image ? 'hidden' : ''
+          )}>
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
+                🍽️
+              </div>
+              <span className="text-xs">No Image</span>
             </div>
-            <span className="text-xs">200x200px</span>
           </div>
         </div>
 

@@ -9,6 +9,7 @@ export interface Dish {
   description?: string;
   isSpecial?: boolean;
   spicyRequired?: boolean;
+  image?: string;
 }
 
 export interface AddOn {

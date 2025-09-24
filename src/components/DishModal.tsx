@@ -102,13 +102,30 @@ const DishModal = ({
           <ScrollArea className="max-h-[85vh] overflow-y-auto">
             <div className="p-6">
             <DialogHeader className="mb-6">
-              {/* Dish Image Placeholder */}
-              <div className={cn('w-full h-48 rounded-lg mb-4 flex items-center justify-center', theme.bg, theme.border)}>
-                <div className="text-center text-muted-foreground">
-                  <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
-                    🍽️
+              {/* Dish Image */}
+              <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
+                {dish.image ? (
+                  <img 
+                    src={dish.image} 
+                    alt={dish.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling!.classList.remove('hidden');
+                    }}
+                  />
+                ) : null}
+                <div className={cn(
+                  'w-full h-full flex items-center justify-center text-muted-foreground',
+                  theme.bg,
+                  dish.image ? 'hidden' : ''
+                )}>
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
+                      🍽️
+                    </div>
+                    <span className="text-xs">No Image</span>
                   </div>
-                  <span className="text-xs">200x200px</span>
                 </div>
               </div>
 
