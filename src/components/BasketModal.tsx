@@ -115,7 +115,7 @@ const BasketModal = ({
   const handleInstagramOrder = () => {
     const orderMessage = generateOrderMessage();
     const encodedMessage = encodeURIComponent(orderMessage);
-    const instagramUrl = `https://ig.me/m/santor_official?text=${encodedMessage}`;
+    const instagramUrl = `https://ig.me/m/santorbrands?text=${encodedMessage}`;
     window.open(instagramUrl, '_blank');
   };
 
