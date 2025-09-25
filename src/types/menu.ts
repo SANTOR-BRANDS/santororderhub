@@ -1,5 +1,11 @@
 export type Restaurant = 'restory' | 'nirvana';
 
+export interface DishVariant {
+  id: string;
+  name: string;
+  priceModifier: number;
+}
+
 export interface Dish {
   id: string;
   name: string;
@@ -10,6 +16,10 @@ export interface Dish {
   isSpecial?: boolean;
   spicyRequired?: boolean;
   image?: string;
+  isPremiumBeef?: boolean;
+  hasBeefSwitchOption?: boolean;
+  isComboFor2?: boolean;
+  consolidatedVariants?: DishVariant[];
 }
 
 export interface AddOn {
@@ -17,6 +27,7 @@ export interface AddOn {
   name: string;
   price: number;
   category: 'meat' | 'egg' | 'sauce' | 'other' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette';
+  isPremium?: boolean;
 }
 
 export interface BasketItem {
@@ -27,6 +38,8 @@ export interface BasketItem {
   sauce: string;
   needsCutlery: boolean;
   quantity: number;
+  selectedVariant?: DishVariant;
+  switchedToNormalBeef?: boolean;
 }
 
 export interface SpicyLevel {

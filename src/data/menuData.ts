@@ -2,50 +2,178 @@ import { Dish, AddOn, Restaurant } from '@/types/menu';
 
 export const restoryMenu: Dish[] = [
   // COMBO DEALS
-  { id: 'r1', name: 'Pad Krapao Minced Pork + Coke', price: 116, category: 'COMBO DEALS', restaurant: 'restory', spicyRequired: true },
-  { id: 'r2', name: '2x Pad Krapao Minced Pork (Special)', price: 199, category: 'COMBO DEALS', restaurant: 'restory', spicyRequired: true },
+  { 
+    id: 'r1', 
+    name: 'Pad Krapao Minced Pork + Coke', 
+    price: 116, 
+    category: 'COMBO DEALS', 
+    restaurant: 'restory', 
+    spicyRequired: true 
+  },
+  { 
+    id: 'r2', 
+    name: '2x Pad Krapao Minced Pork (Special)', 
+    price: 199, 
+    category: 'COMBO DEALS', 
+    restaurant: 'restory', 
+    spicyRequired: true,
+    isComboFor2: true
+  },
 
   // PAD KRAPAO
-  { id: 'r3', name: 'Pad Krapao Minced Pork', price: 99, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r4', name: 'Pad Krapao Minced Pork + Vermicelli', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r5', name: 'Pad Krapao Minced Pork + Chinese Sausage', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r6', name: 'Pad Krapao Minced Pork + Century Egg', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r7', name: 'Pad Krapao Minced Pork + Chicken Sausage', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r8', name: 'Pad Krapao Bacon', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r9', name: 'Pad Krapao Pork Neck Pieces', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r10', name: 'Pad Krapao Pork Belly Pieces', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r11', name: 'Pad Krapao Sliced Pork Belly', price: 129, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r12', name: 'Pad Krapao Minced Beef', price: 139, category: 'PAD KRAPAO', restaurant: 'restory', description: 'Option: Switch to Premium Australian Beef', spicyRequired: true },
-  { id: 'r13', name: 'Pad Krapao Diced Beef', price: 149, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r14', name: 'Pad Krapao Chicken', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r15', name: 'Pad Krapao Chicken with Skin', price: 99, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r16', name: 'Pad Krapao Chicken Sausage', price: 99, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
-  { id: 'r17', name: 'Pad Krapao Chinese Sausage', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { 
+    id: 'r3', 
+    name: 'Pad Krapao Minced Pork', 
+    price: 99, 
+    category: 'PAD KRAPAO', 
+    restaurant: 'restory', 
+    spicyRequired: true,
+    consolidatedVariants: [
+      { id: 'vermicelli', name: 'Vermicelli', priceModifier: 10 },
+      { id: 'chinese-sausage', name: 'Chinese Sausage', priceModifier: 20 },
+      { id: 'century-egg', name: 'Century Egg', priceModifier: 20 },
+      { id: 'chicken-sausage', name: 'Chicken Sausage', priceModifier: 20 }
+    ]
+  },
+  { id: 'r4', name: 'Pad Krapao Bacon', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r5', name: 'Pad Krapao Pork', price: 129, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r6', name: 'Sliced Pork Belly (juicy and soft)', price: 129, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r7', name: 'Sliced Pork Neck (meaty and tender)', price: 129, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r8', name: 'Pork Belly Pieces (chunky and soft)', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { 
+    id: 'r9', 
+    name: 'Pad Krapao Minced Premium Beef', 
+    price: 149, 
+    category: 'PAD KRAPAO', 
+    restaurant: 'restory', 
+    spicyRequired: true,
+    isPremiumBeef: true,
+    hasBeefSwitchOption: true,
+    description: 'Option: Switch to Normal Beef -฿50'
+  },
+  { 
+    id: 'r10', 
+    name: '✨Diced Wagyu Beef Pad Krapao ✨ (Grade A3)', 
+    price: 159, 
+    category: 'PAD KRAPAO', 
+    restaurant: 'restory', 
+    spicyRequired: true,
+    isPremiumBeef: true,
+    isSpecial: true
+  },
+  { id: 'r11', name: 'Pad Krapao Chicken Breast', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r12', name: 'Pad Krapao Chicken', price: 99, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r13', name: 'Pad Krapao Chicken Sausage', price: 99, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r14', name: 'Pad Krapao Chinese Sausage', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
 
   // JAPANESE CURRY
-  { id: 'r18', name: 'Australian Beef Curry', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
-  { id: 'r19', name: 'Pork Curry + Creamy Omelette', price: 129, category: 'JAPANESE CURRY', restaurant: 'restory' },
-  { id: 'r20', name: 'Chicken Katsu Curry (Torikatsu)', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
-  { id: 'r21', name: '🔥 Pork Katsu Curry (Tonkatsu) 🔥', price: 149, category: 'JAPANESE CURRY', restaurant: 'restory', isSpecial: true },
-  { id: 'r22', name: 'Chicken Karaage Curry', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
-  { id: 'r23', name: 'Fried Chicken Thigh Curry', price: 149, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r15', name: 'Australian Beef Curry', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r16', name: 'Pork Curry + Creamy Omelette', price: 129, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r17', name: 'Chicken Katsu Curry (Torikatsu)', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r18', name: '🔥 Pork Katsu Curry (Tonkatsu) 🔥', price: 149, category: 'JAPANESE CURRY', restaurant: 'restory', isSpecial: true },
+  { id: 'r19', name: 'Chicken Karaage Curry', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r20', name: 'Fried Chicken Thigh Curry', price: 149, category: 'JAPANESE CURRY', restaurant: 'restory' },
 
   // DONBURI BOWLS
-  { id: 'r24', name: '⭐ Tonkatsu Don ⭐', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory', isSpecial: true },
-  { id: 'r25', name: 'Chicken Karaage Don', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory' },
-  { id: 'r26', name: 'Chicken Thigh Don', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory' },
-  { id: 'r27', name: '⭐ Torikatsu Don ⭐', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory', isSpecial: true },
+  { id: 'r21', name: '⭐ Tonkatsu Don ⭐', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory', isSpecial: true },
+  { id: 'r22', name: '⭐ Torikatsu Don ⭐', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory', isSpecial: true },
+  { id: 'r23', name: 'Chicken Karaage Don', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory' },
+  { id: 'r24', name: 'Chicken Thigh Don', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory' },
+  { id: 'r25', name: '👍Tonkatsu with Katsu Sauce', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory', isSpecial: true },
+  { id: 'r26', name: '👍Torikatsu with Katsu Sauce', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory', isSpecial: true },
+  { 
+    id: 'r27', 
+    name: 'Sliced Pork Teriyaki', 
+    price: 129, 
+    category: 'DONBURI BOWLS', 
+    restaurant: 'restory',
+    consolidatedVariants: [
+      { id: 'pork-neck', name: 'Sliced Pork Neck', priceModifier: 0 },
+      { id: 'pork-belly', name: 'Sliced Pork Belly', priceModifier: 0 }
+    ]
+  },
+  { 
+    id: 'r28', 
+    name: 'Stir-Fried Pork Belly with Sauce + Pickled Egg', 
+    price: 129, 
+    category: 'DONBURI BOWLS', 
+    restaurant: 'restory',
+    consolidatedVariants: [
+      { id: 'japanese-sauce', name: 'with Japanese Sauce', priceModifier: 0 },
+      { id: 'korean-sauce', name: 'with Korean Sauce', priceModifier: 10 }
+    ]
+  },
+  { 
+    id: 'r29', 
+    name: 'Stir-Fried Pork Neck with Sauce + Pickled Egg', 
+    price: 129, 
+    category: 'DONBURI BOWLS', 
+    restaurant: 'restory',
+    consolidatedVariants: [
+      { id: 'japanese-sauce', name: 'with Japanese Sauce', priceModifier: 0 },
+      { id: 'korean-sauce', name: 'with Korean Sauce', priceModifier: 10 }
+    ]
+  },
+  { id: 'r30', name: 'Chicken Teriyaki', price: 119, category: 'DONBURI BOWLS', restaurant: 'restory' },
+  { id: 'r31', name: 'Stir Fried Pork Neck in Soy Sauce + Fish Roe + Pickled Eggs + Seafood Sauce', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory' },
 
-  // INT MENU
-  { id: 'r28', name: 'Fried Pork with Katsu Sauce', price: 139, category: 'INT MENU', restaurant: 'restory' },
-  { id: 'r29', name: 'Chicken Teriyaki on Rice', price: 99, category: 'INT MENU', restaurant: 'restory' },
-  { id: 'r30', name: 'Pork Teriyaki on Rice', price: 129, category: 'INT MENU', restaurant: 'restory' },
+  // KOREAN SPICY NOODLES
+  { id: 'r32', name: 'Spicy Korean Mama with Crunchy Fried Chicken + Boiled Egg', price: 139, category: 'KOREAN SPICY NOODLES', restaurant: 'restory' },
+  { id: 'r33', name: 'Spicy Korean Mama with Chicken Karaage + Kimchi', price: 139, category: 'KOREAN SPICY NOODLES', restaurant: 'restory' },
+  { id: 'r34', name: 'Spicy Korean Mama with Chicken Karaage + Pickled Egg', price: 159, category: 'KOREAN SPICY NOODLES', restaurant: 'restory' },
+
+  // QUICK DISH
+  { id: 'r35', name: 'Juicy Bacon + Pickled Egg + Seafood Sauce', price: 139, category: 'QUICK DISH', restaurant: 'restory' },
+  { id: 'r36', name: '🔥Pork Belly Slices Grilled with Sesame Oil + Isaan Dipping Sauce', price: 129, category: 'QUICK DISH', restaurant: 'restory', isSpecial: true },
+  { id: 'r37', name: 'Sliced Pork Neck with Soft Omelette', price: 129, category: 'QUICK DISH', restaurant: 'restory' },
+  { id: 'r38', name: 'Stir-Fried Salted Duck Egg', price: 99, category: 'QUICK DISH', restaurant: 'restory' },
+  { id: 'r39', name: 'Stir-Fried Minced Pork with Salted Egg and Chilli Oil', price: 99, category: 'QUICK DISH', restaurant: 'restory' },
+  { id: 'r40', name: 'Fried Rice with Smoked Chicken Sausage', price: 90, category: 'QUICK DISH', restaurant: 'restory' },
+  { id: 'r41', name: 'Fried Rice', price: 70, category: 'QUICK DISH', restaurant: 'restory' },
+
+  // SOMETHING WITH EGG
+  { id: 'r42', name: '⭐ Pork Teriyaki with Creamy Omelette ⭐', price: 129, category: 'SOMETHING WITH EGG', restaurant: 'restory', isSpecial: true },
+  { id: 'r43', name: 'Spicy Crunchy Chicken with Creamy Omelette', price: 129, category: 'SOMETHING WITH EGG', restaurant: 'restory' },
+  { id: 'r44', name: '🔥Creamy Shrimp Fat Omelette + Fish Roe', price: 99, category: 'SOMETHING WITH EGG', restaurant: 'restory', isSpecial: true },
+  { id: 'r45', name: 'Minced Pork with Sesame Oil and Creamy Omelette + Fried Garlic', price: 99, category: 'SOMETHING WITH EGG', restaurant: 'restory' },
+  { id: 'r46', name: 'Minced Pork with Sesame Oil and Soft Omelette + Fried Garlic', price: 99, category: 'SOMETHING WITH EGG', restaurant: 'restory' },
+  { id: 'r47', name: 'Bacon with Creamy Omelette', price: 99, category: 'SOMETHING WITH EGG', restaurant: 'restory' },
+  { id: 'r48', name: '👍Cheese Sausage with Creamy Omelette', price: 89, category: 'SOMETHING WITH EGG', restaurant: 'restory', isSpecial: true },
+  { id: 'r49', name: 'Smoked Sausage in Tomato Sauce with Creamy Omelette', price: 89, category: 'SOMETHING WITH EGG', restaurant: 'restory' },
+  { id: 'r50', name: 'Pork Omelette', price: 75, category: 'SOMETHING WITH EGG', restaurant: 'restory' },
+  { id: 'r51', name: 'Chilli Omelette', price: 55, category: 'SOMETHING WITH EGG', restaurant: 'restory' },
+
+  // FRIED CHICKEN + RICE
+  { id: 'r52', name: '👍Fried Chicken Thigh with Garlic Sauce and Fried Garlic', price: 139, category: 'FRIED CHICKEN + RICE', restaurant: 'restory', isSpecial: true },
+  { id: 'r53', name: 'Fried Chicken Thigh with Teriyaki Sauce', price: 139, category: 'FRIED CHICKEN + RICE', restaurant: 'restory' },
+  { id: 'r54', name: '⭐ Fried Chicken Thigh with Sweet Fish Sauce ⭐', price: 99, category: 'FRIED CHICKEN + RICE', restaurant: 'restory', isSpecial: true },
+  { 
+    id: 'r55', 
+    name: 'Crunchy Fried Chicken with Sauce', 
+    price: 129, 
+    category: 'FRIED CHICKEN + RICE', 
+    restaurant: 'restory',
+    consolidatedVariants: [
+      { id: 'lemon-sauce', name: 'with Lemon Sauce', priceModifier: 0 },
+      { id: 'garlic-sauce', name: 'with Garlic Sauce', priceModifier: 0 },
+      { id: 'korean-sauce', name: 'with Korean Sauce', priceModifier: 0 },
+      { id: 'cheesy-sour-cream', name: 'with Cheesy Sour Cream Sauce', priceModifier: 0 }
+    ]
+  },
+  { id: 'r56', name: 'Chicken Karaage with Korean Sauce', price: 129, category: 'FRIED CHICKEN + RICE', restaurant: 'restory' },
+  { id: 'r57', name: 'Chicken Karaage with Lemon Sauce', price: 139, category: 'FRIED CHICKEN + RICE', restaurant: 'restory' },
+  { id: 'r58', name: 'Chicken Karaage with Spicy Mayo Sauce + Fish Roe', price: 149, category: 'FRIED CHICKEN + RICE', restaurant: 'restory' },
+  { id: 'r59', name: 'Spicy Chicken Karaage with Garlic Sauce + Pickled Egg + Seafood Sauce', price: 149, category: 'FRIED CHICKEN + RICE', restaurant: 'restory' },
+  { id: 'r60', name: 'Chicken Karaage with Cheesy Sour Cream Sauce + Fish Roe', price: 149, category: 'FRIED CHICKEN + RICE', restaurant: 'restory' },
+  { id: 'r61', name: '🔥Chicken Karaage with Cheesy Sour Cream Sauce + Onion', price: 139, category: 'FRIED CHICKEN + RICE', restaurant: 'restory', isSpecial: true },
+  { id: 'r62', name: 'Chicken Karaage with Creamy Shrimp Fat Omelette + Fish Roe', price: 139, category: 'FRIED CHICKEN + RICE', restaurant: 'restory' },
+  { id: 'r63', name: 'Chicken Karaage with Korean Sauce + Kimchi', price: 149, category: 'FRIED CHICKEN + RICE', restaurant: 'restory' },
 
   // CHILLI AND FRIED GARLIC
-  { id: 'r31', name: '⭐ Stir-Fried Pork Belly with Chilli and Fried Garlic ⭐', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', isSpecial: true, spicyRequired: true },
-  { id: 'r32', name: 'Stir-Fried Pork Neck with Chilli and Fried Garlic', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
-  { id: 'r33', name: 'Stir-Fried Bacon with Chilli and Fried Garlic', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
-  { id: 'r34', name: 'Stir-Fried Chicken Thigh with Chilli and Fried Garlic + Pickled Egg', price: 109, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
+  { id: 'r64', name: 'Stir-Fried Chicken Thigh with Chilli and Fried Garlic + Pickled Egg', price: 119, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
+  { id: 'r65', name: '⭐ Stir-Fried Pork Belly with Chilli and Fried Garlic ⭐', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', isSpecial: true, spicyRequired: true },
+  { id: 'r66', name: 'Stir-Fried Pork Neck with Chilli and Fried Garlic', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
+  { id: 'r67', name: 'Stir-Fried Bacon with Chilli and Fried Garlic', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
 ];
 
 export const nirvanaMenu: Dish[] = [
@@ -110,10 +238,11 @@ export const nirvanaMenu: Dish[] = [
 
 export const addOns: AddOn[] = [
   // Extra Meat
-  { id: 'extra-chicken', name: 'Extra Chicken 150g', price: 60, category: 'meat' },
-  { id: 'extra-pork', name: 'Extra Pork 100g', price: 60, category: 'meat' },
-  { id: 'extra-beef', name: 'Extra Beef 100g', price: 80, category: 'meat' },
-  { id: 'extra-rice', name: 'Extra Jasmine Rice 200g', price: 20, category: 'other' },
+  { id: 'extra-chicken', name: '🐔 Extra Chicken 150g', price: 50, category: 'meat' },
+  { id: 'extra-pork', name: '🐷 Extra Pork 100g', price: 50, category: 'meat' },
+  { id: 'extra-premium-beef', name: '🐮 Extra Premium Beef 100g', price: 80, category: 'meat', isPremium: true },
+  { id: 'extra-beef', name: '🐮 Extra Beef 100g', price: 60, category: 'meat' },
+  { id: 'extra-rice', name: '🍚 Extra Jasmine Rice 200g', price: 20, category: 'other' },
 
   // Add-ons
   { id: 'pickled-egg', name: 'Pickled Egg Yolk ⭐', price: 20, category: 'other' },
