@@ -234,17 +234,10 @@ const DishModal = ({
 
             {/* Cutlery */}
             <div className="mb-6">
-              <Label className="text-base font-semibold mb-3">Need Cutlery?</Label>
-              <RadioGroup value={needsCutlery ? 'yes' : 'no'} onValueChange={value => setNeedsCutlery(value === 'yes')} className="gap-2">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="yes" id="cutlery-yes" />
-                  <Label htmlFor="cutlery-yes">Yes, please</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="cutlery-no" />
-                  <Label htmlFor="cutlery-no" className="text-sm">No thanks (help save the environment)</Label>
-                </div>
-              </RadioGroup>
+              <div className="flex items-center space-x-2">
+                        <Checkbox id="cutlery" checked={needsCutlery} onCheckedChange={checked => setNeedsCutlery(checked === true)} />
+                <Label htmlFor="cutlery" className="text-sm">I need cutlery</Label>
+              </div>
             </div>
 
             <Separator className="my-6" />

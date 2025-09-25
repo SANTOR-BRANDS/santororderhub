@@ -1,81 +1,83 @@
 import { Dish, AddOn, Restaurant } from '@/types/menu';
 
 export const restoryMenu: Dish[] = [
-  // SIGNATURE PREMIUM (Anchoring Effect - Show highest value first)
-  { id: 'r21', name: '🔥 Pork Katsu Curry (Tonkatsu) 🔥', price: 149, category: 'SIGNATURE PREMIUM', restaurant: 'restory', isSpecial: true },
-  { id: 'r23', name: 'Fried Chicken Thigh Curry', price: 149, category: 'SIGNATURE PREMIUM', restaurant: 'restory' },
-  { id: 'r13', name: 'Pad Krapao Diced Beef', price: 149, category: 'SIGNATURE PREMIUM', restaurant: 'restory', spicyRequired: true },
+  // COMBO DEALS
+  { id: 'r1', name: 'Pad Krapao Minced Pork + Coke', price: 116, category: 'COMBO DEALS', restaurant: 'restory', spicyRequired: true },
+  { id: 'r2', name: '2x Pad Krapao Minced Pork (Special)', price: 199, category: 'COMBO DEALS', restaurant: 'restory', spicyRequired: true },
 
-  // CHEF'S SPECIALS (High-margin items positioned prominently)
-  { id: 'r24', name: '⭐ Tonkatsu Don ⭐', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory', isSpecial: true },
-  { id: 'r12', name: 'Pad Krapao Minced Beef', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory', description: 'Option: Switch to Premium Australian Beef', spicyRequired: true },
-  { id: 'r18', name: 'Australian Beef Curry', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory' },
-  { id: 'r20', name: 'Chicken Katsu Curry (Torikatsu)', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory' },
-  { id: 'r22', name: 'Chicken Karaage Curry', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory' },
-  { id: 'r25', name: 'Chicken Karaage Don', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory' },
-  { id: 'r26', name: 'Chicken Thigh Don', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory' },
-  { id: 'r27', name: '⭐ Torikatsu Don ⭐', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory', isSpecial: true },
-  { id: 'r28', name: 'Fried Pork with Katsu Sauce', price: 139, category: "CHEF'S SPECIALS", restaurant: 'restory' },
+  // PAD KRAPAO
+  { id: 'r3', name: 'Pad Krapao Minced Pork', price: 99, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r4', name: 'Pad Krapao Minced Pork + Vermicelli', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r5', name: 'Pad Krapao Minced Pork + Chinese Sausage', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r6', name: 'Pad Krapao Minced Pork + Century Egg', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r7', name: 'Pad Krapao Minced Pork + Chicken Sausage', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r8', name: 'Pad Krapao Bacon', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r9', name: 'Pad Krapao Pork Neck Pieces', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r10', name: 'Pad Krapao Pork Belly Pieces', price: 119, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r11', name: 'Pad Krapao Sliced Pork Belly', price: 129, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r12', name: 'Pad Krapao Minced Beef', price: 139, category: 'PAD KRAPAO', restaurant: 'restory', description: 'Option: Switch to Premium Australian Beef', spicyRequired: true },
+  { id: 'r13', name: 'Pad Krapao Diced Beef', price: 149, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r14', name: 'Pad Krapao Chicken', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r15', name: 'Pad Krapao Chicken with Skin', price: 99, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r16', name: 'Pad Krapao Chicken Sausage', price: 99, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
+  { id: 'r17', name: 'Pad Krapao Chinese Sausage', price: 109, category: 'PAD KRAPAO', restaurant: 'restory', spicyRequired: true },
 
-  // COMFORT CLASSICS (Mid-range, high-volume items)
-  { id: 'r11', name: 'Pad Krapao Sliced Pork Belly', price: 129, category: 'COMFORT CLASSICS', restaurant: 'restory', spicyRequired: true },
-  { id: 'r19', name: 'Pork Curry + Creamy Omelette', price: 129, category: 'COMFORT CLASSICS', restaurant: 'restory' },
-  { id: 'r30', name: 'Pork Teriyaki', price: 129, category: 'COMFORT CLASSICS', restaurant: 'restory' },
-  { id: 'r5', name: 'Pad Krapao Minced Pork + Chinese Sausage', price: 119, category: 'COMFORT CLASSICS', restaurant: 'restory', spicyRequired: true },
-  { id: 'r6', name: 'Pad Krapao Minced Pork + Century Egg', price: 119, category: 'COMFORT CLASSICS', restaurant: 'restory', spicyRequired: true },
-  { id: 'r7', name: 'Pad Krapao Minced Pork + Chicken Sausage', price: 119, category: 'COMFORT CLASSICS', restaurant: 'restory', spicyRequired: true },
-  { id: 'r10', name: 'Pad Krapao Pork Belly Pieces', price: 119, category: 'COMFORT CLASSICS', restaurant: 'restory', spicyRequired: true },
-  { id: 'r2', name: '2x Pad Krapao Minced Pork (Special)', price: 199, category: 'COMFORT CLASSICS', restaurant: 'restory', spicyRequired: true },
+  // JAPANESE CURRY
+  { id: 'r18', name: 'Australian Beef Curry', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r19', name: 'Pork Curry + Creamy Omelette', price: 129, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r20', name: 'Chicken Katsu Curry (Torikatsu)', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r21', name: '🔥 Pork Katsu Curry (Tonkatsu) 🔥', price: 149, category: 'JAPANESE CURRY', restaurant: 'restory', isSpecial: true },
+  { id: 'r22', name: 'Chicken Karaage Curry', price: 139, category: 'JAPANESE CURRY', restaurant: 'restory' },
+  { id: 'r23', name: 'Fried Chicken Thigh Curry', price: 149, category: 'JAPANESE CURRY', restaurant: 'restory' },
 
-  // CROWD FAVORITES (Popular, profitable mid-tier items)
-  { id: 'r1', name: 'Pad Krapao Minced Pork + Coke', price: 116, category: 'CROWD FAVORITES', restaurant: 'restory', spicyRequired: true },
-  { id: 'r14', name: 'Pad Krapao Chicken', price: 109, category: 'CROWD FAVORITES', restaurant: 'restory', spicyRequired: true },
-  { id: 'r4', name: 'Pad Krapao Minced Pork + Vermicelli', price: 109, category: 'CROWD FAVORITES', restaurant: 'restory', spicyRequired: true },
-  { id: 'r8', name: 'Pad Krapao Bacon', price: 109, category: 'CROWD FAVORITES', restaurant: 'restory', spicyRequired: true },
-  { id: 'r9', name: 'Pad Krapao Pork Neck Pieces', price: 109, category: 'CROWD FAVORITES', restaurant: 'restory', spicyRequired: true },
-  { id: 'r17', name: 'Pad Krapao Chinese Sausage', price: 109, category: 'CROWD FAVORITES', restaurant: 'restory', spicyRequired: true },
-  { id: 'r34', name: 'Stir-Fried Chicken Thigh with Chilli and Fried Garlic + Pickled Egg', price: 109, category: 'CROWD FAVORITES', restaurant: 'restory', spicyRequired: true },
+  // DONBURI BOWLS
+  { id: 'r24', name: '⭐ Tonkatsu Don ⭐', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory', isSpecial: true },
+  { id: 'r25', name: 'Chicken Karaage Don', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory' },
+  { id: 'r26', name: 'Chicken Thigh Don', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory' },
+  { id: 'r27', name: '⭐ Torikatsu Don ⭐', price: 139, category: 'DONBURI BOWLS', restaurant: 'restory', isSpecial: true },
 
-  // EVERYDAY VALUE (Strategic value positioning after premium items)
-  { id: 'r31', name: '⭐ Stir-Fried Pork Belly with Chilli and Fried Garlic ⭐', price: 99, category: 'EVERYDAY VALUE', restaurant: 'restory', isSpecial: true, spicyRequired: true },
-  { id: 'r3', name: 'Pad Krapao Minced Pork', price: 99, category: 'EVERYDAY VALUE', restaurant: 'restory', spicyRequired: true },
-  { id: 'r15', name: 'Pad Krapao Chicken with Skin', price: 99, category: 'EVERYDAY VALUE', restaurant: 'restory', spicyRequired: true },
-  { id: 'r16', name: 'Pad Krapao Chicken Sausage', price: 99, category: 'EVERYDAY VALUE', restaurant: 'restory', spicyRequired: true },
-  { id: 'r29', name: 'Chicken Teriyaki', price: 99, category: 'EVERYDAY VALUE', restaurant: 'restory' },
-  { id: 'r32', name: 'Stir-Fried Pork Neck with Chilli and Fried Garlic', price: 99, category: 'EVERYDAY VALUE', restaurant: 'restory', spicyRequired: true },
-  { id: 'r33', name: 'Stir-Fried Bacon with Chilli and Fried Garlic', price: 99, category: 'EVERYDAY VALUE', restaurant: 'restory', spicyRequired: true },
+  // INT MENU
+  { id: 'r28', name: 'Fried Pork with Katsu Sauce', price: 139, category: 'INT MENU', restaurant: 'restory' },
+  { id: 'r29', name: 'Chicken Teriyaki on Rice', price: 99, category: 'INT MENU', restaurant: 'restory' },
+  { id: 'r30', name: 'Pork Teriyaki on Rice', price: 129, category: 'INT MENU', restaurant: 'restory' },
+
+  // CHILLI AND FRIED GARLIC
+  { id: 'r31', name: '⭐ Stir-Fried Pork Belly with Chilli and Fried Garlic ⭐', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', isSpecial: true, spicyRequired: true },
+  { id: 'r32', name: 'Stir-Fried Pork Neck with Chilli and Fried Garlic', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
+  { id: 'r33', name: 'Stir-Fried Bacon with Chilli and Fried Garlic', price: 99, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
+  { id: 'r34', name: 'Stir-Fried Chicken Thigh with Chilli and Fried Garlic + Pickled Egg', price: 109, category: 'CHILLI AND FRIED GARLIC', restaurant: 'restory', spicyRequired: true },
 ];
 
 export const nirvanaMenu: Dish[] = [
-  // PREMIUM SPECIALTIES (Anchoring effect with highest-priced signature items)
-  { id: 'n19', name: 'Mala Beef Rice Noodle Soup', price: 169, category: 'PREMIUM SPECIALTIES', restaurant: 'nirvana' },
-  { id: 'n20', name: 'Beef Rice Noodle Soup', price: 159, category: 'PREMIUM SPECIALTIES', restaurant: 'nirvana' },
-  { id: 'n13', name: '⭐ Braised Pork Belly ⭐', price: 149, category: 'PREMIUM SPECIALTIES', restaurant: 'nirvana', isSpecial: true },
+  // PAD KRAPAO
+  { id: 'n1', name: 'Pad Krapao Minced Beef', price: 99, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
+  { id: 'n2', name: 'Pad Krapao Minced Pork', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
+  { id: 'n3', name: 'Pad Krapao Minced Chicken', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
+  { id: 'n4', name: 'Pad Krapao Diced Chicken', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
 
-  // SIGNATURE GRILLED (Feature profitable grilled items prominently)
-  { id: 'n6', name: 'Mala Grilled Beef', price: 129, category: 'SIGNATURE GRILLED', restaurant: 'nirvana' },
-  { id: 'n7', name: 'Grilled Beef with Spring Onion', price: 129, category: 'SIGNATURE GRILLED', restaurant: 'nirvana' },
-  { id: 'n12', name: 'Braised Beef', price: 129, category: 'SIGNATURE GRILLED', restaurant: 'nirvana' },
-  { id: 'n11', name: 'Mala Grilled Pork Belly', price: 125, category: 'SIGNATURE GRILLED', restaurant: 'nirvana' },
-  { id: 'n5', name: '⭐ Grilled Beef ⭐', price: 119, category: 'SIGNATURE GRILLED', restaurant: 'nirvana', isSpecial: true },
-  { id: 'n10', name: 'Grilled Pork Belly', price: 115, category: 'SIGNATURE GRILLED', restaurant: 'nirvana' },
+  // GRILLED MEAT + RICE
+  { id: 'n5', name: '⭐ Grilled Beef on Rice ⭐', price: 119, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana', isSpecial: true },
+  { id: 'n6', name: 'Mala Grilled Beef on Rice', price: 129, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
+  { id: 'n7', name: 'Grilled Beef with Spring Onion on Rice', price: 129, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
+  { id: 'n8', name: 'Grilled Chicken Thigh on Rice', price: 89, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
+  { id: 'n9', name: 'Mala Grilled Chicken Thigh on Rice', price: 99, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
+  { id: 'n10', name: 'Grilled Pork Belly on Rice', price: 115, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
+  { id: 'n11', name: 'Mala Grilled Pork Belly on Rice', price: 125, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
 
-  // CROWD PLEASERS (Mid-range, high-volume items)
-  { id: 'n1', name: 'Pad Krapao Minced Beef', price: 99, category: 'CROWD PLEASERS', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'n9', name: 'Mala Grilled Chicken Thigh', price: 99, category: 'CROWD PLEASERS', restaurant: 'nirvana' },
-  { id: 'n14', name: 'Braised Chicken Wing 👍', price: 95, category: 'CROWD PLEASERS', restaurant: 'nirvana', isSpecial: true },
+  // BRAISED MEAT + RICE
+  { id: 'n12', name: 'Braised Beef on Rice', price: 129, category: 'BRAISED MEAT + RICE', restaurant: 'nirvana' },
+  { id: 'n13', name: '⭐ Braised Pork Belly on Rice ⭐', price: 149, category: 'BRAISED MEAT + RICE', restaurant: 'nirvana', isSpecial: true },
+  { id: 'n14', name: 'Braised Chicken Wing on Rice 👍', price: 95, category: 'BRAISED MEAT + RICE', restaurant: 'nirvana', isSpecial: true },
 
-  // EVERYDAY FAVORITES (Popular, accessible pricing)
-  { id: 'n2', name: 'Pad Krapao Minced Pork', price: 89, category: 'EVERYDAY FAVORITES', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'n3', name: 'Pad Krapao Minced Chicken', price: 89, category: 'EVERYDAY FAVORITES', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'n4', name: 'Pad Krapao Diced Chicken', price: 89, category: 'EVERYDAY FAVORITES', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'n8', name: 'Grilled Chicken Thigh', price: 89, category: 'EVERYDAY FAVORITES', restaurant: 'nirvana' },
+  // VEGETARIAN
+  { id: 'n15', name: 'Grilled Mushroom with Soy Sauce on Rice', price: 69, category: 'VEGETARIAN', restaurant: 'nirvana' },
+  { id: 'n16', name: 'Mala Grilled Mushroom with Soy Sauce on Rice', price: 79, category: 'VEGETARIAN', restaurant: 'nirvana' },
+  { id: 'n17', name: 'Stir-Fried Mushroom with Soy Sauce', price: 69, category: 'VEGETARIAN', restaurant: 'nirvana' },
 
-  // LIGHT & HEALTHY (Positioned as value options after showcasing premium items)
-  { id: 'n16', name: 'Mala Grilled Mushroom with Soy Sauce', price: 79, category: 'LIGHT & HEALTHY', restaurant: 'nirvana' },
-  { id: 'n18', name: 'Creamy Omelette', price: 70, category: 'LIGHT & HEALTHY', restaurant: 'nirvana' },
-  { id: 'n15', name: 'Grilled Mushroom with Soy Sauce', price: 69, category: 'LIGHT & HEALTHY', restaurant: 'nirvana' },
-  { id: 'n17', name: 'Stir-Fried Mushroom with Soy Sauce', price: 69, category: 'LIGHT & HEALTHY', restaurant: 'nirvana' },
+  // OTHERS
+  { id: 'n18', name: 'Creamy Omelette on Rice', price: 70, category: 'OTHERS', restaurant: 'nirvana' },
+  { id: 'n19', name: 'Mala Beef Rice Noodle Soup', price: 169, category: 'OTHERS', restaurant: 'nirvana' },
+  { id: 'n20', name: 'Beef Rice Noodle Soup', price: 159, category: 'OTHERS', restaurant: 'nirvana' },
 ];
 
 export const addOns: AddOn[] = [
