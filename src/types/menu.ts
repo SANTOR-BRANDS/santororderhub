@@ -48,6 +48,11 @@ export interface BasketItem {
   isPremiumBeefSwitched?: boolean;
   // Selected variant for dishes with variants
   selectedVariant?: DishVariant;
+  // Combo configuration for 2x dishes
+  comboConfig?: {
+    dish1: any;
+    dish2: any;
+  };
 }
 
 export interface SpicyLevel {
