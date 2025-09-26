@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Dish, AddOn, SPICY_LEVELS, SAUCES, BasketItem } from '@/types/menu';
+import { Dish, AddOn, SPICY_LEVELS, SAUCES, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -11,12 +11,14 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { Plus, Minus } from 'lucide-react';
+
 interface DishModalProps {
   dish: Dish | null;
   isOpen: boolean;
   onClose: () => void;
   onAddToBasket: (item: BasketItem) => void;
 }
+
 const DishModal = ({
   dish,
   isOpen,
@@ -28,6 +30,10 @@ const DishModal = ({
   const [selectedSauces, setSelectedSauces] = useState<string[]>([]);
   const [needsCutlery, setNeedsCutlery] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  // New state for complex logic
+  const [isPremiumBeefSwitched, setIsPremiumBeefSwitched] = useState(false);
+  const [selectedVariant, setSelectedVariant] = useState<DishVariant | null>(null);
+
   useEffect(() => {
     if (dish && isOpen) {
       setSelectedAddOns([]);
@@ -35,8 +41,11 @@ const DishModal = ({
       setSelectedSauces([]);
       setNeedsCutlery(false);
       setQuantity(1);
+      setIsPremiumBeefSwitched(false);
+      setSelectedVariant(null);
     }
   }, [dish, isOpen]);
+
   if (!dish) return null;
   const getThemeStyles = () => {
     return dish.restaurant === 'restory' ? {
@@ -51,26 +60,72 @@ const DishModal = ({
       button: 'bg-nirvana-accent text-nirvana-primary hover:bg-nirvana-accent/90'
     };
   };
+
   const theme = getThemeStyles();
-  const filteredAddOns = addOns.filter(addon => {
-    if (addon.category === 'meat') {
-      if (addon.id === 'extra-chicken' && !dish.name.toLowerCase().includes('chicken')) return false;
-      if (addon.id === 'extra-pork' && !dish.name.toLowerCase().includes('pork')) return false;
-      if (addon.id === 'extra-beef' && !dish.name.toLowerCase().includes('beef')) return false;
+
+  // Get current effective price (considering premium beef switching and variants)
+  const getCurrentPrice = () => {
+    let basePrice = dish.price;
+    
+    // Apply premium beef switch discount
+    if (dish.hasPremiumBeefSwitch && isPremiumBeefSwitched && dish.normalBeefPrice) {
+      basePrice = dish.normalBeefPrice;
     }
-    if (addon.id === 'extra-rice' && dish.name.toLowerCase().includes('noodle')) return false;
-    return true;
-  });
+    
+    // Apply variant pricing
+    if (selectedVariant) {
+      basePrice = selectedVariant.price;
+    }
+    
+    return basePrice;
+  };
+
+  // Filter add-ons based on dish type and beef switching logic
+  const getFilteredAddOns = () => {
+    return addOns.filter(addon => {
+      // Existing meat filtering logic
+      if (addon.category === 'meat') {
+        if (addon.id === 'extra-chicken' && !dish.name.toLowerCase().includes('chicken')) return false;
+        if (addon.id === 'extra-pork' && !dish.name.toLowerCase().includes('pork')) return false;
+        
+        // Premium beef logic - CRITICAL: NEVER show both beef types together
+        if (dish.hasPremiumBeefSwitch) {
+          if (isPremiumBeefSwitched) {
+            // If switched to normal beef, only show normal beef add-on
+            if (addon.isPremiumBeef) return false;
+          } else {
+            // If using premium beef, only show premium beef add-on  
+            if (addon.isNormalBeef) return false;
+          }
+        } else if (dish.name.toLowerCase().includes('wagyu')) {
+          // Wagyu dishes only get premium beef add-ons
+          if (addon.isNormalBeef) return false;
+        } else if (dish.name.toLowerCase().includes('beef')) {
+          // Regular beef dishes get normal beef add-ons
+          if (addon.isPremiumBeef) return false;
+        }
+      }
+      
+      // Don't show extra rice for noodle dishes
+      if (addon.id === 'extra-rice' && dish.name.toLowerCase().includes('noodle')) return false;
+      
+      return true;
+    });
+  };
+
+  const filteredAddOns = getFilteredAddOns();
   const toggleAddOn = (addon: AddOn) => {
     setSelectedAddOns(prev => prev.find(a => a.id === addon.id) ? prev.filter(a => a.id !== addon.id) : [...prev, addon]);
   };
+
   const getTotalPrice = () => {
+    const basePrice = getCurrentPrice();
     const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
     const saucesTotal = selectedSauces.reduce((sum, sauceId) => {
       const sauce = SAUCES.find(s => s.id === sauceId);
       return sum + (sauce?.price || 0);
     }, 0);
-    return (dish.price + addOnsTotal + saucesTotal) * quantity;
+    return (basePrice + addOnsTotal + saucesTotal) * quantity;
   };
   const canAddToBasket = () => {
     const hasSauce = selectedSauces.length > 0;
@@ -79,6 +134,7 @@ const DishModal = ({
   };
   const handleAddToBasket = () => {
     if (!canAddToBasket()) return;
+    
     const basketItem: BasketItem = {
       id: `${dish.id}-${Date.now()}`,
       dish,
@@ -86,8 +142,11 @@ const DishModal = ({
       spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
       sauce: selectedSauces.join(', '),
       needsCutlery,
-      quantity
+      quantity,
+      isPremiumBeefSwitched,
+      selectedVariant
     };
+    
     onAddToBasket(basketItem);
     onClose();
   };
@@ -143,10 +202,68 @@ const DishModal = ({
                   {dish.restaurant}
                 </Badge>
                 <span className={cn('text-2xl font-bold', `text-${theme.accent}`)}>
-                  ฿{dish.price}
+                  ฿{getCurrentPrice()}
+                  {dish.hasPremiumBeefSwitch && !isPremiumBeefSwitched && (
+                    <span className="text-sm text-muted-foreground ml-1">
+                      (Switch to normal: ฿{dish.normalBeefPrice})
+                    </span>
+                  )}
                 </span>
               </div>
             </DialogHeader>
+
+            {/* Premium Beef Switch Option */}
+            {dish.hasPremiumBeefSwitch && <div className="mb-6">
+                <Label className="text-base font-semibold mb-3">Beef Option</Label>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="beef-switch" 
+                      checked={isPremiumBeefSwitched} 
+                      onCheckedChange={(checked) => {
+                        setIsPremiumBeefSwitched(checked === true);
+                        // Clear beef-related add-ons when switching
+                        setSelectedAddOns(prev => prev.filter(addon => !addon.isPremiumBeef && !addon.isNormalBeef));
+                      }} 
+                    />
+                    <Label htmlFor="beef-switch" className="text-sm">
+                      Switch to Normal Beef (-฿{dish.price - (dish.normalBeefPrice || 0)})
+                    </Label>
+                  </div>
+                </div>
+              </div>}
+
+            {/* Dish Variants */}
+            {dish.variants && dish.variants.length > 0 && <div className="mb-6">
+                <Label className="text-base font-semibold mb-3">Choose Option</Label>
+                <RadioGroup 
+                  value={selectedVariant?.id || ''} 
+                  onValueChange={(value) => {
+                    const variant = dish.variants?.find(v => v.id === value);
+                    setSelectedVariant(variant || null);
+                  }} 
+                  className="gap-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="" id="base-option" />
+                    <Label htmlFor="base-option" className="flex items-center gap-2">
+                      <span>{dish.name} (Base)</span>
+                      <span className="text-sm text-muted-foreground">฿{dish.price}</span>
+                    </Label>
+                  </div>
+                  {dish.variants.map(variant => (
+                    <div key={variant.id} className="flex items-center space-x-2">
+                      <RadioGroupItem value={variant.id} id={variant.id} />
+                      <Label htmlFor={variant.id} className="flex items-center gap-2">
+                        <span>{variant.name}</span>
+                        <span className="text-sm text-muted-foreground">
+                          {variant.priceModifier >= 0 ? '+' : ''}฿{variant.priceModifier} (฿{variant.price})
+                        </span>
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>}
 
             {/* Spicy Level - Mandatory for certain dishes */}
             {dish.spicyRequired && <div className="mb-6">

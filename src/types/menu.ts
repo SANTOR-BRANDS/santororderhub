@@ -10,6 +10,20 @@ export interface Dish {
   isSpecial?: boolean;
   spicyRequired?: boolean;
   image?: string;
+  // Premium beef switching logic
+  hasPremiumBeefSwitch?: boolean;
+  normalBeefPrice?: number;
+  // Combo dishes
+  isCombo?: boolean;
+  // Dish variants (for consolidated options like pork + add-ons)
+  variants?: DishVariant[];
+}
+
+export interface DishVariant {
+  id: string;
+  name: string;
+  price: number;
+  priceModifier: number; // +10, +20, etc.
 }
 
 export interface AddOn {
@@ -17,6 +31,9 @@ export interface AddOn {
   name: string;
   price: number;
   category: 'meat' | 'egg' | 'sauce' | 'other' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette';
+  // For premium beef logic
+  isPremiumBeef?: boolean;
+  isNormalBeef?: boolean;
 }
 
 export interface BasketItem {
@@ -27,6 +44,10 @@ export interface BasketItem {
   sauce: string;
   needsCutlery: boolean;
   quantity: number;
+  // Premium beef switching state
+  isPremiumBeefSwitched?: boolean;
+  // Selected variant for dishes with variants
+  selectedVariant?: DishVariant;
 }
 
 export interface SpicyLevel {
@@ -48,8 +69,8 @@ export const SAUCES = [
   { id: 'chilli-fish', name: 'Chilli Fish Sauce', price: 0 },
   { id: 'chilli', name: 'Chilli Sauce', price: 0 },
   { id: 'maggie', name: 'Maggie Sauce', price: 0 },
+  { id: 'no-sauce', name: '🚫 NO SAUCE', price: 0 },
   { id: 'sweet-chilli', name: 'Sweet Chilli Fish Sauce', price: 10 },
   { id: 'isaan', name: '🔴 Isaan Dipping Sauce', price: 15 },
   { id: 'seafood', name: '🟢 Seafood Sauce', price: 20 },
-  { id: 'no-sauce', name: '🚫 No Sauce', price: 0 },
 ];

@@ -34,8 +34,17 @@ const BasketModal = ({
 
   const getTotalPrice = () => {
     return basketItems.reduce((total, item) => {
+      // Calculate base price considering beef switching and variants
+      let basePrice = item.dish.price;
+      if (item.isPremiumBeefSwitched && item.dish.normalBeefPrice) {
+        basePrice = item.dish.normalBeefPrice;
+      }
+      if (item.selectedVariant) {
+        basePrice = item.selectedVariant.price;
+      }
+      
       const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
-      const itemTotal = (item.dish.price + addOnsTotal) * item.quantity;
+      const itemTotal = (basePrice + addOnsTotal) * item.quantity;
       return total + itemTotal;
     }, 0);
   };
@@ -180,8 +189,14 @@ const BasketModal = ({
 
                 {/* Item Details */}
                 <div className="text-xs text-muted-foreground space-y-1 mb-3">
+                  {item.selectedVariant && (
+                    <div>Option: {item.selectedVariant.name}</div>
+                  )}
+                  {item.isPremiumBeefSwitched && (
+                    <div>Switched to Normal Beef (-฿{item.dish.price - (item.dish.normalBeefPrice || 0)})</div>
+                  )}
                   {item.spicyLevel !== undefined && (
-                    <div>Spicy Level: {item.spicyLevel}</div>
+                    <div>Spicy Level: {item.spicyLevel} {item.spicyLevel > 0 ? '🌶️'.repeat(item.spicyLevel) : ''}</div>
                   )}
                   <div>Sauces: {item.sauce}</div>
                   {item.addOns.length > 0 && (
