@@ -10,8 +10,8 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
   const restaurants = [
     { id: 'restory' as Restaurant, name: 'Restory', available: true },
     { id: 'nirvana' as Restaurant, name: 'Nirvana', available: true },
-    { id: 'a' as Restaurant, name: 'Mejai Hai Yum (soon)', available: false },
-    { id: 'b' as Restaurant, name: 'Chan Wan (soon)', available: false },
+    { id: 'mejai hai yum' as Restaurant, name: 'Mejai Hai Yum (soon)', available: false },
+    { id: 'chan wan' as Restaurant, name: 'Chan Wan (soon)', available: false },
     { id: 'c' as Restaurant, name: 'Restaurant C', available: false },
     { id: 'd' as Restaurant, name: 'Restaurant D', available: false },
   ];
