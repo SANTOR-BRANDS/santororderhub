@@ -12,8 +12,6 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
     { id: 'nirvana' as Restaurant, name: 'Nirvana', available: true },
     { id: 'mejai hai yum' as Restaurant, name: 'Mejai Hai Yum (soon)', available: false },
     { id: 'chan wan' as Restaurant, name: 'Chan Wan (soon)', available: false },
-    { id: 'c' as Restaurant, name: 'Restaurant C', available: false },
-    { id: 'd' as Restaurant, name: 'Restaurant D', available: false },
   ];
 
   const getHeaderStyle = () => {
