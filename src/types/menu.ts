@@ -1,5 +1,12 @@
 export type Restaurant = 'restory' | 'nirvana';
 
+export interface DishVariant {
+  id: string;
+  name: string;
+  price: number;
+  isDefault?: boolean;
+}
+
 export interface Dish {
   id: string;
   name: string;
@@ -10,23 +17,28 @@ export interface Dish {
   isSpecial?: boolean;
   spicyRequired?: boolean;
   image?: string;
+  variants?: DishVariant[];
+  extraOptions?: AddOn[];
 }
 
 export interface AddOn {
   id: string;
   name: string;
   price: number;
-  category: 'meat' | 'egg' | 'sauce' | 'other' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette';
+  category: 'meat' | 'egg' | 'sauce' | 'other' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette' | 'extra-pls';
 }
 
 export interface BasketItem {
   id: string;
   dish: Dish;
+  selectedVariant?: DishVariant;
   addOns: AddOn[];
+  extraPls: AddOn[];
   spicyLevel?: number;
   sauce: string;
   needsCutlery: boolean;
   quantity: number;
+  isPremiumBeef?: boolean;
 }
 
 export interface SpicyLevel {
@@ -51,5 +63,5 @@ export const SAUCES = [
   { id: 'sweet-chilli', name: 'Sweet Chilli Fish Sauce', price: 10 },
   { id: 'isaan', name: '🔴 Isaan Dipping Sauce', price: 15 },
   { id: 'seafood', name: '🟢 Seafood Sauce', price: 20 },
-  { id: 'no-sauce', name: '🚫 No Sauce', price: 0 },
+  { id: 'no-sauce', name: '🚫 NO SAUCE', price: 0 },
 ];
