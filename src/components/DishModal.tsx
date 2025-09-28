@@ -45,7 +45,6 @@ const DishModal = ({
       // Set default variant
       const defaultVariant = dish.variants?.find(v => v.isDefault) || dish.variants?.[0] || null;
       setSelectedVariant(defaultVariant);
-      
       setSelectedExtraPls([]);
       setSelectedAddOns([]);
       setSpicyLevel(dish.spicyRequired ? 2 : undefined); // Default to signature medium
@@ -103,7 +102,6 @@ const DishModal = ({
       }, 0);
       return basePrice + extraPlsTotal + addOnsTotal + saucesTotal + extraPlsTotal2 + addOnsTotal2 + saucesTotal2;
     }
-
     return basePrice + extraPlsTotal + addOnsTotal + saucesTotal;
   };
 
@@ -113,7 +111,6 @@ const DishModal = ({
   // Filter extra options based on current selection
   const getFilteredExtraOptions = () => {
     if (!dish.extraOptions) return [];
-    
     return dish.extraOptions.filter(option => {
       if (dish.name.includes('Premium Beef')) {
         if (option.id === 'extra-premium-beef') return isPremiumBeef;
@@ -169,19 +166,16 @@ const DishModal = ({
   const canAddToBasket = () => {
     const hasSauce = selectedSauces.length > 0;
     const hasSpicyLevel = !dish.spicyRequired || spicyLevel !== undefined;
-    
     if (isCombo) {
       const hasSauce2 = selectedSauces2.length > 0;
       const hasSpicyLevel2 = !dish.spicyRequired || spicyLevel2 !== undefined;
       return hasSauce && hasSpicyLevel && hasSauce2 && hasSpicyLevel2;
     }
-    
     return hasSauce && hasSpicyLevel;
   };
 
   const handleAddToBasket = () => {
     if (!canAddToBasket()) return;
-    
     if (isCombo) {
       // Add two separate basket items for combo
       const basketItem1: BasketItem = {
@@ -209,7 +203,6 @@ const DishModal = ({
         quantity,
         isPremiumBeef
       };
-      
       onAddToBasket(basketItem1);
       onAddToBasket(basketItem2);
     } else {
@@ -225,10 +218,8 @@ const DishModal = ({
         quantity,
         isPremiumBeef
       };
-      
       onAddToBasket(basketItem);
     }
-    
     onClose();
   };
 
@@ -245,7 +236,6 @@ const DishModal = ({
     const currentSelectedAddOns = dishNumber === 1 ? selectedAddOns : selectedAddOns2;
     const currentSpicyLevel = dishNumber === 1 ? spicyLevel : spicyLevel2;
     const currentSelectedSauces = dishNumber === 1 ? selectedSauces : selectedSauces2;
-    
     const setCurrentSelectedVariant = dishNumber === 1 ? setSelectedVariant : setSelectedVariant2;
     const setCurrentSpicyLevel = dishNumber === 1 ? setSpicyLevel : setSpicyLevel2;
     const setCurrentSelectedSauces = dishNumber === 1 ? setSelectedSauces : setSelectedSauces2;
@@ -267,39 +257,25 @@ const DishModal = ({
               }} 
               className="gap-2"
             >
-              {dish.variants && dish.variants.length > 0 && (
-  <div className="mb-6">
-    <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-      CHOOSE OPTION <span className="text-red-500">*</span>
-      <span className="text-xs text-muted-foreground">(Required)</span>
-    </Label>
-    <RadioGroup 
-      value={currentSelectedVariant?.id || ''} 
-      onValueChange={(value) => {
-        const variant = dish.variants?.find(v => v.id === value);
-        setCurrentSelectedVariant(variant || null);
-      }} 
-      className="gap-2"
-    >
-      {dish.variants.map(variant => (
-        <div key={variant.id} className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
-            <Label htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center gap-2">
-              <span>{variant.name}</span>
-            </Label>
+              {dish.variants.map(variant => (
+                <div key={variant.id} className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
+                    <Label htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center gap-2">
+                      <span>{variant.name}</span>
+                    </Label>
+                  </div>
+                  {/* Only show price if not zero */}
+                  {variant.price !== dish.price && (
+                    <span className="text-sm text-muted-foreground">
+                      {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </RadioGroup>
           </div>
-          {/* Only show price if not zero */}
-          {variant.price !== dish.price && (
-            <span className="text-sm text-muted-foreground">
-              {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
-            </span>
-          )}
-        </div>
-      ))}
-    </RadioGroup>
-  </div>
-)}
+        )}
 
         {/* EXTRA Section */}
         {getFilteredExtraOptions().length > 0 && (
@@ -321,7 +297,7 @@ const DishModal = ({
                     </Label>
                   </div>
                   <span className="text-sm text-muted-foreground">
-                    +{addon.price}
+                    {addon.price > 0 ? `+${addon.price}` : '+0'}
                   </span>
                 </div>
               ))}
@@ -380,7 +356,7 @@ const DishModal = ({
                     </Label>
                   </div>
                   <span className="text-sm text-muted-foreground">
-                    +{addon.price}
+                    {addon.price > 0 ? `+${addon.price}` : '+0'}
                   </span>
                 </div>
               ))}
@@ -395,69 +371,75 @@ const DishModal = ({
             <span className="text-xs text-muted-foreground">(Required)</span>
           </Label>
           <div className="space-y-2">
-          {SAUCES.map(sauce => {
-  const isFreeSauce = sauce.price === 0;
-  const isNoSauce = sauce.id === 'no-sauce';
-  const noSauceSelected = currentSelectedSauces.includes('no-sauce');
-  const selectedFreeSauce = currentSelectedSauces.find(id => {
-    const s = SAUCES.find(s => s.id === id);
-    return s && s.price === 0 && s.id !== 'no-sauce';
-  });
+            {SAUCES.map(sauce => {
+              const isFreeSauce = sauce.price === 0;
+              const isNoSauce = sauce.id === 'no-sauce';
+              const noSauceSelected = currentSelectedSauces.includes('no-sauce');
+              const selectedFreeSauce = currentSelectedSauces.find(id => {
+                const s = SAUCES.find(s => s.id === id);
+                return s && s.price === 0 && s.id !== 'no-sauce';
+              });
 
-  let disabled = false;
-  if (isNoSauce) {
-    disabled = false;
-  } else if (noSauceSelected) {
-    disabled = true;
-  } else if (isFreeSauce) {
-    disabled = selectedFreeSauce && selectedFreeSauce !== sauce.id;
-  } else {
-    disabled = false;
-  }
-  if (!isFreeSauce && !isNoSauce && noSauceSelected) disabled = true;
+              let disabled = false;
+              if (isNoSauce) {
+                disabled = false;
+              } else if (noSauceSelected) {
+                disabled = true;
+              } else if (isFreeSauce) {
+                disabled = selectedFreeSauce && selectedFreeSauce !== sauce.id;
+              } else {
+                disabled = false;
+              }
+              if (!isFreeSauce && !isNoSauce && noSauceSelected) disabled = true;
 
-  return (
-    <div
-      key={sauce.id}
-      className={`flex items-center justify-between ${disabled ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}
-      style={{ transition: 'opacity 0.2s' }}
-    >
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id={`${sauce.id}-${dishNumber}`}
-          checked={currentSelectedSauces.includes(sauce.id)}
-          disabled={disabled}
-          onCheckedChange={(checked) => {
-            if (isNoSauce) {
-              if (checked) {
-                setCurrentSelectedSauces(['no-sauce']);
-              } else {
-                setCurrentSelectedSauces([]);
-              }
-              return;
-            }
-            if (isFreeSauce) {
-              if (checked) {
-                setCurrentSelectedSauces([sauce.id]);
-              } else {
-                setCurrentSelectedSauces([]);
-              }
-              return;
-            }
-            if (checked) {
-              setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
-            } else {
-              setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-            }
-          }}
-        />
-        <Label htmlFor={`${sauce.id}-${dishNumber}`}>{sauce.name}</Label>
-      </div>
-      <span className="text-sm text-muted-foreground">
-        {sauce.price > 0 ? `+${sauce.price}` : '+0'}
-      </span>
-    </div>
-  );
+              return (
+                <div
+                  key={sauce.id}
+                  className={`flex items-center justify-between ${disabled ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}
+                  style={{ transition: 'opacity 0.2s' }}
+                >
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`${sauce.id}-${dishNumber}`}
+                      checked={currentSelectedSauces.includes(sauce.id)}
+                      disabled={disabled}
+                      onCheckedChange={(checked) => {
+                        if (isNoSauce) {
+                          if (checked) {
+                            setCurrentSelectedSauces(['no-sauce']);
+                          } else {
+                            setCurrentSelectedSauces([]);
+                          }
+                          return;
+                        }
+                        if (isFreeSauce) {
+                          if (checked) {
+                            setCurrentSelectedSauces([sauce.id]);
+                          } else {
+                            setCurrentSelectedSauces([]);
+                          }
+                          return;
+                        }
+                        if (checked) {
+                          setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
+                        } else {
+                          setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                        }
+                      }}
+                    />
+                    <Label htmlFor={`${sauce.id}-${dishNumber}`}>{sauce.name}</Label>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    {sauce.price > 0 ? `+${sauce.price}` : '+0'}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </>
+    );
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
