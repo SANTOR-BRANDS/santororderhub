@@ -380,35 +380,64 @@ const DishModal = ({
           <div className="space-y-2">
             {SAUCES.map(sauce => {
               const isFreeSauce = sauce.price === 0;
+              const isNoSauce = sauce.id === 'no-sauce';
+              const noSauceSelected = currentSelectedSauces.includes('no-sauce');
+              const selectedFreeSauce = currentSelectedSauces.find(id => {
+                const s = SAUCES.find(s => s.id === id);
+                return s && s.price === 0 && s.id !== 'no-sauce';
+              });
+
+              let disabled = false;
+              if (isNoSauce) {
+                disabled = false;
+              } else if (noSauceSelected) {
+                disabled = true;
+              } else if (isFreeSauce) {
+                disabled = selectedFreeSauce && selectedFreeSauce !== sauce.id;
+              } else {
+                disabled = false;
+              }
+              if (!isFreeSauce && !isNoSauce && noSauceSelected) disabled = true;
+
               return (
-                <div key={sauce.id} className="flex items-center justify-between">
+                <div
+                  key={sauce.id}
+                  className={`flex items-center justify-between ${disabled ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}
+                  style={{ transition: 'opacity 0.2s' }}
+                >
                   <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id={`${sauce.id}-${dishNumber}`} 
-                      checked={currentSelectedSauces.includes(sauce.id)} 
+                    <Checkbox
+                      id={`${sauce.id}-${dishNumber}`}
+                      checked={currentSelectedSauces.includes(sauce.id)}
+                      disabled={disabled}
                       onCheckedChange={(checked) => {
-                        if (checked) {
-                          if (isFreeSauce) {
-                            // For free sauces, only allow one selection
-                            const otherFreeSauces = SAUCES.filter(s => s.price === 0 && s.id !== sauce.id).map(s => s.id);
-                            setCurrentSelectedSauces(prev => [...prev.filter(id => !otherFreeSauces.includes(id)), sauce.id]);
+                        if (isNoSauce) {
+                          if (checked) {
+                            setCurrentSelectedSauces(['no-sauce']);
                           } else {
-                            // For paid sauces, allow multiple
-                            setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
+                            setCurrentSelectedSauces([]);
                           }
+                          return;
+                        }
+                        if (isFreeSauce) {
+                          if (checked) {
+                            setCurrentSelectedSauces([sauce.id]);
+                          } else {
+                            setCurrentSelectedSauces([]);
+                          }
+                          return;
+                        }
+                        if (checked) {
+                          setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
                         } else {
                           setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
                         }
                       }}
                     />
-                    <Label htmlFor={`${sauce.id}-${dishNumber}`}>
-                      {sauce.name}
-                    </Label>
+                    <Label htmlFor={`${sauce.id}-${dishNumber}`}>{sauce.name}</Label>
                   </div>
                   {sauce.price > 0 && (
-                    <span className="text-sm text-muted-foreground">
-                      +{sauce.price}
-                    </span>
+                    <span className="text-sm text-muted-foreground">+{sauce.price}</span>
                   )}
                 </div>
               );
