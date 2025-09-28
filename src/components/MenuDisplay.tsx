@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Restaurant, Dish } from '@/types/menu';
-import { getMenuByRestaurant } from '@/data/menuData';
+import { getMenuByRestaurant, getCategoriesByRestaurant } from '@/data/menuData';
 import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
 import { Search } from 'lucide-react';
@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils';
 interface MenuDisplayProps {
   restaurant: Restaurant;
   onDishSelect: (dish: Dish) => void;
-  selectedCategory: string;
 }
 
 const themeColors: Record<Restaurant, { accent: string; color: string }> = {
@@ -20,10 +19,11 @@ const themeColors: Record<Restaurant, { accent: string; color: string }> = {
 const MenuDisplay = ({
   restaurant,
   onDishSelect,
-  selectedCategory,
 }: MenuDisplayProps) => {
+  const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const menu = useMemo(() => getMenuByRestaurant(restaurant), [restaurant]);
+  const categories = useMemo(() => getCategoriesByRestaurant(restaurant), [restaurant]);
   const filteredDishes = useMemo(() => {
     return menu.filter(dish => {
       const matchesCategory =
@@ -79,6 +79,43 @@ const MenuDisplay = ({
           </p>
         </div>
 
+        {/* Sticky Category Menu Under Restaurant Selector */}
+        <div
+          className="sticky top-[88px] z-40 bg-white/90 backdrop-blur-md border-b border-gray-200"
+          style={{ marginBottom: '1.5rem' }}
+        >
+          <div className="flex gap-6 overflow-x-auto px-4 py-3">
+            {categories.map((category, idx) => (
+              <button
+                key={category}
+                className={`text-base font-semibold transition-all cursor-pointer border-b-2 ${
+                  selectedCategory === category
+                    ? 'active-category'
+                    : ''
+                }`}
+                style={{
+                  borderColor:
+                    selectedCategory === category
+                      ? theme.color
+                      : 'transparent',
+                  color:
+                    selectedCategory === category
+                      ? theme.color
+                      : '#555',
+                  opacity: selectedCategory === category ? 1 : 0.8,
+                  paddingBottom: '4px',
+                  background: 'none',
+                  outline: 'none',
+                }}
+                onClick={() => setSelectedCategory(category)}
+                aria-current={selectedCategory === category ? 'true' : undefined}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Dishes Grid */}
         {filteredDishes.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -100,6 +137,12 @@ const MenuDisplay = ({
           </div>
         )}
       </div>
+      {/* Add to your CSS file for smooth underline: */}
+      <style>{`
+        .active-category {
+          transition: border-color 0.3s, color 0.3s;
+        }
+      `}</style>
     </div>
   );
 };
