@@ -81,18 +81,14 @@ const MenuDisplay = ({
 
         {/* Sticky Category Menu Under Restaurant Selector */}
         <div
-          className="sticky top-[72px] z-40 bg-white/95 backdrop-blur border-b border-gray-200"
+          className="sticky top-[64px] z-40 bg-white/98 backdrop-blur border-b border-gray-200"
           style={{ marginBottom: '1.5rem' }}
         >
-          <div className="flex gap-6 overflow-x-auto px-4 py-3">
+          <div className="flex gap-3 overflow-x-auto px-2 py-2 whitespace-nowrap">
             {categories.map((category, idx) => (
               <button
                 key={category}
-                className={`text-base font-semibold transition-all cursor-pointer border-b-2 ${
-                  selectedCategory === category
-                    ? 'active-category'
-                    : ''
-                }`}
+                className={`text-sm font-semibold transition-all cursor-pointer border-b-2 px-2 py-1 ${selectedCategory === category ? 'active-category' : ''}`}
                 style={{
                   borderColor:
                     selectedCategory === category
@@ -103,9 +99,11 @@ const MenuDisplay = ({
                       ? theme.color
                       : '#555',
                   opacity: selectedCategory === category ? 1 : 0.8,
-                  paddingBottom: '4px',
                   background: 'none',
                   outline: 'none',
+                  maxWidth: '120px',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
                 }}
                 onClick={() => setSelectedCategory(category)}
                 aria-current={selectedCategory === category ? 'true' : undefined}
