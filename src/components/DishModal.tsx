@@ -67,7 +67,14 @@ const DishModal = ({
   const theme = getThemeStyles();
 
   const getCurrentPrice = () => {
-    return selectedVariant?.price || dish.price;
+    const basePrice = selectedVariant?.price || dish.price;
+    const extraPlsTotal = selectedExtraPls.reduce((sum, addon) => sum + addon.price, 0);
+    const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
+    const saucesTotal = selectedSauces.reduce((sum, sauceId) => {
+      const sauce = SAUCES.find(s => s.id === sauceId);
+      return sum + (sauce?.price || 0);
+    }, 0);
+    return basePrice + extraPlsTotal + addOnsTotal + saucesTotal;
   };
 
   const isPremiumBeef = dish.name.includes('Premium Beef') && selectedVariant?.id === 'premium';
@@ -195,7 +202,7 @@ const DishModal = ({
                     {dish.restaurant}
                   </Badge>
                   <span className={cn('text-2xl font-bold', `text-${theme.accent}`)}>
-                    ฿{getCurrentPrice()}
+                    {getCurrentPrice()}
                   </span>
                 </div>
               </DialogHeader>
@@ -204,7 +211,7 @@ const DishModal = ({
               {dish.variants && dish.variants.length > 0 && (
                 <div className="mb-6">
                   <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                    Choose Option <span className="text-red-500">*</span>
+                    CHOOSE OPTION <span className="text-red-500">*</span>
                     <span className="text-xs text-muted-foreground">(Required)</span>
                   </Label>
                   <RadioGroup 
@@ -216,19 +223,16 @@ const DishModal = ({
                     className="gap-2"
                   >
                     {dish.variants.map(variant => (
-                      <div key={variant.id} className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value={variant.id} id={`variant-${variant.id}`} />
-                          <Label htmlFor={`variant-${variant.id}`} className="flex items-center gap-2">
-                            <span>{variant.name}</span>
-                            {variant.price !== dish.price && (
-                              <span className="text-sm text-muted-foreground">
-                                {variant.price > dish.price ? `+฿${variant.price - dish.price}` : `-฿${dish.price - variant.price}`}
-                              </span>
-                            )}
-                          </Label>
-                        </div>
-                        <span className="text-sm font-semibold">฿{variant.price}</span>
+                      <div key={variant.id} className="flex items-center space-x-2">
+                        <RadioGroupItem value={variant.id} id={`variant-${variant.id}`} />
+                        <Label htmlFor={`variant-${variant.id}`} className="flex items-center gap-2">
+                          <span>{variant.name}</span>
+                          {variant.price !== dish.price && (
+                            <span className="text-sm text-muted-foreground">
+                              {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
+                            </span>
+                          )}
+                        </Label>
                       </div>
                     ))}
                   </RadioGroup>
@@ -239,7 +243,7 @@ const DishModal = ({
               {getFilteredExtraOptions().length > 0 && (
                 <div className="mb-6">
                   <Label className="text-base font-semibold mb-3">
-                    EXTRA PLS
+                    EXTRA
                   </Label>
                   <div className="space-y-2">
                     {getFilteredExtraOptions().map(addon => (
@@ -255,7 +259,7 @@ const DishModal = ({
                           </Label>
                         </div>
                         <span className="text-sm text-muted-foreground">
-                          +฿{addon.price}
+                          +{addon.price}
                         </span>
                       </div>
                     ))}
@@ -267,7 +271,7 @@ const DishModal = ({
               {dish.spicyRequired && (
                 <div className="mb-6">
                   <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                    Spicy Level <span className="text-red-500">*</span>
+                    SPICY LEVEL <span className="text-red-500">*</span>
                     <span className="text-xs text-muted-foreground">(Required)</span>
                   </Label>
                   <RadioGroup 
@@ -293,12 +297,12 @@ const DishModal = ({
               {/* Add-ons */}
               {Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
                 <div key={category} className="mb-6">
-                  <Label className="text-base font-semibold mb-3 capitalize">
+                  <Label className="text-base font-semibold mb-3">
                     {category === 'other' ? 'ADD-ONS' : 
-                     category === 'thai-omelette' ? 'Thai Style Omelette 🍳' : 
-                     category === 'creamy-omelette' ? 'Creamy Omelette 🍳' : 
-                     category === 'soft-omelette' ? 'Soft Omelette 🍳' : 
-                     category}
+                     category === 'thai-omelette' ? 'THAI STYLE OMELETTE 🍳' : 
+                     category === 'creamy-omelette' ? 'CREAMY OMELETTE 🍳' : 
+                     category === 'soft-omelette' ? 'SOFT OMELETTE 🍳' : 
+                     category.toUpperCase()}
                   </Label>
                   <div className="space-y-2">
                     {categoryAddOns.map(addon => (
@@ -314,7 +318,7 @@ const DishModal = ({
                           </Label>
                         </div>
                         <span className="text-sm text-muted-foreground">
-                          +฿{addon.price}
+                          +{addon.price}
                         </span>
                       </div>
                     ))}
@@ -325,52 +329,41 @@ const DishModal = ({
               {/* Sauce Selection - Required */}
               <div className="mb-6">
                 <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                  Select Sauce <span className="text-red-500">*</span>
+                  SELECT SAUCE <span className="text-red-500">*</span>
                   <span className="text-xs text-muted-foreground">(Required)</span>
                 </Label>
                 <div className="space-y-2">
                   {SAUCES.map(sauce => {
+                    const isFreeSauce = sauce.price === 0;
                     const isNoSauce = sauce.id === 'no-sauce';
                     return (
                       <div key={sauce.id} className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          {isNoSauce ? (
-                            <Button
-                              variant={selectedSauces.includes(sauce.id) ? "default" : "outline"}
-                              size="sm"
-                              onClick={() => {
-                                if (selectedSauces.includes(sauce.id)) {
-                                  setSelectedSauces([]);
+                          <Checkbox 
+                            id={sauce.id} 
+                            checked={selectedSauces.includes(sauce.id)} 
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                if (isFreeSauce) {
+                                  // For free sauces, only allow one selection
+                                  const otherFreeSauces = SAUCES.filter(s => s.price === 0 && s.id !== sauce.id).map(s => s.id);
+                                  setSelectedSauces(prev => [...prev.filter(id => !otherFreeSauces.includes(id)), sauce.id]);
                                 } else {
-                                  setSelectedSauces([sauce.id]);
+                                  // For paid sauces, allow multiple
+                                  setSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
                                 }
-                              }}
-                              className="text-xs"
-                            >
-                              {sauce.name}
-                            </Button>
-                          ) : (
-                            <>
-                              <Checkbox 
-                                id={sauce.id} 
-                                checked={selectedSauces.includes(sauce.id)} 
-                                onCheckedChange={(checked) => {
-                                  if (checked) {
-                                    setSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
-                                  } else {
-                                    setSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-                                  }
-                                }}
-                              />
-                              <Label htmlFor={sauce.id}>
-                                {sauce.name}
-                              </Label>
-                            </>
-                          )}
+                              } else {
+                                setSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                              }
+                            }}
+                          />
+                          <Label htmlFor={sauce.id}>
+                            {sauce.name}
+                          </Label>
                         </div>
-                        {!isNoSauce && (
+                        {sauce.price > 0 && (
                           <span className="text-sm text-muted-foreground">
-                            +฿{sauce.price}
+                            +{sauce.price}
                           </span>
                         )}
                       </div>
@@ -430,7 +423,7 @@ const DishModal = ({
                 <div className="flex items-center justify-between text-lg font-bold">
                   <span>Total</span>
                   <span className={cn(`text-${theme.accent}`)}>
-                    ฿{getTotalPrice()}
+                    {getTotalPrice()}
                   </span>
                 </div>
 
