@@ -81,7 +81,7 @@ const MenuDisplay = ({
 
         {/* Sticky Category Menu Under Restaurant Selector */}
         <div
-          className="sticky top-[88px] z-40 bg-white/90 backdrop-blur-md border-b border-gray-200"
+          className="sticky top-[72px] z-40 bg-white/95 backdrop-blur border-b border-gray-200"
           style={{ marginBottom: '1.5rem' }}
         >
           <div className="flex gap-6 overflow-x-auto px-4 py-3">
