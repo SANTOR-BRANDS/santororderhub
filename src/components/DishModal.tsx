@@ -33,6 +33,13 @@ const DishModal = ({
   const [needsCutlery, setNeedsCutlery] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
+  // Combo state for dish 2
+  const [selectedVariant2, setSelectedVariant2] = useState<DishVariant | null>(null);
+  const [selectedExtraPls2, setSelectedExtraPls2] = useState<AddOn[]>([]);
+  const [selectedAddOns2, setSelectedAddOns2] = useState<AddOn[]>([]);
+  const [spicyLevel2, setSpicyLevel2] = useState<number | undefined>(undefined);
+  const [selectedSauces2, setSelectedSauces2] = useState<string[]>([]);
+
   useEffect(() => {
     if (dish && isOpen) {
       // Set default variant
@@ -45,10 +52,21 @@ const DishModal = ({
       setSelectedSauces([]);
       setNeedsCutlery(false);
       setQuantity(1);
+
+      // Reset combo state for dish 2
+      if (isCombo) {
+        setSelectedVariant2(defaultVariant);
+        setSelectedExtraPls2([]);
+        setSelectedAddOns2([]);
+        setSpicyLevel2(dish.spicyRequired ? 2 : undefined);
+        setSelectedSauces2([]);
+      }
     }
   }, [dish, isOpen]);
 
   if (!dish) return null;
+
+  const isCombo = dish.name.includes('2x Pad Krapao');
 
   const getThemeStyles = () => {
     return dish.restaurant === 'restory' ? {
@@ -74,6 +92,18 @@ const DishModal = ({
       const sauce = SAUCES.find(s => s.id === sauceId);
       return sum + (sauce?.price || 0);
     }, 0);
+
+    if (isCombo) {
+      // For combo, add the second dish's extras
+      const extraPlsTotal2 = selectedExtraPls2.reduce((sum, addon) => sum + addon.price, 0);
+      const addOnsTotal2 = selectedAddOns2.reduce((sum, addon) => sum + addon.price, 0);
+      const saucesTotal2 = selectedSauces2.reduce((sum, sauceId) => {
+        const sauce = SAUCES.find(s => s.id === sauceId);
+        return sum + (sauce?.price || 0);
+      }, 0);
+      return basePrice + extraPlsTotal + addOnsTotal + saucesTotal + extraPlsTotal2 + addOnsTotal2 + saucesTotal2;
+    }
+
     return basePrice + extraPlsTotal + addOnsTotal + saucesTotal;
   };
 
@@ -93,20 +123,36 @@ const DishModal = ({
     });
   };
 
-  const toggleExtraPls = (addon: AddOn) => {
-    setSelectedExtraPls(prev => 
-      prev.find(a => a.id === addon.id) 
-        ? prev.filter(a => a.id !== addon.id) 
-        : [...prev, addon]
-    );
+  const toggleExtraPls = (addon: AddOn, dishNumber = 1) => {
+    if (dishNumber === 1) {
+      setSelectedExtraPls(prev => 
+        prev.find(a => a.id === addon.id) 
+          ? prev.filter(a => a.id !== addon.id) 
+          : [...prev, addon]
+      );
+    } else {
+      setSelectedExtraPls2(prev => 
+        prev.find(a => a.id === addon.id) 
+          ? prev.filter(a => a.id !== addon.id) 
+          : [...prev, addon]
+      );
+    }
   };
 
-  const toggleAddOn = (addon: AddOn) => {
-    setSelectedAddOns(prev => 
-      prev.find(a => a.id === addon.id) 
-        ? prev.filter(a => a.id !== addon.id) 
-        : [...prev, addon]
-    );
+  const toggleAddOn = (addon: AddOn, dishNumber = 1) => {
+    if (dishNumber === 1) {
+      setSelectedAddOns(prev => 
+        prev.find(a => a.id === addon.id) 
+          ? prev.filter(a => a.id !== addon.id) 
+          : [...prev, addon]
+      );
+    } else {
+      setSelectedAddOns2(prev => 
+        prev.find(a => a.id === addon.id) 
+          ? prev.filter(a => a.id !== addon.id) 
+          : [...prev, addon]
+      );
+    }
   };
 
   const getTotalPrice = () => {
@@ -123,26 +169,66 @@ const DishModal = ({
   const canAddToBasket = () => {
     const hasSauce = selectedSauces.length > 0;
     const hasSpicyLevel = !dish.spicyRequired || spicyLevel !== undefined;
+    
+    if (isCombo) {
+      const hasSauce2 = selectedSauces2.length > 0;
+      const hasSpicyLevel2 = !dish.spicyRequired || spicyLevel2 !== undefined;
+      return hasSauce && hasSpicyLevel && hasSauce2 && hasSpicyLevel2;
+    }
+    
     return hasSauce && hasSpicyLevel;
   };
 
   const handleAddToBasket = () => {
     if (!canAddToBasket()) return;
     
-    const basketItem: BasketItem = {
-      id: `${dish.id}-${Date.now()}`,
-      dish,
-      selectedVariant,
-      addOns: selectedAddOns,
-      extraPls: selectedExtraPls,
-      spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
-      sauce: selectedSauces.join(', '),
-      needsCutlery,
-      quantity,
-      isPremiumBeef
-    };
+    if (isCombo) {
+      // Add two separate basket items for combo
+      const basketItem1: BasketItem = {
+        id: `${dish.id}-1-${Date.now()}`,
+        dish: { ...dish, name: 'Pad Krapao Minced Pork (Combo 1/2)' },
+        selectedVariant,
+        addOns: selectedAddOns,
+        extraPls: selectedExtraPls,
+        spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
+        sauce: selectedSauces.join(', '),
+        needsCutlery,
+        quantity,
+        isPremiumBeef
+      };
+
+      const basketItem2: BasketItem = {
+        id: `${dish.id}-2-${Date.now()}`,
+        dish: { ...dish, name: 'Pad Krapao Minced Pork (Combo 2/2)' },
+        selectedVariant: selectedVariant2,
+        addOns: selectedAddOns2,
+        extraPls: selectedExtraPls2,
+        spicyLevel: dish.spicyRequired ? spicyLevel2 : undefined,
+        sauce: selectedSauces2.join(', '),
+        needsCutlery: false, // Only need cutlery once
+        quantity,
+        isPremiumBeef
+      };
+      
+      onAddToBasket(basketItem1);
+      onAddToBasket(basketItem2);
+    } else {
+      const basketItem: BasketItem = {
+        id: `${dish.id}-${Date.now()}`,
+        dish,
+        selectedVariant,
+        addOns: selectedAddOns,
+        extraPls: selectedExtraPls,
+        spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
+        sauce: selectedSauces.join(', '),
+        needsCutlery,
+        quantity,
+        isPremiumBeef
+      };
+      
+      onAddToBasket(basketItem);
+    }
     
-    onAddToBasket(basketItem);
     onClose();
   };
 
@@ -151,6 +237,187 @@ const DishModal = ({
     acc[addon.category].push(addon);
     return acc;
   }, {} as Record<string, AddOn[]>);
+
+  // Component for rendering customization options
+  const renderCustomizationOptions = (dishNumber = 1) => {
+    const currentSelectedVariant = dishNumber === 1 ? selectedVariant : selectedVariant2;
+    const currentSelectedExtraPls = dishNumber === 1 ? selectedExtraPls : selectedExtraPls2;
+    const currentSelectedAddOns = dishNumber === 1 ? selectedAddOns : selectedAddOns2;
+    const currentSpicyLevel = dishNumber === 1 ? spicyLevel : spicyLevel2;
+    const currentSelectedSauces = dishNumber === 1 ? selectedSauces : selectedSauces2;
+    
+    const setCurrentSelectedVariant = dishNumber === 1 ? setSelectedVariant : setSelectedVariant2;
+    const setCurrentSpicyLevel = dishNumber === 1 ? setSpicyLevel : setSpicyLevel2;
+    const setCurrentSelectedSauces = dishNumber === 1 ? setSelectedSauces : setSelectedSauces2;
+
+    return (
+      <>
+        {/* Main Dish Variation - Required */}
+        {dish.variants && dish.variants.length > 0 && (
+          <div className="mb-6">
+            <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+              CHOOSE OPTION <span className="text-red-500">*</span>
+              <span className="text-xs text-muted-foreground">(Required)</span>
+            </Label>
+            <RadioGroup 
+              value={currentSelectedVariant?.id || ''} 
+              onValueChange={(value) => {
+                const variant = dish.variants?.find(v => v.id === value);
+                setCurrentSelectedVariant(variant || null);
+              }} 
+              className="gap-2"
+            >
+              {dish.variants.map(variant => (
+                <div key={variant.id} className="flex items-center space-x-2">
+                  <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
+                  <Label htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center gap-2">
+                    <span>{variant.name}</span>
+                    {variant.price !== dish.price && (
+                      <span className="text-sm text-muted-foreground">
+                        {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
+                      </span>
+                    )}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+        )}
+
+        {/* EXTRA Section */}
+        {getFilteredExtraOptions().length > 0 && (
+          <div className="mb-6">
+            <Label className="text-base font-semibold mb-3">
+              EXTRA
+            </Label>
+            <div className="space-y-2">
+              {getFilteredExtraOptions().map(addon => (
+                <div key={addon.id} className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id={`extra-${addon.id}-${dishNumber}`} 
+                      checked={currentSelectedExtraPls.some(a => a.id === addon.id)} 
+                      onCheckedChange={() => toggleExtraPls(addon, dishNumber)} 
+                    />
+                    <Label htmlFor={`extra-${addon.id}-${dishNumber}`} className="text-sm">
+                      {addon.name}
+                    </Label>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    +{addon.price}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Spicy Level - Required for Pad Krapao only */}
+        {dish.spicyRequired && (
+          <div className="mb-6">
+            <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+              SPICY LEVEL <span className="text-red-500">*</span>
+              <span className="text-xs text-muted-foreground">(Required)</span>
+            </Label>
+            <RadioGroup 
+              value={currentSpicyLevel?.toString()} 
+              onValueChange={(value) => setCurrentSpicyLevel(Number(value))} 
+              className="gap-2"
+            >
+              {SPICY_LEVELS.map(level => (
+                <div key={level.level} className="flex items-center space-x-2">
+                  <RadioGroupItem value={level.level.toString()} id={`spicy-${level.level}-${dishNumber}`} />
+                  <Label htmlFor={`spicy-${level.level}-${dishNumber}`} className="flex items-center gap-2">
+                    <span>({level.level})</span>
+                    <span>{level.emoji}</span>
+                    <span>{level.label}</span>
+                    {level.level === 2 && <Badge variant="outline" className="text-xs">✨</Badge>}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+        )}
+
+        {/* Add-ons */}
+        {Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
+          <div key={category} className="mb-6">
+            <Label className="text-base font-semibold mb-3">
+              {category === 'other' ? 'ADD-ONS' : 
+               category === 'thai-omelette' ? 'THAI STYLE OMELETTE 🍳' : 
+               category === 'creamy-omelette' ? 'CREAMY OMELETTE 🍳' : 
+               category === 'soft-omelette' ? 'SOFT OMELETTE 🍳' : 
+               category.toUpperCase()}
+            </Label>
+            <div className="space-y-2">
+              {categoryAddOns.map(addon => (
+                <div key={addon.id} className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id={`${addon.id}-${dishNumber}`} 
+                      checked={currentSelectedAddOns.some(a => a.id === addon.id)} 
+                      onCheckedChange={() => toggleAddOn(addon, dishNumber)} 
+                    />
+                    <Label htmlFor={`${addon.id}-${dishNumber}`} className="text-sm">
+                      {addon.name}
+                    </Label>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    +{addon.price}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* Sauce Selection - Required */}
+        <div className="mb-6">
+          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+            SELECT SAUCE <span className="text-red-500">*</span>
+            <span className="text-xs text-muted-foreground">(Required)</span>
+          </Label>
+          <div className="space-y-2">
+            {SAUCES.map(sauce => {
+              const isFreeSauce = sauce.price === 0;
+              return (
+                <div key={sauce.id} className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id={`${sauce.id}-${dishNumber}`} 
+                      checked={currentSelectedSauces.includes(sauce.id)} 
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          if (isFreeSauce) {
+                            // For free sauces, only allow one selection
+                            const otherFreeSauces = SAUCES.filter(s => s.price === 0 && s.id !== sauce.id).map(s => s.id);
+                            setCurrentSelectedSauces(prev => [...prev.filter(id => !otherFreeSauces.includes(id)), sauce.id]);
+                          } else {
+                            // For paid sauces, allow multiple
+                            setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
+                          }
+                        } else {
+                          setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                        }
+                      }}
+                    />
+                    <Label htmlFor={`${sauce.id}-${dishNumber}`}>
+                      {sauce.name}
+                    </Label>
+                  </div>
+                  {sauce.price > 0 && (
+                    <span className="text-sm text-muted-foreground">
+                      +{sauce.price}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </>
+    );
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -207,170 +474,27 @@ const DishModal = ({
                 </div>
               </DialogHeader>
 
-              {/* Main Dish Variation - Required */}
-              {dish.variants && dish.variants.length > 0 && (
-                <div className="mb-6">
-                  <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                    CHOOSE OPTION <span className="text-red-500">*</span>
-                    <span className="text-xs text-muted-foreground">(Required)</span>
-                  </Label>
-                  <RadioGroup 
-                    value={selectedVariant?.id || ''} 
-                    onValueChange={(value) => {
-                      const variant = dish.variants?.find(v => v.id === value);
-                      setSelectedVariant(variant || null);
-                    }} 
-                    className="gap-2"
-                  >
-                    {dish.variants.map(variant => (
-                      <div key={variant.id} className="flex items-center space-x-2">
-                        <RadioGroupItem value={variant.id} id={`variant-${variant.id}`} />
-                        <Label htmlFor={`variant-${variant.id}`} className="flex items-center gap-2">
-                          <span>{variant.name}</span>
-                          {variant.price !== dish.price && (
-                            <span className="text-sm text-muted-foreground">
-                              {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
-                            </span>
-                          )}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </div>
-              )}
-
-              {/* EXTRA PLS Section */}
-              {getFilteredExtraOptions().length > 0 && (
-                <div className="mb-6">
-                  <Label className="text-base font-semibold mb-3">
-                    EXTRA
-                  </Label>
-                  <div className="space-y-2">
-                    {getFilteredExtraOptions().map(addon => (
-                      <div key={addon.id} className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox 
-                            id={`extra-${addon.id}`} 
-                            checked={selectedExtraPls.some(a => a.id === addon.id)} 
-                            onCheckedChange={() => toggleExtraPls(addon)} 
-                          />
-                          <Label htmlFor={`extra-${addon.id}`} className="text-sm">
-                            {addon.name}
-                          </Label>
-                        </div>
-                        <span className="text-sm text-muted-foreground">
-                          +{addon.price}
-                        </span>
-                      </div>
-                    ))}
+              {isCombo ? (
+                <>
+                  <div className="mb-8">
+                    <h3 className="text-lg font-bold mb-4 text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                      🍽️ DISH 1 CUSTOMIZATION
+                    </h3>
+                    {renderCustomizationOptions(1)}
                   </div>
-                </div>
-              )}
-
-              {/* Spicy Level - Required for Pad Krapao only */}
-              {dish.spicyRequired && (
-                <div className="mb-6">
-                  <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                    SPICY LEVEL <span className="text-red-500">*</span>
-                    <span className="text-xs text-muted-foreground">(Required)</span>
-                  </Label>
-                  <RadioGroup 
-                    value={spicyLevel?.toString()} 
-                    onValueChange={(value) => setSpicyLevel(Number(value))} 
-                    className="gap-2"
-                  >
-                    {SPICY_LEVELS.map(level => (
-                      <div key={level.level} className="flex items-center space-x-2">
-                        <RadioGroupItem value={level.level.toString()} id={`spicy-${level.level}`} />
-                        <Label htmlFor={`spicy-${level.level}`} className="flex items-center gap-2">
-                          <span>({level.level})</span>
-                          <span>{level.emoji}</span>
-                          <span>{level.label}</span>
-                          {level.level === 2 && <Badge variant="outline" className="text-xs">✨</Badge>}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </div>
-              )}
-
-              {/* Add-ons */}
-              {Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
-                <div key={category} className="mb-6">
-                  <Label className="text-base font-semibold mb-3">
-                    {category === 'other' ? 'ADD-ONS' : 
-                     category === 'thai-omelette' ? 'THAI STYLE OMELETTE 🍳' : 
-                     category === 'creamy-omelette' ? 'CREAMY OMELETTE 🍳' : 
-                     category === 'soft-omelette' ? 'SOFT OMELETTE 🍳' : 
-                     category.toUpperCase()}
-                  </Label>
-                  <div className="space-y-2">
-                    {categoryAddOns.map(addon => (
-                      <div key={addon.id} className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox 
-                            id={addon.id} 
-                            checked={selectedAddOns.some(a => a.id === addon.id)} 
-                            onCheckedChange={() => toggleAddOn(addon)} 
-                          />
-                          <Label htmlFor={addon.id} className="text-sm">
-                            {addon.name}
-                          </Label>
-                        </div>
-                        <span className="text-sm text-muted-foreground">
-                          +{addon.price}
-                        </span>
-                      </div>
-                    ))}
+                  
+                  <Separator className="my-6" />
+                  
+                  <div className="mb-8">
+                    <h3 className="text-lg font-bold mb-4 text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                      🍽️ DISH 2 CUSTOMIZATION
+                    </h3>
+                    {renderCustomizationOptions(2)}
                   </div>
-                </div>
-              ))}
-
-              {/* Sauce Selection - Required */}
-              <div className="mb-6">
-                <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                  SELECT SAUCE <span className="text-red-500">*</span>
-                  <span className="text-xs text-muted-foreground">(Required)</span>
-                </Label>
-                <div className="space-y-2">
-                  {SAUCES.map(sauce => {
-                    const isFreeSauce = sauce.price === 0;
-                    const isNoSauce = sauce.id === 'no-sauce';
-                    return (
-                      <div key={sauce.id} className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox 
-                            id={sauce.id} 
-                            checked={selectedSauces.includes(sauce.id)} 
-                            onCheckedChange={(checked) => {
-                              if (checked) {
-                                if (isFreeSauce) {
-                                  // For free sauces, only allow one selection
-                                  const otherFreeSauces = SAUCES.filter(s => s.price === 0 && s.id !== sauce.id).map(s => s.id);
-                                  setSelectedSauces(prev => [...prev.filter(id => !otherFreeSauces.includes(id)), sauce.id]);
-                                } else {
-                                  // For paid sauces, allow multiple
-                                  setSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
-                                }
-                              } else {
-                                setSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-                              }
-                            }}
-                          />
-                          <Label htmlFor={sauce.id}>
-                            {sauce.name}
-                          </Label>
-                        </div>
-                        {sauce.price > 0 && (
-                          <span className="text-sm text-muted-foreground">
-                            +{sauce.price}
-                          </span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+                </>
+              ) : (
+                renderCustomizationOptions(1)
+              )}
 
               {/* Cutlery - Required */}
               <div className="mb-6">
