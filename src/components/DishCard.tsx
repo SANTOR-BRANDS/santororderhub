@@ -20,8 +20,8 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
       onClick={() => onClick(dish)}
     >
       <CardContent className="p-0">
-        {/* Dish Image */}
-        <div className="w-full h-48 rounded-t-lg overflow-hidden">
+        {/* Dish Image: Reduced height on mobile to save vertical space */}
+        <div className="w-full h-32 md:h-48 rounded-t-lg overflow-hidden">
           {dish.image ? (
             <img 
               src={dish.image} 
@@ -41,7 +41,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
             dish.image ? 'hidden' : ''
           )}>
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
+              <div className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-1 md:mb-2 rounded-full bg-current/10 flex items-center justify-center text-xl md:text-2xl">
                 🍽️
               </div>
               <span className="text-xs">No Image</span>
@@ -50,16 +50,18 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
         </div>
 
         {/* Content */}
-        <div className="p-4">
-          <div className="flex justify-between items-start gap-2 mb-2">
+        <div className="p-2 md:p-4"> {/* Reduced padding on mobile */}
+          <div className="flex justify-between items-start gap-1 md:gap-2 mb-1 md:mb-2"> {/* Reduced gap and margin on mobile */}
             <h3 className={cn(
-              'font-semibold text-sm leading-tight',
+              // CHANGE: Shrink dish name text from text-sm to text-xs on mobile
+              'font-semibold text-xs md:text-sm leading-tight', 
               dish.isSpecial && 'text-amber-600 font-bold'
             )}>
               {dish.name}
             </h3>
             <span className={cn(
-              'font-bold text-lg whitespace-nowrap',
+              // CHANGE: Shrink price text from text-lg to text-sm on mobile
+              'font-bold text-sm md:text-lg whitespace-nowrap', 
               dish.restaurant === 'restory' ? 'text-restory' : 'text-nirvana-accent'
             )}>
               ฿{dish.price}
@@ -67,14 +69,14 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
           </div>
           
           {dish.description && (
-            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+            <p className="text-xs text-muted-foreground mb-1 line-clamp-2"> {/* Reduced margin on mobile */}
               {dish.description}
             </p>
           )}
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mt-1"> {/* Added top margin for spacing */}
             <span className={cn(
-              'text-xs px-2 py-1 rounded-full',
+              'text-xs px-2 py-0.5 rounded-full', // Slightly reduced vertical padding on tag
               dish.restaurant === 'restory' 
                 ? 'bg-restory/10 text-restory-secondary' 
                 : 'bg-nirvana-accent/10 text-nirvana-accent'
