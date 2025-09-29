@@ -858,6 +858,10 @@ export const addOns: AddOn[] = [
   { id: 'cheese-sausage', name: 'Cheese Sausage', price: 25, category: 'other' },
   { id: 'bamboo-shoots', name: 'Bamboo Shoots', price: 20, category: 'other' },
   { id: 'dashi-soup', name: 'Dashi Soup ✨', price: 15, category: 'other' },
+  
+// Fried Egg 🍳
+  { id: 'fried-egg', name: 'Fried Egg', price: 20, category: 'fried-egg' },
+  { id: 'fried-duck-egg', name: 'Fried Duck Egg', price: 30, category: 'fried-egg' },
 
   // Thai Style Omelette 🍳
   { id: 'thai-omelette-1', name: 'Thai Style Omelette (1 Egg)', price: 20, category: 'thai-omelette' },
