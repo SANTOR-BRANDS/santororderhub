@@ -11,7 +11,7 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
     { id: 'restory' as Restaurant, name: 'Restory', available: true },
     { id: 'nirvana' as Restaurant, name: 'Nirvana', available: true },
     { id: 'mejai hai yum' as Restaurant, name: 'Mejai Hai Yum (soon)', available: false },
-    { id: 'chan wan' as Restaurant, name: 'Chan Wan (soon)', available: false },
+    { id: 'chan wan' as Restaurant, name: 'Chan Wan (soon)', available: 'false' },
   ];
 
   const getHeaderStyle = () => {
@@ -22,7 +22,8 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
   };
 
   return (
-    <header className={cn('fixed top-0 w-full z-50 transition-smooth', getHeaderStyle())}>{/* ... rest of the header content ... */}</header>
+    // START TAG: Now correct with fixed, w-full, and z-50 for fixed position
+    <header className={cn('fixed top-0 w-full z-50 transition-smooth', getHeaderStyle())}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col gap-4">
           {/* SANTOR Brand */}
@@ -56,7 +57,7 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
           </div>
         </div>
       </div>
-    </header>
+    </header> 
   );
 };
 
