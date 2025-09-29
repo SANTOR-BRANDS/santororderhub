@@ -783,10 +783,10 @@ export const restoryMenu: Dish[] = [
 
 export const nirvanaMenu: Dish[] = [
   // PAD KRAPAO
-  { id: 'n1', name: 'Pad Krapao Minced Beef', price: 99, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'n2', name: 'Pad Krapao Minced Pork', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'n3', name: 'Pad Krapao Minced Chicken', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'n4', name: 'Pad Krapao Diced Chicken', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
+  { id: 'n1', name: 'Pad Krapao Minced Beef', price: 99, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true, ExtraOptions: [{id: 'extra-beef', name: '🐮 Extra Beef (100g)', price: 60, category: 'extra-pls' },{ id: 'extra-rice', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls']},
+  { id: 'n2', name: 'Pad Krapao Minced Pork', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true, ExtraOptions: [{id: 'extra-pork', name: '🐷 Extra Pork (100g)', price: 50, category: 'extra-pls' },{ id: 'extra-rice', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls']},
+  { id: 'n3', name: 'Pad Krapao Minced Chicken', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true, ExtraOptions: [{ id: 'extra-chicken', name: '🐔 Extra Chicken (150g)', price: 50, category: 'extra-pls' },{ id: 'extra-rice', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls']},
+  { id: 'n4', name: 'Pad Krapao Diced Chicken', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true, ExtraOptions: [{ id: 'extra-chicken', name: '🐔 Extra Chicken (150g)', price: 50, category: 'extra-pls' },{ id: 'extra-rice', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls']},
 
   // GRILLED MEAT + RICE
   { id: 'n5', name: '⭐ Grilled Beef on Rice ⭐', price: 119, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana', isSpecial: true },
@@ -858,7 +858,11 @@ export const addOns: AddOn[] = [
   { id: 'cheese-sausage', name: 'Cheese Sausage', price: 25, category: 'other' },
   { id: 'bamboo-shoots', name: 'Bamboo Shoots', price: 20, category: 'other' },
   { id: 'dashi-soup', name: 'Dashi Soup ✨', price: 15, category: 'other' },
-
+  
+  // Fried Egg 🍳
+  { id: 'fried-egg', name: 'Fried Egg' , price: 20, category: 'fried-egg' },
+  { id: 'fried-duck-egg', name: 'Fried Duck Egg' , price: 25, category: 'fried-egg' },
+  
   // Thai Style Omelette 🍳
   { id: 'thai-omelette-1', name: 'Thai Style Omelette (1 Egg)', price: 20, category: 'thai-omelette' },
   { id: 'thai-omelette-2', name: 'Thai Style Omelettes (2 Eggs)', price: 35, category: 'thai-omelette' },
