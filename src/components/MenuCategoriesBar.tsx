@@ -11,12 +11,12 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
   setSelectedCategory,
   themeColor,
 }) => (
-  <div className="sticky top-[82px] z-40 bg-white/98 backdrop-blur border-b border-gray-200">
-    <div className="flex gap-3 overflow-x-auto px-2 py-2 whitespace-nowrap">
+  <div className="sticky top-[120px] z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 mb-6">
+    <div className="flex gap-4 overflow-x-auto px-4 py-3 scrollbar-hide">
       {categories.map((category) => (
         <button
           key={category}
-          className={`text-sm font-semibold transition-all cursor-pointer border-b-2 px-2 py-1 ${
+          className={`text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap ${
             selectedCategory === category ? "active-category" : ""
           }`}
           style={{
@@ -25,9 +25,7 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
             opacity: selectedCategory === category ? 1 : 0.8,
             background: "none",
             outline: "none",
-            maxWidth: "120px",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
+            paddingBottom: "8px",
           }}
           onClick={() => setSelectedCategory(category)}
           aria-current={selectedCategory === category ? "true" : undefined}

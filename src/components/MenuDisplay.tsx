@@ -3,6 +3,7 @@ import { Restaurant, Dish } from '@/types/menu';
 import { getMenuByRestaurant, getCategoriesByRestaurant } from '@/data/menuData';
 import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
+import MenuCategoriesBar from './MenuCategoriesBar';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -80,41 +81,12 @@ const MenuDisplay = ({
         </div>
 
         {/* Sticky Category Menu Under Restaurant Selector */}
-        <div
-          className="sticky top-[88px] z-40 bg-white/90 backdrop-blur-md border-b border-gray-200"
-          style={{ marginBottom: '1.5rem' }}
-        >
-          <div className="flex gap-6 overflow-x-auto px-4 py-3">
-            {categories.map((category, idx) => (
-              <button
-                key={category}
-                className={`text-base font-semibold transition-all cursor-pointer border-b-2 ${
-                  selectedCategory === category
-                    ? 'active-category'
-                    : ''
-                }`}
-                style={{
-                  borderColor:
-                    selectedCategory === category
-                      ? theme.color
-                      : 'transparent',
-                  color:
-                    selectedCategory === category
-                      ? theme.color
-                      : '#555',
-                  opacity: selectedCategory === category ? 1 : 0.8,
-                  paddingBottom: '4px',
-                  background: 'none',
-                  outline: 'none',
-                }}
-                onClick={() => setSelectedCategory(category)}
-                aria-current={selectedCategory === category ? 'true' : undefined}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
+        <MenuCategoriesBar 
+          categories={categories}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          themeColor={theme.color}
+        />
 
         {/* Dishes Grid */}
         {filteredDishes.length > 0 ? (
@@ -137,12 +109,6 @@ const MenuDisplay = ({
           </div>
         )}
       </div>
-      {/* Add to your CSS file for smooth underline: */}
-      <style>{`
-        .active-category {
-          transition: border-color 0.3s, color 0.3s;
-        }
-      `}</style>
     </div>
   );
 };
