@@ -11,7 +11,9 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
   setSelectedCategory,
   themeColor,
 }) => (
-  <div className="sticky top-[190px] z-40 bg-white border-b border-gray-200 mb-6">
+  // FINAL CHANGE: Changed sticky offset from 190px to 120px to correctly position the
+  // category bar immediately below the fixed 120px header.
+  <div className="sticky top-[120px] z-40 bg-white border-b border-gray-200 mb-6">
     <div className="flex gap-4 overflow-x-auto px-4 py-3 scrollbar-hide">
       {categories.map((category) => (
         <button
