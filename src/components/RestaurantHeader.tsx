@@ -22,7 +22,7 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
   };
 
   return (
-    <header className={cn('sticky top-0 z-40 transition-smooth', getHeaderStyle())}>
+    <header className={cn('sticky top-0 z-10 transition-smooth', getHeaderStyle())}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col gap-4">
           {/* SANTOR Brand */}
