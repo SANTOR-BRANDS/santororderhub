@@ -22,29 +22,26 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
   };
 
   return (
-    // IMPORTANT: Changed 'sticky' back to 'fixed top-0 w-full' for a proper full-screen persistent header.
-    <header className={cn('fixed top-0 w-full z-50 transition-smooth', getHeaderStyle())}>
-      {/* Reduced py-4 to py-2 on mobile, keeping py-4 for md screens and above */}
-      <div className="container mx-auto px-4 py-2 md:py-4">
-        <div className="flex flex-col gap-3 md:gap-4"> {/* Reduced vertical gap */}
-          {/* SANTOR Brand - Reduced font size on mobile */}
+    <header className={cn('sticky top-0 z-40 transition-smooth', getHeaderStyle())}>
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex flex-col gap-4">
+          {/* SANTOR Brand */}
           <div className="text-center">
-            <h1 className="text-2xl md:text-4xl font-bold tracking-wider">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-wider">
               SANTOR
             </h1>
-            <p className="text-xs md:text-sm opacity-90 mt-1">Restaurant Holdings</p>
+            <p className="text-sm opacity-90 mt-1">Restaurant Holdings</p>
           </div>
 
-          {/* Restaurant Selection - Reduced gap and padding on buttons for mobile */}
-          <div className="flex flex-wrap justify-center gap-1 md:gap-2">
+          {/* Restaurant Selection */}
+          <div className="flex flex-wrap justify-center gap-2">
             {restaurants.map((restaurant) => (
               <button
                 key={restaurant.id}
                 onClick={() => restaurant.available && onRestaurantChange(restaurant.id)}
                 disabled={!restaurant.available}
                 className={cn(
-                  // Smaller padding (px-3 py-1) on mobile, original padding (md:px-4 md:py-2) on desktop
-                  'px-3 py-1 md:px-4 md:py-2 rounded-lg font-medium transition-smooth text-sm',
+                  'px-4 py-2 rounded-lg font-medium transition-smooth',
                   'border border-white/20 backdrop-blur-sm',
                   restaurant.available 
                     ? selectedRestaurant === restaurant.id

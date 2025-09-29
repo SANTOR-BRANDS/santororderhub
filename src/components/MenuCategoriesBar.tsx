@@ -11,10 +11,7 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
   setSelectedCategory,
   themeColor,
 }) => (
-  // CHANGES: 
-  // 1. Z-index increased to z-60 to ensure it is always above the fixed header (z-50).
-  // 2. Responsive top value: top-[80px] for mobile, md:top-[155px] for desktop.
-  <div className="sticky top-[80px] md:top-[155px] z-60 bg-white/95 backdrop-blur-sm border-b border-gray-200 mb-6">
+  <div className="sticky top-[155px] z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 mb-6">
     <div className="flex gap-4 overflow-x-auto px-4 py-3 scrollbar-hide">
       {categories.map((category) => (
         <button
