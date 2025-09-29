@@ -11,7 +11,7 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
   setSelectedCategory,
   themeColor,
 }) => (
-  <div className="sticky top-[154px] z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 mb-6">
+  <div className="sticky top-[120px] z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 mb-6">
     <div className="flex gap-4 overflow-x-auto px-4 py-3 scrollbar-hide">
       {categories.map((category) => (
         <button

@@ -1,18 +1,8 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  /* FIX: Increased base padding-top from 4rem to 6rem (96px) to ensure content clears 
-     the fixed header on mobile screens. */
-  padding: 6rem 2rem 2rem 2rem; 
+  padding: 2rem;
   text-align: center;
-}
-
-/* Add a responsive override for screens larger than md (768px) */
-@media (min-width: 768px) {
-  #root {
-    /* Desktop padding-top (approx 155px or 9.6875rem) remains for the larger header */
-    padding-top: 9.6875rem; 
-  }
 }
 
 .logo {
