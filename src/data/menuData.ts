@@ -967,43 +967,43 @@ export const nirvanaMenu: Dish[] = [
 
 export const addOns: AddOn[] = [
   // Add-ons
-  { id: 'SAN-ADD-001', name: 'Pickled Egg Yolk ⭐️', price: 20, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-002', name: 'Salted Duck Egg', price: 30, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-003', name: 'Century Egg', price: 30, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-004', name: 'Fish Roe', price: 45, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-005', name: 'Fried Chicken Thighs + Sweet Chilli Fish Sauce', price: 55, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-006', name: 'Fried Chicken Thighs', price: 50, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-007', name: 'Crunchy Fried Chicken + Katsu Sauce 🔥', price: 60, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-008', name: 'Crunchy Fried Chicken', price: 50, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-009', name: 'Fried Chicken Karaage Balls 🔥', price: 50, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-010', name: 'Crispy Bacon', price: 30, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-011', name: 'Chinese Sausage', price: 25, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-012', name: 'Smoked Sausage', price: 25, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-013', name: 'Cheese Sausage', price: 25, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-014', name: 'Bamboo Shoots 🍀', price: 25, category: 'SAN-ADD' },
-  { id: 'SAN-ADD-015', name: 'Dashi Soup 🍀', price: 15, category: 'SAN-ADD' },
+  { id: 'SAN-ADD-001', name: 'Pickled Egg Yolk ⭐️', price: 20, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-002', name: 'Salted Duck Egg', price: 30, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-003', name: 'Century Egg', price: 30, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-004', name: 'Fish Roe', price: 45, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-005', name: 'Fried Chicken Thighs + Sweet Chilli Fish Sauce', price: 55, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-006', name: 'Fried Chicken Thighs', price: 50, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-007', name: 'Crunchy Fried Chicken + Katsu Sauce 🔥', price: 60, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-008', name: 'Crunchy Fried Chicken', price: 50, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-009', name: 'Fried Chicken Karaage Balls 🔥', price: 50, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-010', name: 'Crispy Bacon', price: 30, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-011', name: 'Chinese Sausage', price: 25, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-012', name: 'Smoked Sausage', price: 25, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-013', name: 'Cheese Sausage', price: 25, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-014', name: 'Bamboo Shoots 🍀', price: 25, category: 'ADD-ONS' },
+  { id: 'SAN-ADD-015', name: 'Dashi Soup 🍀', price: 15, category: 'ADD-ONS' },
 
   // Fried Egg 🍳
-  { id: 'SAN-FEG-001', name: 'Fried Egg', price: 20, category: 'SAN-FEG' },
-  { id: 'SAN-FEG-002', name: 'Fried Duck Egg', price: 25, category: 'SAN-FEG' },
+  { id: 'SAN-FEG-001', name: 'Fried Egg', price: 20, category: 'FRIED-EGG' },
+  { id: 'SAN-FEG-002', name: 'Fried Duck Egg', price: 25, category: 'FRIED-EGG' },
   
   // Thai Style Omelette 🍳
-  { id: 'SAN-THO-001', name: 'Thai Style Omelette (1 Egg)', price: 20, category: 'SAN-THO' },
-  { id: 'SAN-THO-002', name: 'Thai Style Omelettes (2 Eggs)', price: 35, category: 'SAN-THO' },
-  { id: 'SAN-THO-003', name: 'Thai Style Omelette with Chilli', price: 30, category: 'SAN-THO' },
-  { id: 'SAN-THO-004', name: 'Thai Style Omelette with Minced Pork', price: 45, category: 'SAN-THO' },
+  { id: 'SAN-THO-001', name: 'Thai Style Omelette (1 Egg)', price: 20, category: 'THAI-STYLE-OMELETTE' },
+  { id: 'SAN-THO-002', name: 'Thai Style Omelettes (2 Eggs)', price: 35, category: 'THAI-STYLE-OMELETTE' },
+  { id: 'SAN-THO-003', name: 'Thai Style Omelette with Chilli', price: 30, category: 'THAI-STYLE-OMELETTE' },
+  { id: 'SAN-THO-004', name: 'Thai Style Omelette with Minced Pork', price: 45, category: 'THAI-STYLE-OMELETTE' },
 
   // Creamy Omelette 🍳
-  { id: 'SAN-CRO-001', name: 'Creamy Omelette (1 Egg)', price: 20, category: 'SAN-CRO' },
-  { id: 'SAN-CRO-002', name: 'Creamy Omelettes (2 Eggs)', price: 30, category: 'SAN-CRO' },
-  { id: 'SAN-CRO-003', name: 'Creamy Omelette with Shrimp Fat', price: 30, category: 'SAN-CRO' },
-  { id: 'SAN-CRO-004', name: 'Creamy Omelette with Shrimp Fat + Fish Roe', price: 45, category: 'SAN-CRO' },
+  { id: 'SAN-CRO-001', name: 'Creamy Omelette (1 Egg)', price: 20, category: 'CREAMY-OMELETTE' },
+  { id: 'SAN-CRO-002', name: 'Creamy Omelettes (2 Eggs)', price: 30, category: 'CREAMY-OMELETTE' },
+  { id: 'SAN-CRO-003', name: 'Creamy Omelette with Shrimp Fat', price: 30, category: 'CREAMY-OMELETTE' },
+  { id: 'SAN-CRO-004', name: 'Creamy Omelette with Shrimp Fat + Fish Roe', price: 45, category: 'CREAMY-OMELETTE' },
   
   // Soft Omelette 🍳
-  { id: 'SAN-SOO-001', name: 'Soft Omelette (1 Egg)', price: 20, category: 'SAN-SOO' },
-  { id: 'SAN-SOO-002', name: 'Soft Omelette (2 Eggs)', price: 30, category: 'SAN-SOO' },
-  { id: 'SAN-SOO-003', name: 'Soft Omelette with Shrimp Fat', price: 30, category: 'SAN-SOO' },
-  { id: 'SAN-SOO-004', name: 'Soft Omelette with Shrimp Fat + Fish Roe', price: 45, category: 'SAN-SOO' },
+  { id: 'SAN-SOO-001', name: 'Soft Omelette (1 Egg)', price: 20, category: 'SOFT-OMELETTE' },
+  { id: 'SAN-SOO-002', name: 'Soft Omelette (2 Eggs)', price: 30, category: 'SOFT-OMELETTE' },
+  { id: 'SAN-SOO-003', name: 'Soft Omelette with Shrimp Fat', price: 30, category: 'SOFT-OMELETTE' },
+  { id: 'SAN-SOO-004', name: 'Soft Omelette with Shrimp Fat + Fish Roe', price: 45, category: 'SOFT-OMELETTE' },
 ];
 
 // Note: Sauce and Spice options are const with conditions
