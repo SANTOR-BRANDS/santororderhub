@@ -4,6 +4,8 @@
 
 **URL**: https://lovable.dev/projects/1e35ca5d-372a-441e-a019-2f323d5e78ff
 
+![Santor Order Hub Screenshot] (images/sceenshot.png)
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
