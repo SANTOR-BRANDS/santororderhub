@@ -25,7 +25,7 @@ export interface AddOn {
   id: string;
   name: string;
   price: number;
-  category: 'meat' | 'egg' | 'sauce' | 'other' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette' | 'extra-pls';
+  category: 'meat' | 'egg' | 'sauce' | 'other' | 'fried-egg' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette' | 'extra-pls';
 }
 
 export interface BasketItem {
@@ -56,12 +56,12 @@ export const SPICY_LEVELS: SpicyLevel[] = [
 ];
 
 export const SAUCES = [
-  { id: 'ketchup', name: 'Ketchup', price: 0 },
-  { id: 'chilli-fish', name: 'Chilli Fish Sauce', price: 0 },
-  { id: 'chilli', name: 'Chilli Sauce', price: 0 },
-  { id: 'maggie', name: 'Maggie Sauce', price: 0 },
-  { id: 'sweet-chilli', name: 'Sweet Chilli Fish Sauce', price: 10 },
-  { id: 'isaan', name: '🔴 Isaan Dipping Sauce', price: 15 },
-  { id: 'seafood', name: '🟢 Seafood Sauce', price: 20 },
-  { id: 'no-sauce', name: '🚫 NO SAUCE', price: 0 },
+  { id: 'SAN-SAU-001', name: 'Ketchup', price: 0 },
+  { id: 'SAN-SAU-002', name: 'Chilli Fish Sauce', price: 0 },
+  { id: 'SAN-SAU-003', name: 'Chilli Sauce', price: 0 },
+  { id: 'SAN-SAU-004', name: 'Maggie Sauce', price: 0 },
+  { id: 'SAN-SAU-005', name: 'Sweet Chilli Fish Sauce', price: 10 },
+  { id: 'SAN-SAU-006', name: '🔴 Isaan Dipping Sauce', price: 15 },
+  { id: 'SAN-SAU-007', name: '🟢 Seafood Sauce', price: 20 },
+  { id: 'SAN-SAU-008', name: '🚫 NO SAUCE', price: 0 },
 ];
