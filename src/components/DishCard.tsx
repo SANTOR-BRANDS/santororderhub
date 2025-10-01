@@ -21,7 +21,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
     >
       <CardContent className="p-0">
         {/* Dish Image */}
-        <div className="w-full h-48 rounded-t-lg overflow-hidden">
+        <div className="w-full aspect-square rounded-t-lg overflow-hidden">
           {dish.image ? (
             <img 
               src={dish.image} 
