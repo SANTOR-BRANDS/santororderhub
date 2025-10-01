@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BasketItem } from '@/types/menu';
+import { BasketItem, SAUCES } from '@/types/menu';
 import {
   Dialog,
   DialogContent,
@@ -56,10 +56,14 @@ const BasketModal = ({
           message += `  - Spicy Level: ${item.spicyLevel}\n`;
         }
         if (item.sauce) {
-          message += `  - Sauces: ${item.sauce}\n`;
+          const sauceName = SAUCES.find(s => s.id === item.sauce)?.name || item.sauce;
+          message += `  - Sauces: ${sauceName}\n`;
         }
         if (item.addOns.length > 0) {
           message += `  - Add-ons: ${item.addOns.map(addon => addon.name).join(', ')}\n`;
+        }
+        if (item.extraPls && item.extraPls.length > 0) {
+          message += `  - Extra: ${item.extraPls.map(extra => extra.name).join(', ')}\n`;
         }
         message += `  - Cutlery: ${item.needsCutlery ? 'Yes' : 'No'}\n`;
         message += `  - Quantity: ${item.quantity}\n\n`;
@@ -74,10 +78,14 @@ const BasketModal = ({
           message += `  - Spicy Level: ${item.spicyLevel}\n`;
         }
         if (item.sauce) {
-          message += `  - Sauces: ${item.sauce}\n`;
+          const sauceName = SAUCES.find(s => s.id === item.sauce)?.name || item.sauce;
+          message += `  - Sauces: ${sauceName}\n`;
         }
         if (item.addOns.length > 0) {
           message += `  - Add-ons: ${item.addOns.map(addon => addon.name).join(', ')}\n`;
+        }
+        if (item.extraPls && item.extraPls.length > 0) {
+          message += `  - Extra: ${item.extraPls.map(extra => extra.name).join(', ')}\n`;
         }
         message += `  - Cutlery: ${item.needsCutlery ? 'Yes' : 'No'}\n`;
         message += `  - Quantity: ${item.quantity}\n\n`;
@@ -183,9 +191,12 @@ const BasketModal = ({
                   {item.spicyLevel !== undefined && (
                     <div>Spicy Level: {item.spicyLevel}</div>
                   )}
-                  <div>Sauces: {item.sauce}</div>
+                  <div>Sauces: {SAUCES.find(s => s.id === item.sauce)?.name || item.sauce}</div>
                   {item.addOns.length > 0 && (
                     <div>Add-ons: {item.addOns.map(addon => addon.name).join(', ')}</div>
+                  )}
+                  {item.extraPls && item.extraPls.length > 0 && (
+                    <div>Extra: {item.extraPls.map(extra => extra.name).join(', ')}</div>
                   )}
                   <div>Cutlery: {item.needsCutlery ? 'Yes' : 'No'}</div>
                 </div>

@@ -67,7 +67,7 @@ const MenuDisplay = ({
         <MenuCategoriesBar categories={categories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} themeColor={theme.color} />
 
         {/* Dishes Grid */}
-        {filteredDishes.length > 0 ? <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+        {filteredDishes.length > 0 ? <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
             {filteredDishes.map(dish => <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />)}
           </div> : <div className="text-center py-12">
             <div className="text-6xl mb-4">🔍</div>
