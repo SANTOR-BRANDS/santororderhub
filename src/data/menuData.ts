@@ -1,4 +1,5 @@
 import { Dish, AddOn, Restaurant } from '@/types/menu';
+import { getDishImage } from '@/lib/dishImages';
 
 export const restoryMenu: Dish[] = [
   // COMBO DEALS
@@ -896,7 +897,13 @@ export const addOns: AddOn[] = [
 ];
 
 export const getMenuByRestaurant = (restaurant: Restaurant): Dish[] => {
-  return restaurant === 'restory' ? restoryMenu : nirvanaMenu;
+  const menu = restaurant === 'restory' ? restoryMenu : nirvanaMenu;
+  
+  // Apply images to dishes based on their ID
+  return menu.map(dish => ({
+    ...dish,
+    image: getDishImage(dish.id) || dish.image
+  }));
 };
 
 export const getCategoriesByRestaurant = (restaurant: Restaurant): string[] => {
