@@ -373,11 +373,11 @@ const DishModal = ({
           <div className="space-y-2">
             {SAUCES.map(sauce => {
               const isFreeSauce = sauce.price === 0;
-              const isNoSauce = sauce.id === 'no-sauce';
-              const noSauceSelected = currentSelectedSauces.includes('no-sauce');
+              const isNoSauce = sauce.id === 'SAN-SAU-008';
+              const noSauceSelected = currentSelectedSauces.includes('SAN-SAU-008');
               const selectedFreeSauce = currentSelectedSauces.find(id => {
                 const s = SAUCES.find(s => s.id === id);
-                return s && s.price === 0 && s.id !== 'no-sauce';
+                return s && s.price === 0 && s.id !== 'SAN-SAU-008';
               });
 
               let disabled = false;
@@ -390,7 +390,6 @@ const DishModal = ({
               } else {
                 disabled = false;
               }
-              if (!isFreeSauce && !isNoSauce && noSauceSelected) disabled = true;
 
               return (
                 <div
@@ -404,9 +403,12 @@ const DishModal = ({
                       checked={currentSelectedSauces.includes(sauce.id)}
                       disabled={disabled}
                       onCheckedChange={(checked) => {
+                        // Don't allow changes if disabled (no sauce is selected)
+                        if (disabled) return;
+                        
                         if (isNoSauce) {
                           if (checked) {
-                            setCurrentSelectedSauces(['no-sauce']);
+                            setCurrentSelectedSauces(['SAN-SAU-008']);
                           } else {
                             setCurrentSelectedSauces([]);
                           }
@@ -420,8 +422,11 @@ const DishModal = ({
                           }
                           return;
                         }
+                        // For paid sauces, don't allow selection if no sauce is selected
+                        if (noSauceSelected) return;
+                        
                         if (checked) {
-                          setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'no-sauce'), sauce.id]);
+                          setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'SAN-SAU-008'), sauce.id]);
                         } else {
                           setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
                         }

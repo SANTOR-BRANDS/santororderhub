@@ -430,7 +430,7 @@ export const restoryMenu: Dish[] = [
     restaurant: 'restory',
     extraOptions: [
       { id: 'SAN-EXT-003', name: '🐷 Extra Pork (100g)', price: 50, category: 'extra-pls' },
-      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, containerType: 'extra-pls' }
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
   },
   { 
