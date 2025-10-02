@@ -34,6 +34,7 @@ const BasketModal = ({
 
   const getTotalPrice = () => {
     return basketItems.reduce((total, item) => {
+      const basePrice = item.selectedVariant?.price || item.dish.price;
       const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
       const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
       const sauceIds = item.sauce.split(', ').filter(id => id);
@@ -41,7 +42,7 @@ const BasketModal = ({
         const sauce = SAUCES.find(s => s.id === sauceId);
         return sum + (sauce?.price || 0);
       }, 0);
-      const itemTotal = (item.dish.price + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
+      const itemTotal = (basePrice + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
       return total + itemTotal;
     }, 0);
   };
@@ -57,7 +58,11 @@ const BasketModal = ({
     if (restoryItems.length > 0) {
       message += '🧡 *RESTORY*\n';
       restoryItems.forEach(item => {
-        message += `• ${item.dish.name} (฿${item.dish.price})\n`;
+        const basePrice = item.selectedVariant?.price || item.dish.price;
+        message += `• ${item.dish.name} (฿${basePrice})\n`;
+        if (item.selectedVariant) {
+          message += `  - Variation: ${item.selectedVariant.name}\n`;
+        }
         if (item.spicyLevel !== undefined) {
           message += `  - Spicy Level: ${item.spicyLevel}\n`;
         }
@@ -80,7 +85,11 @@ const BasketModal = ({
     if (nirvanaItems.length > 0) {
       message += '⚫ *NIRVANA*\n';
       nirvanaItems.forEach(item => {
-        message += `• ${item.dish.name} (฿${item.dish.price})\n`;
+        const basePrice = item.selectedVariant?.price || item.dish.price;
+        message += `• ${item.dish.name} (฿${basePrice})\n`;
+        if (item.selectedVariant) {
+          message += `  - Variation: ${item.selectedVariant.name}\n`;
+        }
         if (item.spicyLevel !== undefined) {
           message += `  - Spicy Level: ${item.spicyLevel}\n`;
         }
@@ -196,6 +205,9 @@ const BasketModal = ({
 
                 {/* Item Details */}
                 <div className="text-xs text-muted-foreground space-y-1 mb-3">
+                  {item.selectedVariant && (
+                    <div>Variation: {item.selectedVariant.name}</div>
+                  )}
                   {item.spicyLevel !== undefined && (
                     <div>Spicy Level: {item.spicyLevel}</div>
                   )}
@@ -231,6 +243,7 @@ const BasketModal = ({
                   </div>
                   <span className="font-semibold">
                     ฿{(() => {
+                      const basePrice = item.selectedVariant?.price || item.dish.price;
                       const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
                       const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
                       const sauceIds = item.sauce.split(', ').filter(id => id);
@@ -238,7 +251,7 @@ const BasketModal = ({
                         const sauce = SAUCES.find(s => s.id === sauceId);
                         return sum + (sauce?.price || 0);
                       }, 0);
-                      return (item.dish.price + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
+                      return (basePrice + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
                     })()}
                   </span>
                 </div>
