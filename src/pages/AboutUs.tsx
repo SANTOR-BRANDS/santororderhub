@@ -33,27 +33,27 @@ const AboutUs = () => {
 
           {/* Story Section */}
           <div className="prose prose-lg max-w-none">
-            <p className="text-foreground leading-relaxed">
-              We're a team of five food addicts bound by one belief: good food is the foundations of happiness.
+            <p className="text-foreground leading-relaxed mb-6">
+              We're a team of food addicts bound by one belief: good food is the foundations of happiness.
             </p>
 
-            <p className="text-foreground leading-relaxed">
+            <p className="text-foreground leading-relaxed mb-6">
               Our story began as friends obsessed with the kind of dishes that make you pause mid-conversation, 
               look each other in the eye, and say, <em>"Wow… this is ****** good."</em>
             </p>
 
-            <p className="text-foreground leading-relaxed">
+            <p className="text-foreground leading-relaxed mb-6">
               We've travelled across continents, tasting thousands of dishes from different places — from the 
               local night markets to Michelin-starred kitchens. We weren't searching for fancy experiences but 
               for the kind of dishes that stop you from talking. Recipes that deserve to be shared.
             </p>
 
-            <p className="text-foreground leading-relaxed">
+            <p className="text-foreground leading-relaxed mb-6">
               Together, we bring these experiences to re-create classic dishes from around the world — with a refined touch. 
               Our goal isn't to reinvent what people already love, but to honor it, refine it, and make it more accessible.
             </p>
 
-            <p className="text-foreground leading-relaxed">
+            <p className="text-foreground leading-relaxed mb-6">
               We believe food has the power to bring people together, make memories, and create joy. That's what we 
               strive for every day — not because we think our food alone brings happiness, but because sharing a good 
               meal is often where happiness begins.
