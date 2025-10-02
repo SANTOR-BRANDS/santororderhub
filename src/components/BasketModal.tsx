@@ -166,15 +166,15 @@ const BasketModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0">
-        <DialogHeader className="p-6 pb-0">
+      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col">
+        <DialogHeader className="p-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center justify-between">
             <span>Your Basket ({basketItems.length})</span>
             <Badge variant="secondary">฿{getTotalPrice()}</Badge>
           </DialogTitle>
         </DialogHeader>
 
-        <ScrollArea className="flex-1 px-6">
+        <ScrollArea className="flex-1 px-6 overflow-auto">
           <div className="space-y-4 py-4">
             {basketItems.map((item) => (
               <div key={item.id} className="border rounded-lg p-4">
@@ -260,7 +260,7 @@ const BasketModal = ({
           </div>
         </ScrollArea>
 
-        <div className="p-6 pt-0">
+        <div className="p-6 pt-0 shrink-0">
           <Separator className="mb-4" />
           <div className="flex justify-between items-center mb-4">
             <span className="text-lg font-semibold">Total</span>
