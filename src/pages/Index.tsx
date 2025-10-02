@@ -98,7 +98,7 @@ const Index = () => {
 
       <FloatingBasket basketItems={basketItems} onOpenBasket={() => setIsBasketOpen(true)} />
       
-      <Footer />
+      <Footer selectedRestaurant={selectedRestaurant} />
     </div>;
 };
 export default Index;
