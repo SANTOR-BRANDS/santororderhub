@@ -409,9 +409,14 @@ const DishModal = ({
                         }
                         if (isFreeSauce) {
                           if (checked) {
-                            setCurrentSelectedSauces([sauce.id]);
+                            // Keep paid sauces, remove other free sauces, add this free sauce
+                            const paidSauces = currentSelectedSauces.filter(id => {
+                              const s = SAUCES.find(s => s.id === id);
+                              return s && s.price > 0;
+                            });
+                            setCurrentSelectedSauces([...paidSauces, sauce.id]);
                           } else {
-                            setCurrentSelectedSauces([]);
+                            setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
                           }
                           return;
                         }
