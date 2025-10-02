@@ -5,6 +5,7 @@ import MenuDisplay from '@/components/MenuDisplay';
 import DishModal from '@/components/DishModal';
 import BasketModal from '@/components/BasketModal';
 import FloatingBasket from '@/components/FloatingBasket';
+import Footer from '@/components/Footer';
 import { getCategoriesByRestaurant } from '@/data/menuData';
 
 const themeColors: Record<Restaurant, string> = {
@@ -84,6 +85,8 @@ const Index = () => {
       <BasketModal isOpen={isBasketOpen} onClose={() => setIsBasketOpen(false)} basketItems={basketItems} onUpdateQuantity={handleUpdateQuantity} onRemoveItem={handleRemoveItem} />
 
       <FloatingBasket basketItems={basketItems} onOpenBasket={() => setIsBasketOpen(true)} />
+      
+      <Footer />
     </div>;
 };
 export default Index;
