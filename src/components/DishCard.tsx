@@ -15,7 +15,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
         'border-border/50 backdrop-blur-sm',
         dish.restaurant === 'restory' 
           ? 'hover:border-restory/30' 
-          : 'hover:border-nirvana-accent/30'
+          : 'bg-nirvana-primary hover:border-nirvana-accent/30'
       )}
       onClick={() => onClick(dish)}
     >
@@ -54,6 +54,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
           <div className="flex justify-between items-start gap-2 mb-2">
             <h3 className={cn(
               'font-semibold text-sm leading-tight',
+              dish.restaurant === 'nirvana' ? 'text-white' : '',
               dish.isSpecial && 'text-amber-600 font-bold'
             )}>
               {dish.name}

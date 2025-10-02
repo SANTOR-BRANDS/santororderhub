@@ -22,7 +22,7 @@ const themeColors: Record<Restaurant, {
   },
   nirvana: {
     accent: 'nirvana-accent',
-    color: '#0ea5e9'
+    color: '#ffd93d'
   }
 };
 const MenuDisplay = ({
@@ -58,7 +58,7 @@ const MenuDisplay = ({
         </div>
 
         {/* Promotional Banner */}
-        <div className={cn('rounded-lg mb-6 p-6 text-center', restaurant === 'restory' ? 'bg-gradient-restory text-restory-foreground' : 'bg-gradient-nirvana text-nirvana-foreground')}>
+        <div className={cn('rounded-lg mb-6 p-6 text-center', restaurant === 'restory' ? 'bg-gradient-restory text-restory-foreground' : 'bg-white text-black')}>
           <h3 className="text-xl font-bold mb-2">🔥 Today's Special</h3>
           <p className="opacity-90">
             {restaurant === 'restory' ? 'Try our signature Tonkatsu Don - perfectly crunchy and delicious!' : 'MUST TRY! Braised Pork Belly on Rice - melts in your mouth 🤤'}

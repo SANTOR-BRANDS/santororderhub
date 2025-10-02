@@ -4,14 +4,16 @@ interface MenuCategoriesBarProps {
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
   themeColor: string;
+  restaurant?: 'restory' | 'nirvana';
 }
 const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
   categories,
   selectedCategory,
   setSelectedCategory,
   themeColor,
+  restaurant,
 }) => (
-  <div className="bg-white/95 backdrop-blur-sm border-t border-gray-200">
+  <div className={restaurant === 'nirvana' ? 'bg-nirvana-secondary backdrop-blur-sm border-t border-gray-700' : 'bg-white/95 backdrop-blur-sm border-t border-gray-200'}>
     <div className="flex gap-4 overflow-x-auto px-4 py-3 scrollbar-hide">
       {categories.map((category) => (
         <button
@@ -21,7 +23,7 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
           }`}
           style={{
             borderColor: selectedCategory === category ? themeColor : "transparent",
-            color: selectedCategory === category ? themeColor : "#555",
+            color: selectedCategory === category ? themeColor : restaurant === 'nirvana' ? "#999" : "#555",
             opacity: selectedCategory === category ? 1 : 0.8,
             background: "none",
             outline: "none",

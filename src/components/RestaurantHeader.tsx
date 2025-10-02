@@ -149,6 +149,7 @@ const RestaurantHeader = ({
           selectedCategory={selectedCategory}
           setSelectedCategory={onCategoryChange}
           themeColor={themeColor}
+          restaurant={selectedRestaurant}
         />
       )}
     </header>
