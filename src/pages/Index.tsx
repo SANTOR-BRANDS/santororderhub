@@ -53,6 +53,12 @@ const Index = () => {
     }
   }, [selectedRestaurant]);
 
+  useEffect(() => {
+    if (selectedCategory !== 'ALL') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [selectedCategory]);
+
   return <div className="min-h-screen bg-background">
       <RestaurantHeader 
         selectedRestaurant={selectedRestaurant} 
