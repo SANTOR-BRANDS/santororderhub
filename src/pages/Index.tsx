@@ -1,15 +1,30 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Restaurant, Dish, BasketItem } from '@/types/menu';
 import RestaurantHeader from '@/components/RestaurantHeader';
 import MenuDisplay from '@/components/MenuDisplay';
 import DishModal from '@/components/DishModal';
 import BasketModal from '@/components/BasketModal';
 import FloatingBasket from '@/components/FloatingBasket';
+import { getCategoriesByRestaurant } from '@/data/menuData';
+
+const themeColors: Record<Restaurant, string> = {
+  restory: '#FF9800',
+  nirvana: '#0ea5e9'
+};
+
 const Index = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
   const [isBasketOpen, setIsBasketOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('ALL');
+  
+  const categories = useMemo(() => 
+    selectedRestaurant ? getCategoriesByRestaurant(selectedRestaurant) : [],
+    [selectedRestaurant]
+  );
+  
+  const themeColor = selectedRestaurant ? themeColors[selectedRestaurant] : undefined;
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
   };
@@ -26,10 +41,27 @@ const Index = () => {
   const handleRemoveItem = (itemId: string) => {
     setBasketItems(prev => prev.filter(item => item.id !== itemId));
   };
-  return <div className="min-h-screen bg-background">
-      <RestaurantHeader selectedRestaurant={selectedRestaurant} onRestaurantChange={setSelectedRestaurant} />
+  const handleRestaurantChange = (restaurant: Restaurant | null) => {
+    setSelectedRestaurant(restaurant);
+    setSelectedCategory('ALL'); // Reset category when changing restaurant
+  };
 
-      {selectedRestaurant ? <MenuDisplay restaurant={selectedRestaurant} onDishSelect={setSelectedDish} /> : <div className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
+  return <div className="min-h-screen bg-background">
+      <RestaurantHeader 
+        selectedRestaurant={selectedRestaurant} 
+        onRestaurantChange={handleRestaurantChange}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        themeColor={themeColor}
+      />
+
+      {selectedRestaurant ? <MenuDisplay 
+        restaurant={selectedRestaurant} 
+        onDishSelect={setSelectedDish}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      /> : <div className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
           <div className="text-center p-8">
             <div className="text-8xl mb-6">🍽️</div>
             <h1 className="text-4xl font-bold mb-4">Welcome to SANTOR</h1>

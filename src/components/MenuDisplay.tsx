@@ -1,14 +1,16 @@
 import { useState, useMemo } from 'react';
 import { Restaurant, Dish } from '@/types/menu';
-import { getMenuByRestaurant, getCategoriesByRestaurant } from '@/data/menuData';
+import { getMenuByRestaurant } from '@/data/menuData';
 import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
-import MenuCategoriesBar from './MenuCategoriesBar';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
 interface MenuDisplayProps {
   restaurant: Restaurant;
   onDishSelect: (dish: Dish) => void;
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
 }
 const themeColors: Record<Restaurant, {
   accent: string;
@@ -25,12 +27,12 @@ const themeColors: Record<Restaurant, {
 };
 const MenuDisplay = ({
   restaurant,
-  onDishSelect
+  onDishSelect,
+  selectedCategory,
+  onCategoryChange
 }: MenuDisplayProps) => {
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const menu = useMemo(() => getMenuByRestaurant(restaurant), [restaurant]);
-  const categories = useMemo(() => getCategoriesByRestaurant(restaurant), [restaurant]);
   const filteredDishes = useMemo(() => {
     return menu.filter(dish => {
       const matchesCategory = selectedCategory === 'ALL' || dish.category === selectedCategory;
@@ -62,9 +64,6 @@ const MenuDisplay = ({
             {restaurant === 'restory' ? 'Try our signature Tonkatsu Don - perfectly crunchy and delicious!' : 'MUST TRY! Braised Pork Belly on Rice - melts in your mouth 🤤'}
           </p>
         </div>
-
-        {/* Sticky Category Menu Under Restaurant Selector */}
-        <MenuCategoriesBar categories={categories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} themeColor={theme.color} />
 
         {/* Dishes Grid */}
         {filteredDishes.length > 0 ? <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">

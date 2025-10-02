@@ -7,13 +7,26 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown } from 'lucide-react';
+import MenuCategoriesBar from './MenuCategoriesBar';
 
 interface RestaurantHeaderProps {
   selectedRestaurant: Restaurant | null;
   onRestaurantChange: (restaurant: Restaurant | null) => void;
+  // Menu categories props (optional, only when restaurant is selected)
+  categories?: string[];
+  selectedCategory?: string;
+  onCategoryChange?: (category: string) => void;
+  themeColor?: string;
 }
 
-const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: RestaurantHeaderProps) => {
+const RestaurantHeader = ({ 
+  selectedRestaurant, 
+  onRestaurantChange,
+  categories,
+  selectedCategory,
+  onCategoryChange,
+  themeColor
+}: RestaurantHeaderProps) => {
   const restaurants = [
     { id: 'restory' as Restaurant, name: 'Restory', available: true },
     { id: 'nirvana' as Restaurant, name: 'Nirvana', available: true },
@@ -127,6 +140,16 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
           </div>
         </div>
       </div>
+      
+      {/* Menu Categories Bar - Only shown when restaurant is selected */}
+      {selectedRestaurant && categories && selectedCategory && onCategoryChange && themeColor && (
+        <MenuCategoriesBar 
+          categories={categories}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={onCategoryChange}
+          themeColor={themeColor}
+        />
+      )}
     </header>
   );
 };
