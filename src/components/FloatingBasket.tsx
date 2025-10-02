@@ -1,4 +1,4 @@
-import { BasketItem } from '@/types/menu';
+import { BasketItem, SAUCES } from '@/types/menu';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingBag } from 'lucide-react';
@@ -13,7 +13,13 @@ const FloatingBasket = ({ basketItems, onOpenBasket }: FloatingBasketProps) => {
   const itemCount = basketItems.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = basketItems.reduce((total, item) => {
     const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
-    return total + (item.dish.price + addOnsTotal) * item.quantity;
+    const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
+    const sauceIds = item.sauce.split(', ').filter(id => id);
+    const saucesTotal = sauceIds.reduce((sum, sauceId) => {
+      const sauce = SAUCES.find(s => s.id === sauceId);
+      return sum + (sauce?.price || 0);
+    }, 0);
+    return total + (item.dish.price + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
   }, 0);
 
   if (itemCount === 0) return null;

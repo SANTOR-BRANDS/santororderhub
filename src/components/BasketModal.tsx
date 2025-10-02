@@ -35,12 +35,13 @@ const BasketModal = ({
   const getTotalPrice = () => {
     return basketItems.reduce((total, item) => {
       const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
+      const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
       const sauceIds = item.sauce.split(', ').filter(id => id);
       const saucesTotal = sauceIds.reduce((sum, sauceId) => {
         const sauce = SAUCES.find(s => s.id === sauceId);
         return sum + (sauce?.price || 0);
       }, 0);
-      const itemTotal = (item.dish.price + addOnsTotal + saucesTotal) * item.quantity;
+      const itemTotal = (item.dish.price + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
       return total + itemTotal;
     }, 0);
   };
@@ -231,12 +232,13 @@ const BasketModal = ({
                   <span className="font-semibold">
                     ฿{(() => {
                       const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
+                      const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
                       const sauceIds = item.sauce.split(', ').filter(id => id);
                       const saucesTotal = sauceIds.reduce((sum, sauceId) => {
                         const sauce = SAUCES.find(s => s.id === sauceId);
                         return sum + (sauce?.price || 0);
                       }, 0);
-                      return (item.dish.price + addOnsTotal + saucesTotal) * item.quantity;
+                      return (item.dish.price + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
                     })()}
                   </span>
                 </div>

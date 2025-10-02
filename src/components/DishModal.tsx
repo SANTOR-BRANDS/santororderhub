@@ -153,14 +153,7 @@ const DishModal = ({
   };
 
   const getTotalPrice = () => {
-    const basePrice = getCurrentPrice();
-    const extraPlsTotal = selectedExtraPls.reduce((sum, addon) => sum + addon.price, 0);
-    const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
-    const saucesTotal = selectedSauces.reduce((sum, sauceId) => {
-      const sauce = SAUCES.find(s => s.id === sauceId);
-      return sum + (sauce?.price || 0);
-    }, 0);
-    return (basePrice + extraPlsTotal + addOnsTotal + saucesTotal) * quantity;
+    return getCurrentPrice() * quantity;
   };
 
   const canAddToBasket = () => {
