@@ -54,7 +54,11 @@ const RestaurantHeader = ({
               <h1 className="text-3xl md:text-4xl font-bold tracking-wider">
                 SANTOR
               </h1>
-              <p className="text-sm opacity-90 mt-1">Restaurant Holdings</p>
+              <img 
+                src="/images/SAN-LOGO-001.png" 
+                alt="Santor Restaurant Holdings" 
+                className="h-4 mx-auto mt-1 opacity-90"
+              />
             </button>
           </div>
 
