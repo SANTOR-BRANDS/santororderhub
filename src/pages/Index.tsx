@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Restaurant, Dish, BasketItem } from '@/types/menu';
 import RestaurantHeader from '@/components/RestaurantHeader';
 import MenuDisplay from '@/components/MenuDisplay';
@@ -46,6 +46,12 @@ const Index = () => {
     setSelectedRestaurant(restaurant);
     setSelectedCategory('ALL'); // Reset category when changing restaurant
   };
+
+  useEffect(() => {
+    if (selectedRestaurant) {
+      window.scrollTo(0, 0);
+    }
+  }, [selectedRestaurant]);
 
   return <div className="min-h-screen bg-background">
       <RestaurantHeader 
