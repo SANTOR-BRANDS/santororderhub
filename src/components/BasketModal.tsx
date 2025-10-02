@@ -56,8 +56,8 @@ const BasketModal = ({
           message += `  - Spicy Level: ${item.spicyLevel}\n`;
         }
         if (item.sauce) {
-          const sauceName = SAUCES.find(s => s.id === item.sauce)?.name || item.sauce;
-          message += `  - Sauces: ${sauceName}\n`;
+          const sauce = SAUCES.find(s => s.id === item.sauce);
+          message += `  - Sauce: ${sauce ? sauce.name : 'No sauce'}\n`;
         }
         if (item.addOns.length > 0) {
           message += `  - Add-ons: ${item.addOns.map(addon => addon.name).join(', ')}\n`;
@@ -78,8 +78,8 @@ const BasketModal = ({
           message += `  - Spicy Level: ${item.spicyLevel}\n`;
         }
         if (item.sauce) {
-          const sauceName = SAUCES.find(s => s.id === item.sauce)?.name || item.sauce;
-          message += `  - Sauces: ${sauceName}\n`;
+          const sauce = SAUCES.find(s => s.id === item.sauce);
+          message += `  - Sauce: ${sauce ? sauce.name : 'No sauce'}\n`;
         }
         if (item.addOns.length > 0) {
           message += `  - Add-ons: ${item.addOns.map(addon => addon.name).join(', ')}\n`;
@@ -191,7 +191,7 @@ const BasketModal = ({
                   {item.spicyLevel !== undefined && (
                     <div>Spicy Level: {item.spicyLevel}</div>
                   )}
-                  <div>Sauces: {SAUCES.find(s => s.id === item.sauce)?.name || item.sauce}</div>
+                  <div>Sauce: {SAUCES.find(s => s.id === item.sauce)?.name || 'No sauce'}</div>
                   {item.addOns.length > 0 && (
                     <div>Add-ons: {item.addOns.map(addon => addon.name).join(', ')}</div>
                   )}
