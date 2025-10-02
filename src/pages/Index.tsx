@@ -55,7 +55,7 @@ const Index = () => {
 
   useEffect(() => {
     if (selectedCategory !== 'ALL') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'fast' });
     }
   }, [selectedCategory]);
 
