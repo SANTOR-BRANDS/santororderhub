@@ -957,7 +957,7 @@ export const mejaiMenu: Dish[] = [
   { 
     id: 'MHY-SAL-002', 
     name: 'Pickled Brown Salmon 100g', 
-    price: 100, 
+    price: 120, 
     category: 'FRESH SALMON', 
     restaurant: 'mejai hai yum'
   },
