@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 interface RestaurantHeaderProps {
   selectedRestaurant: Restaurant | null;
-  onRestaurantChange: (restaurant: Restaurant) => void;
+  onRestaurantChange: (restaurant: Restaurant | null) => void;
 }
 
 const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: RestaurantHeaderProps) => {
@@ -27,10 +27,15 @@ const RestaurantHeader = ({ selectedRestaurant, onRestaurantChange }: Restaurant
         <div className="flex flex-col gap-4">
           {/* SANTOR Brand */}
           <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-wider">
-              SANTOR
-            </h1>
-            <p className="text-sm opacity-90 mt-1">Restaurant Holdings</p>
+            <button 
+              onClick={() => onRestaurantChange(null as any)}
+              className="hover:opacity-80 transition-smooth"
+            >
+              <h1 className="text-3xl md:text-4xl font-bold tracking-wider">
+                SANTOR
+              </h1>
+              <p className="text-sm opacity-90 mt-1">Restaurant Holdings</p>
+            </button>
           </div>
 
           {/* Restaurant Selection */}

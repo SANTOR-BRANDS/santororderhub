@@ -330,6 +330,7 @@ const DishModal = ({
           <div key={category} className="mb-6">
             <Label className="text-base font-semibold mb-3">
               {category === 'other' ? 'ADD-ONS' : 
+               category === 'fried-egg' ? 'FRIED EGG 🍳' : 
                category === 'thai-omelette' ? 'THAI STYLE OMELETTE 🍳' : 
                category === 'creamy-omelette' ? 'CREAMY OMELETTE 🍳' : 
                category === 'soft-omelette' ? 'SOFT OMELETTE 🍳' : 
