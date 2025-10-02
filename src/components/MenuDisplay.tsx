@@ -41,7 +41,7 @@ const MenuDisplay = ({
     });
   }, [menu, selectedCategory, searchQuery]);
   const theme = themeColors[restaurant];
-  return <div className={cn('min-h-screen pb-20', restaurant === 'nirvana' ? 'bg-nirvana-secondary' : 'bg-restory-background')}>
+  return <div className={cn('min-h-screen pb-20', restaurant === 'nirvana' ? 'bg-nirvana-secondary' : 'bg-white')}>
       <div className="container mx-auto px-4 py-6">
         {/* Restaurant Title */}
         <div className="text-center mb-8">
