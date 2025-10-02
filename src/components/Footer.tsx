@@ -18,6 +18,9 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
     if (selectedRestaurant === 'nirvana') {
       return 'bg-gradient-nirvana text-white';
     }
+    if (selectedRestaurant === 'mejai hai yum') {
+      return 'bg-gradient-mejai text-white';
+    }
     return 'bg-gradient-santor text-white';
   };
 

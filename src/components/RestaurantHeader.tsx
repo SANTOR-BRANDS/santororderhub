@@ -30,15 +30,15 @@ const RestaurantHeader = ({
   const restaurants = [
     { id: 'restory' as Restaurant, name: 'Restory', available: true },
     { id: 'nirvana' as Restaurant, name: 'Nirvana', available: true },
-    { id: 'mejai hai yum' as Restaurant, name: 'Mejai Hai Yum (soon)', available: false },
+    { id: 'mejai hai yum' as Restaurant, name: 'Mejai Hai Yum', available: true },
     { id: 'chan wan' as Restaurant, name: 'Chan Wan (soon)', available: false },
   ];
 
   const getHeaderStyle = () => {
     if (!selectedRestaurant) return 'bg-gradient-santor text-santor-foreground';
-    return selectedRestaurant === 'restory' 
-      ? 'bg-gradient-restory text-restory-foreground'
-      : 'bg-gradient-nirvana text-nirvana-foreground';
+    if (selectedRestaurant === 'restory') return 'bg-gradient-restory text-restory-foreground';
+    if (selectedRestaurant === 'nirvana') return 'bg-gradient-nirvana text-nirvana-foreground';
+    return 'bg-gradient-mejai text-mejai-foreground';
   };
 
   return (

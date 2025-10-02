@@ -1,4 +1,4 @@
-export type Restaurant = 'restory' | 'nirvana';
+export type Restaurant = 'restory' | 'nirvana' | 'mejai hai yum';
 
 export interface DishVariant {
   id: string;

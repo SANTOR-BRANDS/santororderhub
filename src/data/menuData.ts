@@ -945,6 +945,24 @@ export const nirvanaMenu: Dish[] = [
   },
 ];
 
+export const mejaiMenu: Dish[] = [
+  // FRESH SALMON
+  { 
+    id: 'MHY-SAL-001', 
+    name: 'Fresh Salmon Sashimi 100g', 
+    price: 180, 
+    category: 'FRESH SALMON', 
+    restaurant: 'mejai hai yum'
+  },
+  { 
+    id: 'MHY-SAL-002', 
+    name: 'Pickled Brown Salmon 100g', 
+    price: 100, 
+    category: 'FRESH SALMON', 
+    restaurant: 'mejai hai yum'
+  },
+];
+
 export const addOns: AddOn[] = [
   // Add-ons
   { id: 'SAN-ADD-001', name: 'Pickled Egg Yolk ⭐️', price: 20, category: 'other' },
@@ -987,7 +1005,14 @@ export const addOns: AddOn[] = [
 ];
 
 export const getMenuByRestaurant = (restaurant: Restaurant): Dish[] => {
-  const menu = restaurant === 'restory' ? restoryMenu : nirvanaMenu;
+  let menu: Dish[];
+  if (restaurant === 'restory') {
+    menu = restoryMenu;
+  } else if (restaurant === 'nirvana') {
+    menu = nirvanaMenu;
+  } else {
+    menu = mejaiMenu;
+  }
   
   // Apply images to dishes based on their ID
   return menu.map(dish => ({

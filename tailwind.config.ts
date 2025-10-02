@@ -67,6 +67,13 @@ export default {
           secondary: "hsl(var(--nirvana-secondary))",
           background: "hsl(var(--nirvana-background))",
         },
+        mejai: {
+          DEFAULT: "hsl(var(--mejai-primary))",
+          foreground: "hsl(var(--mejai-primary-foreground))",
+          secondary: "hsl(var(--mejai-secondary))",
+          accent: "hsl(var(--mejai-accent))",
+          background: "hsl(var(--mejai-background))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -82,6 +89,7 @@ export default {
         'gradient-santor': 'var(--gradient-santor)',
         'gradient-restory': 'var(--gradient-restory)',
         'gradient-nirvana': 'var(--gradient-nirvana)',
+        'gradient-mejai': 'var(--gradient-mejai)',
       },
       boxShadow: {
         'elegant': 'var(--shadow-elegant)',

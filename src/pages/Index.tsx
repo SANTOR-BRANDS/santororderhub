@@ -10,7 +10,8 @@ import { getCategoriesByRestaurant } from '@/data/menuData';
 
 const themeColors: Record<Restaurant, string> = {
   restory: '#FF9800',
-  nirvana: '#ffd93d'
+  nirvana: '#ffd93d',
+  'mejai hai yum': '#FF6B9D'
 };
 
 const Index = () => {
@@ -79,7 +80,7 @@ const Index = () => {
             <div className="text-8xl mb-6">🍽️</div>
             <h1 className="text-4xl font-bold mb-4">Welcome to SANTOR</h1>
             <p className="text-xl opacity-90 mb-8 max-w-2xl">We believe good food is the foundation of happiness</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
               <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('restory')}>
                 <h3 className="text-xl font-bold mb-2">🧡 Restory</h3>
                 <p className="text-sm opacity-80">Asian Fusion - Cooked to Order</p>
@@ -87,6 +88,10 @@ const Index = () => {
               <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('nirvana')}>
                 <h3 className="text-xl font-bold mb-2">⚫ Nirvana</h3>
                 <p className="text-sm opacity-80">Authentic Flavors</p>
+              </div>
+              <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('mejai hai yum')}>
+                <h3 className="text-xl font-bold mb-2">💗 Mejai Hai Yum</h3>
+                <p className="text-sm opacity-80">Fresh Salmon & Thai Yum</p>
               </div>
             </div>
           </div>

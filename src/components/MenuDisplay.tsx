@@ -23,6 +23,10 @@ const themeColors: Record<Restaurant, {
   nirvana: {
     accent: 'nirvana-accent',
     color: '#ffd93d'
+  },
+  'mejai hai yum': {
+    accent: 'mejai',
+    color: '#FF6B9D'
   }
 };
 const MenuDisplay = ({
@@ -41,7 +45,25 @@ const MenuDisplay = ({
     });
   }, [menu, selectedCategory, searchQuery]);
   const theme = themeColors[restaurant];
-  return <div className={cn('min-h-screen pb-20', restaurant === 'nirvana' ? 'bg-nirvana-secondary' : 'bg-white')}>
+  
+  const getBackgroundClass = () => {
+    if (restaurant === 'nirvana') return 'bg-nirvana-secondary';
+    return 'bg-white';
+  };
+  
+  const getPromoBannerClass = () => {
+    if (restaurant === 'restory') return 'bg-gradient-restory text-restory-foreground';
+    if (restaurant === 'mejai hai yum') return 'bg-gradient-mejai text-mejai-foreground';
+    return 'bg-white text-black';
+  };
+  
+  const getPromoMessage = () => {
+    if (restaurant === 'restory') return 'Try our signature Tonkatsu Don - perfectly crunchy and delicious!';
+    if (restaurant === 'nirvana') return 'MUST TRY! Braised Pork Belly on Rice - melts in your mouth 🤤';
+    return 'Fresh salmon dishes - Premium quality!';
+  };
+  
+  return <div className={cn('min-h-screen pb-20', getBackgroundClass())}>
       <div className="container mx-auto px-4 py-6">
         {/* Restaurant Title */}
         <div className="text-center mb-8">
@@ -58,10 +80,10 @@ const MenuDisplay = ({
         </div>
 
         {/* Promotional Banner */}
-        <div className={cn('rounded-lg mb-6 p-6 text-center', restaurant === 'restory' ? 'bg-gradient-restory text-restory-foreground' : 'bg-white text-black')}>
+        <div className={cn('rounded-lg mb-6 p-6 text-center', getPromoBannerClass())}>
           <h3 className="text-xl font-bold mb-2">🔥 Today's Special</h3>
           <p className="opacity-90">
-            {restaurant === 'restory' ? 'Try our signature Tonkatsu Don - perfectly crunchy and delicious!' : 'MUST TRY! Braised Pork Belly on Rice - melts in your mouth 🤤'}
+            {getPromoMessage()}
           </p>
         </div>
 

@@ -56,10 +56,18 @@
     --nirvana-secondary: 0 0% 15%;
     --nirvana-background: 0 0% 5%;
 
+    /* Mejai Hai Yum Theme */
+    --mejai-primary: 338 100% 70%;
+    --mejai-primary-foreground: 0 0% 100%;
+    --mejai-secondary: 338 100% 60%;
+    --mejai-accent: 338 100% 75%;
+    --mejai-background: 0 0% 98%;
+
     /* Gradients */
     --gradient-santor: linear-gradient(135deg, hsl(var(--santor-primary)), hsl(var(--santor-secondary)));
     --gradient-restory: linear-gradient(135deg, hsl(var(--restory-primary)), hsl(var(--restory-secondary)));
     --gradient-nirvana: linear-gradient(135deg, hsl(var(--nirvana-primary)), hsl(var(--nirvana-secondary)));
+    --gradient-mejai: linear-gradient(135deg, hsl(var(--mejai-primary)), hsl(var(--mejai-secondary)));
 
     /* Shadows */
     --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.1);
