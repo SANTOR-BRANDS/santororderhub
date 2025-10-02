@@ -793,6 +793,42 @@ export const restoryMenu: Dish[] = [
       { id: 'SAN-ADD-010', name: '🥓 Extra Bacon', price: 30, category: 'extra-pls' }
     ]
   },
+
+  // DRINKS
+  { 
+    id: 'SAN-DRI-001', 
+    name: 'Pandan Water', 
+    price: 15, 
+    category: 'DRINKS', 
+    restaurant: 'restory'
+  },
+  { 
+    id: 'SAN-DRI-003', 
+    name: 'Mont Fleur Water', 
+    price: 20, 
+    category: 'DRINKS', 
+    restaurant: 'restory'
+  },
+  { 
+    id: 'SAN-DRI-007', 
+    name: 'Thai Red Tea', 
+    price: 49, 
+    category: 'DRINKS', 
+    restaurant: 'restory',
+    extraOptions: [
+      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
+  { 
+    id: 'SAN-DRI-008', 
+    name: 'Peach Green Tea ✨', 
+    price: 49, 
+    category: 'DRINKS', 
+    restaurant: 'restory',
+    extraOptions: [
+      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
 ];
 
 export const nirvanaMenu: Dish[] = [
@@ -853,6 +889,42 @@ export const nirvanaMenu: Dish[] = [
   // OTHER
   { id: 'NV-OTH-001', name: 'Creamy Omelette on Rice', price: 70, category: 'OTHER', restaurant: 'nirvana' },
   { id: 'NV-OTH-002', name: 'Stir-Fried Diced Chicken on Rice', price: 99, category: 'OTHER', restaurant: 'nirvana' },
+
+  // DRINKS
+  { 
+    id: 'SAN-DRI-001', 
+    name: 'Pandan Water', 
+    price: 15, 
+    category: 'DRINKS', 
+    restaurant: 'nirvana'
+  },
+  { 
+    id: 'SAN-DRI-003', 
+    name: 'Mont Fleur Water', 
+    price: 20, 
+    category: 'DRINKS', 
+    restaurant: 'nirvana'
+  },
+  { 
+    id: 'SAN-DRI-007', 
+    name: 'Thai Red Tea', 
+    price: 49, 
+    category: 'DRINKS', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
+  { 
+    id: 'SAN-DRI-008', 
+    name: 'Peach Green Tea ✨', 
+    price: 49, 
+    category: 'DRINKS', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
 ];
 
 export const addOns: AddOn[] = [
