@@ -10,7 +10,7 @@ import { getCategoriesByRestaurant } from '@/data/menuData';
 
 const themeColors: Record<Restaurant, string> = {
   restory: '#FF9800',
-  nirvana: '#0ea5e9'
+  nirvana: '#ffd93d'
 };
 
 const Index = () => {
