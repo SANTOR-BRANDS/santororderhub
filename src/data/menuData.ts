@@ -800,14 +800,20 @@ export const restoryMenu: Dish[] = [
     name: 'Pandan Water', 
     price: 15, 
     category: 'DRINKS', 
-    restaurant: 'restory'
+    restaurant: 'restory',
+    extraOptions: [
+      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
   },
   { 
     id: 'SAN-DRI-003', 
     name: 'Mont Fleur Water', 
     price: 20, 
     category: 'DRINKS', 
-    restaurant: 'restory'
+    restaurant: 'restory',
+    extraOptions: [
+      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
   },
   { 
     id: 'SAN-DRI-007', 
@@ -905,14 +911,20 @@ export const nirvanaMenu: Dish[] = [
     name: 'Pandan Water', 
     price: 15, 
     category: 'DRINKS', 
-    restaurant: 'nirvana'
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
   },
   { 
     id: 'SAN-DRI-003', 
     name: 'Mont Fleur Water', 
     price: 20, 
     category: 'DRINKS', 
-    restaurant: 'nirvana'
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
   },
   { 
     id: 'SAN-DRI-007', 

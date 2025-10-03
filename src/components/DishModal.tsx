@@ -526,7 +526,8 @@ const DishModal = ({
                 renderCustomizationOptions(1)
               )}
 
-              {/* Cutlery - Required */}
+              {/* Cutlery - Required (Skip for DRINKS) */}
+              {dish.category !== 'DRINKS' && (
               <div className="mb-6">
                 <Label className="text-base font-semibold mb-3 flex items-center gap-2">
                   Need cutlery? <span className="text-red-500">*</span>
@@ -547,6 +548,7 @@ const DishModal = ({
                   </div>
                 </RadioGroup>
               </div>
+              )}
 
               <Separator className="my-6" />
 
