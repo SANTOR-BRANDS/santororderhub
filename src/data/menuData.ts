@@ -842,7 +842,10 @@ export const restoryMenu: Dish[] = [
     name: 'Vanilla Ice Cream Toast (NEW)', 
     price: 89, 
     category: 'DESSERT', 
-    restaurant: 'restory'
+    restaurant: 'restory',
+    extraOptions: [
+      { id: 'SAN-EXT-007', name: 'EXTRA: Extra Ice Cream (1 Scoop)', price: 30, category: 'extra-pls' }
+    ]
   },
 ];
 
@@ -953,7 +956,10 @@ export const nirvanaMenu: Dish[] = [
     name: 'Vanilla Ice Cream Toast (NEW)', 
     price: 89, 
     category: 'DESSERT', 
-    restaurant: 'nirvana'
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-EXT-007', name: 'EXTRA: Extra Ice Cream (1 Scoop)', price: 30, category: 'extra-pls' }
+    ]
   },
 ];
 
