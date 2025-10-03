@@ -66,7 +66,8 @@ const BasketModal = ({
         if (item.spicyLevel !== undefined) {
           message += `  - Spicy Level: ${item.spicyLevel}\n`;
         }
-        if (item.sauce) {
+        // Only show sauce for items that require it (not DRINKS, FRESH SALMON, or DESSERT)
+        if (item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && item.sauce) {
           const sauceIds = item.sauce.split(', ').filter(id => id);
           const sauceNames = sauceIds.map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
           message += `  - Sauce: ${sauceNames || 'No sauce'}\n`;
@@ -93,7 +94,8 @@ const BasketModal = ({
         if (item.spicyLevel !== undefined) {
           message += `  - Spicy Level: ${item.spicyLevel}\n`;
         }
-        if (item.sauce) {
+        // Only show sauce for items that require it (not DRINKS, FRESH SALMON, or DESSERT)
+        if (item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && item.sauce) {
           const sauceIds = item.sauce.split(', ').filter(id => id);
           const sauceNames = sauceIds.map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
           message += `  - Sauce: ${sauceNames || 'No sauce'}\n`;
@@ -211,7 +213,10 @@ const BasketModal = ({
                   {item.spicyLevel !== undefined && (
                     <div>Spicy Level: {item.spicyLevel}</div>
                   )}
-                  <div>Sauce: {item.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ') || 'No sauce'}</div>
+                  {/* Only show sauce for items that require it */}
+                  {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (
+                    <div>Sauce: {item.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ') || 'No sauce'}</div>
+                  )}
                   {item.addOns.length > 0 && (
                     <div>Add-ons: {item.addOns.map(addon => addon.name).join(', ')}</div>
                   )}
