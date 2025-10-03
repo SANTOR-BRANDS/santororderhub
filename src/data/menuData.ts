@@ -5,8 +5,8 @@ export const restoryMenu: Dish[] = [
   // COMBO DEALS
   { 
     id: 'RS-COM-001', 
-    name: 'Pad Krapao Minced Pork + Peach Tea 🍑', 
-    price: 139, 
+    name: 'Tonkatsu with Katsu Sauce + Peach Tea 🍑', 
+    price: 155, 
     category: 'COMBO DEALS', 
     restaurant: 'restory', 
     spicyRequired: true,
