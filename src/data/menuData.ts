@@ -6,7 +6,7 @@ export const restoryMenu: Dish[] = [
   { 
     id: 'RS-COM-001', 
     name: 'Tonkatsu with Katsu Sauce + Peach Tea 🍑', 
-    price: 155, 
+    price: 179, 
     category: 'COMBO DEALS', 
     restaurant: 'restory', 
     spicyRequired: true,
