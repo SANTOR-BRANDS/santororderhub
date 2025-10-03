@@ -157,8 +157,8 @@ const DishModal = ({
   };
 
   const canAddToBasket = () => {
-    // DRINKS and FRESH SALMON don't require sauce
-    const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON';
+    // DRINKS, FRESH SALMON, and DESSERT don't require sauce
+    const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT';
     const hasSauce = requiresSauce ? selectedSauces.length > 0 : true;
     const hasSpicyLevel = !dish.spicyRequired || spicyLevel !== undefined;
     if (isCombo) {
@@ -327,8 +327,8 @@ const DishModal = ({
           </div>
         )}
 
-        {/* Add-ons - Skip for DRINKS and FRESH SALMON */}
-        {dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
+        {/* Add-ons - Skip for DRINKS, FRESH SALMON, and DESSERT */}
+        {dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
           <div key={category} className="mb-6">
             <Label className="text-base font-semibold mb-3">
               {category === 'other' ? 'ADD-ONS' : 
@@ -360,8 +360,8 @@ const DishModal = ({
           </div>
         ))}
 
-        {/* Sauce Selection - Required (Skip for DRINKS and FRESH SALMON) */}
-        {dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && (
+        {/* Sauce Selection - Required (Skip for DRINKS, FRESH SALMON, and DESSERT) */}
+        {dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && (
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             SELECT SAUCE <span className="text-red-500">*</span>
