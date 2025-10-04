@@ -860,6 +860,17 @@ export const nirvanaMenu: Dish[] = [
     spicyRequired: true,
     extraOptions: [
       { id: 'NV-EXT-006', name: '🐮 Extra Minced Beef 100g', price: 60, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-PKR-005', 
+    name: 'Pad Krapao Premium Minced Beef', 
+    price: 149, 
+    category: 'PAD KRAPAO', 
+    restaurant: 'nirvana', 
+    spicyRequired: true,
+    extraOptions: [
       { id: 'NV-EXT-007', name: '🐮 Extra Premium Beef 100g', price: 80, category: 'extra-pls' },
       { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
