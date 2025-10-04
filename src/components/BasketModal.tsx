@@ -85,6 +85,7 @@ const BasketModal = ({
 
     const restoryItems = basketItems.filter(item => item.dish.restaurant === 'restory');
     const nirvanaItems = basketItems.filter(item => item.dish.restaurant === 'nirvana');
+    const mejaiItems = basketItems.filter(item => item.dish.restaurant === 'mejai hai yum');
 
     let message = '🍽️ *SANTOR Order*\n\n';
     
@@ -137,6 +138,15 @@ const BasketModal = ({
     if (nirvanaItems.length > 0) {
       message += '⚫ *NIRVANA*\n';
       nirvanaItems.forEach(item => {
+        const basePrice = item.selectedVariant?.price || item.dish.price;
+        message += `• ${item.dish.name} (฿${basePrice})\n`;
+        message += formatItemExtras(item);
+      });
+    }
+
+    if (mejaiItems.length > 0) {
+      message += '🍣 *MEJAI HAI YUM*\n';
+      mejaiItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
         message += `• ${item.dish.name} (฿${basePrice})\n`;
         message += formatItemExtras(item);
