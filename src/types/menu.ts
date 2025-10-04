@@ -26,6 +26,9 @@ export interface AddOn {
   name: string;
   price: number;
   category: 'meat' | 'egg' | 'sauce' | 'other' | 'fried-egg' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette' | 'extra-pls';
+  isIncremental?: boolean; // For beef/pork 20g increments
+  incrementalUnit?: number; // 20g units
+  incrementalDiscount?: number; // Discount per 100g
 }
 
 export interface BasketItem {
@@ -34,6 +37,7 @@ export interface BasketItem {
   selectedVariant?: DishVariant;
   addOns: AddOn[];
   extraPls: AddOn[];
+  incrementalExtras?: Map<string, number>; // For tracking beef/pork 20g quantities
   spicyLevel?: number;
   sauce: string;
   needsCutlery: boolean;
@@ -65,3 +69,15 @@ export const SAUCES = [
   { id: 'SAN-SAU-007', name: '🟢 Seafood Sauce', price: 20 },
   { id: 'SAN-SAU-008', name: '🚫 NO SAUCE', price: 0 },
 ];
+
+export const NIRVANA_SAUCES = [
+  { id: 'NV-SAU-001', name: 'Soy Sauce', price: 0 },
+  { id: 'NV-SAU-002', name: 'Chilli Fish Sauce', price: 0 },
+  { id: 'NV-SAU-003', name: 'Isaan Dipping Sauce', price: 0 },
+  { id: 'NV-SAU-004', name: 'Seafood Sauce', price: 0 },
+  { id: 'NV-SAU-005', name: '🚫 No Sauce', price: 0 },
+];
+
+export const getSaucesByRestaurant = (restaurant: Restaurant) => {
+  return restaurant === 'nirvana' ? NIRVANA_SAUCES : SAUCES;
+};

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BasketItem, SAUCES } from '@/types/menu';
+import { BasketItem, getSaucesByRestaurant } from '@/types/menu';
 import {
   Dialog,
   DialogContent,
@@ -32,19 +32,52 @@ const BasketModal = ({
   const { toast } = useToast();
   const [isGeneratingOrder, setIsGeneratingOrder] = useState(false);
 
-  const getTotalPrice = () => {
-    return basketItems.reduce((total, item) => {
-      const basePrice = item.selectedVariant?.price || item.dish.price;
-      const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
-      const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
-      const sauceIds = item.sauce.split(', ').filter(id => id);
-      const saucesTotal = sauceIds.reduce((sum, sauceId) => {
-        const sauce = SAUCES.find(s => s.id === sauceId);
-        return sum + (sauce?.price || 0);
-      }, 0);
-      const itemTotal = (basePrice + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
-      return total + itemTotal;
+  // Helper to calculate incremental extras total
+  const calculateIncrementalExtrasTotal = (item: BasketItem) => {
+    if (!item.incrementalExtras || item.incrementalExtras.size === 0) return 0;
+    
+    let total = 0;
+    item.extraPls?.forEach(addon => {
+      if (addon.isIncremental && item.incrementalExtras) {
+        const qty = item.incrementalExtras.get(addon.id) || 0;
+        if (qty > 0) {
+          const totalGrams = (addon.incrementalUnit || 20) * qty;
+          const basePrice = addon.price * qty;
+          const discountSets = Math.floor(totalGrams / 100);
+          const discount = discountSets * (addon.incrementalDiscount || 10);
+          total += (basePrice - discount);
+        }
+      }
+    });
+    
+    return total;
+  };
+
+  // Helper to get item total price
+  const getItemTotalPrice = (item: BasketItem) => {
+    const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
+    const basePrice = item.selectedVariant?.price || item.dish.price;
+    const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
+    
+    // Calculate regular extras (non-incremental)
+    const regularExtrasTotal = item.extraPls?.reduce((sum, addon) => {
+      if (addon.isIncremental) return sum;
+      return sum + addon.price;
+    }, 0) || 0;
+    
+    const incrementalExtrasTotal = calculateIncrementalExtrasTotal(item);
+    
+    const sauceIds = item.sauce.split(', ').filter(id => id);
+    const saucesTotal = sauceIds.reduce((sum, sauceId) => {
+      const sauce = SAUCES.find(s => s.id === sauceId);
+      return sum + (sauce?.price || 0);
     }, 0);
+    
+    return (basePrice + addOnsTotal + regularExtrasTotal + incrementalExtrasTotal + saucesTotal) * item.quantity;
+  };
+
+  const getTotalPrice = () => {
+    return basketItems.reduce((total, item) => total + getItemTotalPrice(item), 0);
   };
 
   const generateOrderMessage = () => {
@@ -55,31 +88,49 @@ const BasketModal = ({
 
     let message = '🍽️ *SANTOR Order*\n\n';
     
+    const formatItemExtras = (item: BasketItem) => {
+      const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
+      let extras = '';
+      
+      if (item.selectedVariant) {
+        extras += `  - Variation: ${item.selectedVariant.name}\n`;
+      }
+      if (item.spicyLevel !== undefined) {
+        extras += `  - Spicy Level: ${item.spicyLevel}\n`;
+      }
+      if (item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && item.sauce) {
+        const sauceIds = item.sauce.split(', ').filter(id => id);
+        const sauceNames = sauceIds.map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
+        extras += `  - Sauce: ${sauceNames || 'No sauce'}\n`;
+      }
+      if (item.addOns.length > 0) {
+        extras += `  - Add-ons: ${item.addOns.map(addon => addon.name).join(', ')}\n`;
+      }
+      if (item.extraPls && item.extraPls.length > 0) {
+        const extraDetails = item.extraPls.map(extra => {
+          if (extra.isIncremental && item.incrementalExtras) {
+            const qty = item.incrementalExtras.get(extra.id) || 0;
+            if (qty > 0) {
+              const totalGrams = (extra.incrementalUnit || 20) * qty;
+              return `${extra.name} (${totalGrams}g)`;
+            }
+          }
+          return extra.name;
+        }).filter(Boolean);
+        extras += `  - Extra: ${extraDetails.join(', ')}\n`;
+      }
+      extras += `  - Cutlery: ${item.needsCutlery ? 'Yes' : 'No'}\n`;
+      extras += `  - Quantity: ${item.quantity}\n\n`;
+      
+      return extras;
+    };
+    
     if (restoryItems.length > 0) {
       message += '🧡 *RESTORY*\n';
       restoryItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
         message += `• ${item.dish.name} (฿${basePrice})\n`;
-        if (item.selectedVariant) {
-          message += `  - Variation: ${item.selectedVariant.name}\n`;
-        }
-        if (item.spicyLevel !== undefined) {
-          message += `  - Spicy Level: ${item.spicyLevel}\n`;
-        }
-        // Only show sauce for items that require it (not DRINKS, FRESH SALMON, or DESSERT)
-        if (item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && item.sauce) {
-          const sauceIds = item.sauce.split(', ').filter(id => id);
-          const sauceNames = sauceIds.map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
-          message += `  - Sauce: ${sauceNames || 'No sauce'}\n`;
-        }
-        if (item.addOns.length > 0) {
-          message += `  - Add-ons: ${item.addOns.map(addon => addon.name).join(', ')}\n`;
-        }
-        if (item.extraPls && item.extraPls.length > 0) {
-          message += `  - Extra: ${item.extraPls.map(extra => extra.name).join(', ')}\n`;
-        }
-        message += `  - Cutlery: ${item.needsCutlery ? 'Yes' : 'No'}\n`;
-        message += `  - Quantity: ${item.quantity}\n\n`;
+        message += formatItemExtras(item);
       });
     }
 
@@ -88,26 +139,7 @@ const BasketModal = ({
       nirvanaItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
         message += `• ${item.dish.name} (฿${basePrice})\n`;
-        if (item.selectedVariant) {
-          message += `  - Variation: ${item.selectedVariant.name}\n`;
-        }
-        if (item.spicyLevel !== undefined) {
-          message += `  - Spicy Level: ${item.spicyLevel}\n`;
-        }
-        // Only show sauce for items that require it (not DRINKS, FRESH SALMON, or DESSERT)
-        if (item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && item.sauce) {
-          const sauceIds = item.sauce.split(', ').filter(id => id);
-          const sauceNames = sauceIds.map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
-          message += `  - Sauce: ${sauceNames || 'No sauce'}\n`;
-        }
-        if (item.addOns.length > 0) {
-          message += `  - Add-ons: ${item.addOns.map(addon => addon.name).join(', ')}\n`;
-        }
-        if (item.extraPls && item.extraPls.length > 0) {
-          message += `  - Extra: ${item.extraPls.map(extra => extra.name).join(', ')}\n`;
-        }
-        message += `  - Cutlery: ${item.needsCutlery ? 'Yes' : 'No'}\n`;
-        message += `  - Quantity: ${item.quantity}\n\n`;
+        message += formatItemExtras(item);
       });
     }
 
@@ -214,14 +246,25 @@ const BasketModal = ({
                     <div>Spicy Level: {item.spicyLevel}</div>
                   )}
                   {/* Only show sauce for items that require it */}
-                  {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (
-                    <div>Sauce: {item.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ') || 'No sauce'}</div>
-                  )}
+                  {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (() => {
+                    const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
+                    const sauceNames = item.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
+                    return <div>Sauce: {sauceNames || 'No sauce'}</div>;
+                  })()}
                   {item.addOns.length > 0 && (
                     <div>Add-ons: {item.addOns.map(addon => addon.name).join(', ')}</div>
                   )}
                   {item.extraPls && item.extraPls.length > 0 && (
-                    <div>Extra: {item.extraPls.map(extra => extra.name).join(', ')}</div>
+                    <div>Extra: {item.extraPls.map(extra => {
+                      if (extra.isIncremental && item.incrementalExtras) {
+                        const qty = item.incrementalExtras.get(extra.id) || 0;
+                        if (qty > 0) {
+                          const totalGrams = (extra.incrementalUnit || 20) * qty;
+                          return `${extra.name} (${totalGrams}g)`;
+                        }
+                      }
+                      return extra.name;
+                    }).filter(Boolean).join(', ')}</div>
                   )}
                   <div>Cutlery: {item.needsCutlery ? 'Yes' : 'No'}</div>
                 </div>
@@ -247,17 +290,7 @@ const BasketModal = ({
                     </Button>
                   </div>
                   <span className="font-semibold">
-                    ฿{(() => {
-                      const basePrice = item.selectedVariant?.price || item.dish.price;
-                      const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
-                      const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
-                      const sauceIds = item.sauce.split(', ').filter(id => id);
-                      const saucesTotal = sauceIds.reduce((sum, sauceId) => {
-                        const sauce = SAUCES.find(s => s.id === sauceId);
-                        return sum + (sauce?.price || 0);
-                      }, 0);
-                      return (basePrice + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
-                    })()}
+                    ฿{getItemTotalPrice(item)}
                   </span>
                 </div>
               </div>

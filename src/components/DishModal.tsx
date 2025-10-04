@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Dish, AddOn, SPICY_LEVELS, SAUCES, BasketItem, DishVariant } from '@/types/menu';
+import { Dish, AddOn, SPICY_LEVELS, getSaucesByRestaurant, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,7 @@ const DishModal = ({
   const [selectedVariant, setSelectedVariant] = useState<DishVariant | null>(null);
   const [selectedExtraPls, setSelectedExtraPls] = useState<AddOn[]>([]);
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]);
+  const [incrementalQuantities, setIncrementalQuantities] = useState<Map<string, number>>(new Map());
   const [spicyLevel, setSpicyLevel] = useState<number | undefined>(undefined);
   const [selectedSauces, setSelectedSauces] = useState<string[]>([]);
   const [needsCutlery, setNeedsCutlery] = useState(false);
@@ -37,6 +38,7 @@ const DishModal = ({
   const [selectedVariant2, setSelectedVariant2] = useState<DishVariant | null>(null);
   const [selectedExtraPls2, setSelectedExtraPls2] = useState<AddOn[]>([]);
   const [selectedAddOns2, setSelectedAddOns2] = useState<AddOn[]>([]);
+  const [incrementalQuantities2, setIncrementalQuantities2] = useState<Map<string, number>>(new Map());
   const [spicyLevel2, setSpicyLevel2] = useState<number | undefined>(undefined);
   const [selectedSauces2, setSelectedSauces2] = useState<string[]>([]);
 
@@ -47,6 +49,7 @@ const DishModal = ({
       setSelectedVariant(defaultVariant);
       setSelectedExtraPls([]);
       setSelectedAddOns([]);
+      setIncrementalQuantities(new Map());
       setSpicyLevel(dish.spicyRequired ? 2 : undefined); // Default to signature medium
       setSelectedSauces([]);
       setNeedsCutlery(false);
@@ -57,6 +60,7 @@ const DishModal = ({
         setSelectedVariant2(defaultVariant);
         setSelectedExtraPls2([]);
         setSelectedAddOns2([]);
+        setIncrementalQuantities2(new Map());
         setSpicyLevel2(dish.spicyRequired ? 2 : undefined);
         setSelectedSauces2([]);
       }
@@ -66,6 +70,21 @@ const DishModal = ({
   if (!dish) return null;
 
   const isCombo = dish.name.includes('2x Pad Krapao');
+  const SAUCES = getSaucesByRestaurant(dish.restaurant);
+
+  // Calculate price for incremental items with discount
+  const calculateIncrementalPrice = (addon: AddOn, quantity: number) => {
+    if (!addon.isIncremental || !addon.incrementalUnit || !addon.incrementalDiscount) {
+      return addon.price * quantity;
+    }
+    
+    const totalGrams = addon.incrementalUnit * quantity;
+    const basePrice = addon.price * quantity;
+    const discountSets = Math.floor(totalGrams / 100); // Every 100g gets discount
+    const discount = discountSets * addon.incrementalDiscount;
+    
+    return basePrice - discount;
+  };
 
   const getThemeStyles = () => {
     return dish.restaurant === 'restory' ? {
@@ -85,7 +104,16 @@ const DishModal = ({
 
   const getCurrentPrice = () => {
     const basePrice = selectedVariant?.price || dish.price;
-    const extraPlsTotal = selectedExtraPls.reduce((sum, addon) => sum + addon.price, 0);
+    
+    // Calculate extras with incremental pricing
+    const extraPlsTotal = selectedExtraPls.reduce((sum, addon) => {
+      if (addon.isIncremental) {
+        const qty = incrementalQuantities.get(addon.id) || 0;
+        return sum + calculateIncrementalPrice(addon, qty);
+      }
+      return sum + addon.price;
+    }, 0);
+    
     const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
     const saucesTotal = selectedSauces.reduce((sum, sauceId) => {
       const sauce = SAUCES.find(s => s.id === sauceId);
@@ -94,7 +122,13 @@ const DishModal = ({
 
     if (isCombo) {
       // For combo, add the second dish's extras
-      const extraPlsTotal2 = selectedExtraPls2.reduce((sum, addon) => sum + addon.price, 0);
+      const extraPlsTotal2 = selectedExtraPls2.reduce((sum, addon) => {
+        if (addon.isIncremental) {
+          const qty = incrementalQuantities2.get(addon.id) || 0;
+          return sum + calculateIncrementalPrice(addon, qty);
+        }
+        return sum + addon.price;
+      }, 0);
       const addOnsTotal2 = selectedAddOns2.reduce((sum, addon) => sum + addon.price, 0);
       const saucesTotal2 = selectedSauces2.reduce((sum, sauceId) => {
         const sauce = SAUCES.find(s => s.id === sauceId);
@@ -121,6 +155,9 @@ const DishModal = ({
   };
 
   const toggleExtraPls = (addon: AddOn, dishNumber = 1) => {
+    // Incremental items are handled differently
+    if (addon.isIncremental) return;
+    
     if (dishNumber === 1) {
       setSelectedExtraPls(prev => 
         prev.find(a => a.id === addon.id) 
@@ -134,6 +171,31 @@ const DishModal = ({
           : [...prev, addon]
       );
     }
+  };
+
+  const updateIncrementalQuantity = (addon: AddOn, delta: number, dishNumber = 1) => {
+    const currentMap = dishNumber === 1 ? incrementalQuantities : incrementalQuantities2;
+    const setMap = dishNumber === 1 ? setIncrementalQuantities : setIncrementalQuantities2;
+    const currentExtras = dishNumber === 1 ? selectedExtraPls : selectedExtraPls2;
+    const setExtras = dishNumber === 1 ? setSelectedExtraPls : setSelectedExtraPls2;
+    
+    const currentQty = currentMap.get(addon.id) || 0;
+    const newQty = Math.max(0, currentQty + delta);
+    
+    const newMap = new Map(currentMap);
+    if (newQty > 0) {
+      newMap.set(addon.id, newQty);
+      // Add to extras if not already there
+      if (!currentExtras.find(a => a.id === addon.id)) {
+        setExtras(prev => [...prev, addon]);
+      }
+    } else {
+      newMap.delete(addon.id);
+      // Remove from extras if quantity is 0
+      setExtras(prev => prev.filter(a => a.id !== addon.id));
+    }
+    
+    setMap(newMap);
   };
 
   const toggleAddOn = (addon: AddOn, dishNumber = 1) => {
@@ -179,6 +241,7 @@ const DishModal = ({
         selectedVariant,
         addOns: selectedAddOns,
         extraPls: selectedExtraPls,
+        incrementalExtras: incrementalQuantities,
         spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
         sauce: selectedSauces.join(', '),
         needsCutlery,
@@ -192,6 +255,7 @@ const DishModal = ({
         selectedVariant: selectedVariant2,
         addOns: selectedAddOns2,
         extraPls: selectedExtraPls2,
+        incrementalExtras: incrementalQuantities2,
         spicyLevel: dish.spicyRequired ? spicyLevel2 : undefined,
         sauce: selectedSauces2.join(', '),
         needsCutlery: false, // Only need cutlery once
@@ -207,6 +271,7 @@ const DishModal = ({
         selectedVariant,
         addOns: selectedAddOns,
         extraPls: selectedExtraPls,
+        incrementalExtras: incrementalQuantities,
         spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
         sauce: selectedSauces.join(', '),
         needsCutlery,
@@ -229,6 +294,7 @@ const DishModal = ({
     const currentSelectedVariant = dishNumber === 1 ? selectedVariant : selectedVariant2;
     const currentSelectedExtraPls = dishNumber === 1 ? selectedExtraPls : selectedExtraPls2;
     const currentSelectedAddOns = dishNumber === 1 ? selectedAddOns : selectedAddOns2;
+    const currentIncrementalQuantities = dishNumber === 1 ? incrementalQuantities : incrementalQuantities2;
     const currentSpicyLevel = dishNumber === 1 ? spicyLevel : spicyLevel2;
     const currentSelectedSauces = dishNumber === 1 ? selectedSauces : selectedSauces2;
     const setCurrentSelectedVariant = dishNumber === 1 ? setSelectedVariant : setSelectedVariant2;
@@ -279,23 +345,73 @@ const DishModal = ({
               EXTRA
             </Label>
             <div className="space-y-2">
-              {getFilteredExtraOptions().map(addon => (
-                <div key={addon.id} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id={`extra-${addon.id}-${dishNumber}`} 
-                      checked={currentSelectedExtraPls.some(a => a.id === addon.id)} 
-                      onCheckedChange={() => toggleExtraPls(addon, dishNumber)} 
-                    />
-                    <Label htmlFor={`extra-${addon.id}-${dishNumber}`} className="text-sm">
-                      {addon.name}
-                    </Label>
+              {getFilteredExtraOptions().map(addon => {
+                if (addon.isIncremental) {
+                  // Special UI for incremental items (beef/pork 20g)
+                  const qty = currentIncrementalQuantities.get(addon.id) || 0;
+                  const totalGrams = qty * (addon.incrementalUnit || 20);
+                  const totalPrice = calculateIncrementalPrice(addon, qty);
+                  
+                  return (
+                    <div key={addon.id} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex-1">
+                        <Label className="text-sm font-medium">{addon.name}</Label>
+                        {qty > 0 && (
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {totalGrams}g • ฿{totalPrice}
+                            {totalGrams >= 100 && (
+                              <span className="ml-2 text-green-600">
+                                (-฿{Math.floor(totalGrams / 100) * (addon.incrementalDiscount || 10)} discount)
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => updateIncrementalQuantity(addon, -1, dishNumber)}
+                          disabled={qty === 0}
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <span className="w-8 text-center font-medium">{qty}</span>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => updateIncrementalQuantity(addon, 1, dishNumber)}
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                }
+                
+                // Regular checkbox for non-incremental items
+                return (
+                  <div key={addon.id} className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id={`extra-${addon.id}-${dishNumber}`} 
+                        checked={currentSelectedExtraPls.some(a => a.id === addon.id)} 
+                        onCheckedChange={() => toggleExtraPls(addon, dishNumber)} 
+                      />
+                      <Label htmlFor={`extra-${addon.id}-${dishNumber}`} className="text-sm">
+                        {addon.name}
+                      </Label>
+                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      {addon.price > 0 ? `+${addon.price}` : '+0'}
+                    </span>
                   </div>
-                  <span className="text-sm text-muted-foreground">
-                    {addon.price > 0 ? `+${addon.price}` : '+0'}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

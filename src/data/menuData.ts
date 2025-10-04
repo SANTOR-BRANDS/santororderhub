@@ -851,26 +851,191 @@ export const restoryMenu: Dish[] = [
 
 export const nirvanaMenu: Dish[] = [
   // PAD KRAPAO
-  { id: 'NV-PKR-001', name: 'Pad Krapao Minced Beef', price: 99, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'NV-PKR-002', name: 'Pad Krapao Minced Pork', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'NV-PKR-003', name: 'Pad Krapao Minced Chicken', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
-  { id: 'NV-PKR-004', name: 'Pad Krapao Diced Chicken', price: 89, category: 'PAD KRAPAO', restaurant: 'nirvana', spicyRequired: true },
+  { 
+    id: 'NV-PKR-001', 
+    name: 'Pad Krapao Minced Beef', 
+    price: 99, 
+    category: 'PAD KRAPAO', 
+    restaurant: 'nirvana', 
+    spicyRequired: true,
+    extraOptions: [
+      { id: 'NV-EXT-006', name: '🐮 Extra Minced Beef 100g', price: 60, category: 'extra-pls' },
+      { id: 'NV-EXT-007', name: '🐮 Extra Premium Beef 100g', price: 80, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-PKR-002', 
+    name: 'Pad Krapao Minced Pork', 
+    price: 89, 
+    category: 'PAD KRAPAO', 
+    restaurant: 'nirvana', 
+    spicyRequired: true,
+    extraOptions: [
+      { id: 'NV-EXT-005', name: '🐷 Extra Minced Pork 100g', price: 60, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-PKR-003', 
+    name: 'Pad Krapao Minced Chicken', 
+    price: 89, 
+    category: 'PAD KRAPAO', 
+    restaurant: 'nirvana', 
+    spicyRequired: true,
+    extraOptions: [
+      { id: 'NV-EXT-004', name: '🐔 Extra Minced Chicken 150g', price: 60, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-PKR-004', 
+    name: 'Pad Krapao Diced Chicken', 
+    price: 89, 
+    category: 'PAD KRAPAO', 
+    restaurant: 'nirvana', 
+    spicyRequired: true,
+    extraOptions: [
+      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
 
   // GRILLED MEAT + RICE
-  { id: 'NV-GRR-001', name: '⭐ Grilled Beef on Rice ⭐', price: 119, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana', isSpecial: true },
-  { id: 'NV-GRR-002', name: 'Mala Grilled Beef on Rice', price: 129, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
-  { id: 'NV-GRR-003', name: 'Grilled Beef with Spring Onion on Rice', price: 129, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
-  { id: 'NV-GRR-004', name: 'Grilled Chicken Thigh on Rice', price: 89, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
-  { id: 'NV-GRR-005', name: 'Mala Grilled Chicken Thigh on Rice', price: 99, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
-  { id: 'NV-GRR-006', name: 'Grilled Pork Belly on Rice', price: 115, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
-  { id: 'NV-GRR-007', name: 'Mala Grilled Pork Belly on Rice', price: 125, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
-  { id: 'NV-GRR-008', name: 'Grilled Sliced Pork Sirloin on Rice', price: 105, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
-  { id: 'NV-GRR-009', name: 'Mala Grilled Sliced Pork Sirloin on Rice', price: 115, category: 'GRILLED MEAT + RICE', restaurant: 'nirvana' },
+  { 
+    id: 'NV-GRR-001', 
+    name: '⭐ Grilled Beef on Rice ⭐', 
+    price: 119, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana', 
+    isSpecial: true,
+    extraOptions: [
+      { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRR-002', 
+    name: 'Mala Grilled Beef on Rice', 
+    price: 129, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRR-003', 
+    name: 'Grilled Beef with Spring Onion on Rice', 
+    price: 129, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRR-004', 
+    name: 'Grilled Chicken Thigh on Rice', 
+    price: 89, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRR-005', 
+    name: 'Mala Grilled Chicken Thigh on Rice', 
+    price: 99, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRR-006', 
+    name: 'Grilled Pork Belly on Rice', 
+    price: 115, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRR-007', 
+    name: 'Mala Grilled Pork Belly on Rice', 
+    price: 125, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRR-008', 
+    name: 'Grilled Sliced Pork Sirloin on Rice', 
+    price: 105, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRR-009', 
+    name: 'Mala Grilled Sliced Pork Sirloin on Rice', 
+    price: 115, 
+    category: 'GRILLED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
 
   // BRAISED MEAT + RICE
-  { id: 'NV-BRR-001', name: 'Braised Beef on Rice', price: 129, category: 'BRAISED MEAT + RICE', restaurant: 'nirvana' },
-  { id: 'NV-BRR-002', name: '⭐ Braised Pork Belly on Rice ⭐', price: 149, category: 'BRAISED MEAT + RICE', restaurant: 'nirvana', isSpecial: true },
-  { id: 'NV-BRR-003', name: 'Braised Chicken Wing on Rice 👍', price: 95, category: 'BRAISED MEAT + RICE', restaurant: 'nirvana', isSpecial: true },
+  { 
+    id: 'NV-BRR-001', 
+    name: 'Braised Beef on Rice', 
+    price: 129, 
+    category: 'BRAISED MEAT + RICE', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-BRR-002', 
+    name: '⭐ Braised Pork Belly on Rice ⭐', 
+    price: 149, 
+    category: 'BRAISED MEAT + RICE', 
+    restaurant: 'nirvana', 
+    isSpecial: true,
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-BRR-003', 
+    name: 'Braised Chicken Wing on Rice 👍', 
+    price: 95, 
+    category: 'BRAISED MEAT + RICE', 
+    restaurant: 'nirvana', 
+    isSpecial: true,
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
 
   // BRAISED MEAT + EGG NOODLES
   { id: 'NV-BRN-001', name: 'Braised Chicken Wing with Egg Noodles', price: 125, category: 'BRAISED MEAT + EGG NOODLES', restaurant: 'nirvana' },
@@ -881,32 +1046,179 @@ export const nirvanaMenu: Dish[] = [
   { id: 'NV-BRN-006', name: 'Mala Braised Pork Belly with Egg Noodles', price: 189, category: 'BRAISED MEAT + EGG NOODLES', restaurant: 'nirvana' },
 
   // GRILLED MEAT + EGG NOODLES
-  { id: 'NV-GRN-001', name: 'Grilled Pork Belly with Egg Noodles', price: 145, category: 'GRILLED MEAT + EGG NOODLES', restaurant: 'nirvana' },
-  { id: 'NV-GRN-002', name: 'Mala Grilled Pork Belly with Egg Noodles', price: 155, category: 'GRILLED MEAT + EGG NOODLES', restaurant: 'nirvana' },
-  { id: 'NV-GRN-003', name: 'Grilled Sliced Pork Sirloin with Egg Noodles', price: 135, category: 'GRILLED MEAT + EGG NOODLES', restaurant: 'nirvana' },
-  { id: 'NV-GRN-004', name: 'Mala Grilled Sliced Pork Sirloin with Egg Noodles', price: 145, category: 'GRILLED MEAT + EGG NOODLES', restaurant: 'nirvana' },
-  { id: 'NV-GRN-005', name: 'Grilled Chicken Thigh with Egg Noodles', price: 119, category: 'GRILLED MEAT + EGG NOODLES', restaurant: 'nirvana' },
-  { id: 'NV-GRN-006', name: 'Mala Grilled Chicken Thigh with Egg Noodles', price: 129, category: 'GRILLED MEAT + EGG NOODLES', restaurant: 'nirvana' },
-  { id: 'NV-GRN-007', name: '⭐ Grilled Beef with Egg Noodles ⭐', price: 149, category: 'GRILLED MEAT + EGG NOODLES', restaurant: 'nirvana', isSpecial: true },
-  { id: 'NV-GRN-008', name: 'Mala Grilled Beef with Egg Noodles', price: 159, category: 'GRILLED MEAT + EGG NOODLES', restaurant: 'nirvana' },
+  { 
+    id: 'NV-GRN-001', 
+    name: 'Grilled Pork Belly with Egg Noodles', 
+    price: 145, 
+    category: 'GRILLED MEAT + EGG NOODLES', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 }
+    ]
+  },
+  { 
+    id: 'NV-GRN-002', 
+    name: 'Mala Grilled Pork Belly with Egg Noodles', 
+    price: 155, 
+    category: 'GRILLED MEAT + EGG NOODLES', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 }
+    ]
+  },
+  { 
+    id: 'NV-GRN-003', 
+    name: 'Grilled Sliced Pork Sirloin with Egg Noodles', 
+    price: 135, 
+    category: 'GRILLED MEAT + EGG NOODLES', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 }
+    ]
+  },
+  { 
+    id: 'NV-GRN-004', 
+    name: 'Mala Grilled Sliced Pork Sirloin with Egg Noodles', 
+    price: 145, 
+    category: 'GRILLED MEAT + EGG NOODLES', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 }
+    ]
+  },
+  { 
+    id: 'NV-GRN-005', 
+    name: 'Grilled Chicken Thigh with Egg Noodles', 
+    price: 119, 
+    category: 'GRILLED MEAT + EGG NOODLES', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRN-006', 
+    name: 'Mala Grilled Chicken Thigh with Egg Noodles', 
+    price: 129, 
+    category: 'GRILLED MEAT + EGG NOODLES', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-GRN-007', 
+    name: '⭐ Grilled Beef with Egg Noodles ⭐', 
+    price: 149, 
+    category: 'GRILLED MEAT + EGG NOODLES', 
+    restaurant: 'nirvana', 
+    isSpecial: true,
+    extraOptions: [
+      { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 }
+    ]
+  },
+  { 
+    id: 'NV-GRN-008', 
+    name: 'Mala Grilled Beef with Egg Noodles', 
+    price: 159, 
+    category: 'GRILLED MEAT + EGG NOODLES', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 }
+    ]
+  },
 
   // NOODLE SOUP
   { id: 'NV-NSP-001', name: 'Mala Beef Rice Noodle Soup', price: 169, category: 'NOODLE SOUP', restaurant: 'nirvana' },
   { id: 'NV-NSP-002', name: 'Beef Rice Noodle Soup', price: 159, category: 'NOODLE SOUP', restaurant: 'nirvana' },
 
   // VEGETARIAN
-  { id: 'NV-VEG-001', name: 'Grilled Mushroom with Soy Sauce on Rice', price: 69, category: 'VEGETARIAN', restaurant: 'nirvana' },
-  { id: 'NV-VEG-002', name: 'Mala Grilled Mushroom with Soy Sauce on Rice', price: 79, category: 'VEGETARIAN', restaurant: 'nirvana' },
-  { id: 'NV-VEG-003', name: 'Stir-Fried Mushroom with Soy Sauce', price: 69, category: 'VEGETARIAN', restaurant: 'nirvana' },
-  { id: 'NV-VEG-004', name: 'Mala Stir-Fried Mushroom with Soy Sauce', price: 79, category: 'VEGETARIAN', restaurant: 'nirvana' },
+  { 
+    id: 'NV-VEG-001', 
+    name: 'Grilled Mushroom with Soy Sauce on Rice', 
+    price: 69, 
+    category: 'VEGETARIAN', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-VEG-002', 
+    name: 'Mala Grilled Mushroom with Soy Sauce on Rice', 
+    price: 79, 
+    category: 'VEGETARIAN', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-VEG-003', 
+    name: 'Stir-Fried Mushroom with Soy Sauce', 
+    price: 69, 
+    category: 'VEGETARIAN', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-VEG-004', 
+    name: 'Mala Stir-Fried Mushroom with Soy Sauce', 
+    price: 79, 
+    category: 'VEGETARIAN', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
 
   // FISH MENU
-  { id: 'NV-FIS-001', name: 'Grilled Saba Fish with Soy Sauce on Rice', price: 139, category: 'FISH MENU', restaurant: 'nirvana' },
-  { id: 'NV-FIS-002', name: 'Mala Grilled Saba Fish with Soy Sauce on Rice', price: 149, category: 'FISH MENU', restaurant: 'nirvana' },
+  { 
+    id: 'NV-FIS-001', 
+    name: 'Grilled Saba Fish with Soy Sauce on Rice', 
+    price: 139, 
+    category: 'FISH MENU', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-008', name: '🐟 Extra Saba Fish 140g', price: 120, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-FIS-002', 
+    name: 'Mala Grilled Saba Fish with Soy Sauce on Rice', 
+    price: 149, 
+    category: 'FISH MENU', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'NV-EXT-008', name: '🐟 Extra Saba Fish 140g', price: 120, category: 'extra-pls' },
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
 
   // OTHER
-  { id: 'NV-OTH-001', name: 'Creamy Omelette on Rice', price: 70, category: 'OTHER', restaurant: 'nirvana' },
-  { id: 'NV-OTH-002', name: 'Stir-Fried Diced Chicken on Rice', price: 99, category: 'OTHER', restaurant: 'nirvana' },
+  { 
+    id: 'NV-OTH-001', 
+    name: 'Creamy Omelette on Rice', 
+    price: 70, 
+    category: 'OTHER', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
+  { 
+    id: 'NV-OTH-002', 
+    name: 'Stir-Fried Diced Chicken on Rice', 
+    price: 99, 
+    category: 'OTHER', 
+    restaurant: 'nirvana',
+    extraOptions: [
+      { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+    ]
+  },
 
   // DRINKS
   { 
