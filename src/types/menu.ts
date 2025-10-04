@@ -43,6 +43,16 @@ export interface BasketItem {
   needsCutlery: boolean;
   quantity: number;
   isPremiumBeef?: boolean;
+  // For combo deals (2x Pad Krapao)
+  isCombo?: boolean;
+  combo2?: {
+    selectedVariant?: DishVariant;
+    addOns: AddOn[];
+    extraPls: AddOn[];
+    incrementalExtras?: Map<string, number>;
+    spicyLevel?: number;
+    sauce: string;
+  };
 }
 
 export interface SpicyLevel {

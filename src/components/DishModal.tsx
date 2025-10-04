@@ -234,10 +234,10 @@ const DishModal = ({
   const handleAddToBasket = () => {
     if (!canAddToBasket()) return;
     if (isCombo) {
-      // Add two separate basket items for combo
-      const basketItem1: BasketItem = {
-        id: `${dish.id}-1-${Date.now()}`,
-        dish: { ...dish, name: 'Pad Krapao Minced Pork (Combo 1/2)' },
+      // Add a single combo item with both dish configurations
+      const comboItem: BasketItem = {
+        id: `${dish.id}-combo-${Date.now()}`,
+        dish,
         selectedVariant,
         addOns: selectedAddOns,
         extraPls: selectedExtraPls,
@@ -246,24 +246,18 @@ const DishModal = ({
         sauce: selectedSauces.join(', '),
         needsCutlery,
         quantity,
-        isPremiumBeef
+        isPremiumBeef,
+        isCombo: true,
+        combo2: {
+          selectedVariant: selectedVariant2,
+          addOns: selectedAddOns2,
+          extraPls: selectedExtraPls2,
+          incrementalExtras: incrementalQuantities2,
+          spicyLevel: dish.spicyRequired ? spicyLevel2 : undefined,
+          sauce: selectedSauces2.join(', ')
+        }
       };
-
-      const basketItem2: BasketItem = {
-        id: `${dish.id}-2-${Date.now()}`,
-        dish: { ...dish, name: 'Pad Krapao Minced Pork (Combo 2/2)' },
-        selectedVariant: selectedVariant2,
-        addOns: selectedAddOns2,
-        extraPls: selectedExtraPls2,
-        incrementalExtras: incrementalQuantities2,
-        spicyLevel: dish.spicyRequired ? spicyLevel2 : undefined,
-        sauce: selectedSauces2.join(', '),
-        needsCutlery: false, // Only need cutlery once
-        quantity,
-        isPremiumBeef
-      };
-      onAddToBasket(basketItem1);
-      onAddToBasket(basketItem2);
+      onAddToBasket(comboItem);
     } else {
       const basketItem: BasketItem = {
         id: `${dish.id}-${Date.now()}`,
