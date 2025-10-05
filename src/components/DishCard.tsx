@@ -18,12 +18,12 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
         !isUnavailable && (dish.restaurant === 'restory' 
           ? 'bg-nirvana-secondary text-white hover:border-restory/30 border border-gray-700' 
           : dish.restaurant === 'mejai hai yum'
-          ? 'bg-mejai-secondary hover:border-mejai-primary/50 border border-mejai-accent/30'
+          ? 'bg-mejai-background hover:border-mejai-primary/50 border border-mejai-accent/30'
           : 'bg-nirvana-primary hover:border-nirvana-accent/30'),
         isUnavailable && 'opacity-60 cursor-not-allowed',
         dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50',
         dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border border-gray-700',
-        dish.restaurant === 'mejai hai yum' && 'bg-mejai-secondary border border-mejai-accent/30'
+        dish.restaurant === 'mejai hai yum' && 'bg-mejai-background border border-mejai-accent/30'
       )}
       onClick={() => !isUnavailable && onClick(dish)}
     >
@@ -87,7 +87,8 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
         <div className="p-4">
           <div className="flex justify-between items-start gap-2 mb-2">
             <h3 className={cn(
-              'font-semibold text-sm leading-tight text-white',
+              'font-semibold text-sm leading-tight',
+              dish.restaurant === 'mejai hai yum' ? 'text-black' : 'text-white',
               dish.isSpecial && 'text-amber-600 font-bold'
             )}>
               {dish.name}
@@ -104,7 +105,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
           {dish.description && (
             <p className={cn(
               "text-xs mb-2 line-clamp-2",
-              dish.restaurant === 'mejai hai yum' ? 'text-white/80' : 'text-muted-foreground'
+              dish.restaurant === 'mejai hai yum' ? 'text-black/70' : 'text-muted-foreground'
             )}>
               {dish.description}
             </p>
@@ -112,11 +113,11 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
 
           <div className="flex items-center justify-between">
             <span className={cn(
-              'text-xs px-2 py-1 rounded-full',
+              'text-xs px-2 py-1 rounded-full font-semibold',
               dish.restaurant === 'restory' 
                 ? 'bg-restory/10 text-restory-secondary' 
                 : dish.restaurant === 'mejai hai yum'
-                ? 'bg-mejai-accent/20 text-mejai-primary'
+                ? 'bg-transparent text-mejai-primary'
                 : 'bg-nirvana-accent/10 text-nirvana-accent'
             )}>
               {dish.category}
