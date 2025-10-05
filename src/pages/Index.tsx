@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 const themeColors: Record<Restaurant, string> = {
   restory: '#fd7304',
   nirvana: '#ffd93d',
-  'mejai hai yum': '#fec428'
+  'mejai hai yum': '#f8c029'
 };
 
 const Index = () => {

@@ -26,7 +26,7 @@ const themeColors: Record<Restaurant, {
   },
   'mejai hai yum': {
     accent: 'mejai',
-    color: '#fec428'
+    color: '#f8c029'
   }
 };
 const MenuDisplay = ({
