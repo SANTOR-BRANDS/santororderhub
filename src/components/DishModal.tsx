@@ -139,16 +139,23 @@ const DishModal = ({
     return basePrice + extraPlsTotal + addOnsTotal + saucesTotal;
   };
 
-  const isPremiumBeef = dish.name.includes('Premium Beef') && selectedVariant?.id === 'premium';
-  const isNormalBeef = dish.name.includes('Premium Beef') && selectedVariant?.id === 'normal';
+  // Detect if premium beef variant (RS-PKR-011) or normal beef variant (RS-PKR-012)
+  const isPremiumBeef = dish.name.includes('Premium Beef') && selectedVariant?.id === 'RS-PKR-011';
+  const isNormalBeef = dish.name.includes('Premium Beef') && selectedVariant?.id === 'RS-PKR-012';
 
   // Filter extra options based on current selection
-  const getFilteredExtraOptions = () => {
+  const getFilteredExtraOptions = (dishNumber = 1) => {
     if (!dish.extraOptions) return [];
+    const currentVariant = dishNumber === 1 ? selectedVariant : selectedVariant2;
+    const isPremium = dish.name.includes('Premium Beef') && currentVariant?.id === 'RS-PKR-011';
+    const isNormal = dish.name.includes('Premium Beef') && currentVariant?.id === 'RS-PKR-012';
+    
     return dish.extraOptions.filter(option => {
       if (dish.name.includes('Premium Beef')) {
-        if (option.id === 'extra-premium-beef') return isPremiumBeef;
-        if (option.id === 'extra-beef') return isNormalBeef;
+        // SAN-EXT-004 = Extra Premium Beef, only show for premium variant
+        if (option.id === 'SAN-EXT-004') return isPremium;
+        // SAN-EXT-005 = Extra Beef, only show for normal beef variant
+        if (option.id === 'SAN-EXT-005') return isNormal;
       }
       return true;
     });
@@ -309,6 +316,31 @@ const DishModal = ({
               onValueChange={(value) => {
                 const variant = dish.variants?.find(v => v.id === value);
                 setCurrentSelectedVariant(variant || null);
+                
+                // Clear incompatible beef extras when variant changes
+                if (dish.name.includes('Premium Beef')) {
+                  if (dishNumber === 1) {
+                    setSelectedExtraPls(prev => prev.filter(addon => 
+                      addon.id !== 'SAN-EXT-004' && addon.id !== 'SAN-EXT-005'
+                    ));
+                    setIncrementalQuantities(prev => {
+                      const newMap = new Map(prev);
+                      newMap.delete('SAN-EXT-004');
+                      newMap.delete('SAN-EXT-005');
+                      return newMap;
+                    });
+                  } else {
+                    setSelectedExtraPls2(prev => prev.filter(addon => 
+                      addon.id !== 'SAN-EXT-004' && addon.id !== 'SAN-EXT-005'
+                    ));
+                    setIncrementalQuantities2(prev => {
+                      const newMap = new Map(prev);
+                      newMap.delete('SAN-EXT-004');
+                      newMap.delete('SAN-EXT-005');
+                      return newMap;
+                    });
+                  }
+                }
               }} 
               className="gap-2"
             >
@@ -333,13 +365,13 @@ const DishModal = ({
         )}
 
         {/* EXTRA Section */}
-        {getFilteredExtraOptions().length > 0 && (
+        {getFilteredExtraOptions(dishNumber).length > 0 && (
           <div className="mb-6">
             <Label className="text-base font-semibold mb-3">
               EXTRA
             </Label>
             <div className="space-y-2">
-              {getFilteredExtraOptions().map(addon => {
+              {getFilteredExtraOptions(dishNumber).map(addon => {
                 if (addon.isIncremental) {
                   // Special UI for incremental items (beef/pork 20g)
                   const qty = currentIncrementalQuantities.get(addon.id) || 0;
