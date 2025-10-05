@@ -83,9 +83,8 @@ const MenuDisplay = ({
             value={searchQuery} 
             onChange={e => setSearchQuery(e.target.value)} 
             className={cn(
-              "pl-10 backdrop-blur-sm rounded-sm",
-              restaurant === 'restory' ? 'bg-black/40 border-gray-700 text-white placeholder:text-gray-400' : 
-              restaurant === 'mejai hai yum' ? 'bg-white border-mejai-accent/30' : 'bg-slate-200'
+              "pl-10 backdrop-blur-sm rounded-sm bg-white/60 border-gray-300 text-gray-900 placeholder:text-gray-500",
+              restaurant === 'restory' && 'bg-white/10 border-gray-600 text-white placeholder:text-gray-400'
             )} 
           />
         </div>
