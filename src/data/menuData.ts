@@ -1140,8 +1140,19 @@ export const nirvanaMenu: Dish[] = [
   },
 
   // NOODLE SOUP
-  { id: 'NV-NSP-001', name: 'Mala Beef Rice Noodle Soup', price: 169, category: 'NOODLE SOUP', restaurant: 'nirvana' },
-  { id: 'NV-NSP-002', name: 'Beef Rice Noodle Soup', price: 159, category: 'NOODLE SOUP', restaurant: 'nirvana', isAvailable: false },
+  { 
+    id: 'NV-NSP-001', 
+    name: 'Mala Beef Rice Noodle Soup', 
+    price: 169, 
+    category: 'NOODLE SOUP', 
+    restaurant: 'nirvana',
+    variants: [
+      { id: 'NV-NSP-001', name: 'Base', price: 169, isDefault: true },
+      { id: 'NV-NSP-002', name: 'Vermicelli', price: 169 },
+      { id: 'NV-NSP-003', name: 'Egg Noodle', price: 184 }
+    ]
+  },
+  { id: 'NV-NSP-004', name: 'Beef Rice Noodle Soup', price: 159, category: 'NOODLE SOUP', restaurant: 'nirvana', isAvailable: false },
 
   // VEGETARIAN
   { 
