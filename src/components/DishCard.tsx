@@ -117,7 +117,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
               dish.restaurant === 'restory' 
                 ? 'bg-restory/10 text-restory-secondary' 
                 : dish.restaurant === 'mejai hai yum'
-                ? 'bg-transparent text-mejai-secondary'
+                ? 'bg-mejai-secondary/20 text-mejai-secondary'
                 : 'bg-nirvana-accent/10 text-nirvana-accent'
             )}>
               {dish.category}
