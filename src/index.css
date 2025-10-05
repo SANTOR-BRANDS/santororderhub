@@ -57,11 +57,11 @@
     --nirvana-background: 0 0% 5%;
 
     /* Mejai Hai Yum Theme */
-    --mejai-primary: 338 100% 70%;
-    --mejai-primary-foreground: 0 0% 100%;
-    --mejai-secondary: 338 100% 60%;
-    --mejai-accent: 338 100% 75%;
-    --mejai-background: 0 0% 98%;
+    --mejai-primary: 45 99% 58%;
+    --mejai-primary-foreground: 0 0% 0%;
+    --mejai-secondary: 45 99% 50%;
+    --mejai-accent: 45 99% 65%;
+    --mejai-background: 45 99% 95%;
 
     /* Gradients */
     --gradient-santor: linear-gradient(135deg, hsl(var(--santor-primary)), hsl(var(--santor-secondary)));

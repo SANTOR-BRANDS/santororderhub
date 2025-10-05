@@ -17,10 +17,13 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
         !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1',
         !isUnavailable && (dish.restaurant === 'restory' 
           ? 'bg-nirvana-secondary text-white hover:border-restory/30 border border-gray-700' 
+          : dish.restaurant === 'mejai hai yum'
+          ? 'bg-mejai-secondary hover:border-mejai-primary/50 border border-mejai-accent/30'
           : 'bg-nirvana-primary hover:border-nirvana-accent/30'),
         isUnavailable && 'opacity-60 cursor-not-allowed',
         dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50',
-        dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border border-gray-700'
+        dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border border-gray-700',
+        dish.restaurant === 'mejai hai yum' && 'bg-mejai-secondary border border-mejai-accent/30'
       )}
       onClick={() => !isUnavailable && onClick(dish)}
     >
@@ -32,13 +35,16 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
               'w-full h-full flex items-center justify-center',
               dish.restaurant === 'restory' 
                 ? 'bg-restory/10' 
+                : dish.restaurant === 'mejai hai yum'
+                ? 'bg-mejai-accent/20'
                 : 'bg-nirvana-accent/10'
             )}>
               <div className="text-center p-6">
                 <div className="text-4xl mb-3">🚫</div>
                 <div className={cn(
                   'text-sm font-semibold',
-                  dish.restaurant === 'restory' ? 'text-restory' : 'text-nirvana-accent'
+                  dish.restaurant === 'restory' ? 'text-restory' : 
+                  dish.restaurant === 'mejai hai yum' ? 'text-mejai-primary' : 'text-nirvana-accent'
                 )}>
                   Currently Unavailable
                 </div>
@@ -61,6 +67,8 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
                 'w-full h-full flex items-center justify-center text-muted-foreground',
                 dish.restaurant === 'restory' 
                   ? 'bg-restory/10' 
+                  : dish.restaurant === 'mejai hai yum'
+                  ? 'bg-mejai-accent/20'
                   : 'bg-nirvana-accent/10',
                 dish.image ? 'hidden' : ''
               )}>
@@ -87,7 +95,8 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
             </h3>
             <span className={cn(
               'font-bold text-lg whitespace-nowrap',
-              dish.restaurant === 'restory' ? 'text-restory' : 'text-nirvana-accent'
+              dish.restaurant === 'restory' ? 'text-restory' : 
+              dish.restaurant === 'mejai hai yum' ? 'text-mejai-primary' : 'text-nirvana-accent'
             )}>
               ฿{dish.price}
             </span>
@@ -104,6 +113,8 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
               'text-xs px-2 py-1 rounded-full',
               dish.restaurant === 'restory' 
                 ? 'bg-restory/10 text-restory-secondary' 
+                : dish.restaurant === 'mejai hai yum'
+                ? 'bg-mejai-accent/20 text-mejai-primary'
                 : 'bg-nirvana-accent/10 text-nirvana-accent'
             )}>
               {dish.category}

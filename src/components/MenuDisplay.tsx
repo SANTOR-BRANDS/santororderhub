@@ -26,7 +26,7 @@ const themeColors: Record<Restaurant, {
   },
   'mejai hai yum': {
     accent: 'mejai',
-    color: '#FF6B9D'
+    color: '#fec428'
   }
 };
 const MenuDisplay = ({
@@ -49,6 +49,7 @@ const MenuDisplay = ({
   const getBackgroundClass = () => {
     if (restaurant === 'nirvana') return 'bg-nirvana-secondary';
     if (restaurant === 'restory') return 'bg-nirvana-secondary text-white';
+    if (restaurant === 'mejai hai yum') return 'bg-mejai-background';
     return 'bg-white';
   };
   
@@ -83,7 +84,8 @@ const MenuDisplay = ({
             onChange={e => setSearchQuery(e.target.value)} 
             className={cn(
               "pl-10 backdrop-blur-sm rounded-sm",
-              restaurant === 'restory' ? 'bg-black/40 border-gray-700 text-white placeholder:text-gray-400' : 'bg-slate-200'
+              restaurant === 'restory' ? 'bg-black/40 border-gray-700 text-white placeholder:text-gray-400' : 
+              restaurant === 'mejai hai yum' ? 'bg-white border-mejai-accent/30' : 'bg-slate-200'
             )} 
           />
         </div>

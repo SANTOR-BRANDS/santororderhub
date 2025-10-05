@@ -10,9 +10,9 @@ import { getCategoriesByRestaurant } from '@/data/menuData';
 import { cn } from '@/lib/utils';
 
 const themeColors: Record<Restaurant, string> = {
-  restory: '#FF9800',
+  restory: '#fd7304',
   nirvana: '#ffd93d',
-  'mejai hai yum': '#FF6B9D'
+  'mejai hai yum': '#fec428'
 };
 
 const Index = () => {
@@ -61,7 +61,7 @@ const Index = () => {
     }
   }, [selectedCategory]);
 
-  return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-nirvana-secondary' : 'bg-background')}>
+  return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-nirvana-secondary' : selectedRestaurant === 'mejai hai yum' ? 'bg-mejai-background' : 'bg-background')}>
       <RestaurantHeader 
         selectedRestaurant={selectedRestaurant} 
         onRestaurantChange={handleRestaurantChange}
