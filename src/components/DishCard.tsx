@@ -96,7 +96,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
             <span className={cn(
               'font-bold text-lg whitespace-nowrap',
               dish.restaurant === 'restory' ? 'text-restory' : 
-              dish.restaurant === 'mejai hai yum' ? 'text-mejai-primary' : 'text-nirvana-accent'
+              dish.restaurant === 'mejai hai yum' ? 'text-mejai-secondary' : 'text-nirvana-accent'
             )}>
               ฿{dish.price}
             </span>
