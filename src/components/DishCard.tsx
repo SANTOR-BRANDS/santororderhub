@@ -16,10 +16,11 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
         'transition-smooth border-border/50 backdrop-blur-sm relative',
         !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1',
         !isUnavailable && (dish.restaurant === 'restory' 
-          ? 'hover:border-restory/30' 
+          ? 'bg-black text-white hover:border-restory/30' 
           : 'bg-nirvana-primary hover:border-nirvana-accent/30'),
         isUnavailable && 'opacity-60 cursor-not-allowed',
-        dish.restaurant === 'nirvana' && 'bg-nirvana-primary'
+        dish.restaurant === 'nirvana' && 'bg-nirvana-primary',
+        dish.restaurant === 'restory' && 'bg-black text-white'
       )}
       onClick={() => !isUnavailable && onClick(dish)}
     >
@@ -79,7 +80,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
           <div className="flex justify-between items-start gap-2 mb-2">
             <h3 className={cn(
               'font-semibold text-sm leading-tight',
-              dish.restaurant === 'nirvana' ? 'text-white' : '',
+              (dish.restaurant === 'nirvana' || dish.restaurant === 'restory') ? 'text-white' : '',
               dish.isSpecial && 'text-amber-600 font-bold'
             )}>
               {dish.name}

@@ -48,7 +48,7 @@ const MenuDisplay = ({
   
   const getBackgroundClass = () => {
     if (restaurant === 'nirvana') return 'bg-nirvana-secondary';
-    if (restaurant === 'restory') return 'bg-black text-white';
+    if (restaurant === 'restory') return 'bg-nirvana-secondary text-white';
     return 'bg-white';
   };
   
@@ -77,7 +77,15 @@ const MenuDisplay = ({
         {/* Search Bar */}
         <div className="relative mb-6">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input placeholder="Search dishes or categories..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10 backdrop-blur-sm bg-slate-200 rounded-sm" />
+          <Input 
+            placeholder="Search dishes or categories..." 
+            value={searchQuery} 
+            onChange={e => setSearchQuery(e.target.value)} 
+            className={cn(
+              "pl-10 backdrop-blur-sm rounded-sm",
+              restaurant === 'restory' ? 'bg-black/40 border-gray-700 text-white placeholder:text-gray-400' : 'bg-slate-200'
+            )} 
+          />
         </div>
 
         {/* Promotional Banner */}

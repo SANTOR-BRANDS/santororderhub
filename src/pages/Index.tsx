@@ -61,7 +61,7 @@ const Index = () => {
     }
   }, [selectedCategory]);
 
-  return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-black' : 'bg-background')}>
+  return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-nirvana-secondary' : 'bg-background')}>
       <RestaurantHeader 
         selectedRestaurant={selectedRestaurant} 
         onRestaurantChange={handleRestaurantChange}
