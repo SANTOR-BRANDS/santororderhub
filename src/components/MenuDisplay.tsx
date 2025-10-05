@@ -48,6 +48,7 @@ const MenuDisplay = ({
   
   const getBackgroundClass = () => {
     if (restaurant === 'nirvana') return 'bg-nirvana-secondary';
+    if (restaurant === 'restory') return 'bg-black text-white';
     return 'bg-white';
   };
   

@@ -7,6 +7,7 @@ import BasketModal from '@/components/BasketModal';
 import FloatingBasket from '@/components/FloatingBasket';
 import Footer from '@/components/Footer';
 import { getCategoriesByRestaurant } from '@/data/menuData';
+import { cn } from '@/lib/utils';
 
 const themeColors: Record<Restaurant, string> = {
   restory: '#FF9800',
@@ -60,7 +61,7 @@ const Index = () => {
     }
   }, [selectedCategory]);
 
-  return <div className="min-h-screen bg-background">
+  return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-black' : 'bg-background')}>
       <RestaurantHeader 
         selectedRestaurant={selectedRestaurant} 
         onRestaurantChange={handleRestaurantChange}
