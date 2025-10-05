@@ -19,6 +19,7 @@ export interface Dish {
   image?: string;
   variants?: DishVariant[];
   extraOptions?: AddOn[];
+  isAvailable?: boolean;
 }
 
 export interface AddOn {

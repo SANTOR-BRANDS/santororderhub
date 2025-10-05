@@ -8,45 +8,70 @@ interface DishCardProps {
 }
 
 const DishCard = ({ dish, onClick }: DishCardProps) => {
+  const isUnavailable = dish.isAvailable === false;
+  
   return (
     <Card 
       className={cn(
-        'cursor-pointer transition-smooth hover:shadow-card hover:-translate-y-1',
-        'border-border/50 backdrop-blur-sm',
-        dish.restaurant === 'restory' 
+        'transition-smooth border-border/50 backdrop-blur-sm relative',
+        !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1',
+        !isUnavailable && (dish.restaurant === 'restory' 
           ? 'hover:border-restory/30' 
-          : 'bg-nirvana-primary hover:border-nirvana-accent/30'
+          : 'bg-nirvana-primary hover:border-nirvana-accent/30'),
+        isUnavailable && 'opacity-60 cursor-not-allowed',
+        dish.restaurant === 'nirvana' && 'bg-nirvana-primary'
       )}
-      onClick={() => onClick(dish)}
+      onClick={() => !isUnavailable && onClick(dish)}
     >
       <CardContent className="p-0">
         {/* Dish Image */}
-        <div className="w-full aspect-square rounded-t-lg overflow-hidden">
-          {dish.image ? (
-            <img 
-              src={dish.image} 
-              alt={dish.name}
-              className="w-full h-full object-cover transition-smooth hover:scale-105"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.nextElementSibling!.classList.remove('hidden');
-              }}
-            />
-          ) : null}
-          <div className={cn(
-            'w-full h-full flex items-center justify-center text-muted-foreground',
-            dish.restaurant === 'restory' 
-              ? 'bg-restory/10' 
-              : 'bg-nirvana-accent/10',
-            dish.image ? 'hidden' : ''
-          )}>
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
-                🍽️
+        <div className="w-full aspect-square rounded-t-lg overflow-hidden relative">
+          {isUnavailable ? (
+            <div className={cn(
+              'w-full h-full flex items-center justify-center',
+              dish.restaurant === 'restory' 
+                ? 'bg-restory/10' 
+                : 'bg-nirvana-accent/10'
+            )}>
+              <div className="text-center p-6">
+                <div className="text-4xl mb-3">🚫</div>
+                <div className={cn(
+                  'text-sm font-semibold',
+                  dish.restaurant === 'restory' ? 'text-restory' : 'text-nirvana-accent'
+                )}>
+                  Currently Unavailable
+                </div>
               </div>
-              <span className="text-xs">No Image</span>
             </div>
-          </div>
+          ) : (
+            <>
+              {dish.image ? (
+                <img 
+                  src={dish.image} 
+                  alt={dish.name}
+                  className="w-full h-full object-cover transition-smooth hover:scale-105"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling!.classList.remove('hidden');
+                  }}
+                />
+              ) : null}
+              <div className={cn(
+                'w-full h-full flex items-center justify-center text-muted-foreground',
+                dish.restaurant === 'restory' 
+                  ? 'bg-restory/10' 
+                  : 'bg-nirvana-accent/10',
+                dish.image ? 'hidden' : ''
+              )}>
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
+                    🍽️
+                  </div>
+                  <span className="text-xs">No Image</span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Content */}
