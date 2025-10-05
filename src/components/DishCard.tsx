@@ -13,14 +13,14 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
   return (
     <Card 
       className={cn(
-        'transition-smooth border-border/50 backdrop-blur-sm relative',
+        'transition-smooth backdrop-blur-sm relative',
         !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1',
         !isUnavailable && (dish.restaurant === 'restory' 
-          ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-800' 
+          ? 'bg-nirvana-secondary text-white hover:border-restory/30 border border-gray-700' 
           : 'bg-nirvana-primary hover:border-nirvana-accent/30'),
         isUnavailable && 'opacity-60 cursor-not-allowed',
-        dish.restaurant === 'nirvana' && 'bg-nirvana-primary',
-        dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-800'
+        dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50',
+        dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border border-gray-700'
       )}
       onClick={() => !isUnavailable && onClick(dish)}
     >
