@@ -87,8 +87,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
         <div className="p-4">
           <div className="flex justify-between items-start gap-2 mb-2">
             <h3 className={cn(
-              'font-semibold text-sm leading-tight',
-              (dish.restaurant === 'nirvana' || dish.restaurant === 'restory') ? 'text-white' : '',
+              'font-semibold text-sm leading-tight text-white',
               dish.isSpecial && 'text-amber-600 font-bold'
             )}>
               {dish.name}
@@ -103,7 +102,10 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
           </div>
           
           {dish.description && (
-            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+            <p className={cn(
+              "text-xs mb-2 line-clamp-2",
+              dish.restaurant === 'mejai hai yum' ? 'text-white/80' : 'text-muted-foreground'
+            )}>
               {dish.description}
             </p>
           )}
