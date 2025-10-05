@@ -17,7 +17,7 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
 }) => {
   const getBackgroundClass = () => {
     if (restaurant === 'nirvana') return 'bg-nirvana-secondary backdrop-blur-sm border-t border-gray-700';
-    if (restaurant === 'restory') return 'bg-black backdrop-blur-sm border-t border-gray-800';
+    if (restaurant === 'restory') return 'bg-nirvana-secondary backdrop-blur-sm border-t border-gray-800';
     return 'bg-white/95 backdrop-blur-sm border-t border-gray-200';
   };
   
