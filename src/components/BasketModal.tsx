@@ -325,40 +325,53 @@ const BasketModal = ({
     }
   };
 
-  const handleInstagramOrder = () => {
+  const handleInstagramOrder = async () => {
     const orderMessage = generateOrderMessage();
-    const encodedMessage = encodeURIComponent(orderMessage);
-    const instagramUrl = `https://ig.me/m/santorbrands?text=${encodedMessage}`;
-    window.open(instagramUrl, '_blank');
     
-    toast({
-      title: "Opening Instagram",
-      description: "Your order message is pre-filled and ready to send!",
-    });
+    try {
+      // Copy message to clipboard
+      await navigator.clipboard.writeText(orderMessage);
+      
+      // Open Instagram DM
+      window.open('https://ig.me/m/santorbrands', '_blank');
+      
+      toast({
+        title: "✅ Message Copied!",
+        description: "Instagram DM opened. Just paste (Ctrl+V) and send!",
+      });
+    } catch (err) {
+      // Fallback if clipboard fails
+      window.open('https://ig.me/m/santorbrands', '_blank');
+      toast({
+        title: "Opening Instagram",
+        description: "Please copy your order message and paste it in the chat.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleLineOrder = async () => {
     const orderMessage = generateOrderMessage();
     
     try {
-      // Copy message to clipboard first
+      // Copy message to clipboard
       await navigator.clipboard.writeText(orderMessage);
       
       // Open LINE official account
       window.open('https://lin.ee/8kHDCU2', '_blank');
       
       toast({
-        title: "Opening LINE",
-        description: "Your order message is copied! Just paste and send in the chat.",
+        title: "✅ Message Copied!",
+        description: "LINE chat opened. Just paste (Ctrl+V or long press) and send!",
       });
     } catch (err) {
+      // Fallback if clipboard fails
+      window.open('https://lin.ee/8kHDCU2', '_blank');
       toast({
         title: "Opening LINE",
-        description: "Please copy your order message manually and paste it in LINE chat.",
+        description: "Please copy your order message manually and paste it in chat.",
         variant: "destructive",
       });
-      // Still open LINE even if copy fails
-      window.open('https://lin.ee/8kHDCU2', '_blank');
     }
   };
 
