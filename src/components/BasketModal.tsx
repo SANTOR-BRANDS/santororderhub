@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Trash2, Plus, Minus, Instagram } from 'lucide-react';
+import { Trash2, Plus, Minus, Instagram, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
@@ -330,6 +330,36 @@ const BasketModal = ({
     const encodedMessage = encodeURIComponent(orderMessage);
     const instagramUrl = `https://ig.me/m/santorbrands?text=${encodedMessage}`;
     window.open(instagramUrl, '_blank');
+    
+    toast({
+      title: "Opening Instagram",
+      description: "Your order message is pre-filled and ready to send!",
+    });
+  };
+
+  const handleLineOrder = async () => {
+    const orderMessage = generateOrderMessage();
+    
+    try {
+      // Copy message to clipboard first
+      await navigator.clipboard.writeText(orderMessage);
+      
+      // Open LINE official account
+      window.open('https://lin.ee/8kHDCU2', '_blank');
+      
+      toast({
+        title: "Opening LINE",
+        description: "Your order message is copied! Just paste and send in the chat.",
+      });
+    } catch (err) {
+      toast({
+        title: "Opening LINE",
+        description: "Please copy your order message manually and paste it in LINE chat.",
+        variant: "destructive",
+      });
+      // Still open LINE even if copy fails
+      window.open('https://lin.ee/8kHDCU2', '_blank');
+    }
   };
 
   if (basketItems.length === 0) {
@@ -527,6 +557,20 @@ const BasketModal = ({
 
           <div className="space-y-2">
             <Button 
+              onClick={handleLineOrder}
+              className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white"
+            >
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Send via LINE
+            </Button>
+            <Button 
+              onClick={handleInstagramOrder}
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+            >
+              <Instagram className="h-4 w-4 mr-2" />
+              Send via Instagram
+            </Button>
+            <Button 
               onClick={handleCopyOrder}
               variant="outline"
               className="w-full"
@@ -534,17 +578,10 @@ const BasketModal = ({
             >
               📋 Copy Order Message
             </Button>
-            <Button 
-              onClick={handleInstagramOrder}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-            >
-              <Instagram className="h-4 w-4 mr-2" />
-              Send via Instagram DM
-            </Button>
           </div>
 
           <p className="text-xs text-muted-foreground text-center mt-4">
-            Orders are sent via Instagram DM to SANTOR for processing
+            Send your order via LINE or Instagram for processing
           </p>
         </div>
       </DialogContent>
