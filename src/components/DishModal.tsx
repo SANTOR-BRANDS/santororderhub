@@ -509,73 +509,17 @@ const DishModal = ({
             SELECT SAUCE <span className="text-red-500">*</span>
             <span className="text-xs text-muted-foreground">(Required)</span>
           </Label>
-          <div className="space-y-2">
-            {SAUCES.map(sauce => {
-              const isFreeSauce = sauce.price === 0;
-              const isNoSauce = sauce.id === 'SAN-SAU-008';
-              const noSauceSelected = currentSelectedSauces.includes('SAN-SAU-008');
-              const selectedFreeSauce = currentSelectedSauces.find(id => {
-                const s = SAUCES.find(s => s.id === id);
-                return s && s.price === 0 && s.id !== 'SAN-SAU-008';
-              });
-
-              let disabled = false;
-              if (isNoSauce) {
-                disabled = false;
-              } else if (noSauceSelected) {
-                disabled = true;
-              } else if (isFreeSauce) {
-                disabled = selectedFreeSauce && selectedFreeSauce !== sauce.id;
-              } else {
-                disabled = false;
-              }
-
-              return (
-                <div
-                  key={sauce.id}
-                  className={`flex items-center justify-between ${disabled ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}
-                  style={{ transition: 'opacity 0.2s' }}
-                >
+          {dish.customSauces ? (
+            // Radio buttons for dishes with custom sauces (single selection)
+            <RadioGroup 
+              value={currentSelectedSauces[0] || ''} 
+              onValueChange={(value) => setCurrentSelectedSauces([value])}
+              className="space-y-2"
+            >
+              {SAUCES.map(sauce => (
+                <div key={sauce.id} className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`${sauce.id}-${dishNumber}`}
-                      checked={currentSelectedSauces.includes(sauce.id)}
-                      disabled={disabled}
-                      onCheckedChange={(checked) => {
-                        // Don't allow changes if disabled (no sauce is selected)
-                        if (disabled) return;
-                        
-                        if (isNoSauce) {
-                          if (checked) {
-                            setCurrentSelectedSauces(['SAN-SAU-008']);
-                          } else {
-                            setCurrentSelectedSauces([]);
-                          }
-                          return;
-                        }
-                        if (isFreeSauce) {
-                          if (checked) {
-                            // Keep paid sauces, remove other free sauces, add this free sauce
-                            const paidSauces = currentSelectedSauces.filter(id => {
-                              const s = SAUCES.find(s => s.id === id);
-                              return s && s.price > 0;
-                            });
-                            setCurrentSelectedSauces([...paidSauces, sauce.id]);
-                          } else {
-                            setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-                          }
-                          return;
-                        }
-                        // For paid sauces, don't allow selection if no sauce is selected
-                        if (noSauceSelected) return;
-                        
-                        if (checked) {
-                          setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'SAN-SAU-008'), sauce.id]);
-                        } else {
-                          setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-                        }
-                      }}
-                    />
+                    <RadioGroupItem value={sauce.id} id={`${sauce.id}-${dishNumber}`} />
                     <Label htmlFor={`${sauce.id}-${dishNumber}`}>{sauce.name}</Label>
                   </div>
                   {sauce.price > 0 && (
@@ -584,9 +528,89 @@ const DishModal = ({
                     </span>
                   )}
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </RadioGroup>
+          ) : (
+            // Checkboxes for regular dishes (multiple selection allowed)
+            <div className="space-y-2">
+              {SAUCES.map(sauce => {
+                const isFreeSauce = sauce.price === 0;
+                const isNoSauce = sauce.id === 'SAN-SAU-008';
+                const noSauceSelected = currentSelectedSauces.includes('SAN-SAU-008');
+                const selectedFreeSauce = currentSelectedSauces.find(id => {
+                  const s = SAUCES.find(s => s.id === id);
+                  return s && s.price === 0 && s.id !== 'SAN-SAU-008';
+                });
+
+                let disabled = false;
+                if (isNoSauce) {
+                  disabled = false;
+                } else if (noSauceSelected) {
+                  disabled = true;
+                } else if (isFreeSauce) {
+                  disabled = selectedFreeSauce && selectedFreeSauce !== sauce.id;
+                } else {
+                  disabled = false;
+                }
+
+                return (
+                  <div
+                    key={sauce.id}
+                    className={`flex items-center justify-between ${disabled ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}
+                    style={{ transition: 'opacity 0.2s' }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`${sauce.id}-${dishNumber}`}
+                        checked={currentSelectedSauces.includes(sauce.id)}
+                        disabled={disabled}
+                        onCheckedChange={(checked) => {
+                          // Don't allow changes if disabled (no sauce is selected)
+                          if (disabled) return;
+                          
+                          if (isNoSauce) {
+                            if (checked) {
+                              setCurrentSelectedSauces(['SAN-SAU-008']);
+                            } else {
+                              setCurrentSelectedSauces([]);
+                            }
+                            return;
+                          }
+                          if (isFreeSauce) {
+                            if (checked) {
+                              // Keep paid sauces, remove other free sauces, add this free sauce
+                              const paidSauces = currentSelectedSauces.filter(id => {
+                                const s = SAUCES.find(s => s.id === id);
+                                return s && s.price > 0;
+                              });
+                              setCurrentSelectedSauces([...paidSauces, sauce.id]);
+                            } else {
+                              setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                            }
+                            return;
+                          }
+                          // For paid sauces, don't allow selection if no sauce is selected
+                          if (noSauceSelected) return;
+                          
+                          if (checked) {
+                            setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'SAN-SAU-008'), sauce.id]);
+                          } else {
+                            setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                          }
+                        }}
+                      />
+                      <Label htmlFor={`${sauce.id}-${dishNumber}`}>{sauce.name}</Label>
+                    </div>
+                    {sauce.price > 0 && (
+                      <span className="text-sm text-muted-foreground">
+                        +{sauce.price}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
         )}
       </>
