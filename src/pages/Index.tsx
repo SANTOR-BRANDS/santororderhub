@@ -18,7 +18,27 @@ const themeColors: Record<Restaurant, string> = {
 const Index = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
-  const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
+  const [basketItems, setBasketItems] = useState<BasketItem[]>(() => {
+    // Load basket from localStorage on mount
+    try {
+      const saved = localStorage.getItem('santor-basket');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Convert incrementalExtras from object back to Map
+        return parsed.map((item: any) => ({
+          ...item,
+          incrementalExtras: item.incrementalExtras ? new Map(Object.entries(item.incrementalExtras)) : undefined,
+          combo2: item.combo2 ? {
+            ...item.combo2,
+            incrementalExtras: item.combo2.incrementalExtras ? new Map(Object.entries(item.combo2.incrementalExtras)) : undefined
+          } : undefined
+        }));
+      }
+    } catch (error) {
+      console.error('Failed to load basket from localStorage:', error);
+    }
+    return [];
+  });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   
@@ -60,6 +80,24 @@ const Index = () => {
       window.scrollTo(0, 0);
     }
   }, [selectedCategory]);
+
+  // Save basket to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      // Convert Maps to objects for JSON serialization
+      const serializable = basketItems.map(item => ({
+        ...item,
+        incrementalExtras: item.incrementalExtras ? Object.fromEntries(item.incrementalExtras) : undefined,
+        combo2: item.combo2 ? {
+          ...item.combo2,
+          incrementalExtras: item.combo2.incrementalExtras ? Object.fromEntries(item.combo2.incrementalExtras) : undefined
+        } : undefined
+      }));
+      localStorage.setItem('santor-basket', JSON.stringify(serializable));
+    } catch (error) {
+      console.error('Failed to save basket to localStorage:', error);
+    }
+  }, [basketItems]);
 
   return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-nirvana-secondary' : selectedRestaurant === 'mejai hai yum' ? 'bg-mejai-background' : 'bg-background')}>
       <RestaurantHeader 
