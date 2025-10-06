@@ -88,7 +88,6 @@ export const NIRVANA_SAUCES = [
   { id: 'NV-SAU-003', name: 'Isaan Dipping Sauce', price: 0 },
   { id: 'NV-SAU-004', name: 'Seafood Sauce', price: 0 },
   { id: 'NV-SAU-005', name: '🚫 No Sauce', price: 0 },
-  { id: 'NV-SAU-006', name: 'Sesame Sauce', price: 20 },
 ];
 
 export const getSaucesByRestaurant = (restaurant: Restaurant) => {
