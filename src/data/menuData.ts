@@ -1150,6 +1150,10 @@ export const nirvanaMenu: Dish[] = [
       { id: 'NV-NSP-001', name: 'Base', price: 169, isDefault: true },
       { id: 'NV-NSP-002', name: 'Vermicelli', price: 169 },
       { id: 'NV-NSP-003', name: 'Egg Noodle', price: 184 }
+    ],
+    customSauces: [
+      { id: 'NV-SAU-006', name: 'Sesame Sauce', price: 20 },
+      { id: 'NV-SAU-005', name: '🚫 No Sauce', price: 0 }
     ]
   },
   { id: 'NV-NSP-004', name: 'Beef Rice Noodle Soup', price: 159, category: 'NOODLE SOUP', restaurant: 'nirvana', isAvailable: false },

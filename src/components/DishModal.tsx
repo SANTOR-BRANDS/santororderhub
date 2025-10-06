@@ -70,7 +70,7 @@ const DishModal = ({
   if (!dish) return null;
 
   const isCombo = dish.name.includes('2x Pad Krapao');
-  const SAUCES = getSaucesByRestaurant(dish.restaurant);
+  const SAUCES = dish.customSauces || getSaucesByRestaurant(dish.restaurant);
 
   // Calculate price for incremental items with discount
   const calculateIncrementalPrice = (addon: AddOn, quantity: number) => {
