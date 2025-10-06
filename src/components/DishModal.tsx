@@ -578,9 +578,11 @@ const DishModal = ({
                     />
                     <Label htmlFor={`${sauce.id}-${dishNumber}`}>{sauce.name}</Label>
                   </div>
-                  <span className="text-sm text-muted-foreground">
-                    {sauce.price > 0 ? `+${sauce.price}` : '+0'}
-                  </span>
+                  {sauce.price > 0 && (
+                    <span className="text-sm text-muted-foreground">
+                      +{sauce.price}
+                    </span>
+                  )}
                 </div>
               );
             })}
