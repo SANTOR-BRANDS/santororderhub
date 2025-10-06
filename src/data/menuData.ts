@@ -802,7 +802,7 @@ export const restoryMenu: Dish[] = [
     category: 'DRINKS', 
     restaurant: 'restory',
     extraOptions: [
-      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
   },
   { 
@@ -812,7 +812,7 @@ export const restoryMenu: Dish[] = [
     category: 'DRINKS', 
     restaurant: 'restory',
     extraOptions: [
-      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
   },
   { 
@@ -822,7 +822,7 @@ export const restoryMenu: Dish[] = [
     category: 'DRINKS', 
     restaurant: 'restory',
     extraOptions: [
-      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
   },
   { 
@@ -832,7 +832,7 @@ export const restoryMenu: Dish[] = [
     category: 'DRINKS', 
     restaurant: 'restory',
     extraOptions: [
-      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
   },
 
@@ -1250,7 +1250,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'DRINKS', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
   },
   { 
@@ -1260,7 +1260,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'DRINKS', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
   },
   { 
@@ -1270,7 +1270,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'DRINKS', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
   },
   { 
@@ -1280,7 +1280,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'DRINKS', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-ADD-001', name: 'Add Cup with Ice', price: 6, category: 'other' }
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
   },
 
