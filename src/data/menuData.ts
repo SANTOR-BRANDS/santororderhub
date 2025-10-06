@@ -1321,7 +1321,7 @@ export const mejaiMenu: Dish[] = [
 
 export const addOns: AddOn[] = [
   // Add-ons
-  { id: 'SAN-ADD-001', name: 'Pickled Egg Yolk ⭐️', price: 20, category: 'other' },
+  { id: 'SAN-ADD-001', name: 'Pickled Egg Yolk ⭐️', price: 25, category: 'other' },
   { id: 'SAN-ADD-002', name: 'Salted Duck Egg', price: 30, category: 'other' },
   { id: 'SAN-ADD-003', name: 'Century Egg', price: 30, category: 'other' },
   { id: 'SAN-ADD-004', name: 'Fish Roe', price: 45, category: 'other' },
@@ -1339,7 +1339,7 @@ export const addOns: AddOn[] = [
   
   // Fried Egg 🍳
   { id: 'SAN-FEG-001', name: 'Fried Egg', price: 20, category: 'fried-egg' },
-  { id: 'SAN-FEG-002', name: 'Fried Duck Egg', price: 30, category: 'fried-egg' },
+  { id: 'SAN-FEG-002', name: 'Fried Duck Egg', price: 25, category: 'fried-egg' },
 
   // Thai Style Omelette 🍳
   { id: 'SAN-THO-001', name: 'Thai Style Omelette (1 Egg)', price: 20, category: 'thai-omelette' },
