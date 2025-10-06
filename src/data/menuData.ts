@@ -1242,6 +1242,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'OTHER', 
     restaurant: 'nirvana',
     extraOptions: [
+      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' }
       { id: 'SAN-EXT-002', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
   },
