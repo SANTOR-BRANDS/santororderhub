@@ -311,8 +311,8 @@ const BasketModal = ({
     try {
       await navigator.clipboard.writeText(orderMessage);
       toast({
-        title: "Order copied!",
-        description: "Your order has been copied to clipboard. You can now paste it in Instagram DM.",
+        title: "Order Copied ✅",
+        description: "Your order has been copied to clipboard. You can now paste it in Line or Instagram.",
       });
     } catch (err) {
       toast({
@@ -570,6 +570,14 @@ const BasketModal = ({
 
           <div className="space-y-2">
             <Button 
+              onClick={handleCopyOrder}
+              variant="outline"
+              className="w-full"
+              disabled={isGeneratingOrder}
+            >
+              📋 Copy Order Message
+            </Button>
+            <Button 
               onClick={handleLineOrder}
               className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white"
             >
@@ -582,14 +590,6 @@ const BasketModal = ({
             >
               <Instagram className="h-4 w-4 mr-2" />
               Send via Instagram
-            </Button>
-            <Button 
-              onClick={handleCopyOrder}
-              variant="outline"
-              className="w-full"
-              disabled={isGeneratingOrder}
-            >
-              📋 Copy Order Message
             </Button>
           </div>
 
