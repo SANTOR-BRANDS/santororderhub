@@ -284,7 +284,16 @@ const DishModal = ({
     onClose();
   };
 
-  const addOnsByCategory = addOns.reduce((acc, addon) => {
+  // Filter add-ons by restaurant prefix
+  const restaurantPrefix = dish.restaurant === 'nirvana' ? 'NV-' : 
+                          dish.restaurant === 'restory' ? 'RS-' : 
+                          'MHY-';
+  
+  const filteredAddOns = addOns.filter(addon => 
+    addon.id.startsWith(restaurantPrefix) || addon.id.startsWith('SAN-')
+  );
+  
+  const addOnsByCategory = filteredAddOns.reduce((acc, addon) => {
     if (!acc[addon.category]) acc[addon.category] = [];
     acc[addon.category].push(addon);
     return acc;

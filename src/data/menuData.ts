@@ -1414,13 +1414,13 @@ export const addOns: AddOn[] = [
   { id: 'SAN-ADD-014', name: 'Bamboo Shoots', price: 20, category: 'other' },
   { id: 'SAN-ADD-015', name: 'Dashi Soup ✨', price: 15, category: 'other' },
   
-  // Fried Egg 🍳
-  { id: 'SAN-FEG-001', name: 'Fried Egg', price: 25, category: 'fried-egg' },
-  { id: 'SAN-FEG-002', name: 'Fried Duck Egg', price: 30, category: 'fried-egg' },
+  // Fried Egg 🍳 (Restaurant-specific)
   { id: 'NV-FEG-001', name: 'Fried Egg', price: 25, category: 'fried-egg' },
   { id: 'NV-FEG-002', name: 'Fried Duck Egg', price: 30, category: 'fried-egg' },
   { id: 'RS-FEG-001', name: 'Fried Egg', price: 25, category: 'fried-egg' },
   { id: 'RS-FEG-002', name: 'Fried Duck Egg', price: 30, category: 'fried-egg' },
+  { id: 'MHY-FEG-001', name: 'Fried Egg', price: 25, category: 'fried-egg' },
+  { id: 'MHY-FEG-002', name: 'Fried Duck Egg', price: 30, category: 'fried-egg' },
 
   // Thai Style Omelette 🍳
   { id: 'SAN-THO-001', name: 'Thai Style Omelette (1 Egg)', price: 25, category: 'thai-omelette' },
