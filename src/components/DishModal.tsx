@@ -226,6 +226,9 @@ const DishModal = ({
   };
 
   const canAddToBasket = () => {
+    // TOPPINGS items don't require any selections
+    if (dish.category === 'TOPPINGS') return true;
+    
     // DRINKS, FRESH SALMON, and DESSERT don't require sauce
     const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT';
     const hasSauce = requiresSauce ? selectedSauces.length > 0 : true;
@@ -681,53 +684,58 @@ const DishModal = ({
                 </div>
               </DialogHeader>
 
-              {isCombo ? (
+              {/* Simplified view for TOPPINGS - only quantity selection */}
+              {dish.category !== 'TOPPINGS' && (
                 <>
-                  <div className="mb-8">
-                    <h3 className="text-lg font-bold mb-4 text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                      🍽️ DISH 1 CUSTOMIZATION
-                    </h3>
-                    {renderCustomizationOptions(1)}
+                  {isCombo ? (
+                    <>
+                      <div className="mb-8">
+                        <h3 className="text-lg font-bold mb-4 text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                          🍽️ DISH 1 CUSTOMIZATION
+                        </h3>
+                        {renderCustomizationOptions(1)}
+                      </div>
+                      
+                      <Separator className="my-6" />
+                      
+                      <div className="mb-8">
+                        <h3 className="text-lg font-bold mb-4 text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                          🍽️ DISH 2 CUSTOMIZATION
+                        </h3>
+                        {renderCustomizationOptions(2)}
+                      </div>
+                    </>
+                  ) : (
+                    renderCustomizationOptions(1)
+                  )}
+
+                  {/* Cutlery - Required (Skip for DRINKS) */}
+                  {dish.category !== 'DRINKS' && (
+                  <div className="mb-6">
+                    <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+                      Need cutlery? <span className="text-red-500">*</span>
+                      <span className="text-xs text-muted-foreground">(Required)</span>
+                    </Label>
+                    <RadioGroup 
+                      value={needsCutlery.toString()} 
+                      onValueChange={(value) => setNeedsCutlery(value === 'true')} 
+                      className="gap-2"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="true" id="cutlery-yes" />
+                        <Label htmlFor="cutlery-yes">Yes, please</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="false" id="cutlery-no" />
+                        <Label htmlFor="cutlery-no">No (help reduce pollution) 🫡</Label>
+                      </div>
+                    </RadioGroup>
                   </div>
-                  
+                  )}
+
                   <Separator className="my-6" />
-                  
-                  <div className="mb-8">
-                    <h3 className="text-lg font-bold mb-4 text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                      🍽️ DISH 2 CUSTOMIZATION
-                    </h3>
-                    {renderCustomizationOptions(2)}
-                  </div>
                 </>
-              ) : (
-                renderCustomizationOptions(1)
               )}
-
-              {/* Cutlery - Required (Skip for DRINKS) */}
-              {dish.category !== 'DRINKS' && (
-              <div className="mb-6">
-                <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                  Need cutlery? <span className="text-red-500">*</span>
-                  <span className="text-xs text-muted-foreground">(Required)</span>
-                </Label>
-                <RadioGroup 
-                  value={needsCutlery.toString()} 
-                  onValueChange={(value) => setNeedsCutlery(value === 'true')} 
-                  className="gap-2"
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="true" id="cutlery-yes" />
-                    <Label htmlFor="cutlery-yes">Yes, please</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="false" id="cutlery-no" />
-                    <Label htmlFor="cutlery-no">No (help reduce pollution) 🫡</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-              )}
-
-              <Separator className="my-6" />
 
               {/* Quantity and Total */}
               <div className="space-y-4">
