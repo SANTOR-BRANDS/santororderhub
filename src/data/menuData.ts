@@ -1401,7 +1401,7 @@ export const addOns: AddOn[] = [
   { id: 'SAN-ADD-001', name: 'Pickled Egg Yolk ⭐️', price: 25, category: 'other' },
   { id: 'SAN-ADD-002', name: 'Salted Duck Egg', price: 30, category: 'other' },
   { id: 'SAN-ADD-003', name: 'Century Egg', price: 30, category: 'other' },
-  { id: 'SAN-ADD-004', name: 'Fish Roe', price: 45, category: 'other' },
+  { id: 'SAN-ADD-004', name: 'Fish Roe', price: 40, category: 'other' },
   { id: 'SAN-ADD-005', name: 'Fried Chicken Thigh + Sweet Chilli Fish Sauce', price: 55, category: 'other' },
   { id: 'SAN-ADD-006', name: 'Fried Chicken Thigh', price: 50, category: 'other' },
   { id: 'SAN-ADD-008', name: 'Crunchy Fried Chicken', price: 50, category: 'other' },
