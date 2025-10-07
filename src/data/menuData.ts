@@ -1339,26 +1339,26 @@ export const addOns: AddOn[] = [
   { id: 'SAN-ADD-015', name: 'Dashi Soup ✨', price: 15, category: 'other' },
   
   // Fried Egg 🍳
-  { id: 'SAN-FEG-001', name: 'Fried Egg', price: 20, category: 'fried-egg' },
-  { id: 'SAN-FEG-002', name: 'Fried Duck Egg', price: 25, category: 'fried-egg' },
+  { id: 'SAN-FEG-001', name: 'Fried Egg', price: 25, category: 'fried-egg' },
+  { id: 'SAN-FEG-002', name: 'Fried Duck Egg', price: 30, category: 'fried-egg' },
 
   // Thai Style Omelette 🍳
-  { id: 'SAN-THO-001', name: 'Thai Style Omelette (1 Egg)', price: 20, category: 'thai-omelette' },
-  { id: 'SAN-THO-002', name: 'Thai Style Omelettes (2 Eggs)', price: 35, category: 'thai-omelette' },
+  { id: 'SAN-THO-001', name: 'Thai Style Omelette (1 Egg)', price: 25, category: 'thai-omelette' },
+  { id: 'SAN-THO-002', name: 'Thai Style Omelettes (2 Eggs)', price: 40, category: 'thai-omelette' },
   { id: 'SAN-THO-003', name: 'Thai Style Omelette with Chilli', price: 30, category: 'thai-omelette' },
   { id: 'SAN-THO-004', name: 'Thai Style Omelette with Minced Pork', price: 45, category: 'thai-omelette' },
 
   // Creamy Omelette 🍳
-  { id: 'SAN-CRO-001', name: 'Creamy Omelette (1 Egg)', price: 20, category: 'creamy-omelette' },
-  { id: 'SAN-CRO-002', name: 'Creamy Omelettes (2 Eggs)', price: 30, category: 'creamy-omelette' },
+  { id: 'SAN-CRO-001', name: 'Creamy Omelette (1 Egg)', price: 25, category: 'creamy-omelette' },
+  { id: 'SAN-CRO-002', name: 'Creamy Omelettes (2 Eggs)', price: 40, category: 'creamy-omelette' },
   { id: 'SAN-CRO-003', name: 'Creamy Omelette with Shrimp Fat', price: 30, category: 'creamy-omelette' },
-  { id: 'SAN-CRO-004', name: 'Creamy Omelette with Shrimp Fat + Fish Roe', price: 45, category: 'creamy-omelette' },
+  { id: 'SAN-CRO-004', name: 'Creamy Omelette with Shrimp Fat + Fish Roe', price: 55, category: 'creamy-omelette' },
 
   // Soft Omelette 🍳
-  { id: 'SAN-SOO-001', name: 'Soft Omelette (1 Egg)', price: 20, category: 'soft-omelette' },
-  { id: 'SAN-SOO-002', name: 'Soft Omelette (2 Eggs)', price: 30, category: 'soft-omelette' },
+  { id: 'SAN-SOO-001', name: 'Soft Omelette (1 Egg)', price: 25, category: 'soft-omelette' },
+  { id: 'SAN-SOO-002', name: 'Soft Omelette (2 Eggs)', price: 40, category: 'soft-omelette' },
   { id: 'SAN-SOO-003', name: 'Soft Omelette with Shrimp Fat', price: 30, category: 'soft-omelette' },
-  { id: 'SAN-SOO-004', name: 'Soft Omelette with Shrimp Fat + Fish Roe', price: 45, category: 'soft-omelette' },
+  { id: 'SAN-SOO-004', name: 'Soft Omelette with Shrimp Fat + Fish Roe', price: 55, category: 'soft-omelette' },
 ];
 
 export const getMenuByRestaurant = (restaurant: Restaurant): Dish[] => {
