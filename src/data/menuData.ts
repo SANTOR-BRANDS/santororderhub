@@ -796,14 +796,14 @@ export const restoryMenu: Dish[] = [
 
   // TOPPINGS
   { 
-    id: 'SAN-ADD-004-RS', 
+    id: 'SAN-ADD-004', 
     name: 'Fish Roe', 
     price: 40, 
     category: 'TOPPINGS', 
     restaurant: 'restory'
   },
   { 
-    id: 'SAN-ADD-001-RS', 
+    id: 'SAN-ADD-001', 
     name: 'Pickled Egg Yolk ⭐️', 
     price: 25, 
     category: 'TOPPINGS', 
@@ -1279,14 +1279,14 @@ export const nirvanaMenu: Dish[] = [
 
   // TOPPINGS
   { 
-    id: 'SAN-ADD-004-NV', 
+    id: 'SAN-ADD-004', 
     name: 'Fish Roe', 
     price: 40, 
     category: 'TOPPINGS', 
     restaurant: 'nirvana'
   },
   { 
-    id: 'SAN-ADD-001-NV', 
+    id: 'SAN-ADD-001', 
     name: 'Pickled Egg Yolk ⭐️', 
     price: 25, 
     category: 'TOPPINGS', 
