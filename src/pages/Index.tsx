@@ -49,25 +49,6 @@ const Index = () => {
   
   const themeColor = selectedRestaurant ? themeColors[selectedRestaurant] : undefined;
   
-  const handleDishSelect = (dish: Dish) => {
-    // For TOPPINGS items, add directly to basket without opening modal
-    if (dish.category === 'TOPPINGS') {
-      const basketItem: BasketItem = {
-        id: `${dish.id}-${Date.now()}`,
-        dish,
-        addOns: [],
-        extraPls: [],
-        spicyLevel: 0,
-        sauce: '',
-        needsCutlery: false,
-        quantity: 1
-      };
-      setBasketItems(prev => [...prev, basketItem]);
-    } else {
-      setSelectedDish(dish);
-    }
-  };
-
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
   };
@@ -131,7 +112,7 @@ const Index = () => {
 
       {selectedRestaurant ? <MenuDisplay 
         restaurant={selectedRestaurant} 
-        onDishSelect={handleDishSelect}
+        onDishSelect={setSelectedDish}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
       /> : <div className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
