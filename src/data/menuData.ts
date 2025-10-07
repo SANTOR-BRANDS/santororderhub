@@ -794,6 +794,36 @@ export const restoryMenu: Dish[] = [
     ]
   },
 
+  // TOPPINGS
+  { 
+    id: 'SAN-ADD-004-RS', 
+    name: 'Fish Roe', 
+    price: 40, 
+    category: 'TOPPINGS', 
+    restaurant: 'restory'
+  },
+  { 
+    id: 'SAN-ADD-001-RS', 
+    name: 'Pickled Egg Yolk ⭐️', 
+    price: 25, 
+    category: 'TOPPINGS', 
+    restaurant: 'restory'
+  },
+  { 
+    id: 'RS-FEG-001', 
+    name: 'Fried Egg', 
+    price: 25, 
+    category: 'TOPPINGS', 
+    restaurant: 'restory'
+  },
+  { 
+    id: 'RS-FEG-002', 
+    name: 'Fried Duck Egg', 
+    price: 30, 
+    category: 'TOPPINGS', 
+    restaurant: 'restory'
+  },
+
   // DRINKS
   { 
     id: 'SAN-DRI-001', 
@@ -1247,6 +1277,36 @@ export const nirvanaMenu: Dish[] = [
     ]
   },
 
+  // TOPPINGS
+  { 
+    id: 'SAN-ADD-004-NV', 
+    name: 'Fish Roe', 
+    price: 40, 
+    category: 'TOPPINGS', 
+    restaurant: 'nirvana'
+  },
+  { 
+    id: 'SAN-ADD-001-NV', 
+    name: 'Pickled Egg Yolk ⭐️', 
+    price: 25, 
+    category: 'TOPPINGS', 
+    restaurant: 'nirvana'
+  },
+  { 
+    id: 'NV-FEG-001', 
+    name: 'Fried Egg', 
+    price: 25, 
+    category: 'TOPPINGS', 
+    restaurant: 'nirvana'
+  },
+  { 
+    id: 'NV-FEG-002', 
+    name: 'Fried Duck Egg', 
+    price: 30, 
+    category: 'TOPPINGS', 
+    restaurant: 'nirvana'
+  },
+
   // DRINKS
   { 
     id: 'SAN-DRI-001', 
@@ -1316,6 +1376,22 @@ export const mejaiMenu: Dish[] = [
     name: 'Pickled Brown Salmon 100g', 
     price: 120, 
     category: 'FRESH SALMON', 
+    restaurant: 'mejai hai yum'
+  },
+
+  // TOPPINGS
+  { 
+    id: 'SAN-ADD-004-MHY', 
+    name: 'Fish Roe', 
+    price: 40, 
+    category: 'TOPPINGS', 
+    restaurant: 'mejai hai yum'
+  },
+  { 
+    id: 'SAN-ADD-001-MHY', 
+    name: 'Pickled Egg Yolk ⭐️', 
+    price: 25, 
+    category: 'TOPPINGS', 
     restaurant: 'mejai hai yum'
   },
 ];
