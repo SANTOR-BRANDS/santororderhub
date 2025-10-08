@@ -727,7 +727,7 @@ const DishModal = ({
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="false" id="cutlery-no" />
-                        <Label htmlFor="cutlery-no">No (help reduce pollution) 🫡</Label>
+                        <Label htmlFor="cutlery-no">No</Label>
                       </div>
                     </RadioGroup>
                   </div>
