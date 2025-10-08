@@ -37,10 +37,10 @@ const RestaurantHeader = ({
   const { language, setLanguage, t } = useLanguage();
   
   const restaurants = [
-    { id: 'restory' as Restaurant, name: t('restaurant.restory'), available: true },
-    { id: 'nirvana' as Restaurant, name: t('restaurant.nirvana'), available: true },
-    { id: 'mejai hai yum' as Restaurant, name: t('restaurant.mejai'), available: true },
-    { id: 'chan wan' as Restaurant, name: t('restaurant.chanwan'), available: false },
+    { id: 'restory' as Restaurant, name: 'Restory', available: true },
+    { id: 'nirvana' as Restaurant, name: 'Nirvana', available: true },
+    { id: 'mejai hai yum' as Restaurant, name: 'Mejai Hai Yum', available: true },
+    { id: 'chan wan' as Restaurant, name: 'Chan Wan (soon)', available: false },
   ];
 
   const getHeaderStyle = () => {
