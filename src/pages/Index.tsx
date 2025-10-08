@@ -8,6 +8,7 @@ import FloatingBasket from '@/components/FloatingBasket';
 import Footer from '@/components/Footer';
 import { getCategoriesByRestaurant } from '@/data/menuData';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const themeColors: Record<Restaurant, string> = {
   restory: '#fd7304',
@@ -16,6 +17,7 @@ const themeColors: Record<Restaurant, string> = {
 };
 
 const Index = () => {
+  const { t } = useLanguage();
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [basketItems, setBasketItems] = useState<BasketItem[]>(() => {
@@ -118,20 +120,20 @@ const Index = () => {
       /> : <div className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
           <div className="text-center p-8">
             <div className="text-8xl mb-6">🍽️</div>
-            <h1 className="text-4xl font-bold mb-4">Welcome to SANTOR</h1>
-            <p className="text-xl opacity-90 mb-8 max-w-2xl">We believe good food is the foundation of happiness</p>
+            <h1 className="text-4xl font-bold mb-4">{t('header.welcome')}</h1>
+            <p className="text-xl opacity-90 mb-8 max-w-2xl">{t('header.tagline')}</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
               <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('restory')}>
-                <h3 className="text-xl font-bold mb-2">🧡 Restory</h3>
-                <p className="text-sm opacity-80">Asian Fusion - Cooked to Order</p>
+                <h3 className="text-xl font-bold mb-2">🧡 {t('restaurant.restory')}</h3>
+                <p className="text-sm opacity-80">{t('restaurant.restory.desc')}</p>
               </div>
               <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('nirvana')}>
-                <h3 className="text-xl font-bold mb-2">⚫ Nirvana</h3>
-                <p className="text-sm opacity-80">Authentic Flavors</p>
+                <h3 className="text-xl font-bold mb-2">⚫ {t('restaurant.nirvana')}</h3>
+                <p className="text-sm opacity-80">{t('restaurant.nirvana.desc')}</p>
               </div>
               <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('mejai hai yum')}>
-                <h3 className="text-xl font-bold mb-2">💗 Mejai Hai Yum</h3>
-                <p className="text-sm opacity-80">Fresh Salmon & Thai Yum</p>
+                <h3 className="text-xl font-bold mb-2">💗 {t('restaurant.mejai')}</h3>
+                <p className="text-sm opacity-80">{t('restaurant.mejai.desc')}</p>
               </div>
             </div>
           </div>

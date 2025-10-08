@@ -6,7 +6,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Languages } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { useLanguage } from '@/contexts/LanguageContext';
 import MenuCategoriesBar from './MenuCategoriesBar';
 
 interface RestaurantHeaderProps {
@@ -27,11 +34,13 @@ const RestaurantHeader = ({
   onCategoryChange,
   themeColor
 }: RestaurantHeaderProps) => {
+  const { language, setLanguage, t } = useLanguage();
+  
   const restaurants = [
-    { id: 'restory' as Restaurant, name: 'Restory', available: true },
-    { id: 'nirvana' as Restaurant, name: 'Nirvana', available: true },
-    { id: 'mejai hai yum' as Restaurant, name: 'Mejai Hai Yum', available: true },
-    { id: 'chan wan' as Restaurant, name: 'Chan Wan (soon)', available: false },
+    { id: 'restory' as Restaurant, name: t('restaurant.restory'), available: true },
+    { id: 'nirvana' as Restaurant, name: t('restaurant.nirvana'), available: true },
+    { id: 'mejai hai yum' as Restaurant, name: t('restaurant.mejai'), available: true },
+    { id: 'chan wan' as Restaurant, name: t('restaurant.chanwan'), available: false },
   ];
 
   const getHeaderStyle = () => {
@@ -45,8 +54,9 @@ const RestaurantHeader = ({
     <header className={cn('sticky top-0 z-50 transition-smooth', getHeaderStyle())}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col gap-4">
-          {/* SANTOR Brand */}
-          <div className="text-center">
+          {/* SANTOR Brand with Language Selector */}
+          <div className="flex items-center justify-between">
+            <div className="flex-1" />
             <button 
               onClick={() => onRestaurantChange(null as any)}
               className="hover:opacity-80 transition-smooth"
@@ -54,9 +64,43 @@ const RestaurantHeader = ({
               <img 
                 src="/images/SAN-LOGO-001.png" 
                 alt="Santor" 
-                className="h-12 md:h-14 mx-auto"
+                className="h-12 md:h-14"
               />
             </button>
+            <div className="flex-1 flex justify-end">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    className="text-inherit hover:bg-white/10"
+                  >
+                    <Languages className="h-4 w-4 mr-2" />
+                    {language === 'en' ? 'EN' : 'ไทย'}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-32 p-2" align="end">
+                  <div className="flex flex-col gap-1">
+                    <Button
+                      variant={language === 'en' ? 'secondary' : 'ghost'}
+                      size="sm"
+                      className="w-full justify-start"
+                      onClick={() => setLanguage('en')}
+                    >
+                      English
+                    </Button>
+                    <Button
+                      variant={language === 'th' ? 'secondary' : 'ghost'}
+                      size="sm"
+                      className="w-full justify-start"
+                      onClick={() => setLanguage('th')}
+                    >
+                      ไทย
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
 
           {/* Restaurant Selection */}
@@ -112,7 +156,7 @@ const RestaurantHeader = ({
                     'inline-flex items-center gap-1'
                   )}
                 >
-                  More
+                  {t('header.more')}
                   <ChevronDown className="h-4 w-4" />
                 </button>
               </DropdownMenuTrigger>

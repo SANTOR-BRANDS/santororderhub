@@ -13,6 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Trash2, Plus, Minus, Instagram, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BasketModalProps {
   isOpen: boolean;
@@ -30,6 +31,7 @@ const BasketModal = ({
   onRemoveItem 
 }: BasketModalProps) => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [isGeneratingOrder, setIsGeneratingOrder] = useState(false);
 
   // Helper to calculate incremental extras total
@@ -311,8 +313,8 @@ const BasketModal = ({
     try {
       await navigator.clipboard.writeText(orderMessage);
       toast({
-        title: "Order Copied ✅",
-        description: "Your order has been copied to clipboard. You can now paste it in Line or Instagram.",
+        title: t('order.copied'),
+        description: t('order.copied.desc'),
       });
     } catch (err) {
       toast({
@@ -336,8 +338,8 @@ const BasketModal = ({
       window.open('https://ig.me/m/santorbrands', '_blank');
       
       toast({
-        title: "✅ Message Copied!",
-        description: "Instagram DM opened. Just paste (Ctrl+V) and send!",
+        title: t('order.messageCopied'),
+        description: t('order.instagramDM'),
       });
     } catch (err) {
       // Fallback if clipboard fails
@@ -361,8 +363,8 @@ const BasketModal = ({
       window.open('https://lin.ee/8kHDCU2', '_blank');
       
       toast({
-        title: "✅ Message Copied!",
-        description: "LINE chat opened. Just paste (Ctrl+V or long press) and send!",
+        title: t('order.messageCopied'),
+        description: t('order.lineDM'),
       });
     } catch (err) {
       // Fallback if clipboard fails
@@ -380,15 +382,15 @@ const BasketModal = ({
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Your Basket</DialogTitle>
+            <DialogTitle>{t('basket.title')}</DialogTitle>
           </DialogHeader>
           <div className="text-center py-8">
             <div className="text-6xl mb-4">🛒</div>
-            <h3 className="text-xl font-semibold mb-2">Your basket is empty</h3>
+            <h3 className="text-xl font-semibold mb-2">{t('basket.empty')}</h3>
             <p className="text-muted-foreground mb-4">
-              Add some delicious dishes to get started!
+              {t('basket.empty.desc')}
             </p>
-            <Button onClick={onClose}>Continue Shopping</Button>
+            <Button onClick={onClose}>{t('basket.continue')}</Button>
           </div>
         </DialogContent>
       </Dialog>
@@ -400,7 +402,7 @@ const BasketModal = ({
       <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col">
         <DialogHeader className="p-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center justify-between">
-            <span>Your Basket ({basketItems.length})</span>
+            <span>{t('basket.title')} ({basketItems.length})</span>
             <Badge variant="secondary">฿{getTotalPrice()}</Badge>
           </DialogTitle>
         </DialogHeader>
@@ -564,7 +566,7 @@ const BasketModal = ({
         <div className="p-6 pt-0 shrink-0">
           <Separator className="mb-4" />
           <div className="flex justify-between items-center mb-4">
-            <span className="text-lg font-semibold">Total</span>
+            <span className="text-lg font-semibold">{t('basket.total')}</span>
             <span className="text-2xl font-bold text-primary">฿{getTotalPrice()}</span>
           </div>
 
@@ -575,21 +577,21 @@ const BasketModal = ({
               className="w-full"
               disabled={isGeneratingOrder}
             >
-              📋 Copy Order Message
+              📋 {t('order.copyOrder')}
             </Button>
             <Button 
               onClick={handleLineOrder}
               className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white"
             >
               <MessageCircle className="h-4 w-4 mr-2" />
-              Send via LINE
+              {t('order.orderViaLine')}
             </Button>
             <Button 
               onClick={handleInstagramOrder}
               className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
             >
               <Instagram className="h-4 w-4 mr-2" />
-              Send via Instagram
+              {t('order.orderViaInstagram')}
             </Button>
           </div>
 
