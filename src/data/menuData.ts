@@ -825,6 +825,16 @@ export const restoryMenu: Dish[] = [
   },
 
   // DRINKS
+  {
+    id: 'SAN-DRI-009',
+    name: 'Fresh Coconut',
+    price: 30,
+    category: 'DRINKS',
+    restaurant: 'restory',
+    extraOptions: [
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
   { 
     id: 'SAN-DRI-001', 
     name: 'Pandan Water', 
