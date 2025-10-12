@@ -383,7 +383,7 @@ export const restoryMenu: Dish[] = [
   { 
     id: 'RS-KOR-001', 
     name: 'Spicy Korean Mama with Chicken Karaage + Pickled Egg', 
-    price: 219, 
+    price: 169, 
     category: 'KOREAN SPICY NOODLES', 
     restaurant: 'restory',
     extraOptions: [
@@ -393,7 +393,7 @@ export const restoryMenu: Dish[] = [
   { 
     id: 'RS-KOR-002', 
     name: 'Spicy Korean Mama with Chicken Karaage + Kimchi', 
-    price: 199, 
+    price: 149, 
     category: 'KOREAN SPICY NOODLES', 
     restaurant: 'restory',
     extraOptions: [
@@ -403,7 +403,7 @@ export const restoryMenu: Dish[] = [
   { 
     id: 'RS-KOR-003', 
     name: 'Spicy Korean Mama with Crunchy Fried Chicken + Boiled Egg', 
-    price: 189, 
+    price: 159, 
     category: 'KOREAN SPICY NOODLES', 
     restaurant: 'restory',
     extraOptions: [
