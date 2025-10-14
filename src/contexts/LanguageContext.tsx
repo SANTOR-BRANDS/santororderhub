@@ -68,6 +68,267 @@ export const translations = {
     
     // Common
     'common.price': '฿',
+    
+    // Drinks - SANTOR
+    'SAN-DRI-001': 'Pandan Water Packaged',
+    'SAN-DRI-002': 'Coca Cola',
+    'SAN-DRI-003': 'Mont Fleur Water',
+    'SAN-DRI-004': 'Root Beer',
+    'SAN-DRI-005': 'Coca Cola Zero',
+    'SAN-DRI-006': 'Minute Maid Orange Juice',
+    'SAN-DRI-007': 'Thai Red Tea Packaged',
+    'SAN-DRI-008': '✨Peach Green Tea Packaged',
+    'SAN-DRI-009': 'Fresh Coconut',
+    
+    // Salmon - Mejai Hai Yum
+    'MHY-SAL-001': 'Fresh Salmon Sashimi 100g',
+    'MHY-SAL-002': 'Pickled Brown Salmon 100g',
+    
+    // Dessert
+    'SAN-DES-001': 'Vanilla Ice Cream Toast (NEW)',
+    
+    // Nirvana - Pad Krapao
+    'NV-PKR-001': 'Pad Krapao Minced Beef',
+    'NV-PKR-002': 'Pad Krapao Minced Pork',
+    'NV-PKR-003': 'Pad Krapao Minced Chicken',
+    'NV-PKR-004': 'Pad Krapao Diced Chicken',
+    'NV-PKR-005': 'Pad Krapao Minced Premium Beef',
+    
+    // Nirvana - Grilled Rice Bowls
+    'NV-GRR-001': '⭐️Grilled Beef on Rice',
+    'NV-GRR-002': 'Mala Grilled Beef on Rice',
+    'NV-GRR-003': 'Grilled Beef with Spring Onion on Rice',
+    'NV-GRR-004': 'Grilled Chicken Thigh on Rice',
+    'NV-GRR-005': 'Mala Grilled Chicken Thigh on Rice',
+    'NV-GRR-006': 'Grilled Pork Belly on Rice',
+    'NV-GRR-007': 'Mala Grilled Pork Belly on Rice',
+    'NV-GRR-008': 'Grilled Sliced Pork Sirloin on Rice',
+    'NV-GRR-009': 'Mala Grilled Sliced Pork Sirloin on Rice',
+    
+    // Nirvana - Braised Rice Bowls
+    'NV-BRR-001': 'Braised Beef on Rice',
+    'NV-BRR-002': '⭐️Braised Pork Belly on Rice',
+    'NV-BRR-003': '👍Braised Chicken Wing on Rice',
+    
+    // Nirvana - Braised Noodles
+    'NV-BRN-001': 'Braised Chicken Wing with Egg Noodles',
+    'NV-BRN-002': 'Mala Braised Chicken Wing with Egg Noodles',
+    'NV-BRN-003': 'Braised Beef with Egg Noodles',
+    'NV-BRN-004': 'Mala Braised Beef with Egg Noodles',
+    'NV-BRN-005': 'Braised Pork Belly with Egg Noodles',
+    'NV-BRN-006': '🔥Mala Braised Pork Belly with Egg Noodles',
+    
+    // Nirvana - Grilled Noodles
+    'NV-GRN-001': 'Grilled Pork Belly with Egg Noodles',
+    'NV-GRN-002': 'Mala Grilled Pork Belly with Egg Noodles',
+    'NV-GRN-003': 'Grilled Sliced Pork Sirloin with Egg Noodles',
+    'NV-GRN-004': 'Mala Grilled Sliced Pork Sirloin with Egg Noodles',
+    'NV-GRN-005': 'Grilled Chicken Thigh with Egg Noodles',
+    'NV-GRN-006': 'Mala Grilled Chicken Thigh with Egg Noodles',
+    'NV-GRN-007': '⭐️Grilled Beef with Egg Noodles',
+    'NV-GRN-008': 'Mala Grilled Beef with Egg Noodles',
+    
+    // Nirvana - Noodle Soup
+    'NV-NSP-001': '🔥Mala Beef Rice Noodle Soup',
+    'NV-NSP-002': 'Beef Rice Noodle Soup',
+    
+    // Nirvana - Vegetarian
+    'NV-VEG-001': 'Grilled Mushroom with Soy Sauce on Rice',
+    'NV-VEG-002': 'Mala Grilled Mushroom with Soy Sauce on Rice',
+    'NV-VEG-003': 'Stir-Fried Mushroom with Soy Sauce',
+    'NV-VEG-004': 'Mala Stir-Fried Mushroom with Soy Sauce',
+    
+    // Nirvana - Fish
+    'NV-FIS-001': 'Grilled Saba Fish with Soy Sauce on Rice',
+    'NV-FIS-002': 'Mala Grilled Saba Fish with Soy Sauce on Rice',
+    
+    // Nirvana - Other
+    'NV-OTH-001': 'Creamy Omelette on Rice',
+    'NV-OTH-002': 'Stir-Fried Diced Chicken on Rice',
+    
+    // Restory - Combo
+    'RS-COM-001': 'Tonkatsu with Katsu Sauce + Peach Tea 🍑',
+    'RS-COM-002': '2x Pad Krapao Minced Pork (Special) ✨',
+    
+    // Restory - Pad Krapao
+    'RS-PKR-001': 'Pad Krapao Minced Pork',
+    'RS-PKR-002': 'Vermicelli',
+    'RS-PKR-003': 'Chinese Sausage',
+    'RS-PKR-004': 'Century Egg',
+    'RS-PKR-005': 'Chicken Sausage',
+    'RS-PKR-006': 'Pad Krapao Bacon',
+    'RS-PKR-007': 'Pad Krapao Pork',
+    'RS-PKR-008': 'Pork Belly Pieces (chunky and soft)',
+    'RS-PKR-009': 'Sliced Pork Belly (juicy and soft)',
+    'RS-PKR-010': 'Pad Krapao Sliced Pork Neck (meaty and tender)',
+    'RS-PKR-011': 'Pad Krapao Minced Premium Beef',
+    'RS-PKR-012': 'Pad Krapao Minced Premium Beef (Switch to Normal Beef -40THB)',
+    'RS-PKR-013': '✨Diced Wagyu Beef Pad Krapao ✨ (Grade A3)',
+    'RS-PKR-014': 'Pad Krapao Chicken Breast',
+    'RS-PKR-015': 'Pad Krapao Chicken',
+    'RS-PKR-016': 'Pad Krapao Chicken Sausage',
+    'RS-PKR-017': 'Pad Krapao Chinese Sausage',
+    
+    // Restory - Curry
+    'RS-CUR-001': 'Pork Curry + Creamy Omelette',
+    'RS-CUR-002': 'Chicken Katsu Curry (Torikatsu)',
+    'RS-CUR-003': '🔥Pork Katsu Curry (Tonkatsu)',
+    'RS-CUR-004': 'Fried Chicken Thigh Curry',
+    'RS-CUR-005': 'Chicken Karaage Curry',
+    'RS-CUR-006': 'Australian Beef Curry',
+    
+    // Restory - Donburi
+    'RS-DON-001': '⭐️Tonkatsu Don',
+    'RS-DON-002': '⭐️Torikatsu Don',
+    'RS-DON-003': 'Chicken Karaage Don',
+    'RS-DON-004': 'Chicken Thigh Don',
+    'RS-DON-005': '👍Tonkatsu with Katsu Sauce',
+    'RS-DON-006': '👍Torikatsu with Katsu Sauce',
+    'RS-DON-007': 'Sliced Pork Teriyaki on Rice',
+    'RS-DON-008': 'Sliced Pork Neck',
+    'RS-DON-009': 'Sliced Pork Belly',
+    'RS-DON-010': 'Stir-Fried Pork Belly with Sauce + Pickled Egg (Choose Sauce)',
+    'RS-DON-011': 'with Japanese Sauce',
+    'RS-DON-012': 'with Korean Sauce',
+    'RS-DON-013': 'Stir-Fried Pork Neck with Sauce + Pickled Egg (Choose Sauce)',
+    'RS-DON-014': 'with Japanese Sauce',
+    'RS-DON-015': 'with Korean Sauce',
+    'RS-DON-016': '🔥Chicken Teriyaki on Rice',
+    'RS-DON-017': 'Stir Fried Pork Neck in Soy Sauce + Fish Roe + Pickled Eggs + Seafood Sauce',
+    
+    // Restory - Korean
+    'RS-KOR-001': 'Spicy Korean Mama with Chicken Karaage + Pickled Egg',
+    'RS-KOR-002': 'Spicy Korean Mama with Chicken Karaage + Kimchi',
+    'RS-KOR-003': 'Spicy Korean Mama with Crunchy Fried Chicken + Boiled Egg',
+    
+    // Restory - Quick Dish
+    'RS-QIK-001': 'Juicy Bacon on Rice + Pickled Egg + Seafood Sauce',
+    'RS-QIK-002': '🔥Pork Belly Slices Grilled with Sesame Oil + Isaan Dipping Sauce',
+    'RS-QIK-003': 'Sliced Pork Neck with Soft Omelette',
+    'RS-QIK-004': 'Pork Belly with Southern Curry Paste on Rice (Coming Back Soon!)',
+    'RS-QIK-005': 'Stir-Fried Salted Duck Egg on Rice',
+    'RS-QIK-006': 'Stir-Fried Minced Pork with Salted Egg and Chilli Oil on Rice',
+    'RS-QIK-007': 'Fried Rice with Smoked Chicken Sausage',
+    'RS-QIK-008': 'Fried Rice',
+    
+    // Restory - Something with Egg
+    'RS-SWE-001': '⭐️Pork Teriyaki with Creamy Omelette on Rice',
+    'RS-SWE-002': 'Spicy Crunchy Chicken with Creamy Omelette on Rice',
+    'RS-SWE-003': '🔥Creamy Shrimp Fat Omelette on Rice + Fish Roe',
+    'RS-SWE-004': 'Minced Pork with Sesame Oil and Creamy Omelette + Fried Garlic',
+    'RS-SWE-005': 'Minced Pork with Sesame Oil and Soft Omelette + Fried Garlic',
+    'RS-SWE-006': 'Bacon with Creamy Omelette',
+    'RS-SWE-007': '👍Cheese Sausage with Creamy Omelette on Rice',
+    'RS-SWE-008': 'Smoked Sausage in Tomato Sauce with Creamy Omelette on Rice',
+    'RS-SWE-009': 'Pork Omelette on Rice',
+    'RS-SWE-010': 'Chilli Omelette on Rice',
+    
+    // Restory - Fried Chicken
+    'RS-FCR-001': '⭐️Fried Chicken Thigh with Sweet Fish Sauce on Rice',
+    'RS-FCR-002': 'Crunchy Fried Chicken with Sauce (Choose Sauce)',
+    'RS-FCR-003': 'with Lemon Sauce',
+    'RS-FCR-004': 'with Garlic Sauce',
+    'RS-FCR-005': 'with Korean Sauce 🔥',
+    'RS-FCR-006': 'with Cheesy Sour Cream Sauce',
+    'RS-FCR-007': '🔥Fried Chicken Thigh with Teriyaki Sauce',
+    'RS-FCR-008': 'Fried Chicken Thigh with Garlic Sauce and Fried Garlic on Rice',
+    'RS-FCR-009': 'Chicken Karaage with Cheesy Sour Cream Sauce + Onion',
+    'RS-FCR-010': 'Chicken Karaage with Lemon Sauce',
+    'RS-FCR-011': 'Chicken Karaage with Creamy Shrimp Fat Omelette + Fish Roe',
+    'RS-FCR-012': 'Chicken Karaage with Spicy Siracha Mayo Sauce on Rice + Fish Roe',
+    'RS-FCR-013': 'Chicken Karaage with Korean Sauce + Kimchi',
+    'RS-FCR-014': 'Spicy Chicken Karaage with Garlic Sauce on Rice + Pickled Egg + Seafood Sauce',
+    'RS-FCR-015': 'Chicken Karaage with Cheesy Sour Cream Sauce + Fish Roe',
+    'RS-FCR-016': 'Chicken Karaage with Korean Sauce',
+    
+    // Restory - Chilli Fried Garlic
+    'RS-CFG-001': 'Stir-Fried Chicken Thigh with Chilli and Fried Garlic + Pickled Egg',
+    'RS-CFG-002': '⭐️Stir-Fried Pork Belly with Chilli and Fried Garlic',
+    'RS-CFG-003': 'Stir-Fried Pork Neck with Chilli and Fried Garlic',
+    'RS-CFG-004': 'Stir-Fried Bacon with Chilli and Fried Garlic',
+    
+    // Fried Eggs
+    'NV-FEG-001': 'Fried Egg',
+    'NV-FEG-002': 'Fried Duck Egg',
+    'RS-FEG-001': 'Fried Egg',
+    'RS-FEG-002': 'Fried Duck Egg',
+    
+    // Thai Style Omelette
+    'SAN-THO-001': 'Thai Style Omelette (1 Egg)',
+    'SAN-THO-002': 'Thai Style Omelettes (2 Eggs)',
+    'SAN-THO-003': 'Thai Style Omelette with Chilli',
+    'SAN-THO-004': 'Thai Style Omelette with Minced Pork',
+    
+    // Creamy Omelette
+    'SAN-CRO-001': 'Creamy Omelette (1 Egg)',
+    'SAN-CRO-002': 'Creamy Omelettes (2 Eggs)',
+    'SAN-CRO-003': 'Creamy Omelette with Shrimp Fat',
+    'SAN-CRO-004': 'Creamy Omelette with Shrimp Fat + Fish Roe',
+    
+    // Soft Omelette
+    'SAN-SOO-001': 'Soft Omelette (1 Egg)',
+    'SAN-SOO-002': 'Soft Omelette (2 Eggs)',
+    'SAN-SOO-003': 'Soft Omelette with Shrimp Fat',
+    'SAN-SOO-004': 'Soft Omelette with Shrimp Fat + Fish Roe',
+    
+    // Extras
+    'SAN-EXT-001': '🍚 Extra Jasmine Rice 200g',
+    'RS-EXT-001': '🐔 Extra Chicken 150g',
+    'RS-EXT-002': '🐷 Extra Pork 100g',
+    'RS-EXT-003': '🐮 Extra Premium Beef 100g',
+    'RS-EXT-004': '🐮 Extra Beef 100g',
+    'RS-EXT-006': '🍛 Extra Curry',
+    'RS-EXT-007': '🐮 Extra Premium Beef 20g',
+    'RS-EXT-008': '🐷 Extra Pork 20g',
+    'NV-EXT-003': '🐔 Extra Chicken 150g',
+    'NV-EXT-004': '🐔 Extra Minced Chicken 150g',
+    'NV-EXT-005': '🐷 Extra Minced Pork 100g',
+    'NV-EXT-006': '🐮 Extra Minced Beef 100g',
+    'NV-EXT-007': '🐮 Extra Premium Beef 100g',
+    'NV-EXT-008': '🐟 Extra Saba Fish 140g',
+    
+    // Add-ons
+    'SAN-ADD-001': 'Pickled Egg Yolk ⭐️',
+    'SAN-ADD-002': 'Salted Duck Egg',
+    'SAN-ADD-003': 'Century Egg',
+    'SAN-ADD-004': 'Fish Roe',
+    'SAN-ADD-005': 'Fried Chicken Thigh + Sweet Chilli Fish Sauce',
+    'SAN-ADD-006': 'Fried Chicken Thigh',
+    'SAN-ADD-007': 'Crispy Fried Chicken + Katsu Sauce 🔥',
+    'SAN-ADD-008': 'Crispy Fried Chicken',
+    'SAN-ADD-009': 'Fried Chicken Karaage Balls 🔥',
+    'SAN-ADD-010': 'Crispy Bacon',
+    'SAN-ADD-011': 'Chinese Sausage',
+    'SAN-ADD-012': 'Smoked Sausage',
+    'SAN-ADD-013': 'Cheese Sausage',
+    'SAN-ADD-014': 'Bamboo Shoots',
+    'SAN-ADD-015': 'Dashi Soup ✨',
+    'SAN-ADD-016': 'Pandan Water',
+    'SAN-ADD-017': 'Add Cup with Ice +6',
+    
+    // Sauces - Restory
+    'RS-SAU-001': 'Ketchup',
+    'RS-SAU-002': 'Chilli Fish Sauce',
+    'RS-SAU-003': 'Chilli Sauce',
+    'RS-SAU-004': 'Maggie Sauce',
+    'RS-SAU-005': 'Sweet Chilli Fish Sauce',
+    'RS-SAU-006': '🔴Isaan Dipping Sauce',
+    'RS-SAU-007': '🟢Seafood Sauce',
+    'RS-SAU-008': '🚫No Sauce',
+    
+    // Sauces - Nirvana
+    'NV-SAU-001': 'Soy Sauce',
+    'NV-SAU-002': 'Chilli Fish Sauce',
+    'NV-SAU-003': 'Isaan Dipping Sauce',
+    'NV-SAU-004': 'Seafood Sauce',
+    'NV-SAU-005': '🚫No Sauce',
+    
+    // Spicy Levels
+    'SAN-SPI-001': 'Sesame Sauce',
+    'SAN-SPI-002': '(1) 🌶️ Little',
+    'SAN-SPI-003': '(2) 🌶️🌶️ Medium (Signature) ✨',
+    'SAN-SPI-004': '(3) 🌶️🌶️🌶️ Spicy',
+    'SAN-SPI-005': '(4) 🌶️🌶️🌶️🌶️ Extra Spicy',
   },
   th: {
     // Header
@@ -126,6 +387,267 @@ export const translations = {
     
     // Common
     'common.price': '฿',
+    
+    // Drinks - SANTOR
+    'SAN-DRI-001': 'น้ำใบเตย',
+    'SAN-DRI-002': 'โคคา โคล่า',
+    'SAN-DRI-003': 'น้ำเปล่ามองต์เฟลอ',
+    'SAN-DRI-004': 'รูทเบียร์',
+    'SAN-DRI-005': 'โคคา โคล่า ซีโร่',
+    'SAN-DRI-006': 'น้ำส้ม มินิทเมด',
+    'SAN-DRI-007': 'ชาไทย',
+    'SAN-DRI-008': '✨ชาพีช',
+    'SAN-DRI-009': 'มะพร้าวอ่อน',
+    
+    // Salmon - Mejai Hai Yum
+    'MHY-SAL-001': 'แซลมอนซาชิมิ 100 กรัม',
+    'MHY-SAL-002': 'แซลมอนดองซีอิ๊ว 100 กรัม',
+    
+    // Dessert
+    'SAN-DES-001': 'ขนมปังบัตเตอร์โทสต์ไอศกรีมวานิลลา (ใหม่)',
+    
+    // Nirvana - Pad Krapao
+    'NV-PKR-001': 'ผัดกะเพราเนื้อสับ',
+    'NV-PKR-002': 'ผัดกะเพราหมูสับ',
+    'NV-PKR-003': 'ผัดกะเพราไก่สับ',
+    'NV-PKR-004': 'ผัดกะเพราไก่หั่นเต๋า',
+    'NV-PKR-005': 'ผัดกะเพราเนื้อสับพรีเมี่ยม',
+    
+    // Nirvana - Grilled Rice Bowls
+    'NV-GRR-001': '⭐️ข้าวหน้าเนื้อย่าง',
+    'NV-GRR-002': 'ข้าวหน้าเนื้อย่างหม่าล่า',
+    'NV-GRR-003': 'ข้าวหน้าเนื้อย่างต้นหอม',
+    'NV-GRR-004': 'ข้าวหน้าสะโพกไก่ย่างซีอิ๊ว',
+    'NV-GRR-005': 'ข้าวหน้าสะโพกไก่ย่างซีอิ๊วหม่าล่า',
+    'NV-GRR-006': 'ข้าวหน้าหมูสามชั้นย่าง',
+    'NV-GRR-007': 'ข้าวหน้าหมูสามชั้นย่างหม่าล่า',
+    'NV-GRR-008': 'ข้าวหน้าหมูย่างสไลด์ซีอิ๊ว',
+    'NV-GRR-009': 'ข้าวหน้าหมูย่างสไลด์หม่าล่า',
+    
+    // Nirvana - Braised Rice Bowls
+    'NV-BRR-001': 'ข้าวหน้าเนื้อตุ๋น',
+    'NV-BRR-002': '⭐️ข้าวหน้าหมูสามชั้นตุ๋น',
+    'NV-BRR-003': '👍ข้าวหน้าปีกไก่ตุ๋น',
+    
+    // Nirvana - Braised Noodles
+    'NV-BRN-001': 'บะหมี่ปีกไก่ตุ๋น',
+    'NV-BRN-002': 'บะหมี่ปีกไก่ตุ๋นหม่าล่า',
+    'NV-BRN-003': 'บะหมี่เนื้อตุ๋น',
+    'NV-BRN-004': 'บะหมี่เนื้อตุ๋นหม่าล่า',
+    'NV-BRN-005': 'บะหมี่หมูสามชั้นตุ๋น',
+    'NV-BRN-006': '🔥บะหมี่หมูสามชั้นตุ๋นหม่าล่า',
+    
+    // Nirvana - Grilled Noodles
+    'NV-GRN-001': 'บะหมี่หมูสามชั้นย่าง',
+    'NV-GRN-002': 'บะหมี่หมูสามชั้นย่างหม่าล่า',
+    'NV-GRN-003': 'บะหมี่หมูย่างสไลด์',
+    'NV-GRN-004': 'บะหมี่หมูย่างสไลด์หม่าล่า',
+    'NV-GRN-005': 'บะหมี่สะโพกไก่ย่างซีอิ๊ว',
+    'NV-GRN-006': 'บะหมี่สะโพกไก่ย่างซีอิ๊วหม่าล่า',
+    'NV-GRN-007': '⭐️บะหมี่เนื้อย่าง',
+    'NV-GRN-008': 'บะหมี่เนื้อย่างหม่าล่า',
+    
+    // Nirvana - Noodle Soup
+    'NV-NSP-001': '🔥ก๋วยเตี๋ยวเรือเนื้อหม่าล่า',
+    'NV-NSP-002': 'ก๋วยเตี๋ยวเรือเนื้อ',
+    
+    // Nirvana - Vegetarian
+    'NV-VEG-001': 'ข้าวหน้าเห็ดย่างซอสซีอิ๊ว',
+    'NV-VEG-002': 'ข้าวหน้าเห็ดย่างซอสซีอิ๊วหม่าล่า',
+    'NV-VEG-003': 'เห็ดผัดซอสซีอิ๊ว',
+    'NV-VEG-004': 'เห็ดผัดซอสซีอิ๊วหม่าล่า',
+    
+    // Nirvana - Fish
+    'NV-FIS-001': 'ข้าวหน้าปลาย่างซาบะซอส',
+    'NV-FIS-002': 'ข้าวหน้าปลาย่างซาบะซอสหม่าล่า',
+    
+    // Nirvana - Other
+    'NV-OTH-001': 'ข้าวไข่ข้น',
+    'NV-OTH-002': 'ข้าวไก่ชิ้นคั่วพริกเกลือ',
+    
+    // Restory - Combo
+    'RS-COM-001': 'ผัดกะเพราหมูสับ + โค้ก',
+    'RS-COM-002': 'กะเพราหมูสับ 2x (พิเศษ) ✨',
+    
+    // Restory - Pad Krapao
+    'RS-PKR-001': 'ผัดกะเพราหมูสับ',
+    'RS-PKR-002': 'วุ้นเส้น',
+    'RS-PKR-003': 'กุนเชียง',
+    'RS-PKR-004': 'ไข่เยี่ยวม้า',
+    'RS-PKR-005': 'ไส้กรอกไก่รมควัน',
+    'RS-PKR-006': 'ผัดกะเพราเบคอน',
+    'RS-PKR-007': 'ผัดกะเพราหมูชิ้น',
+    'RS-PKR-008': 'หมูสามชั้นหั่นชิ้น (หนานุ่ม)',
+    'RS-PKR-009': 'หมูสามชั้นสไลด์ (ฉ่ำนุ่ม)',
+    'RS-PKR-010': 'ผัดกะเพราสันคอหมูสไลด์ (มีเนื้อสัมผัส นุ่ม)',
+    'RS-PKR-011': 'ผัดกะเพราเนื้อสับพรีเมียม',
+    'RS-PKR-012': 'ผัดกะเพราเนื้อสับพรีเมียม (เปลี่ยนเป็นเนื้อธรรมดา -50 บาท)',
+    'RS-PKR-013': '✨ผัดกะเพราเนื้อวากิวหั่นเต๋า ✨ (เกรด A3)',
+    'RS-PKR-014': 'ผัดกะเพราอกไก่',
+    'RS-PKR-015': 'ผัดกะเพราไก่ชิ้น',
+    'RS-PKR-016': 'ผัดกะเพราไส้กรอกไก่รมควัน',
+    'RS-PKR-017': 'ผัดกะเพรากุนเชียง',
+    
+    // Restory - Curry
+    'RS-CUR-001': 'ข้าวแกงกะหรี่หมู + ไข่ข้น',
+    'RS-CUR-002': 'ข้าวแกงกะหรี่ไก่ทอด (ทงคัตสึ)',
+    'RS-CUR-003': '🔥ข้าวแกงกะหรี่หมูทอด (ทงคัตสึ)',
+    'RS-CUR-004': 'ข้าวแกงกะหรี่สะโพกไก่ทอด',
+    'RS-CUR-005': 'ข้าวแกงกะหรี่ไก่คาราเกะ',
+    'RS-CUR-006': 'ข้าวแกงกะหรี่เนื้อออสเตรเลีย',
+    
+    // Restory - Donburi
+    'RS-DON-001': '⭐️ทงคัตสึด้ง',
+    'RS-DON-002': '⭐️ทงคัตสึด้ง',
+    'RS-DON-003': 'ข้าวหน้าไก่คาราเกะ',
+    'RS-DON-004': 'ข้าวหน้าสะโพกไก่',
+    'RS-DON-005': '👍ทงคัตสึ ราดซอสคัตสึ',
+    'RS-DON-006': '👍ทงริคัตสึ ราดซอสคัตสึ',
+    'RS-DON-007': 'ข้าวหน้าหมูสไลด์เทริยากิ',
+    'RS-DON-008': 'สันคอหมูสไลด์',
+    'RS-DON-009': 'หมูสามชั้นสไลด์',
+    'RS-DON-010': 'หมูสามชั้นผัดซอส + ไข่ดอง (เลือกซอส)',
+    'RS-DON-011': 'ซอสญี่ปุ่น',
+    'RS-DON-012': 'ซอสเกาหลี',
+    'RS-DON-013': 'สันคอหมูผัดซอส + ไข่ดอง (เลือกซอส)',
+    'RS-DON-014': 'ซอสญี่ปุ่น',
+    'RS-DON-015': 'ซอสเกาหลี',
+    'RS-DON-016': '🔥ข้าวหน้าไก่เทริยากิ',
+    'RS-DON-017': 'สันคอหมูผัดซอส+ ไข่กุ้ง + ไข่ดอง + น้ำจิ้มซีฟู้ด',
+    
+    // Restory - Korean
+    'RS-KOR-001': 'มาม่าเกาหลีเผ็ดไก่คาราเกะ + ไข่ดอง',
+    'RS-KOR-002': 'มาม่าเกาหลีเผ็ดไก่คาราเกะ + กิมจิ',
+    'RS-KOR-003': 'มาม่าเกาหลีเผ็ดไก่ทอดกรอบ + ไข่ต้ม',
+    
+    // Restory - Quick Dish
+    'RS-QIK-001': 'ข้าวเบคอนหอมฉ่ำ + ไข่ดอง + น้ำจิ้มซีฟู้ด',
+    'RS-QIK-002': '🔥หมูสามชั้นย่างน้ำมันงา + น้ำจิ้มแจ่ว',
+    'RS-QIK-003': 'สันคอสไลด์ไข่เยิ้ม',
+    'RS-QIK-004': 'หมูสามชั้นผัดพริกแกงใต้ราดข้าว (กำลังจะกลับมา!)',
+    'RS-QIK-005': 'ข้าวหมูสับผัดไข่เค็ม',
+    'RS-QIK-006': 'ข้าวหมูสับไข่เค็มผัดน้ำพริกเผา',
+    'RS-QIK-007': 'ข้าวผัดไส้กรอกไก่รมควัน',
+    'RS-QIK-008': 'ข้าวผัดไข่น้ำมันงา',
+    
+    // Restory - Something with Egg
+    'RS-SWE-001': '⭐️ข้าวหมูเทริยากิไข่ข้น',
+    'RS-SWE-002': 'ข้าวไก่กรอบเผ็ดไข่ข้น',
+    'RS-SWE-003': '🔥ข้าวไข่ข้นมันกุ้ง + ไข่กุ้ง',
+    'RS-SWE-004': 'หมูสับผัดน้ำมันงาไข่ข้น + กระเทียมเจียว',
+    'RS-SWE-005': 'หมูสับผัดน้ำมันงาไข่ยู่ยี่+ กระเทียมเจียว',
+    'RS-SWE-006': 'เบคอนไข่ข้นออริกาโน่',
+    'RS-SWE-007': '👍ไข่ข้นไส้กรอกชีส',
+    'RS-SWE-008': 'ไส้กรอกรมควันผัดซอสมะเขือเทศไข่ข้น',
+    'RS-SWE-009': 'ข้าวไข่เจียวหมูสับ',
+    'RS-SWE-010': 'ข้าวไข่เจียวพริกซอย',
+    
+    // Restory - Fried Chicken
+    'RS-FCR-001': '⭐️ข้าวสะโพกไก่ทอดซอสน้ำปลาหวาน',
+    'RS-FCR-002': 'ไก่ทอดกรอบราดซอส (เลือกซอส)',
+    'RS-FCR-003': 'ซอสมะนาว',
+    'RS-FCR-004': 'ซอสกระเทียม',
+    'RS-FCR-005': 'ซอสเกาหลี 🔥',
+    'RS-FCR-006': 'ซาวครีมชีส',
+    'RS-FCR-007': '🔥สะโพกไก่ทอดซอสเทริยากิ',
+    'RS-FCR-008': 'สะโพกไก่ทอดซอสกระเทียมราดข้าว + กระเทียมเจียว',
+    'RS-FCR-009': 'ไก่คาราเกะซาวครีมชีสซี่ + หัวหอม',
+    'RS-FCR-010': 'ไก่คาราเกะซอสมะนาว',
+    'RS-FCR-011': 'ไก่คาราเกะไข่ข้นมันกุ้ง + ไข่กุ้ง',
+    'RS-FCR-012': 'ไก่คาราเกะซอสมาโยศรีราชาเผ็ดราดข้าว + ไข่กุ้ง',
+    'RS-FCR-013': 'ไก่คาราเกะซอสเกาหลี + กิมจิ',
+    'RS-FCR-014': 'ไก่คาราเกะเผ็ดซอสกระเทียมราดข้าว + ไข่ดอง + น้ำจิ้มซีฟู้ด',
+    'RS-FCR-015': 'ไก่คาราเกะซาวครีมชีสซี่ + ไข่กุ้ง',
+    'RS-FCR-016': 'ไก่คาราเกะซอสเกาหลี',
+    
+    // Restory - Chilli Fried Garlic
+    'RS-CFG-001': 'สะโพกไก่คั่วพริกเกลือ + ไข่ดอง',
+    'RS-CFG-002': '⭐️หมูสามชั้นคั่วพริกเกลือ',
+    'RS-CFG-003': 'สันคอหมูคั่วพริกเกลือ',
+    'RS-CFG-004': 'เบคอนคั่วพริกเกลือ',
+    
+    // Fried Eggs
+    'NV-FEG-001': 'ไข่ไก่ดาว',
+    'NV-FEG-002': 'ไข่เป็ดดาว',
+    'RS-FEG-001': 'ไข่ดาว',
+    'RS-FEG-002': 'ไข่เป็ดดาว',
+    
+    // Thai Style Omelette
+    'SAN-THO-001': 'ไข่เจียวทรงเครื่อง (1 ฟอง)',
+    'SAN-THO-002': 'ไข่เจียวทรงเครื่อง (2 ฟอง)',
+    'SAN-THO-003': 'ไข่เจียวทรงเครื่องพริกซอย',
+    'SAN-THO-004': 'ไข่เจียวทรงเครื่องหมูสับ',
+    
+    // Creamy Omelette
+    'SAN-CRO-001': 'ไข่ข้น (1 ฟอง)',
+    'SAN-CRO-002': 'ไข่ข้น (2 ฟอง)',
+    'SAN-CRO-003': 'ไข่ข้นมันกุ้ง',
+    'SAN-CRO-004': 'ไข่ข้นมันกุ้ง + ไข่กุ้ง',
+    
+    // Soft Omelette
+    'SAN-SOO-001': 'ไข่ยู่ยี่  (1 ฟอง)',
+    'SAN-SOO-002': 'ไข่ยู่ยี่ (2 ฟอง)',
+    'SAN-SOO-003': 'ไข่ยู่ยี่มันกุ้ง',
+    'SAN-SOO-004': 'ไข่ยู่ยี่มันกุ้ง + ไข่กุ้ง',
+    
+    // Extras
+    'SAN-EXT-001': '🍚 ข้าวหอมมะลิเพิ่ม 200 กรัม',
+    'RS-EXT-001': '🐔 เนื้อไก่เพิ่ม 150 กรัม',
+    'RS-EXT-002': '🐷 เนื้อหมูเพิ่ม 100 กรัม',
+    'RS-EXT-003': '🐮 เนื้อวัวพรีเมียมเพิ่ม 100 กรัม',
+    'RS-EXT-004': '🐮 เนื้อวัวเพิ่ม 100 กรัม',
+    'RS-EXT-006': '🍗 สะโพกไก่เพิ่ม',
+    'RS-EXT-007': '🐔 ไก่ทอดกรอบเพิ่ม',
+    'RS-EXT-008': '🐔 ไก่คาราเกะเพิ่ม',
+    'NV-EXT-003': '🐔 เนื้อไก่เพิ่ม 150 กรัม',
+    'NV-EXT-004': '🐔 เนื้อไก่สับเพิ่ม 150 กรัม',
+    'NV-EXT-005': '🐷 เนื้อหมูสับเพิ่ม 100 กรัม',
+    'NV-EXT-006': '🐮 เนื้อวัวสับเพิ่ม 100 กรัม',
+    'NV-EXT-007': '🐮 เนื้อวัวพรีเมียมเพิ่ม 100 กรัม',
+    'NV-EXT-008': '🐟 เนื้อปลาซาบะเพิ่ม 140 กรัม',
+    
+    // Add-ons
+    'SAN-ADD-001': 'ไข่ดอง ⭐️',
+    'SAN-ADD-002': 'ไข่เค็ม',
+    'SAN-ADD-003': 'ไข่เยี่ยวม้า',
+    'SAN-ADD-004': 'ไข่กุ้ง',
+    'SAN-ADD-005': 'สะโพกไก่ทอด + น้ำปลาหวาน',
+    'SAN-ADD-006': 'สะโพกไก่ทอด',
+    'SAN-ADD-007': 'ไก่ทอดกรอบ + ซอสคัตสึ 🔥',
+    'SAN-ADD-008': 'ไก่ทอดกรอบ',
+    'SAN-ADD-009': 'ไก่คาราเกะ 🔥',
+    'SAN-ADD-010': 'เบคอนกรอบ',
+    'SAN-ADD-011': 'กุนเชียง',
+    'SAN-ADD-012': 'ไส้กรอกรมควัน',
+    'SAN-ADD-013': 'ไส้กรอกชีส',
+    'SAN-ADD-014': 'หน่อไม้',
+    'SAN-ADD-015': 'ซุปดาชิ ✨',
+    'SAN-ADD-016': 'น้ำใบเตย',
+    'SAN-ADD-017': 'แก้วพร้อมน้ำแข็ง +6',
+    
+    // Sauces - Restory
+    'RS-SAU-001': 'ซอสมะเขือเทศ',
+    'RS-SAU-002': 'น้ำปลาพริก',
+    'RS-SAU-003': 'ซอสพริก',
+    'RS-SAU-004': 'ซอสแม็กกี้',
+    'RS-SAU-005': 'น้ำปลาหวาน',
+    'RS-SAU-006': '🔴 น้ำจิ้มแจ่ว',
+    'RS-SAU-007': '🟢 น้ำจิ้มซีฟู้ด',
+    'RS-SAU-008': '🚫 ไม่ใส่ซอส',
+    
+    // Sauces - Nirvana
+    'NV-SAU-001': 'ซอสซีอิ๊ว',
+    'NV-SAU-002': 'น้ำปลาพริก',
+    'NV-SAU-003': 'น้ำจิ้มแจ่ว',
+    'NV-SAU-004': 'น้ำจิ้มซีฟู้ด',
+    'NV-SAU-005': '🚫 ไม่ใส่ซอส',
+    
+    // Spicy Levels
+    'SAN-SPI-001': '(0) ไม่เผ็ด',
+    'SAN-SPI-002': '(1) 🌶️ เผ็ดน้อย',
+    'SAN-SPI-003': '(2) 🌶️🌶️ เผ็ดกลาง (สูตรซิกเนเจอร์) ✨',
+    'SAN-SPI-004': '(3) 🌶️🌶️🌶️ เผ็ดมาก',
+    'SAN-SPI-005': '(4) 🌶️🌶️🌶️🌶️ เผ็ดมากที่สุด',
   }
 };
 

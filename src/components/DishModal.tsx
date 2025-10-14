@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { Plus, Minus } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DishModalProps {
   dish: Dish | null;
@@ -25,6 +26,7 @@ const DishModal = ({
   onClose,
   onAddToBasket
 }: DishModalProps) => {
+  const { t } = useLanguage();
   const [selectedVariant, setSelectedVariant] = useState<DishVariant | null>(null);
   const [selectedExtraPls, setSelectedExtraPls] = useState<AddOn[]>([]);
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]);
