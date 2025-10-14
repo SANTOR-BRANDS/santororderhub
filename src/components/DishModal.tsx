@@ -527,7 +527,7 @@ const DishModal = ({
               onValueChange={(value) => setCurrentSelectedSauces([value])}
               className="space-y-2"
             >
-              {SAUCES.map(sauce => (
+              {dish.customSauces.map(sauce => (
                 <div key={sauce.id} className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value={sauce.id} id={`${sauce.id}-${dishNumber}`} />
