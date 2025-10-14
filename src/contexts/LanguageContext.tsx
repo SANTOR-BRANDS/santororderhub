@@ -289,6 +289,10 @@ export const translations = {
     'NV-EXT-007': '🐮 Extra Premium Beef 100g',
     'NV-EXT-008': '🐟 Extra Saba Fish 140g',
     
+    // Mejai Hai Yum Add-ons
+    'MHY-ADD-001': 'Fish Roe',
+    'MHY-ADD-002': 'Pickled Egg Yolk ⭐️',
+    
     // Add-ons
     'SAN-ADD-001': 'Pickled Egg Yolk ⭐️',
     'SAN-ADD-002': 'Salted Duck Egg',
@@ -609,6 +613,10 @@ export const translations = {
     'NV-EXT-006': '🐮 เนื้อวัวสับเพิ่ม 100 กรัม',
     'NV-EXT-007': '🐮 เนื้อวัวพรีเมียมเพิ่ม 100 กรัม',
     'NV-EXT-008': '🐟 เนื้อปลาซาบะเพิ่ม 140 กรัม',
+    
+    // Mejai Hai Yum Add-ons
+    'MHY-ADD-001': 'ไข่ปลา',
+    'MHY-ADD-002': 'ไข่แดงดอง ⭐️',
     
     // Add-ons
     'SAN-ADD-001': 'ไข่ดอง ⭐️',
