@@ -125,7 +125,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
                 ? 'bg-mejai-secondary/20 text-mejai-secondary'
                 : 'bg-nirvana-accent/10 text-nirvana-accent'
             )}>
-              {dish.category}
+              {t(`category.${dish.category}`) !== `category.${dish.category}` ? t(`category.${dish.category}`) : dish.category}
             </span>
             
             {(dish.spicyRequired || dish.isSpecial) && (
