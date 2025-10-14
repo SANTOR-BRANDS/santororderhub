@@ -322,6 +322,16 @@ export const translations = {
     'RS-SAU-007': '🟢Seafood Sauce',
     'RS-SAU-008': '🚫No Sauce',
     
+    // Sauces - SANTOR
+    'SAN-SAU-001': 'Ketchup',
+    'SAN-SAU-002': 'Chilli Fish Sauce',
+    'SAN-SAU-003': 'Chilli Sauce',
+    'SAN-SAU-004': 'Maggie Sauce',
+    'SAN-SAU-005': 'Sweet Chilli Fish Sauce',
+    'SAN-SAU-006': '🔴 Isaan Dipping Sauce',
+    'SAN-SAU-007': '🟢 Seafood Sauce',
+    'SAN-SAU-008': '🚫 NO SAUCE',
+    
     // Sauces - Nirvana
     'NV-SAU-001': 'Soy Sauce',
     'NV-SAU-002': 'Chilli Fish Sauce',
@@ -636,6 +646,16 @@ export const translations = {
     'SAN-ADD-015': 'ซุปดาชิ ✨',
     'SAN-ADD-016': 'น้ำใบเตย',
     'SAN-ADD-017': 'แก้วพร้อมน้ำแข็ง +6',
+    
+    // Sauces - SANTOR
+    'SAN-SAU-001': 'ซอสมะเขือเทศ',
+    'SAN-SAU-002': 'น้ำปลาพริก',
+    'SAN-SAU-003': 'ซอสพริก',
+    'SAN-SAU-004': 'ซอสแม็กกี้',
+    'SAN-SAU-005': 'น้ำปลาหวาน',
+    'SAN-SAU-006': '🔴 น้ำจิ้มแจ่ว',
+    'SAN-SAU-007': '🟢 น้ำจิ้มซีฟู้ด',
+    'SAN-SAU-008': '🚫 ไม่ใส่ซอส',
     
     // Sauces - Restory
     'RS-SAU-001': 'ซอสมะเขือเทศ',
