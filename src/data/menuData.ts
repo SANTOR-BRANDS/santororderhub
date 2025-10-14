@@ -1401,14 +1401,14 @@ export const mejaiMenu: Dish[] = [
 
   // TOPPINGS
   { 
-    id: 'MHY-ADD-001', 
+    id: 'SAN-ADD-004', 
     name: 'Fish Roe', 
     price: 40, 
     category: 'TOPPINGS', 
     restaurant: 'mejai hai yum'
   },
   { 
-    id: 'MHY-ADD-002', 
+    id: 'SAN-ADD-001', 
     name: 'Pickled Egg Yolk ⭐️', 
     price: 25, 
     category: 'TOPPINGS', 
