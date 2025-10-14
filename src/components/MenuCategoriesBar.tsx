@@ -1,5 +1,4 @@
 import { Restaurant } from '@/types/menu';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface MenuCategoriesBarProps {
   categories: string[];
@@ -16,7 +15,6 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
   themeColor,
   restaurant,
 }) => {
-  const { t } = useLanguage();
   const getBackgroundClass = () => {
     if (restaurant === 'nirvana') return 'bg-nirvana-secondary backdrop-blur-sm border-t border-gray-700';
     if (restaurant === 'restory') return 'bg-nirvana-secondary backdrop-blur-sm border-t border-gray-800';
@@ -51,7 +49,7 @@ const MenuCategoriesBar: React.FC<MenuCategoriesBarProps> = ({
             onClick={() => setSelectedCategory(category)}
             aria-current={selectedCategory === category ? "true" : undefined}
           >
-            {t(`category.${category}`) !== `category.${category}` ? t(`category.${category}`) : category}
+            {category}
           </button>
         ))}
       </div>
