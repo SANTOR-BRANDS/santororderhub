@@ -72,14 +72,14 @@ export const SPICY_LEVELS: SpicyLevel[] = [
 ];
 
 export const SAUCES = [
-  { id: 'SAN-SAU-001', name: 'Ketchup', price: 0 },
-  { id: 'SAN-SAU-002', name: 'Chilli Fish Sauce', price: 0 },
-  { id: 'SAN-SAU-003', name: 'Chilli Sauce', price: 0 },
-  { id: 'SAN-SAU-004', name: 'Maggie Sauce', price: 0 },
-  { id: 'SAN-SAU-005', name: 'Sweet Chilli Fish Sauce', price: 10 },
-  { id: 'SAN-SAU-006', name: '🔴 Isaan Dipping Sauce', price: 15 },
-  { id: 'SAN-SAU-007', name: '🟢 Seafood Sauce', price: 20 },
-  { id: 'SAN-SAU-008', name: '🚫 NO SAUCE', price: 0 },
+  { id: 'RS-SAU-001', name: 'Ketchup', price: 0 },
+  { id: 'RS-SAU-002', name: 'Chilli Fish Sauce', price: 0 },
+  { id: 'RS-SAU-003', name: 'Chilli Sauce', price: 0 },
+  { id: 'RS-SAU-004', name: 'Maggie Sauce', price: 0 },
+  { id: 'RS-SAU-005', name: 'Sweet Chilli Fish Sauce', price: 10 },
+  { id: 'RS-SAU-006', name: '🔴 Isaan Dipping Sauce', price: 15 },
+  { id: 'RS-SAU-007', name: '🟢 Seafood Sauce', price: 20 },
+  { id: 'RS-SAU-008', name: '🚫 NO SAUCE', price: 0 },
 ];
 
 export const NIRVANA_SAUCES = [
