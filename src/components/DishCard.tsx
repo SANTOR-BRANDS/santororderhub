@@ -1,6 +1,7 @@
 import { Dish } from '@/types/menu';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DishCardProps {
   dish: Dish;
@@ -8,7 +9,11 @@ interface DishCardProps {
 }
 
 const DishCard = ({ dish, onClick }: DishCardProps) => {
+  const { language, t } = useLanguage();
   const isUnavailable = dish.isAvailable === false;
+  
+  // Get translated name if available, otherwise use original name
+  const dishName = t(dish.id) !== dish.id ? t(dish.id) : dish.name;
   
   return (
     <Card 
@@ -91,7 +96,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
               dish.restaurant === 'mejai hai yum' ? 'text-black' : 'text-white',
               dish.isSpecial && 'text-amber-600 font-bold'
             )}>
-              {dish.name}
+              {dishName}
             </h3>
             <span className={cn(
               'font-bold text-lg whitespace-nowrap',
