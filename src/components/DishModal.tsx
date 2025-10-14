@@ -663,7 +663,7 @@ const DishModal = ({
                 </div>
 
                 <DialogTitle className="text-xl font-bold">
-                  {dish.name}
+                  {t(dish.id)}
                   {dish.isSpecial && <span className="ml-2">⭐</span>}
                 </DialogTitle>
                 

@@ -276,7 +276,7 @@ const BasketModal = ({
       message += '🧡 *RESTORY*\n';
       restoryItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
-        message += `• ${item.dish.name} (฿${basePrice})\n`;
+        message += `• ${t(item.dish.id)} (฿${basePrice})\n`;
         message += formatItemExtras(item);
       });
     }
@@ -285,7 +285,7 @@ const BasketModal = ({
       message += '⚫ *NIRVANA*\n';
       nirvanaItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
-        message += `• ${item.dish.name} (฿${basePrice})\n`;
+        message += `• ${t(item.dish.id)} (฿${basePrice})\n`;
         message += formatItemExtras(item);
       });
     }
@@ -294,7 +294,7 @@ const BasketModal = ({
       message += '🍣 *MEJAI HAI YUM*\n';
       mejaiItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
-        message += `• ${item.dish.name} (฿${basePrice})\n`;
+        message += `• ${t(item.dish.id)} (฿${basePrice})\n`;
         message += formatItemExtras(item);
       });
     }
@@ -413,7 +413,7 @@ const BasketModal = ({
               <div key={item.id} className="border rounded-lg p-4">
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h4 className="font-semibold text-sm">{item.dish.name}</h4>
+                    <h4 className="font-semibold text-sm">{t(item.dish.id)}</h4>
                     <Badge 
                       variant="outline" 
                       className={cn(
