@@ -11,7 +11,6 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { Plus, Minus } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DishModalProps {
   dish: Dish | null;
@@ -26,7 +25,6 @@ const DishModal = ({
   onClose,
   onAddToBasket
 }: DishModalProps) => {
-  const { language, t } = useLanguage();
   const [selectedVariant, setSelectedVariant] = useState<DishVariant | null>(null);
   const [selectedExtraPls, setSelectedExtraPls] = useState<AddOn[]>([]);
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]);
@@ -363,7 +361,7 @@ const DishModal = ({
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
                     <Label htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center gap-2">
-                      <span>{t(variant.id) !== variant.id ? t(variant.id) : variant.name}</span>
+                      <span>{variant.name}</span>
                     </Label>
                   </div>
                   {/* Only show price if not zero */}
@@ -395,7 +393,7 @@ const DishModal = ({
                   return (
                     <div key={addon.id} className="flex items-center justify-between p-3 border rounded-lg">
                       <div className="flex-1">
-                        <Label className="text-sm font-medium">{t(addon.id) !== addon.id ? t(addon.id) : addon.name}</Label>
+                        <Label className="text-sm font-medium">{addon.name}</Label>
                         {qty > 0 && (
                           <div className="text-xs text-muted-foreground mt-1">
                             {totalGrams}g • ฿{totalPrice}
@@ -443,7 +441,7 @@ const DishModal = ({
                         onCheckedChange={() => toggleExtraPls(addon, dishNumber)} 
                       />
                       <Label htmlFor={`extra-${addon.id}-${dishNumber}`} className="text-sm">
-                        {t(addon.id) !== addon.id ? t(addon.id) : addon.name}
+                        {addon.name}
                       </Label>
                     </div>
                     <span className="text-sm text-muted-foreground">
@@ -474,7 +472,7 @@ const DishModal = ({
                   <Label htmlFor={`spicy-${level.level}-${dishNumber}`} className="flex items-center gap-2">
                     <span>({level.level})</span>
                     <span>{level.emoji}</span>
-                    <span>{t(`SAN-SPI-00${level.level + 1}`) !== `SAN-SPI-00${level.level + 1}` ? t(`SAN-SPI-00${level.level + 1}`).replace(/^\(\d+\)\s*/, '').replace(/🌶️/g, '').trim() : level.label}</span>
+                    <span>{level.label}</span>
                     {level.level === 2 && <Badge variant="outline" className="text-xs">✨</Badge>}
                   </Label>
                 </div>
@@ -504,7 +502,7 @@ const DishModal = ({
                       onCheckedChange={() => toggleAddOn(addon, dishNumber)} 
                     />
                     <Label htmlFor={`${addon.id}-${dishNumber}`} className="text-sm">
-                      {t(addon.id) !== addon.id ? t(addon.id) : addon.name}
+                      {addon.name}
                     </Label>
                   </div>
                   <span className="text-sm text-muted-foreground">
@@ -534,7 +532,7 @@ const DishModal = ({
                 <div key={sauce.id} className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value={sauce.id} id={`${sauce.id}-${dishNumber}`} />
-                    <Label htmlFor={`${sauce.id}-${dishNumber}`}>{t(sauce.id) !== sauce.id ? t(sauce.id) : sauce.name}</Label>
+                    <Label htmlFor={`${sauce.id}-${dishNumber}`}>{sauce.name}</Label>
                   </div>
                   {sauce.price > 0 && (
                     <span className="text-sm text-muted-foreground">
@@ -613,7 +611,7 @@ const DishModal = ({
                           }
                         }}
                       />
-                      <Label htmlFor={`${sauce.id}-${dishNumber}`}>{t(sauce.id) !== sauce.id ? t(sauce.id) : sauce.name}</Label>
+                      <Label htmlFor={`${sauce.id}-${dishNumber}`}>{sauce.name}</Label>
                     </div>
                     {sauce.price > 0 && (
                       <span className="text-sm text-muted-foreground">
@@ -666,7 +664,7 @@ const DishModal = ({
                 </div>
 
                 <DialogTitle className="text-xl font-bold">
-                  {t(dish.id) !== dish.id ? t(dish.id) : dish.name}
+                  {dish.name}
                   {dish.isSpecial && <span className="ml-2">⭐</span>}
                 </DialogTitle>
                 
