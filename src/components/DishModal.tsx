@@ -323,7 +323,7 @@ const DishModal = ({
           <div className="mb-6">
             <Label className="text-base font-semibold mb-3 flex items-center gap-2">
               CHOOSE OPTION <span className="text-red-500">*</span>
-              <span className="text-xs text-muted-foreground">(Required)</span>
+              <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
             </Label>
             <RadioGroup 
               value={currentSelectedVariant?.id || ''} 
@@ -461,7 +461,7 @@ const DishModal = ({
           <div className="mb-6">
             <Label className="text-base font-semibold mb-3 flex items-center gap-2">
               SPICY LEVEL <span className="text-red-500">*</span>
-              <span className="text-xs text-muted-foreground">(Required)</span>
+              <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
             </Label>
             <RadioGroup 
               value={currentSpicyLevel?.toString()} 
@@ -518,7 +518,7 @@ const DishModal = ({
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             SELECT SAUCE <span className="text-red-500">*</span>
-            <span className="text-xs text-muted-foreground">(Required)</span>
+            <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
           </Label>
           {dish.customSauces ? (
             // Radio buttons for dishes with custom sauces (single selection)
@@ -711,9 +711,9 @@ const DishModal = ({
                   {/* Cutlery - Required (Skip for DRINKS) */}
                   {dish.category !== 'DRINKS' && (
                   <div className="mb-6">
-                    <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-                      Need cutlery? <span className="text-red-500">*</span>
-                      <span className="text-xs text-muted-foreground">(Required)</span>
+                     <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+                      {t('dish.cutleryQuestion')} <span className="text-red-500">*</span>
+                      <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
                     </Label>
                     <RadioGroup 
                       value={needsCutlery.toString()} 
@@ -722,11 +722,11 @@ const DishModal = ({
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="true" id="cutlery-yes" />
-                        <Label htmlFor="cutlery-yes">Yes, please</Label>
+                        <Label htmlFor="cutlery-yes">{t('dish.cutleryYes')}</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="false" id="cutlery-no" />
-                        <Label htmlFor="cutlery-no">No</Label>
+                        <Label htmlFor="cutlery-no">{t('dish.cutleryNo')}</Label>
                       </div>
                     </RadioGroup>
                   </div>

@@ -60,6 +60,10 @@ export const translations = {
     'dish.addOns': 'Add-ons',
     'dish.extras': 'Extra',
     'dish.cutlery': 'Cutlery',
+    'dish.cutleryQuestion': 'Need cutlery?',
+    'dish.cutleryYes': 'Yes, please',
+    'dish.cutleryNo': 'No',
+    'dish.required': 'Required',
     'dish.notes': 'Special Notes',
     'dish.notes.placeholder': 'Any special requests...',
     
@@ -450,6 +454,10 @@ export const translations = {
     'dish.addOns': 'เพิ่มเติม',
     'dish.extras': 'เพิ่ม',
     'dish.cutlery': 'ช้อนส้อม',
+    'dish.cutleryQuestion': 'ต้องการรับช้อนส้อม?',
+    'dish.cutleryYes': 'ใช่',
+    'dish.cutleryNo': 'ไม่',
+    'dish.required': 'ที่จำเป็น',
     'dish.notes': 'หมายเหตุพิเศษ',
     'dish.notes.placeholder': 'ข้อความพิเศษ...',
     
