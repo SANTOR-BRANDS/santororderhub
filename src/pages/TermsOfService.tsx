@@ -2,103 +2,97 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Footer from '@/components/Footer';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const TermsOfService = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <Link to="/">
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
+            {t('about.backToHome')}
           </Button>
         </Link>
 
         <div className="prose prose-lg max-w-none">
-          <h1 className="text-4xl font-bold mb-8 text-foreground">Terms of Service</h1>
+          <h1 className="text-4xl font-bold mb-8 text-foreground">{t('terms.title')}</h1>
           
           <div className="space-y-6 text-foreground">
             <section>
-              <h2 className="text-2xl font-semibold mb-3">1. Acceptance of Terms</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.acceptance.title')}</h2>
               <p className="text-muted-foreground">
-                By accessing and using SANTOR's services, you accept and agree to be bound by the terms 
-                and provision of this agreement.
+                {t('terms.acceptance.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">2. Use of Service</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.service.title')}</h2>
               <p className="text-muted-foreground">
-                Our service is provided for ordering and purchasing food items. You agree to use the 
-                service only for lawful purposes and in accordance with these Terms.
+                {t('terms.service.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">3. Orders and Payments</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.orders.title')}</h2>
               <p className="text-muted-foreground">
-                All orders placed through our service are subject to acceptance and availability. 
-                Prices are subject to change without notice. Payment must be made at the time of order.
+                {t('terms.orders.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">4. Delivery</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.delivery.title')}</h2>
               <p className="text-muted-foreground">
-                Delivery times are estimates and not guaranteed. We are not liable for delays in delivery 
-                caused by circumstances beyond our control.
+                {t('terms.delivery.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">5. Food Safety</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.safety.title')}</h2>
               <p className="text-muted-foreground">
-                We take food safety seriously. Please inform us of any allergies or dietary restrictions 
-                when placing your order. We cannot guarantee that our food is free from all allergens.
+                {t('terms.safety.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">6. Cancellations and Refunds</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.cancellation.title')}</h2>
               <p className="text-muted-foreground">
-                Orders may be cancelled within a specified time frame. Refunds will be processed according 
-                to our refund policy. Please contact us for specific cases.
+                {t('terms.cancellation.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">7. Intellectual Property</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.ip.title')}</h2>
               <p className="text-muted-foreground">
-                All content on this platform, including text, graphics, logos, and images, is the property 
-                of SANTOR and protected by copyright laws.
+                {t('terms.ip.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">8. Limitation of Liability</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.liability.title')}</h2>
               <p className="text-muted-foreground">
-                SANTOR shall not be liable for any indirect, incidental, special, consequential or punitive 
-                damages resulting from your use of or inability to use the service.
+                {t('terms.liability.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">9. Changes to Terms</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.changes.title')}</h2>
               <p className="text-muted-foreground">
-                We reserve the right to modify these terms at any time. Changes will be effective immediately 
-                upon posting to the website.
+                {t('terms.changes.content')}
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-3">10. Contact Information</h2>
+              <h2 className="text-2xl font-semibold mb-3">{t('terms.contact.title')}</h2>
               <p className="text-muted-foreground">
-                For questions about these Terms of Service, please contact us through our Contact Us form.
+                {t('terms.contact.content')}
               </p>
             </section>
 
             <p className="text-sm text-muted-foreground mt-8">
-              Last updated: {new Date().toLocaleDateString()}
+              {t('terms.lastUpdated')}
             </p>
           </div>
         </div>

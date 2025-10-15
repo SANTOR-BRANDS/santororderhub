@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ContactDialogProps {
   isOpen: boolean;
@@ -8,13 +9,15 @@ interface ContactDialogProps {
 }
 
 const ContactDialog = ({ isOpen, onClose }: ContactDialogProps) => {
+  const { t } = useLanguage();
+  
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
-          <DialogTitle>Contact Us</DialogTitle>
+          <DialogTitle>{t('contact.title')}</DialogTitle>
           <DialogDescription>
-            Please call us at the number below
+            {t('contact.description')}
           </DialogDescription>
         </DialogHeader>
         
@@ -32,7 +35,7 @@ const ContactDialog = ({ isOpen, onClose }: ContactDialogProps) => {
         
         <div className="flex justify-end">
           <Button onClick={onClose}>
-            Close
+            {t('contact.close')}
           </Button>
         </div>
       </DialogContent>

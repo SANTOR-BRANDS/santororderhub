@@ -345,6 +345,61 @@ export const translations = {
     'SAN-SPI-003': '(2) 🌶️🌶️ Medium (Signature) ✨',
     'SAN-SPI-004': '(3) 🌶️🌶️🌶️ Spicy',
     'SAN-SPI-005': '(4) 🌶️🌶️🌶️🌶️ Extra Spicy',
+    
+    // Footer translations
+    'footer.followUs': 'Follow Us',
+    'footer.visitUs': 'Visit Us',
+    'footer.lineOfficial': 'LINE Official',
+    'footer.aboutUs': 'About Us',
+    'footer.terms': 'Terms of Service',
+    'footer.faq': 'FAQ',
+    'footer.contact': 'Contact Us',
+    'footer.copyright': 'All rights reserved',
+    
+    // Contact Dialog
+    'contact.title': 'Contact Us',
+    'contact.description': 'Please call us at the number below',
+    'contact.close': 'Close',
+    
+    // About Us page
+    'about.title': 'About Us',
+    'about.quote': '"Good food is the foundation of happiness"',
+    'about.backToHome': 'Back to Home',
+    'about.paragraph1': "We're a team of food addicts bound by one belief: good food is the foundations of happiness.",
+    'about.paragraph2': 'Our story began as friends obsessed with the kind of dishes that make you pause mid-conversation, look each other in the eye, and say,',
+    'about.paragraph2Quote': '"Wow… this is ****** good."',
+    'about.paragraph3': "We've travelled across continents, tasting thousands of dishes from different places — from the local night markets to Michelin-starred kitchens. We weren't searching for fancy experiences but for the kind of dishes that stop you from talking. Recipes that deserve to be shared.",
+    'about.paragraph4': "Together, we bring these experiences to re-create classic dishes from around the world — with a refined touch. Our goal isn't to reinvent what people already love, but to honor it, refine it, and make it more accessible.",
+    'about.paragraph5': "We believe food has the power to bring people together, make memories, and create joy. That's what we strive for every day — not because we think our food alone brings happiness, but because sharing a good meal is often where happiness begins.",
+    
+    // FAQ page
+    'faq.title': 'Frequently Asked Questions',
+    'faq.comingSoon': 'Coming Soon',
+    'faq.workingOn': "We're working on compiling the most common questions. Check back soon!",
+    
+    // Terms of Service page
+    'terms.title': 'Terms of Service',
+    'terms.lastUpdated': 'Last updated: January 1, 2025',
+    'terms.acceptance.title': '1. Acceptance of Terms',
+    'terms.acceptance.content': 'By accessing and using this website, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.',
+    'terms.service.title': '2. Use of Service',
+    'terms.service.content': 'Our service is provided for ordering food and beverages. You agree to use the service only for lawful purposes and in accordance with these Terms.',
+    'terms.orders.title': '3. Orders and Payments',
+    'terms.orders.content': 'All orders are subject to acceptance and availability. We reserve the right to refuse or cancel any order. Payment must be made in full at the time of order.',
+    'terms.delivery.title': '4. Delivery',
+    'terms.delivery.content': 'Delivery times are estimates and not guaranteed. We are not liable for delays caused by circumstances beyond our control.',
+    'terms.safety.title': '5. Food Safety',
+    'terms.safety.content': 'We maintain high standards of food safety and hygiene. If you have allergies or dietary restrictions, please inform us before ordering.',
+    'terms.cancellation.title': '6. Cancellations and Refunds',
+    'terms.cancellation.content': 'Orders may be cancelled within a reasonable time before preparation begins. Refunds are issued at our discretion based on individual circumstances.',
+    'terms.ip.title': '7. Intellectual Property',
+    'terms.ip.content': 'All content on this website, including text, graphics, logos, and images, is our property and protected by copyright laws.',
+    'terms.liability.title': '8. Limitation of Liability',
+    'terms.liability.content': 'We are not liable for any indirect, incidental, or consequential damages arising from the use of our services.',
+    'terms.changes.title': '9. Changes to Terms',
+    'terms.changes.content': 'We reserve the right to modify these terms at any time. Continued use of the service constitutes acceptance of modified terms.',
+    'terms.contact.title': '10. Contact Information',
+    'terms.contact.content': 'For questions about these Terms of Service, please contact us through our contact page.',
   },
   th: {
     // Header
@@ -680,6 +735,61 @@ export const translations = {
     'SAN-SPI-003': '(2) 🌶️🌶️ เผ็ดกลาง (สูตรซิกเนเจอร์) ✨',
     'SAN-SPI-004': '(3) 🌶️🌶️🌶️ เผ็ดมาก',
     'SAN-SPI-005': '(4) 🌶️🌶️🌶️🌶️ เผ็ดมากที่สุด',
+    
+    // Footer translations
+    'footer.followUs': 'ติดตามเรา',
+    'footer.visitUs': 'เยี่ยมชมเรา',
+    'footer.lineOfficial': 'ไลน์ออฟฟิเชียล',
+    'footer.aboutUs': 'เกี่ยวกับเรา',
+    'footer.terms': 'เงื่อนไขการให้บริการ',
+    'footer.faq': 'คำถามที่พบบ่อย',
+    'footer.contact': 'ติดต่อเรา',
+    'footer.copyright': 'สงวนลิขสิทธิ์',
+    
+    // Contact Dialog
+    'contact.title': 'ติดต่อเรา',
+    'contact.description': 'โปรดโทรหาเราที่หมายเลขด้านล่าง',
+    'contact.close': 'ปิด',
+    
+    // About Us page
+    'about.title': 'เกี่ยวกับเรา',
+    'about.quote': '"อาหารดีคือรากฐานของความสุข"',
+    'about.backToHome': 'กลับหน้าหลัก',
+    'about.paragraph1': 'เราคือทีมคนบ้าอาหารที่ผูกพันด้วยความเชื่อเดียว: อาหารดีคือรากฐานของความสุข',
+    'about.paragraph2': 'เรื่องราวของเราเริ่มต้นจากกลุ่มเพื่อนที่หลงใหลในเมนูอาหารที่ทำให้คุณหยุดพูดคุยกลางคำ จ้องตากัน แล้วพูดว่า',
+    'about.paragraph2Quote': '"ว้าว... นี่มันอร่อยจริงๆ"',
+    'about.paragraph3': 'เราได้เดินทางข้ามทวีป ลิ้มรสอาหารหลายพันจานจากที่ต่างๆ — ตั้งแต่ตลาดกลางคืนท้องถิ่นไปจนถึงครัวที่ได้รับดาวมิชลิน เราไม่ได้มองหาประสบการณ์ที่หรูหรา แต่มองหาอาหารที่ทำให้คุณหยุดพูด สูตรอาหารที่สมควรได้รับการแบ่งปัน',
+    'about.paragraph4': 'เรานำประสบการณ์เหล่านี้มาร่วมกันเพื่อสร้างสรรค์เมนูคลาสสิกจากทั่วโลกใหม่ — ด้วยสัมผัสที่ประณีต เป้าหมายของเราไม่ใช่การสร้างสิ่งใหม่จากสิ่งที่ผู้คนรักอยู่แล้ว แต่เพื่อเคารพ ปรับปรุง และทำให้เข้าถึงได้มากขึ้น',
+    'about.paragraph5': 'เราเชื่อว่าอาหารมีพลังในการนำผู้คนมารวมกัน สร้างความทรงจำ และสร้างความสุข นั่นคือสิ่งที่เรามุ่งมั่นทุกวัน — ไม่ใช่เพราะเราคิดว่าอาหารของเราเพียงอย่างเดียวนำความสุขมา แต่เพราะการแบ่งปันมื้ออาหารดีๆ มักเป็นจุดเริ่มต้นของความสุข',
+    
+    // FAQ page
+    'faq.title': 'คำถามที่พบบ่อย',
+    'faq.comingSoon': 'เร็วๆ นี้',
+    'faq.workingOn': 'เรากำลังรวบรวมคำถามที่พบบ่อยที่สุด กรุณากลับมาตรวจสอบอีกครั้งเร็วๆ นี้!',
+    
+    // Terms of Service page
+    'terms.title': 'เงื่อนไขการให้บริการ',
+    'terms.lastUpdated': 'อัปเดตล่าสุด: 1 มกราคม 2568',
+    'terms.acceptance.title': '1. การยอมรับเงื่อนไข',
+    'terms.acceptance.content': 'การเข้าใช้และใช้งานเว็บไซต์นี้ ถือว่าคุณยอมรับและตกลงที่จะปฏิบัติตามเงื่อนไขการให้บริการเหล่านี้ หากคุณไม่เห็นด้วยกับเงื่อนไขเหล่านี้ กรุณาอย่าใช้บริการของเรา',
+    'terms.service.title': '2. การใช้บริการ',
+    'terms.service.content': 'บริการของเราจัดทำขึ้นเพื่อสั่งอาหารและเครื่องดื่ม คุณตกลงที่จะใช้บริการเพื่อวัตถุประสงค์ที่ถูกกฎหมายเท่านั้นและสอดคล้องกับเงื่อนไขเหล่านี้',
+    'terms.orders.title': '3. การสั่งซื้อและการชำระเงิน',
+    'terms.orders.content': 'คำสั่งซื้อทั้งหมดขึ้นอยู่กับการยอมรับและความพร้อมจำหน่าย เราขอสงวนสิทธิ์ในการปฏิเสธหรือยกเลิกคำสั่งซื้อใดก็ได้ ต้องชำระเงินเต็มจำนวนในขณะสั่งซื้อ',
+    'terms.delivery.title': '4. การจัดส่ง',
+    'terms.delivery.content': 'เวลาการจัดส่งเป็นการประมาณและไม่รับประกัน เราไม่รับผิดชอบต่อความล่าช้าที่เกิดจากสถานการณ์ที่เราควบคุมไม่ได้',
+    'terms.safety.title': '5. ความปลอดภัยของอาหาร',
+    'terms.safety.content': 'เรารักษามาตรฐานความปลอดภัยและสุขอนามัยของอาหารในระดับสูง หากคุณมีอาการแพ้หรือข้อจำกัดด้านอาหาร กรุณาแจ้งเราก่อนสั่งซื้อ',
+    'terms.cancellation.title': '6. การยกเลิกและการคืนเงิน',
+    'terms.cancellation.content': 'คำสั่งซื้ออาจถูกยกเลิกภายในระยะเวลาที่เหมาะสมก่อนเริ่มการเตรียม การคืนเงินจะพิจารณาตามดุลยพินิจของเราโดยพิจารณาจากสถานการณ์เฉพาะกรณี',
+    'terms.ip.title': '7. ทรัพย์สินทางปัญญา',
+    'terms.ip.content': 'เนื้อหาทั้งหมดบนเว็บไซต์นี้ รวมถึงข้อความ กราฟิก โลโก้ และรูปภาพ เป็นทรัพย์สินของเราและได้รับการคุ้มครองโดยกฎหมายลิขสิทธิ์',
+    'terms.liability.title': '8. ข้อจำกัดความรับผิด',
+    'terms.liability.content': 'เราไม่รับผิดชอบต่อความเสียหายทางอ้อม โดยบังเอิญ หรือเป็นผลสืบเนื่องที่เกิดจากการใช้บริการของเรา',
+    'terms.changes.title': '9. การเปลี่ยนแปลงเงื่อนไข',
+    'terms.changes.content': 'เราขอสงวนสิทธิ์ในการแก้ไขเงื่อนไขเหล่านี้ได้ตลอดเวลา การใช้บริการต่อไปถือเป็นการยอมรับเงื่อนไขที่แก้ไข',
+    'terms.contact.title': '10. ข้อมูลการติดต่อ',
+    'terms.contact.content': 'หากมีคำถามเกี่ยวกับเงื่อนไขการให้บริการเหล่านี้ กรุณาติดต่อเราผ่านหน้าติดต่อของเรา',
   }
 };
 

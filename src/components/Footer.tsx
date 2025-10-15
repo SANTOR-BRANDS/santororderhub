@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ContactDialog from './ContactDialog';
 import { Restaurant } from '@/types/menu';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface FooterProps {
   selectedRestaurant?: Restaurant | null;
@@ -10,6 +11,7 @@ interface FooterProps {
 
 const Footer = ({ selectedRestaurant }: FooterProps) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const { t } = useLanguage();
 
   const getFooterClasses = () => {
     if (selectedRestaurant === 'restory') {
@@ -31,7 +33,7 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Social Links Section - Left */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+              <h3 className="text-lg font-semibold mb-4">{t('footer.followUs')}</h3>
               <div className="flex flex-col gap-3">
                 <a
                   href="https://www.instagram.com/santorbrands/"
@@ -63,7 +65,7 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
                   <span className="text-sm">TikTok</span>
                 </a>
                 <div className="space-y-2 mt-2">
-                  <p className="text-lg font-semibold">LINE Official</p>
+                  <p className="text-lg font-semibold">{t('footer.lineOfficial')}</p>
                   <a
                     href="https://lin.ee/DPDQ8Aj"
                     target="_blank"
@@ -103,7 +105,7 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
 
             {/* Location Section - Center */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Visit Us</h3>
+              <h3 className="text-lg font-semibold mb-4">{t('footer.visitUs')}</h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-2">
                   <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
@@ -141,17 +143,17 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
               <ul className="space-y-2">
                 <li>
                   <Link to="/about" className="hover:opacity-80 transition-opacity">
-                    About Us
+                    {t('footer.aboutUs')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/terms" className="hover:opacity-80 transition-opacity">
-                    Terms of Service
+                    {t('footer.terms')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/faq" className="hover:opacity-80 transition-opacity">
-                    FAQ
+                    {t('footer.faq')}
                   </Link>
                 </li>
                 <li>
@@ -159,7 +161,7 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
                     onClick={() => setIsContactOpen(true)}
                     className="hover:opacity-80 transition-opacity text-left"
                   >
-                    Contact Us
+                    {t('footer.contact')}
                   </button>
                 </li>
               </ul>
@@ -168,7 +170,7 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
 
           {/* Copyright */}
           <div className="mt-8 pt-8 border-t border-white/20 text-center text-sm opacity-90">
-            <p>&copy; {new Date().getFullYear()} SANTOR. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} SANTOR. {t('footer.copyright')}</p>
           </div>
         </div>
       </footer>
