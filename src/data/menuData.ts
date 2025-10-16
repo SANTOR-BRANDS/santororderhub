@@ -1414,6 +1414,70 @@ export const mejaiMenu: Dish[] = [
     category: 'TOPPINGS', 
     restaurant: 'mejai hai yum'
   },
+  
+// DRINKS
+  {
+    id: 'SAN-DRI-009',
+    name: 'Fresh Coconut',
+    price: 29,
+    category: 'DRINKS',
+    restaurant: 'mejai hai yum',
+    extraOptions: [
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
+  { 
+    id: 'SAN-DRI-001', 
+    name: 'Pandan Water', 
+    price: 15, 
+    category: 'DRINKS', 
+    restaurant: 'mejai hai yum',
+    extraOptions: [
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
+  { 
+    id: 'SAN-DRI-003', 
+    name: 'Mont Fleur Water', 
+    price: 20, 
+    category: 'DRINKS', 
+    restaurant: 'mejai hai yum',
+    extraOptions: [
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
+  { 
+    id: 'SAN-DRI-007', 
+    name: 'Thai Red Tea', 
+    price: 49, 
+    category: 'DRINKS', 
+    restaurant: 'mejai hai yum',
+    extraOptions: [
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
+  { 
+    id: 'SAN-DRI-008', 
+    name: 'Peach Green Tea ✨', 
+    price: 49, 
+    category: 'DRINKS', 
+    restaurant: 'mejai hai yum',
+    extraOptions: [
+      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
+    ]
+  },
+
+  // DESSERT
+  { 
+    id: 'SAN-DES-001', 
+    name: 'Vanilla Ice Cream Toast (NEW)', 
+    price: 89, 
+    category: 'DESSERT', 
+    restaurant: 'mejai hai yum',
+    extraOptions: [
+      { id: 'SAN-EXT-007', name: 'EXTRA: Extra Ice Cream (1 Scoop)', price: 30, category: 'extra-pls' }
+    ]
+  },
 ];
 
 export const addOns: AddOn[] = [
