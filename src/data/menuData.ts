@@ -1323,7 +1323,7 @@ export const nirvanaMenu: Dish[] = [
     name: 'Fresh Coconut',
     price: 29,
     category: 'DRINKS',
-    restaurant: 'restory',
+    restaurant: 'nirvana',
     extraOptions: [
       { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
     ]
