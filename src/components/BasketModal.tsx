@@ -33,6 +33,7 @@ const BasketModal = ({
   const { toast } = useToast();
   const { t } = useLanguage();
   const [isGeneratingOrder, setIsGeneratingOrder] = useState(false);
+  const [orderCopied, setOrderCopied] = useState(false);
 
   // Helper to calculate incremental extras total
   const calculateIncrementalExtrasTotal = (item: BasketItem) => {
@@ -134,12 +135,12 @@ const BasketModal = ({
       
       if (item.isCombo && item.combo2) {
         // Format combo dish 1
-        extras += '  🍽️ Dish 1:\n';
+        extras += `  🍽️ ${t('basket.dish')} 1:\n`;
         if (item.selectedVariant) {
-          extras += `    - Variation: ${item.selectedVariant.name}\n`;
+          extras += `    - ${t('basket.variation')}: ${item.selectedVariant.name}\n`;
         }
         if (item.spicyLevel !== undefined) {
-          extras += `    - Spicy Level: ${item.spicyLevel}\n`;
+          extras += `    - ${t('basket.spicyLevel')}: ${item.spicyLevel}\n`;
         }
         if (item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && item.sauce) {
           const sauceIds = item.sauce.split(', ').filter(id => id);
@@ -150,11 +151,11 @@ const BasketModal = ({
             }
             return null;
           }).filter(Boolean).join(', ');
-          extras += `    - Sauce: ${sauceDetails || 'No sauce'}\n`;
+          extras += `    - ${t('basket.sauce')}: ${sauceDetails || t('basket.noSauce')}\n`;
         }
         if (item.addOns.length > 0) {
           const addOnDetails = item.addOns.map(addon => `${addon.name} (+฿${addon.price})`).join(', ');
-          extras += `    - Add-ons: ${addOnDetails}\n`;
+          extras += `    - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.extraPls && item.extraPls.length > 0) {
           const extraDetails = item.extraPls.map(extra => {
@@ -171,16 +172,16 @@ const BasketModal = ({
             }
             return `${extra.name} (+฿${extra.price})`;
           }).filter(Boolean);
-          extras += `    - Extra: ${extraDetails.join(', ')}\n`;
+          extras += `    - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
         }
         
         // Format combo dish 2
-        extras += '  🍽️ Dish 2:\n';
+        extras += `  🍽️ ${t('basket.dish')} 2:\n`;
         if (item.combo2.selectedVariant) {
-          extras += `    - Variation: ${item.combo2.selectedVariant.name}\n`;
+          extras += `    - ${t('basket.variation')}: ${item.combo2.selectedVariant.name}\n`;
         }
         if (item.combo2.spicyLevel !== undefined) {
-          extras += `    - Spicy Level: ${item.combo2.spicyLevel}\n`;
+          extras += `    - ${t('basket.spicyLevel')}: ${item.combo2.spicyLevel}\n`;
         }
         if (item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && item.combo2.sauce) {
           const sauceIds = item.combo2.sauce.split(', ').filter(id => id);
@@ -191,11 +192,11 @@ const BasketModal = ({
             }
             return null;
           }).filter(Boolean).join(', ');
-          extras += `    - Sauce: ${sauceDetails || 'No sauce'}\n`;
+          extras += `    - ${t('basket.sauce')}: ${sauceDetails || t('basket.noSauce')}\n`;
         }
         if (item.combo2.addOns.length > 0) {
           const addOnDetails = item.combo2.addOns.map(addon => `${addon.name} (+฿${addon.price})`).join(', ');
-          extras += `    - Add-ons: ${addOnDetails}\n`;
+          extras += `    - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.combo2.extraPls && item.combo2.extraPls.length > 0) {
           const extraDetails = item.combo2.extraPls.map(extra => {
@@ -212,10 +213,10 @@ const BasketModal = ({
             }
             return `${extra.name} (+฿${extra.price})`;
           }).filter(Boolean);
-          extras += `    - Extra: ${extraDetails.join(', ')}\n`;
+          extras += `    - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
         }
         
-        extras += `  - Cutlery: ${item.needsCutlery ? 'Yes' : 'No'}\n`;
+        extras += `  - ${t('basket.cutlery')}: ${item.needsCutlery ? t('basket.yes') : t('basket.no')}\n`;
         extras += `  - Quantity: ${item.quantity}\n`;
         
         // Add item subtotal
@@ -224,10 +225,10 @@ const BasketModal = ({
       } else {
         // Regular dish format
         if (item.selectedVariant) {
-          extras += `  - Variation: ${item.selectedVariant.name}\n`;
+          extras += `  - ${t('basket.variation')}: ${item.selectedVariant.name}\n`;
         }
         if (item.spicyLevel !== undefined) {
-          extras += `  - Spicy Level: ${item.spicyLevel}\n`;
+          extras += `  - ${t('basket.spicyLevel')}: ${item.spicyLevel}\n`;
         }
         if (item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && item.sauce) {
           const sauceIds = item.sauce.split(', ').filter(id => id);
@@ -238,11 +239,11 @@ const BasketModal = ({
             }
             return null;
           }).filter(Boolean).join(', ');
-          extras += `  - Sauce: ${sauceDetails || 'No sauce'}\n`;
+          extras += `  - ${t('basket.sauce')}: ${sauceDetails || t('basket.noSauce')}\n`;
         }
         if (item.addOns.length > 0) {
           const addOnDetails = item.addOns.map(addon => `${addon.name} (+฿${addon.price})`).join(', ');
-          extras += `  - Add-ons: ${addOnDetails}\n`;
+          extras += `  - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.extraPls && item.extraPls.length > 0) {
           const extraDetails = item.extraPls.map(extra => {
@@ -259,9 +260,9 @@ const BasketModal = ({
             }
             return `${extra.name} (+฿${extra.price})`;
           }).filter(Boolean);
-          extras += `  - Extra: ${extraDetails.join(', ')}\n`;
+          extras += `  - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
         }
-        extras += `  - Cutlery: ${item.needsCutlery ? 'Yes' : 'No'}\n`;
+        extras += `  - ${t('basket.cutlery')}: ${item.needsCutlery ? t('basket.yes') : t('basket.no')}\n`;
         extras += `  - Quantity: ${item.quantity}\n`;
         
         // Add item subtotal
@@ -312,6 +313,7 @@ const BasketModal = ({
     
     try {
       await navigator.clipboard.writeText(orderMessage);
+      setOrderCopied(true);
       toast({
         title: t('order.copied'),
         description: t('order.copied.desc'),
@@ -327,54 +329,42 @@ const BasketModal = ({
     }
   };
 
-  const handleInstagramOrder = async () => {
-    const orderMessage = generateOrderMessage();
-    
-    try {
-      // Copy message to clipboard
-      await navigator.clipboard.writeText(orderMessage);
-      
-      // Open Instagram DM
-      window.open('https://ig.me/m/santorbrands', '_blank');
-      
+  const handleInstagramOrder = () => {
+    if (!orderCopied) {
       toast({
-        title: t('order.messageCopied'),
-        description: t('order.instagramDM'),
-      });
-    } catch (err) {
-      // Fallback if clipboard fails
-      window.open('https://ig.me/m/santorbrands', '_blank');
-      toast({
-        title: "Opening Instagram",
-        description: "Please copy your order message and paste it in the chat.",
+        title: t('order.copyFirst'),
+        description: t('order.copyFirst.desc'),
         variant: "destructive",
       });
+      return;
     }
+    
+    // Open Instagram DM
+    window.open('https://ig.me/m/santorbrands', '_blank');
+    
+    toast({
+      title: t('order.instagramOpened'),
+      description: t('order.instagramDM'),
+    });
   };
 
-  const handleLineOrder = async () => {
-    const orderMessage = generateOrderMessage();
-    
-    try {
-      // Copy message to clipboard
-      await navigator.clipboard.writeText(orderMessage);
-      
-      // Open LINE official account
-      window.open('https://lin.ee/8kHDCU2', '_blank');
-      
+  const handleLineOrder = () => {
+    if (!orderCopied) {
       toast({
-        title: t('order.messageCopied'),
-        description: t('order.lineDM'),
-      });
-    } catch (err) {
-      // Fallback if clipboard fails
-      window.open('https://lin.ee/8kHDCU2', '_blank');
-      toast({
-        title: "Opening LINE",
-        description: "Please copy your order message manually and paste it in chat.",
+        title: t('order.copyFirst'),
+        description: t('order.copyFirst.desc'),
         variant: "destructive",
       });
+      return;
     }
+    
+    // Open LINE official account
+    window.open('https://lin.ee/8kHDCU2', '_blank');
+    
+    toast({
+      title: t('order.lineOpened'),
+      description: t('order.lineDM'),
+    });
   };
 
   if (basketItems.length === 0) {
@@ -441,23 +431,23 @@ const BasketModal = ({
                   {item.isCombo && item.combo2 ? (
                     <>
                       {/* Combo Dish 1 */}
-                      <div className="font-semibold text-foreground">🍽️ Dish 1:</div>
+                      <div className="font-semibold text-foreground">🍽️ {t('basket.dish')} 1:</div>
                       {item.selectedVariant && (
-                        <div className="pl-3">Variation: {item.selectedVariant.name}</div>
+                        <div className="pl-3">{t('basket.variation')}: {item.selectedVariant.name}</div>
                       )}
                       {item.spicyLevel !== undefined && (
-                        <div className="pl-3">Spicy Level: {item.spicyLevel}</div>
+                        <div className="pl-3">{t('basket.spicyLevel')}: {item.spicyLevel}</div>
                       )}
                       {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (() => {
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
                         const sauceNames = item.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
-                        return <div className="pl-3">Sauce: {sauceNames || 'No sauce'}</div>;
+                        return <div className="pl-3">{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.addOns.length > 0 && (
-                        <div className="pl-3">Add-ons: {item.addOns.map(addon => addon.name).join(', ')}</div>
+                        <div className="pl-3">{t('basket.addOns')}: {item.addOns.map(addon => addon.name).join(', ')}</div>
                       )}
                       {item.extraPls && item.extraPls.length > 0 && (
-                        <div className="pl-3">Extra: {item.extraPls.map(extra => {
+                        <div className="pl-3">{t('basket.extra')}: {item.extraPls.map(extra => {
                           if (extra.isIncremental && item.incrementalExtras) {
                             const qty = item.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
@@ -470,23 +460,23 @@ const BasketModal = ({
                       )}
                       
                       {/* Combo Dish 2 */}
-                      <div className="font-semibold text-foreground mt-2">🍽️ Dish 2:</div>
+                      <div className="font-semibold text-foreground mt-2">🍽️ {t('basket.dish')} 2:</div>
                       {item.combo2.selectedVariant && (
-                        <div className="pl-3">Variation: {item.combo2.selectedVariant.name}</div>
+                        <div className="pl-3">{t('basket.variation')}: {item.combo2.selectedVariant.name}</div>
                       )}
                       {item.combo2.spicyLevel !== undefined && (
-                        <div className="pl-3">Spicy Level: {item.combo2.spicyLevel}</div>
+                        <div className="pl-3">{t('basket.spicyLevel')}: {item.combo2.spicyLevel}</div>
                       )}
                       {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (() => {
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
                         const sauceNames = item.combo2.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
-                        return <div className="pl-3">Sauce: {sauceNames || 'No sauce'}</div>;
+                        return <div className="pl-3">{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.combo2.addOns.length > 0 && (
-                        <div className="pl-3">Add-ons: {item.combo2.addOns.map(addon => addon.name).join(', ')}</div>
+                        <div className="pl-3">{t('basket.addOns')}: {item.combo2.addOns.map(addon => addon.name).join(', ')}</div>
                       )}
                       {item.combo2.extraPls && item.combo2.extraPls.length > 0 && (
-                        <div className="pl-3">Extra: {item.combo2.extraPls.map(extra => {
+                        <div className="pl-3">{t('basket.extra')}: {item.combo2.extraPls.map(extra => {
                           if (extra.isIncremental && item.combo2!.incrementalExtras) {
                             const qty = item.combo2!.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
@@ -497,28 +487,28 @@ const BasketModal = ({
                           return extra.name;
                         }).filter(Boolean).join(', ')}</div>
                       )}
-                      <div className="mt-2">Cutlery: {item.needsCutlery ? 'Yes' : 'No'}</div>
+                      <div className="mt-2">{t('basket.cutlery')}: {item.needsCutlery ? t('basket.yes') : t('basket.no')}</div>
                     </>
                   ) : (
                     <>
                       {/* Regular Item */}
                       {item.selectedVariant && (
-                        <div>Variation: {item.selectedVariant.name}</div>
+                        <div>{t('basket.variation')}: {item.selectedVariant.name}</div>
                       )}
                       {item.spicyLevel !== undefined && (
-                        <div>Spicy Level: {item.spicyLevel}</div>
+                        <div>{t('basket.spicyLevel')}: {item.spicyLevel}</div>
                       )}
                       {/* Only show sauce for items that require it */}
                       {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (() => {
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
                         const sauceNames = item.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
-                        return <div>Sauce: {sauceNames || 'No sauce'}</div>;
+                        return <div>{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.addOns.length > 0 && (
-                        <div>Add-ons: {item.addOns.map(addon => addon.name).join(', ')}</div>
+                        <div>{t('basket.addOns')}: {item.addOns.map(addon => addon.name).join(', ')}</div>
                       )}
                       {item.extraPls && item.extraPls.length > 0 && (
-                        <div>Extra: {item.extraPls.map(extra => {
+                        <div>{t('basket.extra')}: {item.extraPls.map(extra => {
                           if (extra.isIncremental && item.incrementalExtras) {
                             const qty = item.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
@@ -529,7 +519,7 @@ const BasketModal = ({
                           return extra.name;
                         }).filter(Boolean).join(', ')}</div>
                       )}
-                      <div>Cutlery: {item.needsCutlery ? 'Yes' : 'No'}</div>
+                      <div>{t('basket.cutlery')}: {item.needsCutlery ? t('basket.yes') : t('basket.no')}</div>
                     </>
                   )}
                 </div>
@@ -570,33 +560,59 @@ const BasketModal = ({
             <span className="text-2xl font-bold text-primary">฿{getTotalPrice()}</span>
           </div>
 
-          <div className="space-y-2">
-            <Button 
-              onClick={handleCopyOrder}
-              variant="outline"
-              className="w-full"
-              disabled={isGeneratingOrder}
-            >
-              📋 {t('order.copyOrder')}
-            </Button>
-            <Button 
-              onClick={handleLineOrder}
-              className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white"
-            >
-              <MessageCircle className="h-4 w-4 mr-2" />
-              {t('order.orderViaLine')}
-            </Button>
-            <Button 
-              onClick={handleInstagramOrder}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-            >
-              <Instagram className="h-4 w-4 mr-2" />
-              {t('order.orderViaInstagram')}
-            </Button>
+          <div className="space-y-3">
+            {/* Step 1: Copy Order */}
+            <div className={cn("space-y-2", orderCopied && "opacity-60")}>
+              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                <span className={cn(
+                  "flex items-center justify-center w-5 h-5 rounded-full text-xs",
+                  orderCopied ? "bg-green-500 text-white" : "bg-primary text-primary-foreground"
+                )}>
+                  {orderCopied ? '✓' : '1'}
+                </span>
+                <span>{orderCopied ? t('order.copied').replace(' ✅', '') : t('order.copyFirst.step')}</span>
+              </div>
+              <Button 
+                onClick={handleCopyOrder}
+                variant={orderCopied ? "outline" : "default"}
+                className="w-full"
+                disabled={isGeneratingOrder || orderCopied}
+              >
+                {orderCopied ? '✓ ' : '📋 '}{t('order.copyOrder')}
+              </Button>
+            </div>
+
+            {/* Step 2: Send via LINE or Instagram */}
+            <div className={cn("space-y-2", !orderCopied && "opacity-40")}>
+              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs">
+                  2
+                </span>
+                <span>{t('order.sendOrder.step')}</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Button 
+                  onClick={handleLineOrder}
+                  className="bg-[#06C755] hover:bg-[#05b34c] text-white"
+                  disabled={!orderCopied}
+                >
+                  <MessageCircle className="h-4 w-4 mr-1" />
+                  LINE
+                </Button>
+                <Button 
+                  onClick={handleInstagramOrder}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                  disabled={!orderCopied}
+                >
+                  <Instagram className="h-4 w-4 mr-1" />
+                  Instagram
+                </Button>
+              </div>
+            </div>
           </div>
 
           <p className="text-xs text-muted-foreground text-center mt-4">
-            Send your order via LINE or Instagram for processing
+            {t('order.instructions')}
           </p>
         </div>
       </DialogContent>

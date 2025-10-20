@@ -36,6 +36,13 @@ export const translations = {
     'basket.cutlery': 'Cutlery',
     'basket.yes': 'Yes',
     'basket.no': 'No',
+    'basket.dish': 'Dish',
+    'basket.spicyLevel': 'Spicy Level',
+    'basket.sauce': 'Sauce',
+    'basket.noSauce': 'No sauce',
+    'basket.addOns': 'Add-ons',
+    'basket.extra': 'Extra',
+    'basket.variation': 'Variation',
     
     // Order
     'order.copyOrder': 'Copy Order',
@@ -46,6 +53,13 @@ export const translations = {
     'order.messageCopied': '✅ Message Copied!',
     'order.lineDM': 'LINE chat opened. Just paste (Ctrl+V or long press) and send!',
     'order.instagramDM': 'Instagram DM opened. Just paste (Ctrl+V) and send!',
+    'order.copyFirst': 'Copy Order First',
+    'order.copyFirst.desc': 'Please copy your order first before sending via LINE or Instagram.',
+    'order.copyFirst.step': 'First, copy your order',
+    'order.sendOrder.step': 'Then, send via LINE or Instagram',
+    'order.lineOpened': 'LINE Opened',
+    'order.instagramOpened': 'Instagram Opened',
+    'order.instructions': 'Copy your order, then send via LINE or Instagram for processing',
     
     // Dish Modal
     'dish.addToBasket': 'Add to Basket',
@@ -430,6 +444,13 @@ export const translations = {
     'basket.cutlery': 'ช้อนส้อม',
     'basket.yes': 'ใช่',
     'basket.no': 'ไม่',
+    'basket.dish': 'จาน',
+    'basket.spicyLevel': 'ระดับความเผ็ด',
+    'basket.sauce': 'น้ำจิ้ม',
+    'basket.noSauce': 'ไม่ใส่น้ำจิ้ม',
+    'basket.addOns': 'เพิ่มเติม',
+    'basket.extra': 'เพิ่ม',
+    'basket.variation': 'แบบ',
     
     // Order
     'order.copyOrder': 'คัดลอกรายการสั่งซื้อ',
@@ -440,6 +461,13 @@ export const translations = {
     'order.messageCopied': '✅ คัดลอกข้อความแล้ว!',
     'order.lineDM': 'เปิดแชท LINE แล้ว แค่วาง (Ctrl+V หรือกดค้างแล้ววาง) และส่ง!',
     'order.instagramDM': 'เปิด Instagram DM แล้ว แค่วาง (Ctrl+V) และส่ง!',
+    'order.copyFirst': 'คัดลอกรายการก่อน',
+    'order.copyFirst.desc': 'กรุณาคัดลอกรายการสั่งซื้อก่อนส่งผ่าน LINE หรือ Instagram',
+    'order.copyFirst.step': 'ขั้นที่ 1: คัดลอกรายการสั่งซื้อ',
+    'order.sendOrder.step': 'ขั้นที่ 2: ส่งผ่าน LINE หรือ Instagram',
+    'order.lineOpened': 'เปิด LINE แล้ว',
+    'order.instagramOpened': 'เปิด Instagram แล้ว',
+    'order.instructions': 'คัดลอกรายการสั่งซื้อก่อน แล้วส่งผ่าน LINE หรือ Instagram',
     
     // Dish Modal
     'dish.addToBasket': 'เพิ่มลงตะกร้า',
