@@ -9,6 +9,9 @@ import Footer from '@/components/Footer';
 import { getCategoriesByRestaurant } from '@/data/menuData';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { SEOHead } from '@/seo/components/SEOHead';
+import { getMetadata } from '@/seo/metadata';
+import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, mejaiSchema } from '@/seo/jsonld';
 
 const themeColors: Record<Restaurant, string> = {
   restory: '#fd7304',
@@ -102,7 +105,22 @@ const Index = () => {
     }
   }, [basketItems]);
 
+  const homeMetadata = {
+    ...getMetadata('home'),
+    structuredData: {
+      "@context": "https://schema.org",
+      "@graph": [
+        organizationSchema,
+        websiteSchema,
+        restorySchema,
+        nirvanaSchema,
+        mejaiSchema
+      ]
+    }
+  };
+
   return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-nirvana-secondary' : selectedRestaurant === 'mejai hai yum' ? 'bg-mejai-background' : 'bg-background')}>
+      <SEOHead metadata={homeMetadata} />
       <RestaurantHeader 
         selectedRestaurant={selectedRestaurant} 
         onRestaurantChange={handleRestaurantChange}

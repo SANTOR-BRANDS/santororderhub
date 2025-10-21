@@ -1,72 +1,118 @@
-## Project info
+# SANTOR Order Hub 🍽️
 
-**URL**: www.santorbrands.com
+**Live Site**: https://santororderhub.vercel.app  
+**Website**: www.santorbrands.com
 
+Premium Thai food ordering platform featuring three restaurant brands: Restory, Nirvana, and Mejai Hai Yum.
 
+## ✨ Features
 
+- 🔒 **Enterprise Security** - Production-ready security headers
+- 🚀 **SEO Optimized** - Full meta tags, JSON-LD, sitemap
+- 🤖 **LLM Ready** - AI-friendly `/api/ai-recommend` endpoint
+- 📊 **Analytics Enabled** - Vercel Web Analytics & Speed Insights
+- 🌐 **Bilingual** - English & Thai language support
+- 📱 **Mobile First** - Responsive design
 
-There are several ways of editing your application.
+## 🚀 Quick Start
 
-**Use Lovable**
+```bash
+# Install dependencies
+npm install
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1e35ca5d-372a-441e-a019-2f323d5e78ff) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Run development server
 npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+## 🔐 Security
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Security headers configured in `vercel.json`:
+- HSTS with preload
+- XSS protection
+- Clickjacking prevention
+- CSP policy
 
-**Use GitHub Codespaces**
+Verify in production:
+```bash
+curl -I https://santororderhub.vercel.app
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📈 SEO & Analytics
 
-## What technologies are used for this project?
+### Sitemap & Robots
+- Sitemap: `/sitemap.xml`
+- Robots: `/robots.txt`
+- AI Endpoint: `/api/ai-recommend`
 
-This project is built with:
+### Vercel Analytics Setup
+1. Go to Vercel Dashboard → Project → Analytics
+2. Enable Web Analytics
+3. Enable Speed Insights
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Lighthouse Targets
+- SEO: ≥ 90
+- Accessibility: ≥ 90
+- Performance: ≥ 80
 
-## How can I deploy this project?
+## 🛠️ Tech Stack
 
-Simply open [Lovable](https://lovable.dev/projects/1e35ca5d-372a-441e-a019-2f323d5e78ff) and click on Share -> Publish.
+- **Framework**: Vite + React + TypeScript
+- **Styling**: Tailwind CSS + shadcn/ui
+- **SEO**: React Helmet Async + JSON-LD
+- **Deployment**: Vercel
+- **CI/CD**: GitHub Actions + Dependabot
 
-## Can I connect a custom domain to my Lovable project?
+## 📦 Deployment
 
-Yes, you can!
+### Via Lovable
+[Open Lovable](https://lovable.dev/projects/1e35ca5d-372a-441e-a019-2f323d5e78ff) → Share → Publish
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Via Vercel CLI
+```bash
+npm i -g vercel
+vercel --prod
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Via GitHub
+Push to main branch - auto-deploys via Vercel integration
+
+## 🧪 Testing & Quality
+
+```bash
+# Lint code
+npm run lint
+
+# Type check
+npm run typecheck
+
+# Security audit
+npm audit
+
+# Run all checks (CI)
+npm run lint && npm run build && npm audit
+```
+
+## 📚 Documentation
+
+- [Acceptance Tests](./docs/acceptance.md) - Performance targets & checklists
+- [Security Policy](./.github/security.md) - Security headers & best practices
+
+## 🤝 Contributing
+
+1. Code changes trigger CI pipeline
+2. Dependabot monitors dependencies weekly
+3. Pre-commit hooks ensure code quality
+
+## 📄 License
+
+MIT License - see [LICENSE](./LICENSE)
+
+---
+
+Built with ❤️ by SANTOR BRANDS

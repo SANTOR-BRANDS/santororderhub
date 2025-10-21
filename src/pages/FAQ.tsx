@@ -3,12 +3,27 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { SEOHead } from '@/seo/components/SEOHead';
+import { getMetadata } from '@/seo/metadata';
+import { faqSchema, generateBreadcrumbSchema, faqBreadcrumb } from '@/seo/jsonld';
 
 const FAQ = () => {
   const { t } = useLanguage();
   
+  const faqMetadata = {
+    ...getMetadata('faq'),
+    structuredData: {
+      "@context": "https://schema.org",
+      "@graph": [
+        faqSchema,
+        generateBreadcrumbSchema(faqBreadcrumb)
+      ]
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead metadata={faqMetadata} />
       <div className="max-w-4xl mx-auto px-4 py-8">
         <Link to="/">
           <Button variant="ghost" className="mb-6">

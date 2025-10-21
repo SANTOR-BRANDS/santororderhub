@@ -3,12 +3,21 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { SEOHead } from '@/seo/components/SEOHead';
+import { getMetadata } from '@/seo/metadata';
+import { generateBreadcrumbSchema, aboutBreadcrumb } from '@/seo/jsonld';
 
 const AboutUs = () => {
   const { t } = useLanguage();
   
+  const aboutMetadata = {
+    ...getMetadata('aboutUs'),
+    structuredData: generateBreadcrumbSchema(aboutBreadcrumb)
+  };
+  
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead metadata={aboutMetadata} />
       <div className="max-w-4xl mx-auto px-4 py-8">
         <Link to="/">
           <Button variant="ghost" className="mb-6">

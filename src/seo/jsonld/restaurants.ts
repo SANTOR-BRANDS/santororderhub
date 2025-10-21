@@ -1,0 +1,47 @@
+/**
+ * Restaurant Structured Data for SANTOR brands
+ * https://schema.org/Restaurant
+ */
+
+const baseRestaurantData = {
+  "@context": "https://schema.org",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "TH",
+    "addressLocality": "Bangkok"
+  },
+  "servesCuisine": "Thai",
+  "priceRange": "฿฿",
+  "acceptsReservations": "False",
+  "currenciesAccepted": "THB"
+};
+
+export const restorySchema = {
+  ...baseRestaurantData,
+  "@type": "Restaurant",
+  "name": "Restory",
+  "description": "Asian Fusion restaurant serving cooked-to-order Thai dishes with modern twists",
+  "url": "https://santororderhub.vercel.app",
+  "servesCuisine": ["Thai", "Asian Fusion"],
+  "menu": "https://santororderhub.vercel.app/#restory"
+};
+
+export const nirvanaSchema = {
+  ...baseRestaurantData,
+  "@type": "Restaurant",
+  "name": "Nirvana",
+  "description": "Authentic Thai restaurant specializing in traditional flavors and grilled dishes",
+  "url": "https://santororderhub.vercel.app",
+  "servesCuisine": "Thai",
+  "menu": "https://santororderhub.vercel.app/#nirvana"
+};
+
+export const mejaiSchema = {
+  ...baseRestaurantData,
+  "@type": "Restaurant",
+  "name": "Mejai Hai Yum",
+  "description": "Fresh salmon specialties and authentic Thai yum dishes",
+  "url": "https://santororderhub.vercel.app",
+  "servesCuisine": ["Thai", "Seafood"],
+  "menu": "https://santororderhub.vercel.app/#mejai"
+};
