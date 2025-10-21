@@ -147,18 +147,23 @@ const BasketModal = ({
           const sauceDetails = sauceIds.map(id => {
             const sauce = SAUCES.find(s => s.id === id);
             if (sauce) {
-              return sauce.price > 0 ? `${sauce.name} (+฿${sauce.price})` : sauce.name;
+              const sauceName = t(sauce.id) || sauce.name;
+              return sauce.price > 0 ? `${sauceName} (+฿${sauce.price})` : sauceName;
             }
             return null;
           }).filter(Boolean).join(', ');
           extras += `    - ${t('basket.sauce')}: ${sauceDetails || t('basket.noSauce')}\n`;
         }
         if (item.addOns.length > 0) {
-          const addOnDetails = item.addOns.map(addon => `${addon.name} (+฿${addon.price})`).join(', ');
+          const addOnDetails = item.addOns.map(addon => {
+            const addonName = t(addon.id) || addon.name;
+            return `${addonName} (+฿${addon.price})`;
+          }).join(', ');
           extras += `    - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.extraPls && item.extraPls.length > 0) {
           const extraDetails = item.extraPls.map(extra => {
+            const extraName = t(extra.id) || extra.name;
             if (extra.isIncremental && item.incrementalExtras) {
               const qty = item.incrementalExtras.get(extra.id) || 0;
               if (qty > 0) {
@@ -167,10 +172,10 @@ const BasketModal = ({
                 const discountSets = Math.floor(totalGrams / 100);
                 const discount = discountSets * (extra.incrementalDiscount || 10);
                 const finalPrice = basePrice - discount;
-                return `${extra.name} (${totalGrams}g) (+฿${finalPrice})`;
+                return `${extraName} (${totalGrams}g) (+฿${finalPrice})`;
               }
             }
-            return `${extra.name} (+฿${extra.price})`;
+            return `${extraName} (+฿${extra.price})`;
           }).filter(Boolean);
           extras += `    - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
         }
@@ -188,18 +193,23 @@ const BasketModal = ({
           const sauceDetails = sauceIds.map(id => {
             const sauce = SAUCES.find(s => s.id === id);
             if (sauce) {
-              return sauce.price > 0 ? `${sauce.name} (+฿${sauce.price})` : sauce.name;
+              const sauceName = t(sauce.id) || sauce.name;
+              return sauce.price > 0 ? `${sauceName} (+฿${sauce.price})` : sauceName;
             }
             return null;
           }).filter(Boolean).join(', ');
           extras += `    - ${t('basket.sauce')}: ${sauceDetails || t('basket.noSauce')}\n`;
         }
         if (item.combo2.addOns.length > 0) {
-          const addOnDetails = item.combo2.addOns.map(addon => `${addon.name} (+฿${addon.price})`).join(', ');
+          const addOnDetails = item.combo2.addOns.map(addon => {
+            const addonName = t(addon.id) || addon.name;
+            return `${addonName} (+฿${addon.price})`;
+          }).join(', ');
           extras += `    - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.combo2.extraPls && item.combo2.extraPls.length > 0) {
           const extraDetails = item.combo2.extraPls.map(extra => {
+            const extraName = t(extra.id) || extra.name;
             if (extra.isIncremental && item.combo2!.incrementalExtras) {
               const qty = item.combo2!.incrementalExtras.get(extra.id) || 0;
               if (qty > 0) {
@@ -208,10 +218,10 @@ const BasketModal = ({
                 const discountSets = Math.floor(totalGrams / 100);
                 const discount = discountSets * (extra.incrementalDiscount || 10);
                 const finalPrice = basePrice - discount;
-                return `${extra.name} (${totalGrams}g) (+฿${finalPrice})`;
+                return `${extraName} (${totalGrams}g) (+฿${finalPrice})`;
               }
             }
-            return `${extra.name} (+฿${extra.price})`;
+            return `${extraName} (+฿${extra.price})`;
           }).filter(Boolean);
           extras += `    - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
         }
@@ -235,18 +245,23 @@ const BasketModal = ({
           const sauceDetails = sauceIds.map(id => {
             const sauce = SAUCES.find(s => s.id === id);
             if (sauce) {
-              return sauce.price > 0 ? `${sauce.name} (+฿${sauce.price})` : sauce.name;
+              const sauceName = t(sauce.id) || sauce.name;
+              return sauce.price > 0 ? `${sauceName} (+฿${sauce.price})` : sauceName;
             }
             return null;
           }).filter(Boolean).join(', ');
           extras += `  - ${t('basket.sauce')}: ${sauceDetails || t('basket.noSauce')}\n`;
         }
         if (item.addOns.length > 0) {
-          const addOnDetails = item.addOns.map(addon => `${addon.name} (+฿${addon.price})`).join(', ');
+          const addOnDetails = item.addOns.map(addon => {
+            const addonName = t(addon.id) || addon.name;
+            return `${addonName} (+฿${addon.price})`;
+          }).join(', ');
           extras += `  - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.extraPls && item.extraPls.length > 0) {
           const extraDetails = item.extraPls.map(extra => {
+            const extraName = t(extra.id) || extra.name;
             if (extra.isIncremental && item.incrementalExtras) {
               const qty = item.incrementalExtras.get(extra.id) || 0;
               if (qty > 0) {
@@ -255,10 +270,10 @@ const BasketModal = ({
                 const discountSets = Math.floor(totalGrams / 100);
                 const discount = discountSets * (extra.incrementalDiscount || 10);
                 const finalPrice = basePrice - discount;
-                return `${extra.name} (${totalGrams}g) (+฿${finalPrice})`;
+                return `${extraName} (${totalGrams}g) (+฿${finalPrice})`;
               }
             }
-            return `${extra.name} (+฿${extra.price})`;
+            return `${extraName} (+฿${extra.price})`;
           }).filter(Boolean);
           extras += `  - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
         }
@@ -440,22 +455,26 @@ const BasketModal = ({
                       )}
                       {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (() => {
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
-                        const sauceNames = item.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
+                        const sauceNames = item.sauce.split(', ').filter(id => id).map(id => {
+                          const sauce = SAUCES.find(s => s.id === id);
+                          return sauce ? (t(sauce.id) || sauce.name) : null;
+                        }).filter(Boolean).join(', ');
                         return <div className="pl-3">{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.addOns.length > 0 && (
-                        <div className="pl-3">{t('basket.addOns')}: {item.addOns.map(addon => addon.name).join(', ')}</div>
+                        <div className="pl-3">{t('basket.addOns')}: {item.addOns.map(addon => t(addon.id) || addon.name).join(', ')}</div>
                       )}
                       {item.extraPls && item.extraPls.length > 0 && (
                         <div className="pl-3">{t('basket.extra')}: {item.extraPls.map(extra => {
+                          const extraName = t(extra.id) || extra.name;
                           if (extra.isIncremental && item.incrementalExtras) {
                             const qty = item.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
                               const totalGrams = (extra.incrementalUnit || 20) * qty;
-                              return `${extra.name} (${totalGrams}g)`;
+                              return `${extraName} (${totalGrams}g)`;
                             }
                           }
-                          return extra.name;
+                          return extraName;
                         }).filter(Boolean).join(', ')}</div>
                       )}
                       
@@ -469,22 +488,26 @@ const BasketModal = ({
                       )}
                       {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (() => {
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
-                        const sauceNames = item.combo2.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
+                        const sauceNames = item.combo2.sauce.split(', ').filter(id => id).map(id => {
+                          const sauce = SAUCES.find(s => s.id === id);
+                          return sauce ? (t(sauce.id) || sauce.name) : null;
+                        }).filter(Boolean).join(', ');
                         return <div className="pl-3">{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.combo2.addOns.length > 0 && (
-                        <div className="pl-3">{t('basket.addOns')}: {item.combo2.addOns.map(addon => addon.name).join(', ')}</div>
+                        <div className="pl-3">{t('basket.addOns')}: {item.combo2.addOns.map(addon => t(addon.id) || addon.name).join(', ')}</div>
                       )}
                       {item.combo2.extraPls && item.combo2.extraPls.length > 0 && (
                         <div className="pl-3">{t('basket.extra')}: {item.combo2.extraPls.map(extra => {
+                          const extraName = t(extra.id) || extra.name;
                           if (extra.isIncremental && item.combo2!.incrementalExtras) {
                             const qty = item.combo2!.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
                               const totalGrams = (extra.incrementalUnit || 20) * qty;
-                              return `${extra.name} (${totalGrams}g)`;
+                              return `${extraName} (${totalGrams}g)`;
                             }
                           }
-                          return extra.name;
+                          return extraName;
                         }).filter(Boolean).join(', ')}</div>
                       )}
                       <div className="mt-2">{t('basket.cutlery')}: {item.needsCutlery ? t('basket.yes') : t('basket.no')}</div>
@@ -501,22 +524,26 @@ const BasketModal = ({
                       {/* Only show sauce for items that require it */}
                       {item.dish.category !== 'DRINKS' && item.dish.category !== 'FRESH SALMON' && item.dish.category !== 'DESSERT' && (() => {
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
-                        const sauceNames = item.sauce.split(', ').filter(id => id).map(id => SAUCES.find(s => s.id === id)?.name).filter(Boolean).join(', ');
+                        const sauceNames = item.sauce.split(', ').filter(id => id).map(id => {
+                          const sauce = SAUCES.find(s => s.id === id);
+                          return sauce ? (t(sauce.id) || sauce.name) : null;
+                        }).filter(Boolean).join(', ');
                         return <div>{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.addOns.length > 0 && (
-                        <div>{t('basket.addOns')}: {item.addOns.map(addon => addon.name).join(', ')}</div>
+                        <div>{t('basket.addOns')}: {item.addOns.map(addon => t(addon.id) || addon.name).join(', ')}</div>
                       )}
                       {item.extraPls && item.extraPls.length > 0 && (
                         <div>{t('basket.extra')}: {item.extraPls.map(extra => {
+                          const extraName = t(extra.id) || extra.name;
                           if (extra.isIncremental && item.incrementalExtras) {
                             const qty = item.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
                               const totalGrams = (extra.incrementalUnit || 20) * qty;
-                              return `${extra.name} (${totalGrams}g)`;
+                              return `${extraName} (${totalGrams}g)`;
                             }
                           }
-                          return extra.name;
+                          return extraName;
                         }).filter(Boolean).join(', ')}</div>
                       )}
                       <div>{t('basket.cutlery')}: {item.needsCutlery ? t('basket.yes') : t('basket.no')}</div>
