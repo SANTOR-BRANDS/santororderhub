@@ -51,9 +51,13 @@ curl -I https://santororderhub.vercel.app
 - AI Endpoint: `/api/ai-recommend`
 
 ### Vercel Analytics Setup
+Analytics packages are pre-installed (`@vercel/analytics` and `@vercel/speed-insights`).
+
+To enable data collection:
 1. Go to Vercel Dashboard → Project → Analytics
 2. Enable Web Analytics
 3. Enable Speed Insights
+4. Deploy and visit your site to start collecting data
 
 ### Lighthouse Targets
 - SEO: ≥ 90
@@ -65,6 +69,7 @@ curl -I https://santororderhub.vercel.app
 - **Framework**: Vite + React + TypeScript
 - **Styling**: Tailwind CSS + shadcn/ui
 - **SEO**: React Helmet Async + JSON-LD
+- **Analytics**: @vercel/analytics + @vercel/speed-insights
 - **Deployment**: Vercel
 - **CI/CD**: GitHub Actions + Dependabot
 

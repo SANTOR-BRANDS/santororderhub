@@ -24,8 +24,10 @@
 - [x] Comprehensive restaurant and menu data
 
 ### Phase 4: Analytics & Monitoring
-- [x] Vercel Web Analytics script added
-- [x] Vercel Speed Insights script added
+- [x] `@vercel/analytics` package installed
+- [x] `@vercel/speed-insights` package installed
+- [x] `<Analytics />` component added to App.tsx
+- [x] `<SpeedInsights />` component added to App.tsx
 - [x] Analytics ready for activation in Vercel Dashboard
 
 ## 🎯 Performance Targets
