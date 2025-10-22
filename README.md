@@ -3,7 +3,7 @@
 **Live Site**: https://santororderhub.vercel.app  
 **Website**: www.santorbrands.com
 
-Premium Thai food ordering platform featuring three restaurant brands: Restory, Nirvana, and Mejai Hai Yum.
+Premium Asian foodd ordering platform featuring three restaurant brands: Restory, Nirvana, and Mejai Hai Yum.
 
 ## ✨ Features
 
@@ -75,9 +75,6 @@ To enable data collection:
 
 ## 📦 Deployment
 
-### Via Lovable
-[Open Lovable](https://lovable.dev/projects/1e35ca5d-372a-441e-a019-2f323d5e78ff) → Share → Publish
-
 ### Via Vercel CLI
 ```bash
 npm i -g vercel
@@ -113,10 +110,6 @@ npm run lint && npm run build && npm audit
 1. Code changes trigger CI pipeline
 2. Dependabot monitors dependencies weekly
 3. Pre-commit hooks ensure code quality
-
-## 📄 License
-
-MIT License - see [LICENSE](./LICENSE)
 
 ---
 
