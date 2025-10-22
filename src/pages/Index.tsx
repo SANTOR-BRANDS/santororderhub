@@ -121,7 +121,7 @@ const Index = () => {
 
   return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-nirvana-secondary' : selectedRestaurant === 'mejai hai yum' ? 'bg-mejai-background' : 'bg-background')}>
       <SEOHead metadata={homeMetadata} />
-      <RestaurantHeader 
+      <RestaurantHeader
         selectedRestaurant={selectedRestaurant} 
         onRestaurantChange={handleRestaurantChange}
         categories={categories}
@@ -130,15 +130,16 @@ const Index = () => {
         themeColor={themeColor}
       />
 
-      {selectedRestaurant ? <MenuDisplay 
-        restaurant={selectedRestaurant} 
-        onDishSelect={setSelectedDish}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      /> : <div className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
-          <div className="text-center p-8">
-            <div className="text-8xl mb-6">🍽️</div>
-            <h1 className="text-4xl font-bold mb-4">{t('header.welcome')}</h1>
+      <main>
+        {selectedRestaurant ? <MenuDisplay 
+          restaurant={selectedRestaurant} 
+          onDishSelect={setSelectedDish}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        /> : <div className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
+            <div className="text-center p-8">
+              <div className="text-8xl mb-6">🍽️</div>
+              <h1 className="text-4xl font-bold mb-4">{t('header.welcome')}</h1>
             <p className="text-xl opacity-90 mb-8 max-w-2xl">{t('header.tagline')}</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
               <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('restory')}>
@@ -156,6 +157,7 @@ const Index = () => {
             </div>
           </div>
         </div>}
+      </main>
 
       <DishModal dish={selectedDish} isOpen={!!selectedDish} onClose={() => setSelectedDish(null)} onAddToBasket={handleAddToBasket} />
 

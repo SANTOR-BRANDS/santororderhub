@@ -63,7 +63,9 @@ const RestaurantHeader = ({
             >
               <img 
                 src="/images/SAN-LOGO-001.png" 
-                alt="Santor" 
+                alt="SANTOR Restaurant Holdings Logo" 
+                width="245"
+                height="48"
                 className="h-12 md:h-14"
               />
             </button>
