@@ -176,7 +176,7 @@ export const restoryMenu: Dish[] = [
     restaurant: 'restory',
     extraOptions: [
       { id: 'RS-EXT-002', name: '🐷 Extra Pork (100g)', price: 60, category: 'extra-pls' },
-      { id: 'RS-EXT-006', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
+      { id: 'RS-EXT-010', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
       { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
   },
@@ -187,8 +187,8 @@ export const restoryMenu: Dish[] = [
     category: 'JAPANESE CURRY', 
     restaurant: 'restory',
     extraOptions: [
-      { id: 'RS-EXT-001', name: '🐔 Extra Crunchy Chicken', price: 60, category: 'extra-pls' },
-      { id: 'RS-EXT-006', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
+      { id: 'RS-EXT-007', name: '🐔 Extra Crunchy Fried Chicken', price: 60, category: 'extra-pls' },
+      { id: 'RS-EXT-010', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
       { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
   },
@@ -201,7 +201,7 @@ export const restoryMenu: Dish[] = [
     isSpecial: true,
     extraOptions: [
       { id: 'RS-EXT-009', name: '🐷 Extra Crunchy Fried Pork', price: 60, category: 'extra-pls' },
-      { id: 'RS-EXT-006', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
+      { id: 'RS-EXT-010', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
       { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
   },
@@ -213,7 +213,7 @@ export const restoryMenu: Dish[] = [
     restaurant: 'restory',
     extraOptions: [
       { id: 'RS-EXT-006', name: '🍗 Extra Crispy Fried Chicken Thigh', price: 60, category: 'extra-pls' },
-      { id: 'RS-EXT-006', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
+      { id: 'RS-EXT-010', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
       { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
   },
@@ -225,7 +225,7 @@ export const restoryMenu: Dish[] = [
     restaurant: 'restory',
     extraOptions: [
       { id: 'RS-EXT-008', name: '🐔 Extra Chicken Karaage', price: 60, category: 'extra-pls' },
-      { id: 'RS-EXT-006', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
+      { id: 'RS-EXT-010', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
       { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
   },
@@ -237,7 +237,7 @@ export const restoryMenu: Dish[] = [
     restaurant: 'restory',
     extraOptions: [
       { id: 'RS-EXT-004', name: '🐮 Extra Beef (100g)', price: 60, category: 'extra-pls' },
-      { id: 'RS-EXT-006', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
+      { id: 'RS-EXT-010', name: '✨ Extra Curry', price: 40, category: 'extra-pls' },
       { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
     ]
   },
