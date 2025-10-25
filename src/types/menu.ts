@@ -27,7 +27,7 @@ export interface AddOn {
   id: string;
   name: string;
   price: number;
-  category: 'meat' | 'egg' | 'sauce' | 'other' | 'fried-egg' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette' | 'extra-pls';
+  category: 'meat' | 'egg' | 'sauce' | 'other' | 'fried-egg' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette' | 'extra';
   isIncremental?: boolean; // For beef/pork 20g increments
   incrementalUnit?: number; // 20g units
   incrementalDiscount?: number; // Discount per 100g
