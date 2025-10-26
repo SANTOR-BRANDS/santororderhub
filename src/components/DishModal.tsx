@@ -152,22 +152,15 @@ const DishModal = ({
     const isPremium = dish.name.includes('Premium Beef') && currentVariant?.id === 'RS-PKR-011';
     const isNormal = dish.name.includes('Premium Beef') && currentVariant?.id === 'RS-PKR-012';
     
-    return dish.extraOptions
-      .filter(option => {
-        if (dish.name.includes('Premium Beef')) {
-          // RS-EXT-003 = Extra Premium Beef, only show for premium variant
-          if (option.id === 'RS-EXT-003') return isPremium;
-          // RS-EXT-004 = Extra Beef, only show for normal beef variant
-          if (option.id === 'RS-EXT-004') return isNormal;
-        }
-        return true;
-      })
-      .map(option => {
-        // Look up the full addon details from the global addOns array
-        const fullAddon = addOns.find(a => a.id === option.id);
-        // If found in global array, use it; otherwise use the option as-is
-        return fullAddon || option;
-      });
+    return dish.extraOptions.filter(option => {
+      if (dish.name.includes('Premium Beef')) {
+        // SAN-EXT-004 = Extra Premium Beef, only show for premium variant
+        if (option.id === 'SAN-EXT-004') return isPremium;
+        // SAN-EXT-005 = Extra Beef, only show for normal beef variant
+        if (option.id === 'SAN-EXT-005') return isNormal;
+      }
+      return true;
+    });
   };
 
   const toggleExtraPls = (addon: AddOn, dishNumber = 1) => {
@@ -342,22 +335,22 @@ const DishModal = ({
                 if (dish.name.includes('Premium Beef')) {
                   if (dishNumber === 1) {
                     setSelectedExtraPls(prev => prev.filter(addon => 
-                      addon.id !== 'RS-EXT-003' && addon.id !== 'RS-EXT-004'
+                      addon.id !== 'SAN-EXT-004' && addon.id !== 'SAN-EXT-005'
                     ));
                     setIncrementalQuantities(prev => {
                       const newMap = new Map(prev);
-                      newMap.delete('RS-EXT-003');
-                      newMap.delete('RS-EXT-004');
+                      newMap.delete('SAN-EXT-004');
+                      newMap.delete('SAN-EXT-005');
                       return newMap;
                     });
                   } else {
                     setSelectedExtraPls2(prev => prev.filter(addon => 
-                      addon.id !== 'RS-EXT-003' && addon.id !== 'RS-EXT-004'
+                      addon.id !== 'SAN-EXT-004' && addon.id !== 'SAN-EXT-005'
                     ));
                     setIncrementalQuantities2(prev => {
                       const newMap = new Map(prev);
-                      newMap.delete('RS-EXT-003');
-                      newMap.delete('RS-EXT-004');
+                      newMap.delete('SAN-EXT-004');
+                      newMap.delete('SAN-EXT-005');
                       return newMap;
                     });
                   }
