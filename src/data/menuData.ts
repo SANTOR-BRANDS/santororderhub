@@ -1481,6 +1481,32 @@ export const mejaiMenu: Dish[] = [
 ];
 
 export const addOns: AddOn[] = [
+  // Extra options for Restory
+  { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice 200g', price: 20, category: 'extra-pls' },
+  { id: 'RS-EXT-001', name: '🐔 Extra Chicken 150g', price: 60, category: 'extra-pls' },
+  { id: 'RS-EXT-002', name: '🐷 Extra Pork 100g', price: 60, category: 'extra-pls' },
+  { id: 'RS-EXT-003', name: '🐮 Extra Premium Beef 100g', price: 80, category: 'extra-pls' },
+  { id: 'RS-EXT-004', name: '🐮 Extra Beef 100g', price: 60, category: 'extra-pls' },
+  { id: 'RS-EXT-005', name: '🍛 Extra Curry', price: 40, category: 'extra-pls' },
+  { id: 'RS-EXT-006', name: '🍗 Extra Crispy Fried Chicken Thigh', price: 60, category: 'extra-pls' },
+  { id: 'RS-EXT-007', name: '🐔 Extra Crunchy Fried Chicken', price: 60, category: 'extra-pls' },
+  { id: 'RS-EXT-008', name: '🐔 Extra Chicken Karaage', price: 60, category: 'extra-pls' },
+  { id: 'RS-EXT-009', name: '🐷 Extra Crunchy Fried Pork', price: 60, category: 'extra-pls' },
+  
+  // Extra options for Nirvana
+  { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+  { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
+  { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' },
+  { id: 'NV-EXT-004', name: '🐔 Extra Minced Chicken 150g', price: 60, category: 'extra-pls' },
+  { id: 'NV-EXT-005', name: '🐷 Extra Minced Pork 100g', price: 60, category: 'extra-pls' },
+  { id: 'NV-EXT-006', name: '🐮 Extra Minced Beef 100g', price: 60, category: 'extra-pls' },
+  { id: 'NV-EXT-007', name: '🐮 Extra Premium Beef 100g', price: 80, category: 'extra-pls' },
+  { id: 'NV-EXT-008', name: '🐟 Extra Saba Fish 140g', price: 120, category: 'extra-pls' },
+
+  // Other extras
+  { id: 'SAN-EXT-007', name: 'EXTRA: Extra Ice Cream (1 Scoop)', price: 30, category: 'extra-pls' },
+  { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' },
+  
   // Add-ons
   { id: 'SAN-ADD-001', name: 'Pickled Egg Yolk ⭐️', price: 25, category: 'other' },
   { id: 'SAN-ADD-002', name: 'Salted Duck Egg', price: 30, category: 'other' },
