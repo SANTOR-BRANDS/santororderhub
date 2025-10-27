@@ -7,7 +7,7 @@ interface SEOHeadProps {
 }
 
 export const SEOHead = ({ metadata, children }: SEOHeadProps) => {
-  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://santororderhub.vercel.app';
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://www.santorbrands.com';
   const canonicalUrl = metadata.canonical 
     ? `${siteUrl}${metadata.canonical}` 
     : siteUrl;

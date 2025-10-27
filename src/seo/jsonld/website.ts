@@ -8,14 +8,14 @@ export const websiteSchema = {
   "@type": "WebSite",
   "name": "SANTOR Order Hub",
   "alternateName": "SANTOR",
-  "url": "https://santororderhub.vercel.app",
+  "url": "https://www.santorbrands.com",
   "description": "Online ordering platform for SANTOR restaurants: Restory, Nirvana, and Mejai Hai Yum",
   "inLanguage": ["en", "th"],
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://santororderhub.vercel.app/?q={search_term_string}"
+      "urlTemplate": "https://www.santorbrands.com/?q={search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }

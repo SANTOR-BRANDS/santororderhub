@@ -9,7 +9,7 @@ export interface BreadcrumbItem {
 }
 
 export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
-  const baseUrl = 'https://santororderhub.vercel.app';
+  const baseUrl = 'https://www.santorbrands.com';
   
   return {
     "@context": "https://schema.org",
@@ -30,7 +30,7 @@ export const homeBreadcrumb: BreadcrumbItem[] = [
 
 export const aboutBreadcrumb: BreadcrumbItem[] = [
   { name: "Home", url: "/" },
-  { name: "About Us", url: "/about-us" }
+  { name: "About Us", url: "/about" }
 ];
 
 export const faqBreadcrumb: BreadcrumbItem[] = [
@@ -40,5 +40,5 @@ export const faqBreadcrumb: BreadcrumbItem[] = [
 
 export const termsBreadcrumb: BreadcrumbItem[] = [
   { name: "Home", url: "/" },
-  { name: "Terms of Service", url: "/terms-of-service" }
+  { name: "Terms of Service", url: "/terms" }
 ];

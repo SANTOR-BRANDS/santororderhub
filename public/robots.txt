@@ -18,4 +18,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemap
-Sitemap: https://santororderhub.vercel.app/sitemap.xml
+Sitemap: https://www.santorbrands.com/sitemap.xml

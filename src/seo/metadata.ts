@@ -46,7 +46,7 @@ export const pageMetadata: Record<string, PageMetadata> = {
   aboutUs: {
     title: 'About SANTOR - Our Story & Mission | SANTOR',
     description: 'Learn about SANTOR\'s journey to bring authentic Thai cuisine to your doorstep. Discover our commitment to quality, freshness, and traditional flavors.',
-    canonical: '/about-us',
+    canonical: '/about',
     keywords: [
       'SANTOR about',
       'Thai restaurant story',
@@ -72,7 +72,7 @@ export const pageMetadata: Record<string, PageMetadata> = {
   terms: {
     title: 'Terms of Service - SANTOR',
     description: 'Read SANTOR\'s terms of service, including ordering policies, delivery terms, and usage guidelines.',
-    canonical: '/terms-of-service',
+    canonical: '/terms',
     keywords: ['terms of service', 'SANTOR terms', 'legal'],
     ogType: 'website',
   },

@@ -21,9 +21,9 @@ export const restorySchema = {
   "@type": "Restaurant",
   "name": "Restory",
   "description": "Asian Fusion restaurant serving cooked-to-order Thai dishes with modern twists",
-  "url": "https://santororderhub.vercel.app",
+  "url": "https://www.santorbrands.com",
   "servesCuisine": ["Thai", "Asian Fusion"],
-  "menu": "https://santororderhub.vercel.app/#restory"
+  "menu": "https://www.santorbrands.com/#restory"
 };
 
 export const nirvanaSchema = {
@@ -31,9 +31,9 @@ export const nirvanaSchema = {
   "@type": "Restaurant",
   "name": "Nirvana",
   "description": "Authentic Thai restaurant specializing in traditional flavors and grilled dishes",
-  "url": "https://santororderhub.vercel.app",
+  "url": "https://www.santorbrands.com",
   "servesCuisine": "Thai",
-  "menu": "https://santororderhub.vercel.app/#nirvana"
+  "menu": "https://www.santorbrands.com/#nirvana"
 };
 
 export const mejaiSchema = {
@@ -41,7 +41,7 @@ export const mejaiSchema = {
   "@type": "Restaurant",
   "name": "Mejai Hai Yum",
   "description": "Fresh salmon specialties and authentic Thai yum dishes",
-  "url": "https://santororderhub.vercel.app",
+  "url": "https://www.santorbrands.com",
   "servesCuisine": ["Thai", "Seafood"],
-  "menu": "https://santororderhub.vercel.app/#mejai"
+  "menu": "https://www.santorbrands.com/#mejai"
 };

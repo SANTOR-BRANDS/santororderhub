@@ -8,8 +8,8 @@ export const organizationSchema = {
   "@type": "Organization",
   "name": "SANTOR BRANDS",
   "alternateName": "SANTOR",
-  "url": "https://santororderhub.vercel.app",
-  "logo": "https://santororderhub.vercel.app/images/SAN-LOGO-001.png",
+  "url": "https://www.santorbrands.com",
+  "logo": "https://www.santorbrands.com/images/SAN-LOGO-001.svg",
   "description": "Authentic Thai cuisine and culinary experience. Home to Restory, Nirvana, and Mejai Hai Yum restaurants.",
   "address": {
     "@type": "PostalAddress",
