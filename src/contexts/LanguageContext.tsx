@@ -832,7 +832,7 @@ export const translations = {
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('santor-language');
-    return (saved as Language) || 'en';
+    return (saved as Language) || 'th';
   });
 
   useEffect(() => {
