@@ -832,6 +832,7 @@ export const translations = {
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('santor-language');
+    // Default language is Thai, can be switched to English
     return (saved as Language) || 'th';
   });
 
