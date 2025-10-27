@@ -62,7 +62,7 @@ const RestaurantHeader = ({
               className="hover:opacity-80 transition-smooth"
             >
               <img 
-                src="/images/SAN-LOGO-001.png" 
+                src="/images/SAN-LOGO-001.svg" 
                 alt="SANTOR Restaurant Holdings Logo" 
                 className="h-12 md:h-14"
               />

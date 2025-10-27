@@ -32,9 +32,9 @@ const AboutUs = () => {
             <div className="w-32 h-32 mx-auto mb-6 bg-gradient-santor rounded-full flex items-center justify-center">
               {/* Image Replacement: Using the <img> tag */}
               <img 
-                src="/images/SAN-LOGO-003.png" // Path relative to the public folder
+                src="/images/SAN-LOGO-001.svg"
                 alt="Santor Logo" 
-                className="w-full h-full object-contain p-4" // Styling to fit the circular container
+                className="w-full h-full object-contain p-4"
               />
             </div>
             <h1 className="text-4xl font-bold mb-4 text-foreground">{t('about.title')}</h1>
