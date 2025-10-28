@@ -16,22 +16,24 @@ export interface PageMetadata {
 
 export const defaultMetadata: PageMetadata = {
   title: 'SANTOR - Authentic Thai Cuisine & Culinary Experience',
-  description: 'Experience authentic Thai flavors with SANTOR. Order from our restaurants: Restory (Asian Fusion), Nirvana (Authentic Thai), and Mejai Hai Yum (Fresh Salmon & Thai Yum). Fast delivery, fresh ingredients.',
+  description: 'Experience authentic Thai flavors with SANTOR near ABAC and Bang Bo. Order from Restory (Asian Fusion), Nirvana (Authentic Thai), and Mejai Hai Yum. Fast delivery, fresh ingredients.',
   keywords: [
     'SANTOR',
+    'SANTOR ABAC',
+    'SANTOR Bang Bo',
     'Thai restaurant',
     'Thai food delivery',
     'authentic Thai cuisine',
     'Restory',
+    'Restory ABAC',
+    'Restory Bang Bo',
     'Nirvana',
+    'Nirvana ABAC',
+    'Nirvana Bang Bo',
     'Mejai Hai Yum',
     'Asian fusion',
-    'fresh salmon',
-    'Thai yum',
-    'Bangkok food',
-    'pad krapao',
-    'Thai curry',
-    'online food order'
+    'Thai restaurant near ABAC',
+    'food delivery Bang Bo'
   ],
   ogType: 'website',
   ogImage: '/share-card.jpeg',

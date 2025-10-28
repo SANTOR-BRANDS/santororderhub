@@ -14,8 +14,23 @@ export const organizationSchema = {
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "TH",
-    "addressLocality": "Bangkok"
+    "addressLocality": "Bangkok",
+    "addressRegion": "Bang Bo, ABAC area"
   },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Bangkok"
+    },
+    {
+      "@type": "Place",
+      "name": "ABAC"
+    },
+    {
+      "@type": "Place",
+      "name": "Bang Bo"
+    }
+  ],
   "contactPoint": [
     {
       "@type": "ContactPoint",

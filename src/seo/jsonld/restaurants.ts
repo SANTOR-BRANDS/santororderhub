@@ -8,12 +8,14 @@ const baseRestaurantData = {
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "TH",
-    "addressLocality": "Bangkok"
+    "addressLocality": "Bangkok",
+    "addressRegion": "Bang Bo, ABAC area"
   },
   "servesCuisine": "Thai",
   "priceRange": "฿฿",
   "acceptsReservations": "False",
-  "currenciesAccepted": "THB"
+  "currenciesAccepted": "THB",
+  "areaServed": ["ABAC", "Bang Bo", "Bangkok"]
 };
 
 export const restorySchema = {
