@@ -14,7 +14,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
   const dishName = t(dish.id) || dish.name;
   
   return (
-    <Card 
+    <article 
       className={cn(
         'transition-smooth backdrop-blur-sm relative',
         !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1',
@@ -43,7 +43,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
                 : 'bg-nirvana-accent/10'
             )}>
               <div className="text-center p-6">
-                <div className="text-4xl mb-3">🚫</div>
+                <div className="text-4xl mb-3" role="img" aria-label="Unavailable">🚫</div>
                 <div className={cn(
                   'text-sm font-semibold',
                   dish.restaurant === 'restory' ? 'text-restory' : 
@@ -58,8 +58,9 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
               {dish.image ? (
                 <img 
                   src={dish.image} 
-                  alt={dish.name}
+                  alt={`${dish.name} - ${dish.category} dish`}
                   className="w-full h-full object-cover transition-smooth hover:scale-105"
+                  loading="lazy"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                     e.currentTarget.nextElementSibling!.classList.remove('hidden');
@@ -76,7 +77,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
                 dish.image ? 'hidden' : ''
               )}>
                 <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
+                  <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center" role="img" aria-label="Dish placeholder">
                     🍽️
                   </div>
                   <span className="text-xs">No Image</span>
@@ -129,17 +130,17 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
             {(dish.spicyRequired || dish.isSpecial) && (
               <div className="flex gap-1">
                 {dish.spicyRequired && (
-                  <span className="text-xs">🌶️</span>
+                  <span className="text-xs" role="img" aria-label="Spicy">🌶️</span>
                 )}
                 {dish.isSpecial && (
-                  <span className="text-xs">⭐</span>
+                  <span className="text-xs" role="img" aria-label="Special dish">⭐</span>
                 )}
               </div>
             )}
           </div>
         </div>
       </CardContent>
-    </Card>
+    </article>
   );
 };
 

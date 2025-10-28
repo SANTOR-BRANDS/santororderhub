@@ -136,27 +136,27 @@ const Index = () => {
           onDishSelect={setSelectedDish}
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
-        /> : <div className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
+        /> : <section className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
             <div className="text-center p-8">
-              <div className="text-8xl mb-6">🍽️</div>
+              <div className="text-8xl mb-6" role="img" aria-label="Restaurant icon">🍽️</div>
               <h1 className="text-4xl font-bold mb-4">{t('header.welcome')}</h1>
             <p className="text-xl opacity-90 mb-8 max-w-2xl">{t('header.tagline')}</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('restory')}>
-                <h3 className="text-xl font-bold mb-2">🧡 Restory</h3>
+            <nav aria-label="Restaurant selection" className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              <article className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('restory')}>
+                <h2 className="text-xl font-bold mb-2">🧡 Restory</h2>
                 <p className="text-sm opacity-80">Asian Fusion - Cooked to Order</p>
-              </div>
-              <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('nirvana')}>
-                <h3 className="text-xl font-bold mb-2">⚫ Nirvana</h3>
+              </article>
+              <article className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('nirvana')}>
+                <h2 className="text-xl font-bold mb-2">⚫ Nirvana</h2>
                 <p className="text-sm opacity-80">Authentic Flavors</p>
-              </div>
-              <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('mejai hai yum')}>
-                <h3 className="text-xl font-bold mb-2">💗 Mejai Hai Yum</h3>
+              </article>
+              <article className="p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 cursor-pointer transition-smooth hover:bg-white/20" onClick={() => setSelectedRestaurant('mejai hai yum')}>
+                <h2 className="text-xl font-bold mb-2">💗 Mejai Hai Yum</h2>
                 <p className="text-sm opacity-80">Fresh Salmon & Thai Yum</p>
-              </div>
-            </div>
+              </article>
+            </nav>
           </div>
-        </div>}
+        </section>}
       </main>
 
       <DishModal dish={selectedDish} isOpen={!!selectedDish} onClose={() => setSelectedDish(null)} onAddToBasket={handleAddToBasket} />

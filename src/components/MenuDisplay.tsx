@@ -68,45 +68,46 @@ const MenuDisplay = ({
   return <div className={cn('min-h-screen pb-20', getBackgroundClass())}>
       <div className="container mx-auto px-4 py-6">
         {/* Restaurant Title */}
-        <div className="text-center mb-8">
-          
+        <section className="text-center mb-8">
+          <h1 className="sr-only">{restaurant.charAt(0).toUpperCase() + restaurant.slice(1)} Menu - Order Thai Food Online</h1>
           <p className="text-muted-foreground">
             Choose your favorite dishes and customize them to your taste!
           </p>
-        </div>
+        </section>
 
         {/* Search Bar */}
-        <div className="relative mb-6">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        <search role="search" className="relative mb-6">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" aria-hidden="true" />
           <Input 
             placeholder="Search dishes or categories..." 
             value={searchQuery} 
-            onChange={e => setSearchQuery(e.target.value)} 
+            onChange={e => setSearchQuery(e.target.value)}
+            aria-label="Search dishes or categories" 
             className={cn(
               "pl-10 backdrop-blur-sm rounded-sm bg-white/60 border-gray-300 text-gray-900 placeholder:text-gray-500",
               restaurant === 'restory' && 'bg-white/10 border-gray-600 text-white placeholder:text-gray-400'
             )} 
           />
-        </div>
+        </search>
 
         {/* Promotional Banner */}
-        <div className={cn('rounded-lg mb-6 p-6 text-center', getPromoBannerClass())}>
-          <h3 className="text-xl font-bold mb-2">🔥 Today's Special</h3>
+        <aside className={cn('rounded-lg mb-6 p-6 text-center', getPromoBannerClass())} aria-label="Today's special offer">
+          <h2 className="text-xl font-bold mb-2">🔥 Today&apos;s Special</h2>
           <p className="opacity-90">
             {getPromoMessage()}
           </p>
-        </div>
+        </aside>
 
         {/* Dishes Grid */}
-        {filteredDishes.length > 0 ? <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+        {filteredDishes.length > 0 ? <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4" aria-label="Menu dishes">
             {filteredDishes.map(dish => <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />)}
-          </div> : <div className="text-center py-12">
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold mb-2">No dishes found</h3>
+          </section> : <section className="text-center py-12">
+            <div className="text-6xl mb-4" role="img" aria-label="Search icon">🔍</div>
+            <h2 className="text-xl font-semibold mb-2">No dishes found</h2>
             <p className="text-muted-foreground">
               Try adjusting your search or filter criteria
             </p>
-          </div>}
+          </section>}
       </div>
     </div>;
 };

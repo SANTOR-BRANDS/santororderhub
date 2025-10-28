@@ -60,6 +60,7 @@ const RestaurantHeader = ({
             <button 
               onClick={() => onRestaurantChange(null as any)}
               className="hover:opacity-80 transition-smooth"
+              aria-label="Return to SANTOR home"
             >
               <img 
                 src="/images/SAN-LOGO-001.svg" 
@@ -67,13 +68,14 @@ const RestaurantHeader = ({
                 className="h-12 md:h-14"
               />
             </button>
-            <div className="flex-1 flex justify-end">
+            <nav className="flex-1 flex justify-end" aria-label="Language selection">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button 
                     variant="ghost" 
                     size="sm"
                     className="text-inherit hover:bg-white/10"
+                    aria-label="Change language"
                   >
                     <Languages className="h-4 w-4 mr-2" />
                     {language === 'en' ? 'EN' : 'ไทย'}
@@ -100,11 +102,11 @@ const RestaurantHeader = ({
                   </div>
                 </PopoverContent>
               </Popover>
-            </div>
+            </nav>
           </div>
 
           {/* Restaurant Selection */}
-          <div className="flex justify-center gap-2 overflow-hidden">
+          <nav aria-label="Restaurant navigation" className="flex justify-center gap-2 overflow-hidden">
             {/* Show first 2 restaurants on mobile, all on larger screens */}
             {restaurants.slice(0, 2).map((restaurant) => (
               <button
@@ -182,7 +184,7 @@ const RestaurantHeader = ({
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
+          </nav>
         </div>
       </div>
       
