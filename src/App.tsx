@@ -6,12 +6,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { lazy, Suspense } from "react";
 import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import AboutUs from "./pages/AboutUs";
-import FAQ from "./pages/FAQ";
-import TermsOfService from "./pages/TermsOfService";
 import ScrollToTop from "./components/ScrollToTop";
+
+// Lazy load non-critical pages
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 
 const queryClient = new QueryClient();
 
@@ -23,14 +26,16 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/terms" element={<TermsOfService />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<div className="min-h-screen bg-background" />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
         <Analytics />
         <SpeedInsights />
