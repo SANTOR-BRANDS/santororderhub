@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ContactDialog from './ContactDialog';
 import { Restaurant } from '@/types/menu';
 import { useLanguage } from '@/contexts/LanguageContext';
+import LazyMap from './LazyMap';
 
 interface FooterProps {
   selectedRestaurant?: Restaurant | null;
@@ -122,18 +123,11 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
                   rel="noopener noreferrer"
                   className="block mt-3"
                 >
-                  <div className="relative w-full h-32 rounded-lg overflow-hidden border border-white/20 hover:opacity-90 transition-opacity">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d496757.8082015029!2d100.47748082466232!3d13.417255550214755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d5dfac84f3277%3A0xce207ecdf109522b!2sSANTOR!5e0!3m2!1sde!2sus!4v1759416208428!5m2!1sde!2sus"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="SANTOR Location"
-                    />
-                  </div>
+                  <LazyMap
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d496757.8082015029!2d100.47748082466232!3d13.417255550214755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d5dfac84f3277%3A0xce207ecdf109522b!2sSANTOR!5e0!3m2!1sde!2sus!4v1759416208428!5m2!1sde!2sus"
+                    title="SANTOR Location"
+                    className="relative w-full h-32 rounded-lg overflow-hidden border border-white/20 hover:opacity-90 transition-opacity"
+                  />
                 </a>
               </div>
             </div>
