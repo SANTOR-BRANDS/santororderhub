@@ -8,8 +8,7 @@ export const restoryMenu: Dish[] = [
     name: 'Tonkatsu with Katsu Sauce + Peach Tea 🍑', 
     price: 174, 
     category: 'COMBO DEALS', 
-    restaurant: 'restory', 
-    spicyRequired: true,
+    restaurant: 'restory',
     extraOptions: [
       { id: 'RS-EXT-002', name: '🐷 Extra Pork (100g)', price: 60, category: 'extra-pls' },
       { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
