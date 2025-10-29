@@ -16,17 +16,17 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
   return (
     <article 
       className={cn(
-        'transition-smooth backdrop-blur-sm relative',
+        'transition-smooth backdrop-blur-sm relative rounded-lg border',
         !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1',
         !isUnavailable && (dish.restaurant === 'restory' 
-          ? 'bg-nirvana-secondary text-white hover:border-restory/30 border border-gray-700' 
+          ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-700' 
           : dish.restaurant === 'mejai hai yum'
-          ? 'bg-mejai-background hover:border-mejai-primary/50 border border-mejai-accent/30'
-          : 'bg-nirvana-primary hover:border-nirvana-accent/30'),
+          ? 'bg-mejai-background hover:border-mejai-primary/50 border-mejai-accent/30'
+          : 'bg-nirvana-primary hover:border-nirvana-accent/30 border-border/50'),
         isUnavailable && 'opacity-60 cursor-not-allowed',
         dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50',
-        dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border border-gray-700',
-        dish.restaurant === 'mejai hai yum' && 'bg-mejai-background border border-mejai-accent/30'
+        dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700',
+        dish.restaurant === 'mejai hai yum' && 'bg-mejai-background border-mejai-accent/30'
       )}
       onClick={() => !isUnavailable && onClick(dish)}
     >
