@@ -16,24 +16,42 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Optimize chunk splitting
+    // Optimize chunk splitting for better caching and loading
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Split vendor code into separate chunks
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-tabs', '@radix-ui/react-scroll-area'],
+        manualChunks: (id) => {
+          // Split node_modules into separate chunks
+          if (id.includes('node_modules')) {
+            // Core React libraries
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'react-vendor';
+            }
+            // Radix UI components
+            if (id.includes('@radix-ui')) {
+              return 'ui-vendor';
+            }
+            // Other large dependencies
+            if (id.includes('@tanstack') || id.includes('lucide-react')) {
+              return 'utils-vendor';
+            }
+            // Everything else
+            return 'vendor';
+          }
         },
       },
     },
     // Warn on large chunks
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 600,
     // Enable minification
     minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: mode === 'production',
+        drop_debugger: mode === 'production',
+        pure_funcs: mode === 'production' ? ['console.log', 'console.info'] : [],
       },
     },
+    // Enable CSS code splitting
+    cssCodeSplit: true,
   },
 }));
