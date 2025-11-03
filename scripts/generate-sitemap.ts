@@ -10,7 +10,7 @@ interface SitemapEntry {
   priority?: number;
 }
 
-const baseUrl = 'https://www.santorbrands.com';
+const baseUrl = 'https://santororderhub.vercel.app';
 
 const routes: SitemapEntry[] = [
   {
@@ -19,7 +19,7 @@ const routes: SitemapEntry[] = [
     priority: 1.0,
   },
   {
-    url: '/about',
+    url: '/about-us',
     changefreq: 'monthly',
     priority: 0.8,
   },
@@ -29,7 +29,7 @@ const routes: SitemapEntry[] = [
     priority: 0.7,
   },
   {
-    url: '/terms',
+    url: '/terms-of-service',
     changefreq: 'yearly',
     priority: 0.5,
   },
