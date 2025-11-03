@@ -22,7 +22,8 @@ export const restorySchema = {
   ...baseRestaurantData,
   "@type": "Restaurant",
   "name": "Restory",
-  "description": "Asian Fusion restaurant serving cooked-to-order Thai dishes with modern twists",
+  "alternateName": ["Restory ABAC", "Restory Bang Bo"],
+  "description": "Best Asian Fusion restaurant near ABAC and Bang Bo. Cooked-to-order Thai dishes with modern twists. Top-rated food in Bang Bo area.",
   "url": "https://www.santorbrands.com",
   "servesCuisine": ["Thai", "Asian Fusion"],
   "menu": "https://www.santorbrands.com/#restory"
@@ -32,7 +33,8 @@ export const nirvanaSchema = {
   ...baseRestaurantData,
   "@type": "Restaurant",
   "name": "Nirvana",
-  "description": "Authentic Thai restaurant specializing in traditional flavors and grilled dishes",
+  "alternateName": ["Nirvana ABAC", "Nirvana Bang Bo", "Guimei", "Guimei ABAC"],
+  "description": "Best authentic Thai restaurant near ABAC and Bang Bo. Specializing in traditional Thai flavors and grilled dishes. Top Thai food delivery in Bang Bo.",
   "url": "https://www.santorbrands.com",
   "servesCuisine": "Thai",
   "menu": "https://www.santorbrands.com/#nirvana"
