@@ -7,10 +7,10 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "SANTOR BRANDS",
-  "alternateName": ["SANTOR", "Guimei", "Guimei ABAC"],
+  "alternateName": "SANTOR",
   "url": "https://www.santorbrands.com",
   "logo": "https://www.santorbrands.com/images/SAN-LOGO-001.svg",
-  "description": "Best Thai food near ABAC and Bang Bo. Authentic Thai cuisine and Asian fusion restaurant group featuring Guimei, Restory, Nirvana, and Mejai Hai Yum.",
+  "description": "Authentic Thai cuisine and culinary experience. Home to Restory, Nirvana, and Mejai Hai Yum restaurants.",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "TH",
