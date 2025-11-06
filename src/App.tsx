@@ -15,6 +15,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const SEODashboard = lazy(() => import("./pages/SEODashboard"));
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/about" element={<AboutUs />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/seo-dashboard" element={<SEODashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
