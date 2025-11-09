@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -137,7 +138,10 @@ const BasketModal = ({
         // Format combo dish 1
         extras += `  🍽️ ${t('basket.dish')} 1:\n`;
         if (item.selectedVariant) {
-          extras += `    - ${t('basket.variation')}: ${item.selectedVariant.name}\n`;
+          const variantName = t(item.selectedVariant.id) === item.selectedVariant.id 
+            ? item.selectedVariant.name 
+            : t(item.selectedVariant.id);
+          extras += `    - ${t('basket.variation')}: ${variantName}\n`;
         }
         if (item.spicyLevel !== undefined) {
           extras += `    - ${t('basket.spicyLevel')}: ${item.spicyLevel}\n`;
@@ -183,7 +187,10 @@ const BasketModal = ({
         // Format combo dish 2
         extras += `  🍽️ ${t('basket.dish')} 2:\n`;
         if (item.combo2.selectedVariant) {
-          extras += `    - ${t('basket.variation')}: ${item.combo2.selectedVariant.name}\n`;
+          const variantName = t(item.combo2.selectedVariant.id) === item.combo2.selectedVariant.id 
+            ? item.combo2.selectedVariant.name 
+            : t(item.combo2.selectedVariant.id);
+          extras += `    - ${t('basket.variation')}: ${variantName}\n`;
         }
         if (item.combo2.spicyLevel !== undefined) {
           extras += `    - ${t('basket.spicyLevel')}: ${item.combo2.spicyLevel}\n`;
@@ -235,7 +242,10 @@ const BasketModal = ({
       } else {
         // Regular dish format
         if (item.selectedVariant) {
-          extras += `  - ${t('basket.variation')}: ${item.selectedVariant.name}\n`;
+          const variantName = t(item.selectedVariant.id) === item.selectedVariant.id 
+            ? item.selectedVariant.name 
+            : t(item.selectedVariant.id);
+          extras += `  - ${t('basket.variation')}: ${variantName}\n`;
         }
         if (item.spicyLevel !== undefined) {
           extras += `  - ${t('basket.spicyLevel')}: ${item.spicyLevel}\n`;
@@ -388,6 +398,9 @@ const BasketModal = ({
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>{t('basket.title')}</DialogTitle>
+            <DialogDescription className="sr-only">
+              Your empty basket
+            </DialogDescription>
           </DialogHeader>
           <div className="text-center py-8">
             <div className="text-6xl mb-4">🛒</div>
@@ -410,6 +423,9 @@ const BasketModal = ({
             <span>{t('basket.title')} ({basketItems.length})</span>
             <Badge variant="secondary">฿{getTotalPrice()}</Badge>
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Review and manage your order items
+          </DialogDescription>
         </DialogHeader>
 
         <ScrollArea className="flex-1 px-6 overflow-auto">
@@ -448,7 +464,7 @@ const BasketModal = ({
                       {/* Combo Dish 1 */}
                       <div className="font-semibold text-foreground">🍽️ {t('basket.dish')} 1:</div>
                       {item.selectedVariant && (
-                        <div className="pl-3">{t('basket.variation')}: {item.selectedVariant.name}</div>
+                        <div className="pl-3">{t('basket.variation')}: {t(item.selectedVariant.id) === item.selectedVariant.id ? item.selectedVariant.name : t(item.selectedVariant.id)}</div>
                       )}
                       {item.spicyLevel !== undefined && (
                         <div className="pl-3">{t('basket.spicyLevel')}: {item.spicyLevel}</div>
@@ -481,7 +497,7 @@ const BasketModal = ({
                       {/* Combo Dish 2 */}
                       <div className="font-semibold text-foreground mt-2">🍽️ {t('basket.dish')} 2:</div>
                       {item.combo2.selectedVariant && (
-                        <div className="pl-3">{t('basket.variation')}: {item.combo2.selectedVariant.name}</div>
+                        <div className="pl-3">{t('basket.variation')}: {t(item.combo2.selectedVariant.id) === item.combo2.selectedVariant.id ? item.combo2.selectedVariant.name : t(item.combo2.selectedVariant.id)}</div>
                       )}
                       {item.combo2.spicyLevel !== undefined && (
                         <div className="pl-3">{t('basket.spicyLevel')}: {item.combo2.spicyLevel}</div>
@@ -516,7 +532,7 @@ const BasketModal = ({
                     <>
                       {/* Regular Item */}
                       {item.selectedVariant && (
-                        <div>{t('basket.variation')}: {item.selectedVariant.name}</div>
+                        <div>{t('basket.variation')}: {t(item.selectedVariant.id) === item.selectedVariant.id ? item.selectedVariant.name : t(item.selectedVariant.id)}</div>
                       )}
                       {item.spicyLevel !== undefined && (
                         <div>{t('basket.spicyLevel')}: {item.spicyLevel}</div>

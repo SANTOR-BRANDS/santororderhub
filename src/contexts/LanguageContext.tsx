@@ -149,6 +149,7 @@ export const translations = {
     // Nirvana - Noodle Soup
     'NV-NSP-001': '🔥Mala Beef Rice Noodle Soup',
     'NV-NSP-002': 'Beef Rice Noodle Soup',
+    'NV-NSP-003': 'Egg Noodle',
     
     // Nirvana - Vegetarian
     'NV-VEG-001': 'Grilled Mushroom with Soy Sauce on Rice',
@@ -356,6 +357,7 @@ export const translations = {
     'NV-SAU-003': 'Isaan Dipping Sauce',
     'NV-SAU-004': 'Seafood Sauce',
     'NV-SAU-005': '🚫No Sauce',
+    'NV-SAU-006': 'Sesame Sauce',
     
     // Spicy Levels
     'SAN-SPI-001': '(0) Not Spicy',
@@ -557,6 +559,7 @@ export const translations = {
     // Nirvana - Noodle Soup
     'NV-NSP-001': '🔥ก๋วยเตี๋ยวเรือเนื้อหม่าล่า',
     'NV-NSP-002': 'ก๋วยเตี๋ยวเรือเนื้อ',
+    'NV-NSP-003': 'บะหมี่',
     
     // Nirvana - Vegetarian
     'NV-VEG-001': 'ข้าวหน้าเห็ดย่างซอสซีอิ๊ว',
@@ -764,6 +767,7 @@ export const translations = {
     'NV-SAU-003': 'น้ำจิ้มแจ่ว',
     'NV-SAU-004': 'น้ำจิ้มซีฟู้ด',
     'NV-SAU-005': '🚫 ไม่ใส่ซอส',
+    'NV-SAU-006': 'น้ำจิ้มงา',
     
     // Spicy Levels
     'SAN-SPI-001': '(0) ไม่เผ็ด',

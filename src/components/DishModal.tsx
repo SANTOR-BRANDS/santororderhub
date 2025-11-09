@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Dish, AddOn, SPICY_LEVELS, getSaucesByRestaurant, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -363,7 +363,7 @@ const DishModal = ({
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
                     <Label htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center gap-2">
-                      <span>{t(variant.id)}</span>
+                      <span>{t(variant.id) === variant.id ? variant.name : t(variant.id)}</span>
                     </Label>
                   </div>
                   {/* Only show price if not zero */}
@@ -464,7 +464,7 @@ const DishModal = ({
               <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
             </Label>
             <RadioGroup 
-              value={currentSpicyLevel?.toString()} 
+              value={currentSpicyLevel?.toString() || ''} 
               onValueChange={(value) => setCurrentSpicyLevel(Number(value))} 
               className="gap-2"
             >
@@ -635,6 +635,9 @@ const DishModal = ({
           <ScrollArea className="max-h-[85vh] overflow-y-auto">
             <div className="p-6">
               <DialogHeader className="mb-6">
+                <DialogDescription className="sr-only">
+                  Customize your dish options, add-ons, and preferences
+                </DialogDescription>
                 {/* Dish Image */}
                 <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
                   {dish.image ? (
