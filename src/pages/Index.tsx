@@ -144,19 +144,19 @@ const Index = () => {
             <p className="text-2xl font-semibold mb-6">Choose your restaurant:</p>
             <nav aria-label="Restaurant selection" className="grid grid-cols-3 gap-4 max-w-4xl mx-auto px-4">
               <article className="flex flex-col items-center gap-3 cursor-pointer group" onClick={() => setSelectedRestaurant('restory')}>
-                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 p-3">
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105">
                   <img src="/images/RS-LOGO-001.webp" alt="Restory" className="w-full h-full object-cover" />
                 </div>
                 <p className="text-xs md:text-sm opacity-80 text-center">Asian Fusion - Cooked to Order</p>
               </article>
               <article className="flex flex-col items-center gap-3 cursor-pointer group" onClick={() => setSelectedRestaurant('nirvana')}>
-                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 p-3">
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105">
                   <img src="/images/NV-LOGO-001.webp" alt="Nirvana" className="w-full h-full object-cover" />
                 </div>
                 <p className="text-xs md:text-sm opacity-80 text-center">Authentic Flavors</p>
               </article>
               <article className="flex flex-col items-center gap-3 cursor-pointer group" onClick={() => setSelectedRestaurant('mejai hai yum')}>
-                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 p-3">
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105">
                   <img src="/images/MHY-LOGO-001.webp" alt="Mejai Hai Yum" className="w-full h-full object-cover" />
                 </div>
                 <p className="text-xs md:text-sm opacity-80 text-center">Fresh Salmon & Thai Yum</p>
