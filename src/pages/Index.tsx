@@ -141,24 +141,25 @@ const Index = () => {
               <div className="text-8xl mb-6" role="img" aria-label="Restaurant icon">🍽️</div>
               <h1 className="text-4xl font-bold mb-4">{t('header.welcome')}</h1>
             <p className="text-xl opacity-90 mb-8 max-w-2xl">{t('header.tagline')}</p>
-            <nav aria-label="Restaurant selection" className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <p className="text-2xl font-semibold mb-6">Choose your restaurant:</p>
+            <nav aria-label="Restaurant selection" className="grid grid-cols-3 gap-4 max-w-4xl mx-auto px-4">
               <article className="flex flex-col items-center gap-3 cursor-pointer group" onClick={() => setSelectedRestaurant('restory')}>
-                <div className="w-full aspect-[3/1] rounded-full overflow-hidden transition-smooth group-hover:scale-105">
-                  <img src="/images/RS-LOGO-001.webp" alt="Restory" className="w-full h-full object-cover" />
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 p-3">
+                  <img src="/images/RS-LOGO-001.webp" alt="Restory" className="w-full h-full object-contain" />
                 </div>
-                <p className="text-sm opacity-80 text-center">Asian Fusion - Cooked to Order</p>
+                <p className="text-xs md:text-sm opacity-80 text-center">Asian Fusion - Cooked to Order</p>
               </article>
               <article className="flex flex-col items-center gap-3 cursor-pointer group" onClick={() => setSelectedRestaurant('nirvana')}>
-                <div className="w-full aspect-[3/1] rounded-full overflow-hidden transition-smooth group-hover:scale-105">
-                  <img src="/images/NV-LOGO-001.webp" alt="Nirvana" className="w-full h-full object-cover" />
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 p-3">
+                  <img src="/images/NV-LOGO-001.webp" alt="Nirvana" className="w-full h-full object-contain" />
                 </div>
-                <p className="text-sm opacity-80 text-center">Authentic Flavors</p>
+                <p className="text-xs md:text-sm opacity-80 text-center">Authentic Flavors</p>
               </article>
               <article className="flex flex-col items-center gap-3 cursor-pointer group" onClick={() => setSelectedRestaurant('mejai hai yum')}>
-                <div className="w-full aspect-[3/1] rounded-full overflow-hidden transition-smooth group-hover:scale-105">
-                  <img src="/images/MHY-LOGO-001.webp" alt="Mejai Hai Yum" className="w-full h-full object-cover" />
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 p-3">
+                  <img src="/images/MHY-LOGO-001.webp" alt="Mejai Hai Yum" className="w-full h-full object-contain" />
                 </div>
-                <p className="text-sm opacity-80 text-center">Fresh Salmon & Thai Yum</p>
+                <p className="text-xs md:text-sm opacity-80 text-center">Fresh Salmon & Thai Yum</p>
               </article>
             </nav>
           </div>
