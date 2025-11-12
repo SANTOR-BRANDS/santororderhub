@@ -65,6 +65,20 @@ const MenuDisplay = ({
     return 'Fresh salmon dishes - Premium quality!';
   };
   
+  const getSpecialDishId = () => {
+    if (restaurant === 'restory') return 'RS-DON-001'; // Tonkatsu Don
+    if (restaurant === 'nirvana') return 'NV-BRR-002'; // Braised Pork Belly on Rice
+    return 'MHY-SAL-001'; // Fresh Salmon Sashimi
+  };
+  
+  const handleSpecialClick = () => {
+    const specialDishId = getSpecialDishId();
+    const specialDish = menu.find(dish => dish.id === specialDishId);
+    if (specialDish) {
+      onDishSelect(specialDish);
+    }
+  };
+  
   return <div className={cn('min-h-screen pb-20', getBackgroundClass())}>
       <div className="container mx-auto px-4 py-6">
         {/* Restaurant Title */}
@@ -91,12 +105,19 @@ const MenuDisplay = ({
         </search>
 
         {/* Promotional Banner */}
-        <aside className={cn('rounded-lg mb-6 p-6 text-center', getPromoBannerClass())} aria-label="Today's special offer">
+        <button 
+          onClick={handleSpecialClick}
+          className={cn(
+            'w-full rounded-lg mb-6 p-6 text-center transition-smooth hover:scale-[1.02] cursor-pointer', 
+            getPromoBannerClass()
+          )} 
+          aria-label="Today's special offer - Click to view dish"
+        >
           <h2 className="text-xl font-bold mb-2">🔥 Today&apos;s Special</h2>
           <p className="opacity-90">
             {getPromoMessage()}
           </p>
-        </aside>
+        </button>
 
         {/* Dishes Grid */}
         {filteredDishes.length > 0 ? <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4" aria-label="Menu dishes">
