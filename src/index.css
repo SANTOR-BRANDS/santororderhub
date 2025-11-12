@@ -143,3 +143,44 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .sparkle-border {
+    position: relative;
+    z-index: 0;
+  }
+  
+  .sparkle-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--angle),
+      transparent 70%,
+      rgba(255, 215, 0, 0.8) 80%,
+      rgba(255, 255, 255, 0.9) 85%,
+      rgba(255, 215, 0, 0.8) 90%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotate-sparkle 3s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  @keyframes rotate-sparkle {
+    to {
+      --angle: 360deg;
+    }
+  }
+  
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+}

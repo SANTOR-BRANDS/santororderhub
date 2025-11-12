@@ -108,7 +108,7 @@ const MenuDisplay = ({
         <button 
           onClick={handleSpecialClick}
           className={cn(
-            'w-full rounded-lg mb-6 p-6 text-center transition-smooth hover:scale-[1.02] cursor-pointer', 
+            'w-full rounded-lg mb-6 p-6 text-center transition-smooth hover:scale-[1.02] cursor-pointer sparkle-border', 
             getPromoBannerClass()
           )} 
           aria-label="Today's special offer - Click to view dish"
