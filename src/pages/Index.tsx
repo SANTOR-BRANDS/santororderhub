@@ -140,7 +140,7 @@ const Index = () => {
             <div className="text-center p-8">
               <div className="text-8xl mb-6" role="img" aria-label="Restaurant icon">🍽️</div>
               <h1 className="text-4xl font-bold mb-4">{t('header.welcome')}</h1>
-            <p className="text-xl opacity-90 mb-8 max-w-2xl">{t('header.tagline')}</p>
+            <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">{t('header.tagline')}</p>
             <p className="text-2xl font-semibold mb-6">Choose your restaurant:</p>
             <nav aria-label="Restaurant selection" className="grid grid-cols-3 gap-4 max-w-4xl mx-auto px-4">
               <article className="flex flex-col items-center gap-3 cursor-pointer group" onClick={() => setSelectedRestaurant('restory')}>
