@@ -194,10 +194,26 @@ const Index = () => {
                 </div>
               </div>
 
-              {/* How It Works - Hidden on mobile, visible on desktop */}
-              <div className="hidden md:block mb-12 animate-fade-in">
-                <h2 className="text-2xl md:text-3xl font-bold mb-8">How It Works</h2>
-                <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
+              {/* How It Works - Compact on mobile, expanded on desktop */}
+              <div className="mb-6 md:mb-12 animate-fade-in">
+                <h2 className="text-lg md:text-3xl font-bold mb-3 md:mb-8">How It Works</h2>
+                {/* Mobile: horizontal compact row */}
+                <div className="flex md:hidden justify-center gap-4 text-xs">
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl mb-1">1️⃣</span>
+                    <span className="font-medium">Choose</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl mb-1">2️⃣</span>
+                    <span className="font-medium">Build Order</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-2xl mb-1">3️⃣</span>
+                    <span className="font-medium">Delivered</span>
+                  </div>
+                </div>
+                {/* Desktop: full cards */}
+                <div className="hidden md:grid md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
                   <div className="flex flex-col items-center p-6 bg-white/10 rounded-xl backdrop-blur-sm transition-smooth hover:scale-105">
                     <div className="text-4xl mb-3">1️⃣</div>
                     <h3 className="text-lg font-semibold mb-2">Choose Restaurants</h3>
