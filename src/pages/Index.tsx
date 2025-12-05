@@ -195,21 +195,21 @@ const Index = () => {
               </div>
 
               {/* How It Works - Compact on mobile, expanded on desktop */}
-              <div className="mb-6 md:mb-12 animate-fade-in">
-                <h2 className="text-lg md:text-3xl font-bold mb-3 md:mb-8">How It Works</h2>
+              <div className="mb-6 md:mb-12 animate-fade-in bg-[#8B1538] rounded-full px-6 py-3 md:px-10 md:py-6 md:rounded-2xl inline-block">
+                <h2 className="text-sm md:text-2xl font-bold mb-2 md:mb-6">How It Works</h2>
                 {/* Mobile: horizontal compact row */}
-                <div className="flex md:hidden justify-center gap-4 text-xs">
+                <div className="flex md:hidden justify-center gap-6 text-xs">
                   <div className="flex flex-col items-center">
-                    <span className="text-2xl mb-1">1️⃣</span>
-                    <span className="font-medium">Choose</span>
+                    <span className="text-xl mb-1">1️⃣</span>
+                    <span className="font-medium text-[10px]">Choose</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <span className="text-2xl mb-1">2️⃣</span>
-                    <span className="font-medium">Build Order</span>
+                    <span className="text-xl mb-1">2️⃣</span>
+                    <span className="font-medium text-[10px]">Build Order</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <span className="text-2xl mb-1">3️⃣</span>
-                    <span className="font-medium">Delivered</span>
+                    <span className="text-xl mb-1">3️⃣</span>
+                    <span className="font-medium text-[10px]">Delivered</span>
                   </div>
                 </div>
                 {/* Desktop: full cards */}
