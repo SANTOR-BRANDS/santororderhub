@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import { PageMetadata } from '../metadata';
 
 interface SEOHeadProps {
@@ -7,13 +8,24 @@ interface SEOHeadProps {
 }
 
 export const SEOHead = ({ metadata, children }: SEOHeadProps) => {
+  const location = useLocation();
   const siteUrl = import.meta.env.VITE_SITE_URL || 'https://www.santorbrands.com';
-  const canonicalUrl = metadata.canonical 
-    ? `${siteUrl}${metadata.canonical}` 
-    : siteUrl;
+  
+  // Always use clean path without query parameters for canonical
+  const cleanPath = metadata.canonical || location.pathname;
+  const canonicalUrl = `${siteUrl}${cleanPath === '/' ? '' : cleanPath}`;
+  
+  // Check if current URL has query parameters (search, filters, etc.)
+  const hasQueryParams = location.search.length > 0;
+  
   const imageUrl = metadata.ogImage?.startsWith('http') 
     ? metadata.ogImage 
     : `${siteUrl}${metadata.ogImage || '/share-card.jpeg'}`;
+
+  // Determine robots directive - noindex for parameter pages
+  const robotsContent = hasQueryParams 
+    ? 'noindex, follow' 
+    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
   return (
     <Helmet>
@@ -25,7 +37,7 @@ export const SEOHead = ({ metadata, children }: SEOHeadProps) => {
         <meta name="keywords" content={metadata.keywords.join(', ')} />
       )}
       
-      {/* Canonical URL */}
+      {/* Canonical URL - always clean without query params */}
       <link rel="canonical" href={canonicalUrl} />
       
       {/* Open Graph / Facebook */}
@@ -43,9 +55,11 @@ export const SEOHead = ({ metadata, children }: SEOHeadProps) => {
       <meta property="twitter:description" content={metadata.description} />
       <meta property="twitter:image" content={imageUrl} />
       
+      {/* Robots - noindex for parameter pages, index for clean URLs */}
+      <meta name="robots" content={robotsContent} />
+      <meta name="googlebot" content={hasQueryParams ? 'noindex, follow' : 'index, follow'} />
+      
       {/* Additional SEO Tags */}
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-      <meta name="googlebot" content="index, follow" />
       <meta name="language" content="th" />
       <meta name="revisit-after" content="7 days" />
       <meta name="author" content="SANTOR BRANDS" />
