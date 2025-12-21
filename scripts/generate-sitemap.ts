@@ -10,7 +10,8 @@ interface SitemapEntry {
   priority?: number;
 }
 
-const baseUrl = 'https://www.santorbrands.com';
+// Preferred canonical: https://santorbrands.com (no www, no trailing slash)
+const baseUrl = 'https://santorbrands.com';
 
 const routes: SitemapEntry[] = [
   {
