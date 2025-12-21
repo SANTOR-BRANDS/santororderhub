@@ -15,7 +15,15 @@ export const translations = {
     // Header
     'header.welcome': 'Welcome to SANTOR',
     'header.tagline': 'We believe good food is the foundation of happiness',
+    'header.heroTagline': 'Order from many restaurants, ONE DELIVERY.',
+    'header.selectRestaurants': 'Select restaurants to start ordering:',
+    'header.orderNow': 'Order Now',
     'header.more': 'More',
+    
+    // Trust signals
+    'trust.bestPrices': 'Best Prices',
+    'trust.fastDelivery': 'Fast Delivery',
+    'trust.mixMatch': 'Mix & Match',
     
     // Restaurant names
     'restaurant.restory': 'Restory',
@@ -437,7 +445,15 @@ export const translations = {
     // Header
     'header.welcome': 'ยินดีต้อนรับสู่ SANTOR',
     'header.tagline': 'เราเชื่อว่าอาหารดีคือรากฐานของความสุข',
+    'header.heroTagline': 'สั่งจากหลายร้าน ส่งครั้งเดียว',
+    'header.selectRestaurants': 'เลือกร้านอาหารเพื่อเริ่มสั่ง:',
+    'header.orderNow': 'สั่งเลย',
     'header.more': 'เพิ่มเติม',
+    
+    // Trust signals
+    'trust.bestPrices': 'ราคาดีที่สุด',
+    'trust.fastDelivery': 'ส่งไว',
+    'trust.mixMatch': 'สั่งรวมได้',
     
     // Restaurant names
     'restaurant.restory': 'Restory',
