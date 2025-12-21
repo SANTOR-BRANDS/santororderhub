@@ -114,7 +114,7 @@ const Index = () => {
               <div className="text-5xl md:text-8xl mb-3 md:mb-6 animate-scale-in" role="img" aria-label="Restaurant icon">🍽️</div>
               <h1 className="text-2xl md:text-5xl mb-2 md:mb-4 animate-fade-in font-serif text-center font-normal">{t('header.welcome')}</h1>
               <p className="text-sm md:text-xl opacity-90 mb-2 md:mb-3 max-w-2xl mx-auto animate-fade-in hidden md:block">{t('header.tagline')}</p>
-              <p className="text-lg md:text-3xl font-semibold mb-4 md:mb-4 animate-fade-in">Order from many restaurants, one delivery.</p>
+              <p className="text-lg md:text-3xl font-semibold mb-4 md:mb-4 animate-fade-in font-mono text-primary-foreground px-0 bg-destructive">Order from many restaurants,  ONE DELIVERY.</p>
               
               {/* Restaurant Selection - MOBILE FIRST (appears immediately) */}
               <div className="animate-fade-in mb-6 md:mb-0 md:order-last">
@@ -177,11 +177,11 @@ const Index = () => {
                   </div>
                   <div className="flex flex-col items-center">
                     <span className="text-xl mb-1">2️⃣</span>
-                    <span className="font-medium text-[10px]">Build Order</span>
+                    <span className="font-medium text-[10px]">Confirm</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <span className="text-xl mb-1">3️⃣</span>
-                    <span className="font-medium text-[10px]">Confirm/Delivered</span>
+                    <span className="font-medium text-[10px]">Delivered</span>
                   </div>
                 </div>
                 {/* Desktop: full cards */}
