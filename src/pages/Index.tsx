@@ -12,15 +12,15 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { SEOHead } from '@/seo/components/SEOHead';
 import { getMetadata } from '@/seo/metadata';
 import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, mejaiSchema } from '@/seo/jsonld';
-
 const themeColors: Record<Restaurant, string> = {
   restory: '#fd7304',
   nirvana: '#ffd93d',
   'mejai hai yum': '#fec428'
 };
-
 const Index = () => {
-  const { t } = useLanguage();
+  const {
+    t
+  } = useLanguage();
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [basketItems, setBasketItems] = useState<BasketItem[]>(() => {
@@ -46,14 +46,8 @@ const Index = () => {
   });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
-  
-  const categories = useMemo(() => 
-    selectedRestaurant ? getCategoriesByRestaurant(selectedRestaurant) : [],
-    [selectedRestaurant]
-  );
-  
+  const categories = useMemo(() => selectedRestaurant ? getCategoriesByRestaurant(selectedRestaurant) : [], [selectedRestaurant]);
   const themeColor = selectedRestaurant ? themeColors[selectedRestaurant] : undefined;
-  
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
   };
@@ -74,13 +68,11 @@ const Index = () => {
     setSelectedRestaurant(restaurant);
     setSelectedCategory('ALL'); // Reset category when changing restaurant
   };
-
   useEffect(() => {
     if (selectedRestaurant) {
       window.scrollTo(0, 0);
     }
   }, [selectedRestaurant]);
-
   useEffect(() => {
     if (selectedCategory !== 'ALL') {
       window.scrollTo(0, 0);
@@ -104,43 +96,23 @@ const Index = () => {
       console.error('Failed to save basket to localStorage:', error);
     }
   }, [basketItems]);
-
   const homeMetadata = {
     ...getMetadata('home'),
     structuredData: {
       "@context": "https://schema.org",
-      "@graph": [
-        organizationSchema,
-        websiteSchema,
-        restorySchema,
-        nirvanaSchema,
-        mejaiSchema
-      ]
+      "@graph": [organizationSchema, websiteSchema, restorySchema, nirvanaSchema, mejaiSchema]
     }
   };
-
   return <div className={cn("min-h-screen", selectedRestaurant === 'restory' ? 'bg-nirvana-secondary' : selectedRestaurant === 'mejai hai yum' ? 'bg-mejai-background' : 'bg-background')}>
       <SEOHead metadata={homeMetadata} />
-      <RestaurantHeader
-        selectedRestaurant={selectedRestaurant} 
-        onRestaurantChange={handleRestaurantChange}
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        themeColor={themeColor}
-      />
+      <RestaurantHeader selectedRestaurant={selectedRestaurant} onRestaurantChange={handleRestaurantChange} categories={categories} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} themeColor={themeColor} />
 
       <main>
-        {selectedRestaurant ? <MenuDisplay 
-          restaurant={selectedRestaurant} 
-          onDishSelect={setSelectedDish}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-        /> : <section className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
+        {selectedRestaurant ? <MenuDisplay restaurant={selectedRestaurant} onDishSelect={setSelectedDish} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} /> : <section className="min-h-[80vh] flex items-center justify-center bg-gradient-santor text-santor-foreground">
             <div className="text-center p-4 md:p-8 max-w-6xl mx-auto">
               {/* Mobile-First Hero - Compact */}
               <div className="text-5xl md:text-8xl mb-3 md:mb-6 animate-scale-in" role="img" aria-label="Restaurant icon">🍽️</div>
-              <h1 className="text-2xl md:text-5xl font-bold mb-2 md:mb-4 animate-fade-in">{t('header.welcome')}</h1>
+              <h1 className="text-2xl md:text-5xl mb-2 md:mb-4 animate-fade-in font-serif text-center font-normal">{t('header.welcome')}</h1>
               <p className="text-sm md:text-xl opacity-90 mb-2 md:mb-3 max-w-2xl mx-auto animate-fade-in hidden md:block">{t('header.tagline')}</p>
               <p className="text-lg md:text-3xl font-semibold mb-4 md:mb-4 animate-fade-in">Order from many restaurants, one delivery.</p>
               
@@ -209,7 +181,7 @@ const Index = () => {
                   </div>
                   <div className="flex flex-col items-center">
                     <span className="text-xl mb-1">3️⃣</span>
-                    <span className="font-medium text-[10px]">Delivered</span>
+                    <span className="font-medium text-[10px]">Confirm/Delivered</span>
                   </div>
                 </div>
                 {/* Desktop: full cards */}
