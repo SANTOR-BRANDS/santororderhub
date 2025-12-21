@@ -114,17 +114,17 @@ const Index = () => {
               <div className="text-5xl md:text-8xl mb-3 md:mb-6 animate-scale-in" role="img" aria-label="Restaurant icon">🍽️</div>
               <h1 className="text-2xl md:text-5xl mb-2 md:mb-4 animate-fade-in font-serif text-center font-normal">{t('header.welcome')}</h1>
               <p className="text-sm md:text-xl opacity-90 mb-2 md:mb-3 max-w-2xl mx-auto animate-fade-in hidden md:block">{t('header.tagline')}</p>
-              <p className="text-lg md:text-3xl font-semibold mb-4 md:mb-4 animate-fade-in font-mono text-primary-foreground px-0 bg-destructive">Order from many restaurants,  ONE DELIVERY.</p>
+              <p className="text-lg md:text-3xl font-semibold mb-4 md:mb-4 animate-fade-in font-mono text-primary-foreground px-0 bg-destructive">{t('header.heroTagline')}</p>
               
               {/* Restaurant Selection - MOBILE FIRST (appears immediately) */}
               <div className="animate-fade-in mb-6 md:mb-0 md:order-last">
-                <p className="text-lg md:text-3xl font-semibold mb-4 md:mb-6">Select restaurants to start ordering:</p>
+                <p className="text-lg md:text-3xl font-semibold mb-4 md:mb-6">{t('header.selectRestaurants')}</p>
                 <nav aria-label="Restaurant selection" className="grid grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto px-2 md:px-4">
                   <article className="flex flex-col items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => setSelectedRestaurant('restory')}>
                     <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 relative">
                       <img src="/images/RS-LOGO-001.webp" alt="Restory" className="w-full h-full object-cover" />
                       <div className="absolute top-1 right-1 md:top-2 md:right-2 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded-full font-semibold">
-                        Order Now
+                        {t('header.orderNow')}
                       </div>
                     </div>
                     <p className="text-[10px] md:text-sm opacity-80 text-center hidden md:block">Asian Fusion - Cooked to Order</p>
@@ -133,7 +133,7 @@ const Index = () => {
                     <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 relative">
                       <img src="/images/NV-LOGO-001.webp" alt="Nirvana" className="w-full h-full object-cover" />
                       <div className="absolute top-1 right-1 md:top-2 md:right-2 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded-full font-semibold">
-                        Order Now
+                        {t('header.orderNow')}
                       </div>
                     </div>
                     <p className="text-[10px] md:text-sm opacity-80 text-center hidden md:block">Authentic Flavors</p>
@@ -142,7 +142,7 @@ const Index = () => {
                     <div className="w-full aspect-square rounded-xl overflow-hidden bg-white transition-smooth group-hover:scale-105 relative">
                       <img src="/images/MHY-LOGO-001.webp" alt="Mejai Hai Yum" className="w-full h-full object-cover" />
                       <div className="absolute top-1 right-1 md:top-2 md:right-2 bg-green-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded-full font-semibold">
-                        Order Now
+                        {t('header.orderNow')}
                       </div>
                     </div>
                     <p className="text-[10px] md:text-sm opacity-80 text-center hidden md:block">Fresh Salmon & Thai Yum</p>
@@ -154,15 +154,15 @@ const Index = () => {
               <div className="flex flex-wrap justify-center gap-3 md:gap-6 mb-4 md:mb-12 text-xs md:text-base animate-fade-in">
                 <div className="flex items-center gap-1 md:gap-2">
                   <span className="text-lg md:text-2xl">🏆</span>
-                  <span className="font-medium">Best Prices</span>
+                  <span className="font-medium">{t('trust.bestPrices')}</span>
                 </div>
                 <div className="flex items-center gap-1 md:gap-2">
                   <span className="text-lg md:text-2xl">⚡</span>
-                  <span className="font-medium">Fast Delivery</span>
+                  <span className="font-medium">{t('trust.fastDelivery')}</span>
                 </div>
                 <div className="flex items-center gap-1 md:gap-2">
                   <span className="text-lg md:text-2xl">🍱</span>
-                  <span className="font-medium">Mix & Match</span>
+                  <span className="font-medium">{t('trust.mixMatch')}</span>
                 </div>
               </div>
 
