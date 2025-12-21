@@ -168,38 +168,38 @@ const Index = () => {
 
               {/* How It Works - Compact on mobile, expanded on desktop */}
               <div className="mb-6 md:mb-12 animate-fade-in bg-[#8B1538] rounded-full px-6 py-3 md:px-10 md:py-6 md:rounded-2xl inline-block">
-                <h2 className="text-sm md:text-2xl font-bold mb-2 md:mb-6">How It Works</h2>
+                <h2 className="text-sm md:text-2xl font-bold mb-2 md:mb-6">{t('how.title')}</h2>
                 {/* Mobile: horizontal compact row */}
                 <div className="flex md:hidden justify-center gap-6 text-xs">
                   <div className="flex flex-col items-center">
                     <span className="text-xl mb-1">1️⃣</span>
-                    <span className="font-medium text-[10px]">Choose</span>
+                    <span className="font-medium text-[10px]">{t('how.step1.short')}</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <span className="text-xl mb-1">2️⃣</span>
-                    <span className="font-medium text-[10px]">Confirm</span>
+                    <span className="font-medium text-[10px]">{t('how.step2.short')}</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <span className="text-xl mb-1">3️⃣</span>
-                    <span className="font-medium text-[10px]">Delivered</span>
+                    <span className="font-medium text-[10px]">{t('how.step3.short')}</span>
                   </div>
                 </div>
                 {/* Desktop: full cards */}
                 <div className="hidden md:grid md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
                   <div className="flex flex-col items-center p-6 bg-white/10 rounded-xl backdrop-blur-sm transition-smooth hover:scale-105">
                     <div className="text-4xl mb-3">1️⃣</div>
-                    <h3 className="text-lg font-semibold mb-2">Choose Restaurants</h3>
-                    <p className="text-sm opacity-80">Browse Restory, Nirvana & Mejai Hai Yum</p>
+                    <h3 className="text-lg font-semibold mb-2">{t('how.step1.title')}</h3>
+                    <p className="text-sm opacity-80">{t('how.step1.desc')}</p>
                   </div>
                   <div className="flex flex-col items-center p-6 bg-white/10 rounded-xl backdrop-blur-sm transition-smooth hover:scale-105">
                     <div className="text-4xl mb-3">2️⃣</div>
-                    <h3 className="text-lg font-semibold mb-2">Build Your Order</h3>
-                    <p className="text-sm opacity-80">Mix dishes from all restaurants</p>
+                    <h3 className="text-lg font-semibold mb-2">{t('how.step2.title')}</h3>
+                    <p className="text-sm opacity-80">{t('how.step2.desc')}</p>
                   </div>
                   <div className="flex flex-col items-center p-6 bg-white/10 rounded-xl backdrop-blur-sm transition-smooth hover:scale-105">
                     <div className="text-4xl mb-3">3️⃣</div>
-                    <h3 className="text-lg font-semibold mb-2">Delivered to Your Door</h3>
-                    <p className="text-sm opacity-80">One order, one delivery fee</p>
+                    <h3 className="text-lg font-semibold mb-2">{t('how.step3.title')}</h3>
+                    <p className="text-sm opacity-80">{t('how.step3.desc')}</p>
                   </div>
                 </div>
               </div>

@@ -366,6 +366,18 @@ export const translations = {
     'SAN-SPI-004': '(3) 🌶️🌶️🌶️ Spicy',
     'SAN-SPI-005': '(4) 🌶️🌶️🌶️🌶️ Extra Spicy',
     
+    // How It Works section
+    'how.title': 'How It Works',
+    'how.step1.short': 'Choose',
+    'how.step2.short': 'Confirm',
+    'how.step3.short': 'Delivered',
+    'how.step1.title': 'Choose Restaurants',
+    'how.step1.desc': 'Browse Restory, Nirvana & Mejai Hai Yum',
+    'how.step2.title': 'Build Your Order',
+    'how.step2.desc': 'Mix dishes from all restaurants',
+    'how.step3.title': 'Delivered to Your Door',
+    'how.step3.desc': 'One order, one delivery fee',
+    
     // Footer translations
     'footer.followUs': 'Follow Us',
     'footer.visitUs': 'Visit Us',
@@ -775,6 +787,18 @@ export const translations = {
     'SAN-SPI-003': '(2) 🌶️🌶️ เผ็ดกลาง (สูตรซิกเนเจอร์) ✨',
     'SAN-SPI-004': '(3) 🌶️🌶️🌶️ เผ็ดมาก',
     'SAN-SPI-005': '(4) 🌶️🌶️🌶️🌶️ เผ็ดมากที่สุด',
+    
+    // How It Works section
+    'how.title': 'วิธีการสั่งซื้อ',
+    'how.step1.short': 'เลือกร้าน',
+    'how.step2.short': 'สั่งอาหาร',
+    'how.step3.short': 'จัดส่ง',
+    'how.step1.title': 'เลือกร้านอาหาร',
+    'how.step1.desc': 'เลือกจาก Restory, Nirvana และ เมจัย ไหหยำ',
+    'how.step2.title': 'สร้างออเดอร์ของคุณ',
+    'how.step2.desc': 'ผสมเมนูจากทุกร้านได้ในออเดอร์เดียว',
+    'how.step3.title': 'จัดส่งถึงหน้าบ้าน',
+    'how.step3.desc': 'สั่งหลายร้าน จ่ายค่าส่งครั้งเดียว',
     
     // Footer translations
     'footer.followUs': 'ติดตามเรา',
