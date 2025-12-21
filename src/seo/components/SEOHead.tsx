@@ -9,11 +9,14 @@ interface SEOHeadProps {
 
 export const SEOHead = ({ metadata, children }: SEOHeadProps) => {
   const location = useLocation();
-  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://www.santorbrands.com';
+  // Preferred canonical: https://santorbrands.com (no www, no trailing slash)
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://santorbrands.com';
   
   // Always use clean path without query parameters for canonical
   const cleanPath = metadata.canonical || location.pathname;
-  const canonicalUrl = `${siteUrl}${cleanPath === '/' ? '' : cleanPath}`;
+  // Remove trailing slash for consistency (except for root)
+  const normalizedPath = cleanPath === '/' ? '' : cleanPath.replace(/\/$/, '');
+  const canonicalUrl = `${siteUrl}${normalizedPath}`;
   
   // Check if current URL has query parameters (search, filters, etc.)
   const hasQueryParams = location.search.length > 0;

@@ -17,5 +17,8 @@ Allow: /
 # Disallow admin and API routes
 Disallow: /api/
 
-# Sitemap
-Sitemap: https://www.santorbrands.com/sitemap.xml
+# Block all URLs with query parameters (search, filters, etc.)
+Disallow: /*?*
+
+# Sitemap - using canonical non-www URL
+Sitemap: https://santorbrands.com/sitemap.xml
