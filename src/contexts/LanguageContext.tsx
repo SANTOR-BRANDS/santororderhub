@@ -20,6 +20,27 @@ export const translations = {
     'header.orderNow': 'Order Now',
     'header.more': 'More',
     
+    // Unified Food Court
+    'foodCourt.headline': 'The Online Food Court',
+    'foodCourt.subheadline': 'Delivered as One',
+    'foodCourt.searchPlaceholder': 'Search all restaurants...',
+    'foodCourt.favorites': 'Mix & Match Favorites',
+    'foodCourt.browseByBrand': 'Browse by Brand',
+    'foodCourt.viewAll': 'View All',
+    'foodCourt.noResults': 'No dishes found',
+    'foodCourt.tryDifferent': 'Try a different search term',
+    
+    // Categories
+    'category.all': 'All',
+    'category.noodles': 'Noodles',
+    'category.rice': 'Rice Bowls',
+    'category.curry': 'Curry',
+    'category.drinks': 'Drinks',
+    'category.grilled': 'Grilled',
+    'category.krapao': 'Pad Krapao',
+    'category.fried': 'Fried',
+    'category.eggs': 'Eggs',
+    
     // Trust signals
     'trust.bestPrices': 'Best Prices',
     'trust.fastDelivery': 'Fast Delivery',
@@ -89,8 +110,6 @@ export const translations = {
     'dish.notes': 'Special Notes',
     'dish.notes.placeholder': 'Any special requests...',
     
-    // Categories
-    'category.all': 'ALL',
     
     // Common
     'common.price': '฿',
@@ -450,6 +469,27 @@ export const translations = {
     'header.orderNow': 'สั่งเลย',
     'header.more': 'เพิ่มเติม',
     
+    // Unified Food Court
+    'foodCourt.headline': 'ศูนย์อาหารออนไลน์',
+    'foodCourt.subheadline': 'ส่งรวมครั้งเดียว',
+    'foodCourt.searchPlaceholder': 'ค้นหาอาหารจากทุกร้าน...',
+    'foodCourt.favorites': 'เมนูยอดนิยม',
+    'foodCourt.browseByBrand': 'เลือกตามร้าน',
+    'foodCourt.viewAll': 'ดูทั้งหมด',
+    'foodCourt.noResults': 'ไม่พบเมนูที่ค้นหา',
+    'foodCourt.tryDifferent': 'ลองค้นหาคำอื่น',
+    
+    // Categories
+    'category.all': 'ทั้งหมด',
+    'category.noodles': 'เส้น',
+    'category.rice': 'ข้าว',
+    'category.curry': 'แกงกะหรี่',
+    'category.drinks': 'เครื่องดื่ม',
+    'category.grilled': 'ย่าง',
+    'category.krapao': 'กะเพรา',
+    'category.fried': 'ทอด',
+    'category.eggs': 'ไข่',
+    
     // Trust signals
     'trust.bestPrices': 'ราคาดีที่สุด',
     'trust.fastDelivery': 'ส่งไว',
@@ -519,8 +559,6 @@ export const translations = {
     'dish.notes': 'หมายเหตุพิเศษ',
     'dish.notes.placeholder': 'ข้อความพิเศษ...',
     
-    // Categories
-    'category.all': 'ทั้งหมด',
     
     // Common
     'common.price': '฿',
