@@ -22,3 +22,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# --- Santor Brands Security Additions ---
+
+# Ignore ALL environment variable files (even if they don't end in .local)
+.env
+.env.production
+.env.development
+.env.test
+
+# Ignore Google Service Account JSON files specifically
+# (In case you ever upload one by accident)
+*-credentials.json
+service-account.json
+secrets.json
+
+# Vercel's internal folder
+.vercel
