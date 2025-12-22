@@ -15,6 +15,8 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+// Added the Test Automation page route
+const TestAutomation = lazy(() => import("./pages/TestAutomation"));
 
 const queryClient = new QueryClient();
 
@@ -32,6 +34,10 @@ const App = () => (
               <Route path="/about" element={<AboutUs />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/terms" element={<TermsOfService />} />
+              
+              {/* Added the Route for testing the Google Sheets connection */}
+              <Route path="/test-automation" element={<TestAutomation />} />
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
