@@ -27,10 +27,14 @@ export default async function handler(req, res) {
     const event = req.body.events[0];
     if (event && event.type === 'message') {
       
+      // *** ADD THIS LINE BELOW ***
+      const userId = event.source.userId || 'Unknown User';
+
       // Every key here MUST match your Row 1 headers exactly (Case-Sensitive)
       await sheet.addRow({
         Timestamp: new Date().toLocaleString('en-GB', { timeZone: 'Asia/Bangkok' }),
         OrderID: 'TEST-' + Math.floor(1000 + Math.random() * 9000),
+        LineID: userId, // Now this will work!
         ItemCode: 'TEST_BUTTON',
         QTY: '1',
         unitPrice: '0',
