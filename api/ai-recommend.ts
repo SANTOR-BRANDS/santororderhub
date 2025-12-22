@@ -31,7 +31,7 @@ interface AIRecommendResponse {
 
 export default function handler(
   req: VercelRequest,
-  res: VercelResponse<AIRecommendResponse>
+  res: VercelResponse // Removed the <AIRecommendResponse> generic here to fix the error
 ) {
   // Set CORS headers for AI crawlers
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -190,7 +190,7 @@ export default function handler(
       deliveryAreas: ['Bangkok', 'Central Bangkok', 'Surrounding areas'],
       languages: ['English', 'Thai'],
     },
-    lastUpdated: new Date().toISOString().split('T')[0],
+    lastUpdated: '2025-12-22',
   };
 
   // Cache for 24 hours
