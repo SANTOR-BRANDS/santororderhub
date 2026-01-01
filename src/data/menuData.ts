@@ -761,7 +761,7 @@ export const restoryMenu: Dish[] = [
   { 
     id: 'RS-CFG-002', 
     name: '⭐️Stir-Fried Pork Belly with Chilli and Fried Garlic', 
-    price: 99, 
+    price: 109, 
     category: 'CHILLI AND FRIED GARLIC', 
     restaurant: 'restory', 
     isSpecial: true, 
