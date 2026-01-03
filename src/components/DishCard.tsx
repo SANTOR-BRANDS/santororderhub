@@ -2,6 +2,7 @@ import { Dish } from '@/types/menu';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
+import KitchenBadge from './KitchenBadge';
 
 interface DishCardProps {
   dish: Dish;
@@ -84,6 +85,13 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
                 </div>
               </div>
             </>
+          )}
+          
+          {/* Kitchen Badge - shows which restaurant the dish is from */}
+          {!isUnavailable && (
+            <div className="absolute top-2 left-2">
+              <KitchenBadge restaurant={dish.restaurant} size="sm" />
+            </div>
           )}
         </div>
 
