@@ -155,7 +155,7 @@ const getCategoryEmoji = (category: UnifiedCategory): string => {
     'RICE': '🍚',
     'NOODLES': '🍜',
     'YUM & FRESH': '🥗',
-    'SIDES': '🥢',
+    'TOPPINGS': '🥢',
     'DRINKS': '🧃',
     'DESSERTS': '🍨',
   };
