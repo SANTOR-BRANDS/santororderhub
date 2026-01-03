@@ -25,10 +25,10 @@ const CATEGORY_MAPPING: Record<string, string> = {
   'FRESH SALMON': 'YUM & FRESH',
   'VEGETARIAN': 'YUM & FRESH',
   'FISH MENU': 'YUM & FRESH',
+  'OTHER': 'RICE', // Stir-Fried Diced Chicken, Creamy Omelette etc
   
-  // Sides/Toppings
-  'TOPPINGS': 'SIDES',
-  'OTHER': 'SIDES',
+  // Toppings
+  'TOPPINGS': 'TOPPINGS',
   
   // Drinks
   'DRINKS': 'DRINKS',
@@ -49,7 +49,7 @@ export const UNIFIED_CATEGORIES = [
   'RICE',
   'NOODLES',
   'YUM & FRESH',
-  'SIDES',
+  'TOPPINGS',
   'DRINKS',
   'DESSERTS',
 ] as const;
@@ -77,10 +77,17 @@ const getAllMenusWithImages = (): Dish[] => {
   }));
 };
 
+// Items that should NOT be de-duplicated (different cooking styles per restaurant)
+const KEEP_ALL_VARIANTS = [
+  'Fried Egg',
+  'Fried Duck Egg',
+];
+
 /**
  * De-duplicate items using Restory-Priority logic
  * Items with same ID (SAN- prefix) or same name are de-duplicated,
- * keeping only the Restory version if it exists
+ * keeping only the Restory version if it exists.
+ * Exception: Items in KEEP_ALL_VARIANTS are kept from all restaurants.
  */
 export const getUnifiedMenu = (): UnifiedDish[] => {
   const allDishes = getAllMenusWithImages();
@@ -99,9 +106,14 @@ export const getUnifiedMenu = (): UnifiedDish[] => {
     // Skip if we've already seen this ID (for SAN- shared items)
     if (seenIds.has(dish.id)) continue;
     
-    // Skip if we've already seen this exact name (for differently-IDed duplicates)
+    // Check if this item should keep all variants
+    const shouldKeepAllVariants = KEEP_ALL_VARIANTS.some(
+      name => dish.name.toLowerCase().trim() === name.toLowerCase()
+    );
+    
+    // Skip if we've already seen this exact name (unless it's a keep-all-variants item)
     const normalizedName = dish.name.toLowerCase().trim();
-    if (seenNames.has(normalizedName)) continue;
+    if (!shouldKeepAllVariants && seenNames.has(normalizedName)) continue;
     
     // Mark as seen
     seenIds.add(dish.id);
