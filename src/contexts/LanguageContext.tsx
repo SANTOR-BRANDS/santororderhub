@@ -53,6 +53,11 @@ export const translations = {
     'basket.variation': 'Variation',
     
     // Order
+    'order.confirmAndSend': 'Confirm & Send',
+    'order.addressPlaceholder': 'Enter delivery address (Required)...',
+    'order.phonePlaceholder': 'Phone Number (Optional)',
+    'order.missingAddress': 'Missing Address',
+    'order.missingAddressDesc': 'Please enter your delivery address to continue.',
     'order.copyOrder': 'Copy Order',
     'order.orderViaLine': 'Order via LINE',
     'order.orderViaInstagram': 'Order via Instagram',
@@ -483,6 +488,11 @@ export const translations = {
     'basket.variation': 'แบบ',
     
     // Order
+    'order.confirmAndSend': 'ยืนยันและส่งรายการ',
+    'order.addressPlaceholder': 'กรุณาระบุที่อยู่จัดส่ง (จำเป็น)...',
+    'order.phonePlaceholder': 'เบอร์โทรศัพท์ (ไม่บังคับ)',
+    'order.missingAddress': 'กรุณาระบุที่อยู่',
+    'order.missingAddressDesc': 'กรุณาระบุที่อยู่จัดส่งเพื่อดำเนินการต่อ',
     'order.copyOrder': 'คัดลอกรายการสั่งซื้อ',
     'order.orderViaLine': 'สั่งผ่าน LINE',
     'order.orderViaInstagram': 'สั่งผ่าน Instagram',
