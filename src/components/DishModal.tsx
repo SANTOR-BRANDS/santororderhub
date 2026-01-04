@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Dish, AddOn, SPICY_LEVELS, getSaucesByRestaurant, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
@@ -10,7 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { Plus, Minus } from 'lucide-react';
+import { Plus, Minus, ShoppingCart, Zap } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DishModalProps {
@@ -18,13 +18,15 @@ interface DishModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAddToBasket: (item: BasketItem) => void;
+  onOrderNow?: (item: BasketItem) => void;
 }
 
 const DishModal = ({
   dish,
   isOpen,
   onClose,
-  onAddToBasket
+  onAddToBasket,
+  onOrderNow
 }: DishModalProps) => {
   const { t } = useLanguage();
   const [selectedVariant, setSelectedVariant] = useState<DishVariant | null>(null);
@@ -35,6 +37,14 @@ const DishModal = ({
   const [selectedSauces, setSelectedSauces] = useState<string[]>([]);
   const [needsCutlery, setNeedsCutlery] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  // Refs for scrolling to error sections
+  const spicyRef = useRef<HTMLDivElement>(null);
+  const sauceRef = useRef<HTMLDivElement>(null);
+  const spicy2Ref = useRef<HTMLDivElement>(null);
+  const sauce2Ref = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   // Combo state for dish 2
   const [selectedVariant2, setSelectedVariant2] = useState<DishVariant | null>(null);
@@ -243,11 +253,50 @@ const DishModal = ({
     return hasSauce && hasSpicyLevel;
   };
 
-  const handleAddToBasket = () => {
-    if (!canAddToBasket()) return;
+  // Validate and scroll to first error
+  const validateAndScrollToError = (): boolean => {
+    setValidationError(null);
+    
+    // TOPPINGS items don't require any selections
+    if (dish.category === 'TOPPINGS') return true;
+
+    const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT';
+
+    // Check spicy level first for dish 1
+    if (dish.spicyRequired && spicyLevel === undefined) {
+      setValidationError('spicy1');
+      spicyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+
+    // Check sauce for dish 1
+    if (requiresSauce && selectedSauces.length === 0) {
+      setValidationError('sauce1');
+      sauceRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+
+    // For combos, check dish 2
     if (isCombo) {
-      // Add a single combo item with both dish configurations
-      const comboItem: BasketItem = {
+      if (dish.spicyRequired && spicyLevel2 === undefined) {
+        setValidationError('spicy2');
+        spicy2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      }
+
+      if (requiresSauce && selectedSauces2.length === 0) {
+        setValidationError('sauce2');
+        sauce2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const createBasketItem = (): BasketItem => {
+    if (isCombo) {
+      return {
         id: `${dish.id}-combo-${Date.now()}`,
         dish,
         selectedVariant,
@@ -269,9 +318,8 @@ const DishModal = ({
           sauce: selectedSauces2.join(', ')
         }
       };
-      onAddToBasket(comboItem);
     } else {
-      const basketItem: BasketItem = {
+      return {
         id: `${dish.id}-${Date.now()}`,
         dish,
         selectedVariant,
@@ -284,7 +332,22 @@ const DishModal = ({
         quantity,
         isPremiumBeef
       };
-      onAddToBasket(basketItem);
+    }
+  };
+
+  const handleAddToBasket = () => {
+    if (!validateAndScrollToError()) return;
+    const basketItem = createBasketItem();
+    onAddToBasket(basketItem);
+    onClose();
+  };
+
+  const handleOrderNow = () => {
+    if (!validateAndScrollToError()) return;
+    const basketItem = createBasketItem();
+    onAddToBasket(basketItem);
+    if (onOrderNow) {
+      onOrderNow(basketItem);
     }
     onClose();
   };
@@ -315,6 +378,12 @@ const DishModal = ({
     const setCurrentSelectedVariant = dishNumber === 1 ? setSelectedVariant : setSelectedVariant2;
     const setCurrentSpicyLevel = dishNumber === 1 ? setSpicyLevel : setSpicyLevel2;
     const setCurrentSelectedSauces = dishNumber === 1 ? setSelectedSauces : setSelectedSauces2;
+    
+    // Refs and error states for this dish number
+    const currentSpicyRef = dishNumber === 1 ? spicyRef : spicy2Ref;
+    const currentSauceRef = dishNumber === 1 ? sauceRef : sauce2Ref;
+    const spicyHasError = validationError === (dishNumber === 1 ? 'spicy1' : 'spicy2');
+    const sauceHasError = validationError === (dishNumber === 1 ? 'sauce1' : 'sauce2');
 
     return (
       <>
@@ -458,14 +527,24 @@ const DishModal = ({
 
         {/* Spicy Level - Required for Pad Krapao only */}
         {dish.spicyRequired && (
-          <div className="mb-6">
+          <div 
+            ref={currentSpicyRef}
+            className={cn(
+              "mb-6 p-3 rounded-lg transition-all duration-300",
+              spicyHasError && "border-2 border-red-500 bg-red-500/10 animate-pulse"
+            )}
+          >
             <Label className="text-base font-semibold mb-3 flex items-center gap-2">
               SPICY LEVEL <span className="text-red-500">*</span>
               <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
+              {spicyHasError && <span className="text-red-500 text-xs ml-2">Please select</span>}
             </Label>
             <RadioGroup 
               value={currentSpicyLevel?.toString() || ''} 
-              onValueChange={(value) => setCurrentSpicyLevel(Number(value))} 
+              onValueChange={(value) => {
+                setCurrentSpicyLevel(Number(value));
+                if (spicyHasError) setValidationError(null);
+              }}
               className="gap-2"
             >
               {SPICY_LEVELS.map(level => (
@@ -515,16 +594,26 @@ const DishModal = ({
 
         {/* Sauce Selection - Required (Skip for DRINKS, FRESH SALMON, and DESSERT) */}
         {dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && (
-        <div className="mb-6">
+        <div 
+          ref={currentSauceRef}
+          className={cn(
+            "mb-6 p-3 rounded-lg transition-all duration-300",
+            sauceHasError && "border-2 border-red-500 bg-red-500/10 animate-pulse"
+          )}
+        >
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             SELECT SAUCE <span className="text-red-500">*</span>
             <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
+            {sauceHasError && <span className="text-red-500 text-xs ml-2">Please select</span>}
           </Label>
           {dish.customSauces ? (
             // Radio buttons for dishes with custom sauces (single selection)
             <RadioGroup 
               value={currentSelectedSauces[0] || ''} 
-              onValueChange={(value) => setCurrentSelectedSauces([value])}
+              onValueChange={(value) => {
+                setCurrentSelectedSauces([value]);
+                if (sauceHasError) setValidationError(null);
+              }}
               className="space-y-2"
             >
               {dish.customSauces.map(sauce => (
@@ -576,6 +665,9 @@ const DishModal = ({
                         checked={currentSelectedSauces.includes(sauce.id)}
                         disabled={disabled}
                         onCheckedChange={(checked) => {
+                          // Clear validation error when user selects
+                          if (sauceHasError) setValidationError(null);
+                          
                           // Don't allow changes if disabled (no sauce is selected)
                           if (disabled) return;
                           
@@ -766,18 +858,29 @@ const DishModal = ({
                 <div className="flex items-center justify-between text-lg font-bold">
                   <span>Total</span>
                   <span className={cn(`text-${theme.accent}`)}>
-                    {getTotalPrice()}
+                    ฿{getTotalPrice()}
                   </span>
                 </div>
 
-                <Button 
-                  onClick={handleAddToBasket} 
-                  disabled={!canAddToBasket()} 
-                  className={cn('w-full', theme.button)} 
-                  size="lg"
-                >
-                  Add to Basket
-                </Button>
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={handleAddToBasket}
+                    variant="outline"
+                    className="flex-1 gap-2"
+                    size="lg"
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    Add to Basket
+                  </Button>
+                  <Button 
+                    onClick={handleOrderNow}
+                    className={cn('flex-1 gap-2', theme.button)} 
+                    size="lg"
+                  >
+                    <Zap className="h-4 w-4" />
+                    Order Now
+                  </Button>
+                </div>
               </div>
             </div>
           </ScrollArea>
