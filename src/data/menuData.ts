@@ -358,7 +358,7 @@ export const restoryMenu: Dish[] = [
   { 
     id: 'RS-DON-016', 
     name: '🔥Chicken Teriyaki', 
-    price: 99, 
+    price: 119, 
     category: 'DONBURI BOWLS', 
     restaurant: 'restory',
     extraOptions: [
