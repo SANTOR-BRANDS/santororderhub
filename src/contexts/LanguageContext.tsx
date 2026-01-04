@@ -53,6 +53,7 @@ export const translations = {
     'basket.variation': 'Variation',
     
     // Order
+    'order.confirmAndSend': 'Confirm & Send', // <--- ADDED THIS
     'order.copyOrder': 'Copy Order',
     'order.orderViaLine': 'Order via LINE',
     'order.orderViaInstagram': 'Order via Instagram',
@@ -483,6 +484,7 @@ export const translations = {
     'basket.variation': 'แบบ',
     
     // Order
+    'order.confirmAndSend': 'ยืนยันและส่งรายการ', // <--- ADDED THIS
     'order.copyOrder': 'คัดลอกรายการสั่งซื้อ',
     'order.orderViaLine': 'สั่งผ่าน LINE',
     'order.orderViaInstagram': 'สั่งผ่าน Instagram',
