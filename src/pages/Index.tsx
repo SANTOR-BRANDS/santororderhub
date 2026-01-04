@@ -112,7 +112,8 @@ const Index = () => {
         dish={selectedDish} 
         isOpen={!!selectedDish} 
         onClose={() => setSelectedDish(null)} 
-        onAddToBasket={handleAddToBasket} 
+        onAddToBasket={handleAddToBasket}
+        onOrderNow={() => setIsBasketOpen(true)}
       />
 
       <BasketModal 
