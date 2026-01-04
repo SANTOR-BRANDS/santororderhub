@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Restaurant, Dish, BasketItem } from '@/types/menu';
 import UnifiedHeader from '@/components/UnifiedHeader';
 import UnifiedMenuDisplay from '@/components/UnifiedMenuDisplay';
@@ -6,25 +6,25 @@ import DishModal from '@/components/DishModal';
 import BasketModal from '@/components/BasketModal';
 import FloatingBasket from '@/components/FloatingBasket';
 import Footer from '@/components/Footer';
+import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { SEOHead } from '@/seo/components/SEOHead';
 import { getMetadata } from '@/seo/metadata';
 import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, mejaiSchema } from '@/seo/jsonld';
 import { UnifiedCategory } from '@/lib/unifiedMenu';
-import liff from '@line/liff';
 
 const Index = () => {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<UnifiedCategory>('ALL');
   const [selectedBrand, setSelectedBrand] = useState<Restaurant | 'all'>('all');
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
-  
-  // NEW: Store Line Profile
-  const [lineProfile, setLineProfile] = useState<{ userId: string; displayName: string } | null>(null);
-
   const [basketItems, setBasketItems] = useState<BasketItem[]>(() => {
+    // Load basket from localStorage on mount
     try {
       const saved = localStorage.getItem('santor-basket');
       if (saved) {
         const parsed = JSON.parse(saved);
+        // Convert incrementalExtras from object back to Map
         return parsed.map((item: any) => ({
           ...item,
           incrementalExtras: item.incrementalExtras ? new Map(Object.entries(item.incrementalExtras)) : undefined,
@@ -40,22 +40,6 @@ const Index = () => {
     return [];
   });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
-
-  // NEW: Initialize LIFF
-  useEffect(() => {
-    const initLiff = async () => {
-      try {
-        await liff.init({ liffId: "2008817839-m0RDGxvD" });
-        if (liff.isLoggedIn()) {
-          const profile = await liff.getProfile();
-          setLineProfile({ userId: profile.userId, displayName: profile.displayName });
-        }
-      } catch (err) {
-        console.error("LIFF Init failed", err);
-      }
-    };
-    initLiff();
-  }, []);
 
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
@@ -80,8 +64,10 @@ const Index = () => {
     window.scrollTo(0, 0);
   }, [selectedCategory]);
 
+  // Save basket to localStorage whenever it changes
   useEffect(() => {
     try {
+      // Convert Maps to objects for JSON serialization
       const serializable = basketItems.map(item => ({
         ...item,
         incrementalExtras: item.incrementalExtras ? Object.fromEntries(item.incrementalExtras) : undefined,
@@ -136,7 +122,6 @@ const Index = () => {
         basketItems={basketItems} 
         onUpdateQuantity={handleUpdateQuantity} 
         onRemoveItem={handleRemoveItem} 
-        lineProfile={lineProfile} // Pass the profile here
       />
 
       <FloatingBasket 
