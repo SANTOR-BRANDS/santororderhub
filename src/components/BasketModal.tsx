@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BasketItem, getSaucesByRestaurant } from '@/types/menu';
 import {
   Dialog,
@@ -11,7 +11,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input'; 
 import { Textarea } from '@/components/ui/textarea';
-import { Trash2, Plus, Minus, Send, MapPin, Phone } from 'lucide-react';
+import { Trash2, Plus, Minus, Send, MapPin, Phone, Instagram, MessageCircle, Copy, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -38,9 +38,32 @@ const BasketModal = ({
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // 1. Inputs for Customer Details
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  // State for Web Manual Flow
+  const [orderCopied, setOrderCopied] = useState(false);
+  const [isLiffClient, setIsLiffClient] = useState(false);
+
+  // --- NEW: Load saved data from Local Storage immediately ---
+  const [address, setAddress] = useState(() => {
+    return localStorage.getItem('santor-user-address') || '';
+  });
+  const [phoneNumber, setPhoneNumber] = useState(() => {
+    return localStorage.getItem('santor-user-phone') || '';
+  });
+
+  // Check if running in LINE or Web on mount
+  useEffect(() => {
+    setIsLiffClient(liff.isInClient());
+  }, [isOpen]);
+
+  // --- NEW: Save to Local Storage whenever they type ---
+  useEffect(() => {
+    localStorage.setItem('santor-user-address', address);
+  }, [address]);
+
+  useEffect(() => {
+    localStorage.setItem('santor-user-phone', phoneNumber);
+  }, [phoneNumber]);
+
 
   // --- Calculations ---
 
@@ -133,7 +156,6 @@ const BasketModal = ({
       const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
       let extras = '';
 
-      // Helper to lookup names safely
       const getName = (id: string, fallback: string) => {
          const val = t(id);
          return val !== id ? val : fallback;
@@ -208,87 +230,66 @@ const BasketModal = ({
     }
 
     message += `💰 *Total: ฿${getTotalPrice()}*\n\n`;
-    // Inject the inputs here
     message += `📍 Delivery Address: ${address || 'N/A'}\n`;
     message += `📞 Contact: ${phoneNumber || 'N/A'}`;
     
     return message;
   };
 
-  // --- Submit Handler (Updated) ---
+  // --- Handlers ---
 
-  const handleFinalOrder = async () => {
-    // 1. Validation
-    if (!address.trim() || !phoneNumber.trim()) {
+  const validateInput = () => {
+    if (!address.trim()) {
       toast({ 
-        title: "Missing Details", 
-        description: "Please enter your address and phone number.",
+        title: "Missing Address", 
+        description: "Please enter your delivery address.",
         variant: "destructive" 
       });
-      return;
+      return false;
     }
+    return true;
+  };
 
+  // 1. LIFF AUTO SEND
+  const handleLiffSend = async () => {
+    if (!validateInput()) return;
     setIsSubmitting(true);
-    const orderMessage = generateOrderMessage();
+    const message = generateOrderMessage();
+    
+    try {
+        await liff.sendMessages([{ type: 'text', text: message }]);
+        toast({ title: "Order Sent!", description: "Your order was sent to our team." });
+        liff.closeWindow();
+    } catch (err) {
+        console.error("LIFF Send Failed", err);
+        handleManualCopy();
+    } finally {
+        setIsSubmitting(false);
+    }
+  };
+
+  // 2. WEB MANUAL COPY
+  const handleManualCopy = async () => {
+    if (!validateInput()) return;
+    setIsSubmitting(true);
+    const message = generateOrderMessage();
 
     try {
-      // 2. Try API Save (doesn't block if fails)
-      try {
-        await fetch('/api/orders', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId: lineProfile?.userId || 'GUEST',
-            userName: lineProfile?.displayName || 'GUEST',
-            items: basketItems,
-            totalPrice: getTotalPrice(),
-            rawMessage: orderMessage,
-            address,
-            phoneNumber
-          }),
-        });
-      } catch (e) { console.warn("API Save skipped/failed", e); }
-
-      // 3. Send via LIFF
-      if (liff.isInClient()) {
-        try {
-          await liff.sendMessages([{ type: 'text', text: orderMessage }]);
-          toast({ title: "Order Sent!", description: "Your order was sent to our team." });
-          liff.closeWindow(); 
-        } catch (liffError) {
-          console.error("LIFF Send Error", liffError);
-          copyToClipboardAndOpenLine(orderMessage);
-        }
-      } else {
-        // Fallback for Web Browser
-        await copyToClipboardAndOpenLine(orderMessage);
-      }
-
+      await navigator.clipboard.writeText(message);
+      setOrderCopied(true);
+      toast({ title: t('order.copied'), description: t('order.copied.desc') });
     } catch (err) {
-      console.error(err);
-      // Failsafe
-      window.open('https://lin.ee/8kHDCU2', '_blank');
-      toast({ title: "Error", description: "Could not auto-send. Please manually order.", variant: "destructive" });
+      toast({ title: "Copy Failed", description: "Please manually select and copy the text.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Helper for Web Fallback
-  const copyToClipboardAndOpenLine = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      toast({ title: "Order Copied", description: "Paste the message into the LINE chat." });
-      setTimeout(() => {
-         window.open('https://lin.ee/8kHDCU2', '_blank');
-      }, 500);
-    } catch (err) {
-      console.warn("Clipboard blocked", err);
-      // Even if copy fails, open the window
-      window.open('https://lin.ee/8kHDCU2', '_blank');
-      toast({ title: "Warning", description: "Could not copy text automatically. Please type your order.", variant: "destructive" });
-    }
-  };
+  // 3. WEB OPEN APPS
+  const handleOpenLine = () => window.open('https://lin.ee/8kHDCU2', '_blank');
+  const handleOpenInstagram = () => window.open('https://ig.me/m/santorbrands', '_blank');
+
+  // --- Render ---
 
   if (basketItems.length === 0) {
     return (
@@ -356,7 +357,7 @@ const BasketModal = ({
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4 text-muted-foreground" />
               <Input 
-                placeholder="Phone Number" 
+                placeholder="Phone Number (Optional)" 
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 type="tel"
@@ -365,24 +366,77 @@ const BasketModal = ({
           </div>
         </ScrollArea>
 
+        {/* FOOTER ACTIONS */}
         <div className="p-6 pt-0 shrink-0 border-t mt-auto">
           <div className="flex justify-between items-center my-4">
             <span className="text-lg font-semibold">{t('basket.total')}</span>
             <span className="text-2xl font-bold text-primary">฿{getTotalPrice()}</span>
           </div>
 
-          <Button 
-            onClick={handleFinalOrder}
-            className="w-full h-14 text-lg bg-[#06C755] hover:bg-[#05b34c] text-white font-bold gap-2"
-            disabled={isSubmitting || !address || !phoneNumber}
-          >
-            {isSubmitting ? "Processing..." : (
-              <>
-                <Send className="h-5 w-5" />
-                {t('order.confirmAndSend')}
-              </>
-            )}
-          </Button>
+          {isLiffClient ? (
+            <Button 
+                onClick={handleLiffSend}
+                className="w-full h-14 text-lg bg-[#06C755] hover:bg-[#05b34c] text-white font-bold gap-2"
+                disabled={isSubmitting || !address}
+            >
+                {isSubmitting ? "Processing..." : (
+                <>
+                    <Send className="h-5 w-5" />
+                    {t('order.confirmAndSend')}
+                </>
+                )}
+            </Button>
+          ) : (
+            <div className="space-y-3">
+                {/* Step 1: Copy */}
+                <div className={cn("space-y-2", orderCopied && "opacity-60")}>
+                  <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                    <span className={cn(
+                      "flex items-center justify-center w-5 h-5 rounded-full text-xs",
+                      orderCopied ? "bg-green-500 text-white" : "bg-primary text-primary-foreground"
+                    )}>
+                      {orderCopied ? <Check className="h-3 w-3" /> : '1'}
+                    </span>
+                    <span>{orderCopied ? t('order.copied').replace(' ✅', '') : t('order.copyFirst.step')}</span>
+                  </div>
+                  <Button 
+                    onClick={handleManualCopy}
+                    variant={orderCopied ? "outline" : "default"}
+                    className="w-full"
+                    disabled={isSubmitting || !address}
+                  >
+                    {orderCopied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                    {t('order.copyOrder')}
+                  </Button>
+                </div>
+
+                {/* Step 2: Open Apps */}
+                <div className={cn("space-y-2", !orderCopied && "opacity-40")}>
+                  <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                    <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs">2</span>
+                    <span>{t('order.sendOrder.step')}</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button 
+                      onClick={handleOpenLine}
+                      className="bg-[#06C755] hover:bg-[#05b34c] text-white"
+                      disabled={!orderCopied}
+                    >
+                      <MessageCircle className="h-4 w-4 mr-1" />
+                      LINE
+                    </Button>
+                    <Button 
+                      onClick={handleOpenInstagram}
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                      disabled={!orderCopied}
+                    >
+                      <Instagram className="h-4 w-4 mr-1" />
+                      Instagram
+                    </Button>
+                  </div>
+                </div>
+            </div>
+          )}
 
           <p className="text-[10px] text-muted-foreground text-center mt-3">
              {lineProfile ? `Ordering as ${lineProfile.displayName}` : "Ordering as Guest"}
