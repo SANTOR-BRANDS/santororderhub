@@ -12,12 +12,18 @@ import { SEOHead } from '@/seo/components/SEOHead';
 import { getMetadata } from '@/seo/metadata';
 import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, mejaiSchema } from '@/seo/jsonld';
 import { UnifiedCategory } from '@/lib/unifiedMenu';
+// 1. Import LIFF SDK
+import liff from '@line/liff';
 
 const Index = () => {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<UnifiedCategory>('ALL');
   const [selectedBrand, setSelectedBrand] = useState<Restaurant | 'all'>('all');
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
+  
+  // 2. State for LINE User Profile
+  const [lineProfile, setLineProfile] = useState<{ userId: string; displayName: string } | null>(null);
+
   const [basketItems, setBasketItems] = useState<BasketItem[]>(() => {
     // Load basket from localStorage on mount
     try {
@@ -40,6 +46,32 @@ const Index = () => {
     return [];
   });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
+
+  // 3. Initialize LIFF on mount
+  useEffect(() => {
+    const initLiff = async () => {
+      try {
+        // Your specific LIFF ID
+        await liff.init({ liffId: "2008817839-m0RDGxvD" });
+        
+        if (liff.isLoggedIn()) {
+          const profile = await liff.getProfile();
+          setLineProfile({ 
+            userId: profile.userId, 
+            displayName: profile.displayName 
+          });
+          console.log("LINE Profile loaded successfully");
+        } else {
+          // If not logged in and not in the LINE browser, this will trigger login
+          liff.login();
+        }
+      } catch (error) {
+        console.error("LIFF Initialization failed:", error);
+      }
+    };
+
+    initLiff();
+  }, []);
 
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
@@ -122,6 +154,8 @@ const Index = () => {
         basketItems={basketItems} 
         onUpdateQuantity={handleUpdateQuantity} 
         onRemoveItem={handleRemoveItem} 
+        // 4. Passing the lineProfile as a prop to your modal
+        lineProfile={lineProfile}
       />
 
       <FloatingBasket 
