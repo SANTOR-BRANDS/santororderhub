@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Restaurant, Dish } from '@/types/menu';
 import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { 
   getUnifiedMenu, 
@@ -10,7 +10,8 @@ import {
   searchUnifiedMenu, 
   UnifiedCategory, 
   UnifiedDish,
-  getRestaurantInfo 
+  getRestaurantInfo,
+  SUBCATEGORY_TAGS 
 } from '@/lib/unifiedMenu';
 
 interface UnifiedMenuDisplayProps {
@@ -25,6 +26,7 @@ const UnifiedMenuDisplay = ({
   onDishSelect,
 }: UnifiedMenuDisplayProps) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   
   // Get the unified, de-duplicated menu
   const unifiedMenu = useMemo(() => getUnifiedMenu(), []);
@@ -36,10 +38,47 @@ const UnifiedMenuDisplay = ({
   );
   
   // Apply search
-  const finalDishes = useMemo(() => 
+  const searchedDishes = useMemo(() => 
     searchUnifiedMenu(filteredByCategory, searchQuery),
     [filteredByCategory, searchQuery]
   );
+  
+  // Get available subcategory tags for current category with counts
+  const subcategoryTagsWithCounts = useMemo(() => {
+    const categoryKey = selectedCategory as string;
+    const tags = SUBCATEGORY_TAGS[categoryKey];
+    if (!tags) return [];
+    
+    return tags.map(tagInfo => {
+      const count = searchedDishes.filter(dish => 
+        tagInfo.keywords.some(kw => 
+          dish.name.toLowerCase().includes(kw.toLowerCase()) ||
+          dish.originalCategory.toLowerCase().includes(kw.toLowerCase())
+        )
+      ).length;
+      return { ...tagInfo, count };
+    }).filter(t => t.count > 0).sort((a, b) => b.count - a.count);
+  }, [searchedDishes, selectedCategory]);
+  
+  // Apply subcategory filter
+  const finalDishes = useMemo(() => {
+    if (!selectedSubcategory) return searchedDishes;
+    
+    const tagInfo = subcategoryTagsWithCounts.find(t => t.tag === selectedSubcategory);
+    if (!tagInfo) return searchedDishes;
+    
+    return searchedDishes.filter(dish =>
+      tagInfo.keywords.some(kw => 
+        dish.name.toLowerCase().includes(kw.toLowerCase()) ||
+        dish.originalCategory.toLowerCase().includes(kw.toLowerCase())
+      )
+    );
+  }, [searchedDishes, selectedSubcategory, subcategoryTagsWithCounts]);
+  
+  // Reset subcategory when main category changes
+  useMemo(() => {
+    setSelectedSubcategory(null);
+  }, [selectedCategory]);
   
   // Get featured/special dish for promo
   const featuredDish = useMemo(() => {
@@ -67,6 +106,16 @@ const UnifiedMenuDisplay = ({
     return groups;
   }, [finalDishes, selectedCategory]);
   
+  // Calculate pill size based on count (word-cloud style)
+  const getTagSize = (count: number, maxCount: number) => {
+    const ratio = count / maxCount;
+    if (ratio > 0.7) return 'text-base px-4 py-2';
+    if (ratio > 0.4) return 'text-sm px-3 py-1.5';
+    return 'text-xs px-2.5 py-1';
+  };
+  
+  const maxTagCount = Math.max(...subcategoryTagsWithCounts.map(t => t.count), 1);
+  
   return (
     <div className="min-h-screen pb-20 bg-[#1a1a1a] text-white">
       <div className="container mx-auto px-4 py-6">
@@ -79,7 +128,7 @@ const UnifiedMenuDisplay = ({
         </section>
 
         {/* Search Bar */}
-        <search role="search" className="relative mb-6">
+        <search role="search" className="relative mb-4">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" aria-hidden="true" />
           <Input 
             placeholder="Search dishes..." 
@@ -89,6 +138,42 @@ const UnifiedMenuDisplay = ({
             className="pl-10 bg-white/10 border-gray-600 text-white placeholder:text-gray-400 rounded-lg"
           />
         </search>
+        
+        {/* Subcategory Filter Pills - Word Cloud Style */}
+        {subcategoryTagsWithCounts.length > 0 && (
+          <div className="mb-6">
+            <div className="flex flex-wrap gap-2 justify-center items-center">
+              {selectedSubcategory && (
+                <button
+                  onClick={() => setSelectedSubcategory(null)}
+                  className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600 transition-all"
+                >
+                  <X className="h-3 w-3" />
+                  Clear
+                </button>
+              )}
+              {subcategoryTagsWithCounts.map(({ tag, count }) => {
+                const isSelected = selectedSubcategory === tag;
+                return (
+                  <button
+                    key={tag}
+                    onClick={() => setSelectedSubcategory(isSelected ? null : tag)}
+                    className={cn(
+                      'rounded-full font-medium transition-all',
+                      getTagSize(count, maxTagCount),
+                      isSelected
+                        ? 'bg-[#fd7304] text-white shadow-lg scale-105'
+                        : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
+                    )}
+                  >
+                    {tag}
+                    <span className="ml-1.5 opacity-60">({count})</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Featured Banner */}
         {featuredDish && !searchQuery && selectedCategory === 'ALL' && (

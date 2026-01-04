@@ -20,12 +20,14 @@ const CATEGORY_MAPPING: Record<string, string> = {
   'CHILLI AND FRIED GARLIC': 'RICE',
   'GRILLED MEAT + RICE': 'RICE',
   'BRAISED MEAT + RICE': 'RICE',
-  
-  // Yum/Salads & Fresh
-  'FRESH SALMON': 'YUM & FRESH',
-  'VEGETARIAN': 'YUM & FRESH',
-  'FISH MENU': 'YUM & FRESH',
   'OTHER': 'RICE', // Stir-Fried Diced Chicken, Creamy Omelette etc
+  
+  // Fresh Seafood
+  'FRESH SALMON': 'FRESH SEAFOOD',
+  'FISH MENU': 'FRESH SEAFOOD',
+  
+  // Vegetarian
+  'VEGETARIAN': 'VEGETARIAN',
   
   // Toppings
   'TOPPINGS': 'TOPPINGS',
@@ -40,6 +42,27 @@ const CATEGORY_MAPPING: Record<string, string> = {
   'COMBO DEALS': 'COMBO DEALS',
 };
 
+// Subcategory tags for filtering within main categories
+export const SUBCATEGORY_TAGS: Record<string, { tag: string; keywords: string[] }[]> = {
+  'RICE': [
+    { tag: 'Mala', keywords: ['mala'] },
+    { tag: 'Fried', keywords: ['fried', 'karaage', 'katsu', 'tonkatsu', 'torikatsu', 'crunchy'] },
+    { tag: 'Grilled', keywords: ['grilled', 'grill'] },
+    { tag: 'Curry', keywords: ['curry'] },
+    { tag: 'Pad Krapao', keywords: ['krapao', 'pad kra pao'] },
+    { tag: 'Donburi', keywords: ['don', 'donburi'] },
+    { tag: 'Omelette', keywords: ['omelette', 'egg'] },
+    { tag: 'Salmon', keywords: ['salmon'] },
+  ],
+  'NOODLES': [
+    { tag: 'Mala', keywords: ['mala'] },
+    { tag: 'Braised', keywords: ['braised'] },
+    { tag: 'Grilled', keywords: ['grilled', 'grill'] },
+    { tag: 'Korean', keywords: ['korean', 'mama'] },
+    { tag: 'Soup', keywords: ['soup'] },
+  ],
+};
+
 // Priority order: Restory > Nirvana > MHY
 const RESTAURANT_PRIORITY: Restaurant[] = ['restory', 'nirvana', 'mejai hai yum'];
 
@@ -48,7 +71,8 @@ export const UNIFIED_CATEGORIES = [
   'COMBO DEALS',
   'RICE',
   'NOODLES',
-  'YUM & FRESH',
+  'FRESH SEAFOOD',
+  'VEGETARIAN',
   'TOPPINGS',
   'DRINKS',
   'DESSERTS',
