@@ -11,11 +11,13 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Trash2, Plus, Minus, Instagram, MessageCircle, Send } from 'lucide-react';
+import { Input } from '@/components/ui/input'; 
+import { Textarea } from '@/components/ui/textarea';
+import { Trash2, Plus, Minus, Instagram, MessageCircle, Send, MapPin, Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
-import liff from '@line/liff'; // Import LIFF
+import liff from '@line/liff';
 
 interface BasketModalProps {
   isOpen: boolean;
@@ -36,14 +38,17 @@ const BasketModal = ({
   const { t } = useLanguage();
   const [isGeneratingOrder, setIsGeneratingOrder] = useState(false);
   const [orderCopied, setOrderCopied] = useState(false);
-  const [isLiff, setIsLiff] = useState(false); // State to track if we are in LINE
+  const [isLiff, setIsLiff] = useState(false);
 
-  // Initialize LIFF to check if we are running inside the LINE app
+  // -- NEW STATE FOR ADDRESS & PHONE --
+  // Initialize from LocalStorage if available
+  const [address, setAddress] = useState(() => localStorage.getItem('santor-user-address') || '');
+  const [phoneNumber, setPhoneNumber] = useState(() => localStorage.getItem('santor-user-phone') || '');
+
+  // Initialize LIFF
   useEffect(() => {
     const initLiff = async () => {
       try {
-        // We init here to ensure we can check liff.isInClient()
-        // We will cleanup/move this to Index.tsx later if needed, but this makes the modal work standalone
         await liff.init({ liffId: '2008817839-m0RDGxvD' });
         setIsLiff(liff.isInClient());
       } catch (error) {
@@ -53,10 +58,48 @@ const BasketModal = ({
     initLiff();
   }, []);
 
+  // Save Address/Phone to LocalStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('santor-user-address', address);
+  }, [address]);
+
+  useEffect(() => {
+    localStorage.setItem('santor-user-phone', phoneNumber);
+  }, [phoneNumber]);
+
   // Reset orderCopied when basket changes
   useEffect(() => {
     setOrderCopied(false);
   }, [basketItems]);
+
+  // --- VALIDATION LOGIC ---
+  const validateOrder = (): boolean => {
+    // 1. Check Address (Required)
+    if (!address.trim()) {
+      toast({
+        title: t('validation.addressRequired'),
+        description: t('validation.addressRequiredDesc'),
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    // 2. Check Phone (Optional, but must be valid if entered)
+    // Regex: Starts with 0, followed by 9 digits (total 10)
+    if (phoneNumber.trim() !== '') {
+      const phoneRegex = /^0\d{9}$/;
+      if (!phoneRegex.test(phoneNumber.replace(/[- ]/g, ''))) { // strip dashes/spaces for check
+        toast({
+          title: t('validation.phoneInvalid'),
+          description: t('validation.phoneInvalidDesc'),
+          variant: "destructive",
+        });
+        return false;
+      }
+    }
+
+    return true;
+  };
 
   // Helper to calculate incremental extras total
   const calculateIncrementalExtrasTotal = (item: BasketItem) => {
@@ -346,19 +389,20 @@ const BasketModal = ({
     }
 
     message += `💰 *Total: ฿${getTotalPrice()}*\n\n`;
-    message += '📍 Delivery Address: [Please add your address]\n';
-    message += '📞 Contact: [Please add your phone number]';
+    message += `📍 Delivery Address: ${address}\n`;
+    message += `📞 Contact: ${phoneNumber || 'N/A'}`;
 
     return message;
   };
 
-  // Function to handle sending message via LIFF
   const handleLiffSendMessage = async () => {
+    // Validate first
+    if (!validateOrder()) return;
+
     setIsGeneratingOrder(true);
     const message = generateOrderMessage();
 
     if (!liff.isLoggedIn()) {
-      // Safety check, though isInClient usually implies logged in
       toast({
         title: "Error",
         description: "You must be logged into LINE to send this order.",
@@ -369,21 +413,9 @@ const BasketModal = ({
     }
 
     try {
-      await liff.sendMessages([
-        {
-          type: 'text',
-          text: message,
-        },
-      ]);
-      
-      toast({
-        title: "Order Sent!",
-        description: "Your order has been sent successfully.",
-      });
-      
-      // Close the LIFF window after sending
+      await liff.sendMessages([{ type: 'text', text: message }]);
+      toast({ title: "Order Sent!", description: "Your order has been sent successfully." });
       liff.closeWindow();
-      
     } catch (error) {
       console.error("LIFF send error", error);
       toast({
@@ -397,6 +429,9 @@ const BasketModal = ({
   };
 
   const handleCopyOrder = async () => {
+    // Validate first
+    if (!validateOrder()) return;
+
     setIsGeneratingOrder(true);
     const orderMessage = generateOrderMessage();
     
@@ -427,10 +462,7 @@ const BasketModal = ({
       });
       return;
     }
-    
-    // Open Instagram DM
     window.open('https://ig.me/m/santorbrands', '_blank');
-    
     toast({
       title: t('order.instagramOpened'),
       description: t('order.instagramDM'),
@@ -446,10 +478,7 @@ const BasketModal = ({
       });
       return;
     }
-    
-    // Open LINE official account
     window.open('https://lin.ee/8kHDCU2', '_blank');
-    
     toast({
       title: t('order.lineOpened'),
       description: t('order.lineDM'),
@@ -657,6 +686,32 @@ const BasketModal = ({
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* -- NEW DELIVERY DETAILS SECTION -- */}
+          <div className="space-y-4 py-4 border-t">
+             <h4 className="font-semibold flex items-center gap-2">
+                <MapPin className="h-4 w-4" /> 
+                {t('order.deliveryDetails')}
+             </h4>
+             <Textarea 
+               placeholder={t('order.addressPlaceholder')}
+               value={address}
+               onChange={(e) => setAddress(e.target.value)}
+               className="resize-none text-base" 
+               autoComplete="street-address"
+             />
+             <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-muted-foreground" />
+                <Input 
+                   placeholder={t('order.phonePlaceholder')}
+                   value={phoneNumber}
+                   onChange={(e) => setPhoneNumber(e.target.value)}
+                   type="tel"
+                   autoComplete="tel"
+                   className="text-base"
+                />
+             </div>
           </div>
         </ScrollArea>
 
