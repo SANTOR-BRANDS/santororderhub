@@ -425,19 +425,18 @@ const DishModal = ({
                   }
                 }
               }} 
-              className="gap-2"
+              className="space-y-1"
             >
               {dish.variants.map(variant => (
                 <Label 
                   key={variant.id} 
                   htmlFor={`variant-${variant.id}-${dishNumber}`}
-                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
                 >
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-3">
                     <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
                     <span>{t(variant.id) === variant.id ? variant.name : t(variant.id)}</span>
                   </div>
-                  {/* Only show price if not zero */}
                   {variant.price !== dish.price && (
                     <span className="text-sm text-muted-foreground">
                       {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
@@ -455,18 +454,17 @@ const DishModal = ({
             <Label className="text-base font-semibold mb-3">
               EXTRA
             </Label>
-            <div className="space-y-2">
+            <div className="space-y-1">
               {getFilteredExtraOptions(dishNumber).map(addon => {
                 if (addon.isIncremental) {
-                  // Special UI for incremental items (beef/pork 20g)
                   const qty = currentIncrementalQuantities.get(addon.id) || 0;
                   const totalGrams = qty * (addon.incrementalUnit || 20);
                   const totalPrice = calculateIncrementalPrice(addon, qty);
                   
                   return (
-                    <div key={addon.id} className="flex items-center justify-between p-3 border rounded-lg">
+                    <div key={addon.id} className="flex items-center justify-between py-2.5 px-3 border rounded-lg">
                       <div className="flex-1">
-                        <Label className="text-sm font-medium">{t(addon.id)}</Label>
+                        <span className="text-sm font-medium">{t(addon.id)}</span>
                         {qty > 0 && (
                           <div className="text-xs text-muted-foreground mt-1">
                             {totalGrams}g • ฿{totalPrice}
@@ -504,14 +502,13 @@ const DishModal = ({
                   );
                 }
                 
-                // Regular checkbox for non-incremental items
                 return (
                   <Label 
                     key={addon.id} 
                     htmlFor={`extra-${addon.id}-${dishNumber}`}
-                    className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                    className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
                   >
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-3">
                       <Checkbox 
                         id={`extra-${addon.id}-${dishNumber}`} 
                         checked={currentSelectedExtraPls.some(a => a.id === addon.id)} 
@@ -549,13 +546,13 @@ const DishModal = ({
                 setCurrentSpicyLevel(Number(value));
                 if (spicyHasError) setValidationError(null);
               }}
-              className="gap-2"
+              className="space-y-1"
             >
               {SPICY_LEVELS.map(level => (
                 <Label 
                   key={level.level} 
                   htmlFor={`spicy-${level.level}-${dishNumber}`}
-                  className="flex items-center space-x-2 cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                  className="flex items-center gap-3 cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
                 >
                   <RadioGroupItem value={level.level.toString()} id={`spicy-${level.level}-${dishNumber}`} />
                   <span>{t(`SAN-SPI-00${level.level + 1}`)}</span>
@@ -576,14 +573,14 @@ const DishModal = ({
                category === 'soft-omelette' ? 'SOFT OMELETTE 🍳' : 
                category.toUpperCase()}
             </Label>
-            <div className="space-y-2">
+            <div className="space-y-1">
               {categoryAddOns.map(addon => (
                 <Label 
                   key={addon.id} 
                   htmlFor={`${addon.id}-${dishNumber}`}
-                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
                 >
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-3">
                     <Checkbox 
                       id={`${addon.id}-${dishNumber}`} 
                       checked={currentSelectedAddOns.some(a => a.id === addon.id)} 
@@ -622,15 +619,15 @@ const DishModal = ({
                 setCurrentSelectedSauces([value]);
                 if (sauceHasError) setValidationError(null);
               }}
-              className="space-y-2"
+              className="space-y-1"
             >
               {dish.customSauces.map(sauce => (
                 <Label 
                   key={sauce.id} 
                   htmlFor={`${sauce.id}-${dishNumber}`}
-                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
                 >
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-3">
                     <RadioGroupItem value={sauce.id} id={`${sauce.id}-${dishNumber}`} />
                     <span>{t(sauce.id)}</span>
                   </div>
@@ -644,7 +641,7 @@ const DishModal = ({
             </RadioGroup>
           ) : (
             // Checkboxes for regular dishes (multiple selection allowed)
-            <div className="space-y-2">
+            <div className="space-y-1">
               {SAUCES.map(sauce => {
                 const isFreeSauce = sauce.price === 0;
                 const isNoSauce = sauce.id === 'SAN-SAU-008';
@@ -669,10 +666,12 @@ const DishModal = ({
                   <Label
                     key={sauce.id}
                     htmlFor={`${sauce.id}-${dishNumber}`}
-                    className={`flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors ${disabled ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}
-                    style={{ transition: 'opacity 0.2s' }}
+                    className={cn(
+                      "flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors",
+                      disabled && "opacity-40 pointer-events-none"
+                    )}
                   >
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-3">
                       <Checkbox
                         id={`${sauce.id}-${dishNumber}`}
                         checked={currentSelectedSauces.includes(sauce.id)}
