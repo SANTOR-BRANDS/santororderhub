@@ -428,12 +428,14 @@ const DishModal = ({
               className="gap-2"
             >
               {dish.variants.map(variant => (
-                <div key={variant.id} className="flex items-center justify-between">
+                <Label 
+                  key={variant.id} 
+                  htmlFor={`variant-${variant.id}-${dishNumber}`}
+                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
-                    <Label htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center gap-2">
-                      <span>{t(variant.id) === variant.id ? variant.name : t(variant.id)}</span>
-                    </Label>
+                    <span>{t(variant.id) === variant.id ? variant.name : t(variant.id)}</span>
                   </div>
                   {/* Only show price if not zero */}
                   {variant.price !== dish.price && (
@@ -441,7 +443,7 @@ const DishModal = ({
                       {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
                     </span>
                   )}
-                </div>
+                </Label>
               ))}
             </RadioGroup>
           </div>
@@ -504,21 +506,23 @@ const DishModal = ({
                 
                 // Regular checkbox for non-incremental items
                 return (
-                  <div key={addon.id} className="flex items-center justify-between">
+                  <Label 
+                    key={addon.id} 
+                    htmlFor={`extra-${addon.id}-${dishNumber}`}
+                    className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                  >
                     <div className="flex items-center space-x-2">
                       <Checkbox 
                         id={`extra-${addon.id}-${dishNumber}`} 
                         checked={currentSelectedExtraPls.some(a => a.id === addon.id)} 
                         onCheckedChange={() => toggleExtraPls(addon, dishNumber)} 
                       />
-                      <Label htmlFor={`extra-${addon.id}-${dishNumber}`} className="text-sm">
-                        {t(addon.id)}
-                      </Label>
+                      <span className="text-sm">{t(addon.id)}</span>
                     </div>
                     <span className="text-sm text-muted-foreground">
                       {addon.price > 0 ? `+${addon.price}` : '+0'}
                     </span>
-                  </div>
+                  </Label>
                 );
               })}
             </div>
@@ -548,12 +552,14 @@ const DishModal = ({
               className="gap-2"
             >
               {SPICY_LEVELS.map(level => (
-                <div key={level.level} className="flex items-center space-x-2">
+                <Label 
+                  key={level.level} 
+                  htmlFor={`spicy-${level.level}-${dishNumber}`}
+                  className="flex items-center space-x-2 cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                >
                   <RadioGroupItem value={level.level.toString()} id={`spicy-${level.level}-${dishNumber}`} />
-                  <Label htmlFor={`spicy-${level.level}-${dishNumber}`} className="flex items-center gap-2">
-                    <span>{t(`SAN-SPI-00${level.level + 1}`)}</span>
-                  </Label>
-                </div>
+                  <span>{t(`SAN-SPI-00${level.level + 1}`)}</span>
+                </Label>
               ))}
             </RadioGroup>
           </div>
@@ -572,21 +578,23 @@ const DishModal = ({
             </Label>
             <div className="space-y-2">
               {categoryAddOns.map(addon => (
-                <div key={addon.id} className="flex items-center justify-between">
+                <Label 
+                  key={addon.id} 
+                  htmlFor={`${addon.id}-${dishNumber}`}
+                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                >
                   <div className="flex items-center space-x-2">
                     <Checkbox 
                       id={`${addon.id}-${dishNumber}`} 
                       checked={currentSelectedAddOns.some(a => a.id === addon.id)} 
                       onCheckedChange={() => toggleAddOn(addon, dishNumber)} 
                     />
-                    <Label htmlFor={`${addon.id}-${dishNumber}`} className="text-sm">
-                      {t(addon.id)}
-                    </Label>
+                    <span className="text-sm">{t(addon.id)}</span>
                   </div>
                   <span className="text-sm text-muted-foreground">
                     {addon.price > 0 ? `+${addon.price}` : '+0'}
                   </span>
-                </div>
+                </Label>
               ))}
             </div>
           </div>
@@ -617,17 +625,21 @@ const DishModal = ({
               className="space-y-2"
             >
               {dish.customSauces.map(sauce => (
-                <div key={sauce.id} className="flex items-center justify-between">
+                <Label 
+                  key={sauce.id} 
+                  htmlFor={`${sauce.id}-${dishNumber}`}
+                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors"
+                >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value={sauce.id} id={`${sauce.id}-${dishNumber}`} />
-                    <Label htmlFor={`${sauce.id}-${dishNumber}`}>{t(sauce.id)}</Label>
+                    <span>{t(sauce.id)}</span>
                   </div>
                   {sauce.price > 0 && (
                     <span className="text-sm text-muted-foreground">
                       +{sauce.price}
                     </span>
                   )}
-                </div>
+                </Label>
               ))}
             </RadioGroup>
           ) : (
@@ -654,9 +666,10 @@ const DishModal = ({
                 }
 
                 return (
-                  <div
+                  <Label
                     key={sauce.id}
-                    className={`flex items-center justify-between ${disabled ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}
+                    htmlFor={`${sauce.id}-${dishNumber}`}
+                    className={`flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md p-2 -m-2 transition-colors ${disabled ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}
                     style={{ transition: 'opacity 0.2s' }}
                   >
                     <div className="flex items-center space-x-2">
@@ -702,14 +715,14 @@ const DishModal = ({
                           }
                         }}
                       />
-                      <Label htmlFor={`${sauce.id}-${dishNumber}`}>{t(sauce.id)}</Label>
+                      <span>{t(sauce.id)}</span>
                     </div>
                     {sauce.price > 0 && (
                       <span className="text-sm text-muted-foreground">
                         +{sauce.price}
                       </span>
                     )}
-                  </div>
+                  </Label>
                 );
               })}
             </div>
