@@ -2,9 +2,8 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <!-- Preconnect to external domains for faster resource loading -->
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +12,6 @@
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://maps.googleapis.com">
 
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNLHB3FBVE"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -23,20 +21,16 @@
     gtag('config', 'G-WNLHB3FBVE');
   </script>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/favicon.ico" />
   
-  <!-- Default canonical (overridden by react-helmet-async for each page) -->
   <link rel="canonical" href="https://santorbrands.com/" />
   
-  <!-- Default robots directive (overridden by react-helmet-async for query param pages) -->
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="googlebot" content="index, follow" />
   
-  <!-- SEO meta tags are managed by react-helmet-async via SEOHead component -->
-</head>
+  </head>
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
