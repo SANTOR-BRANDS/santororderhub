@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BasketItem, getSaucesByRestaurant } from '@/types/menu';
 import {
   Dialog,
@@ -35,6 +35,11 @@ const BasketModal = ({
   const { t } = useLanguage();
   const [isGeneratingOrder, setIsGeneratingOrder] = useState(false);
   const [orderCopied, setOrderCopied] = useState(false);
+
+  // Reset orderCopied when basket changes so user can re-copy updated order
+  useEffect(() => {
+    setOrderCopied(false);
+  }, [basketItems]);
 
   // Helper to calculate incremental extras total
   const calculateIncrementalExtrasTotal = (item: BasketItem) => {
