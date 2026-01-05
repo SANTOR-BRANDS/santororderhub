@@ -510,7 +510,7 @@ const BasketModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col">
+      <DialogContent className="max-w-md max-h-[85dvh] p-0 flex flex-col">
         <DialogHeader className="p-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center justify-between">
             <span>{t('basket.title')} ({basketItems.length})</span>
@@ -698,8 +698,9 @@ const BasketModal = ({
                placeholder={t('order.addressPlaceholder')}
                value={address}
                onChange={(e) => setAddress(e.target.value)}
-               className="resize-none text-base" 
+               className="resize-none text-base min-h-[80px]"
                autoComplete="street-address"
+               rows={3}
              />
              <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-muted-foreground" />
@@ -709,13 +710,13 @@ const BasketModal = ({
                    onChange={(e) => setPhoneNumber(e.target.value)}
                    type="tel"
                    autoComplete="tel"
-                   className="text-base"
+                   className="text-base w-full"
                 />
              </div>
           </div>
         </ScrollArea>
 
-        <div className="p-6 pt-0 shrink-0">
+        <div className="p-6 pt-0 pb-10 shrink-0">
           <Separator className="mb-4" />
           <div className="flex justify-between items-center mb-4">
             <span className="text-lg font-semibold">{t('basket.total')}</span>
