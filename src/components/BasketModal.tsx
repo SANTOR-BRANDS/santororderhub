@@ -702,8 +702,9 @@ const BasketModal = ({
                autoComplete="street-address"
                rows={3}
              />
-             <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center gap-2">
+              <Phone className="h-4 w-4 text-muted-foreground" />
+              <div className="w-full">
                 <Input 
                    placeholder={t('order.phonePlaceholder')}
                    value={phoneNumber}
