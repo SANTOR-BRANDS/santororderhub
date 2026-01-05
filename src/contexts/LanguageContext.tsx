@@ -52,7 +52,10 @@ export const translations = {
     'basket.extra': 'Extra',
     'basket.variation': 'Variation',
     
-    // Order
+    // Order & Validation (NEW)
+    'order.deliveryDetails': 'Delivery Details',
+    'order.addressPlaceholder': 'Enter delivery address (Required)...',
+    'order.phonePlaceholder': 'Phone Number (Optional)...',
     'order.copyOrder': 'Copy Order',
     'order.orderViaLine': 'Order via LINE',
     'order.orderViaInstagram': 'Order via Instagram',
@@ -69,6 +72,12 @@ export const translations = {
     'order.instagramOpened': 'Instagram Opened',
     'order.instructions': 'Copy your order, then send via LINE or Instagram for processing',
     
+    // Validation Messages (NEW)
+    'validation.addressRequired': 'Missing Address',
+    'validation.addressRequiredDesc': 'Please enter your delivery address to continue.',
+    'validation.phoneInvalid': 'Invalid Phone Number',
+    'validation.phoneInvalidDesc': 'Please enter a valid 10-digit number starting with 0.',
+
     // Dish Modal
     'dish.addToBasket': 'Add to Basket',
     'dish.selectVariant': 'Select Variant',
@@ -482,7 +491,10 @@ export const translations = {
     'basket.extra': 'เพิ่ม',
     'basket.variation': 'แบบ',
     
-    // Order
+    // Order & Validation (NEW)
+    'order.deliveryDetails': 'ข้อมูลการจัดส่ง',
+    'order.addressPlaceholder': 'กรุณาระบุที่อยู่จัดส่ง (จำเป็น)...',
+    'order.phonePlaceholder': 'เบอร์โทรศัพท์ (ไม่บังคับ)...',
     'order.copyOrder': 'คัดลอกรายการสั่งซื้อ',
     'order.orderViaLine': 'สั่งผ่าน LINE',
     'order.orderViaInstagram': 'สั่งผ่าน Instagram',
@@ -499,6 +511,12 @@ export const translations = {
     'order.instagramOpened': 'เปิด Instagram แล้ว',
     'order.instructions': 'คัดลอกรายการสั่งซื้อก่อน แล้วส่งผ่าน LINE หรือ Instagram',
     
+    // Validation Messages (NEW)
+    'validation.addressRequired': 'กรุณาระบุที่อยู่',
+    'validation.addressRequiredDesc': 'กรุณาระบุที่อยู่จัดส่งเพื่อดำเนินการต่อ',
+    'validation.phoneInvalid': 'เบอร์โทรศัพท์ไม่ถูกต้อง',
+    'validation.phoneInvalidDesc': 'กรุณาระบุเบอร์โทรศัพท์ 10 หลักที่ขึ้นต้นด้วย 0',
+
     // Dish Modal
     'dish.addToBasket': 'เพิ่มลงตะกร้า',
     'dish.selectVariant': 'เลือกแบบ',
