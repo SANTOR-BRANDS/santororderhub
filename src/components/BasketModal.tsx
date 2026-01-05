@@ -11,10 +11,11 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Trash2, Plus, Minus, Instagram, MessageCircle } from 'lucide-react';
+import { Trash2, Plus, Minus, Instagram, MessageCircle, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
+import liff from '@line/liff'; // Import LIFF
 
 interface BasketModalProps {
   isOpen: boolean;
@@ -35,8 +36,24 @@ const BasketModal = ({
   const { t } = useLanguage();
   const [isGeneratingOrder, setIsGeneratingOrder] = useState(false);
   const [orderCopied, setOrderCopied] = useState(false);
+  const [isLiff, setIsLiff] = useState(false); // State to track if we are in LINE
 
-  // Reset orderCopied when basket changes so user can re-copy updated order
+  // Initialize LIFF to check if we are running inside the LINE app
+  useEffect(() => {
+    const initLiff = async () => {
+      try {
+        // We init here to ensure we can check liff.isInClient()
+        // We will cleanup/move this to Index.tsx later if needed, but this makes the modal work standalone
+        await liff.init({ liffId: '2008817839-m0RDGxvD' });
+        setIsLiff(liff.isInClient());
+      } catch (error) {
+        console.error('LIFF Initialization failed', error);
+      }
+    };
+    initLiff();
+  }, []);
+
+  // Reset orderCopied when basket changes
   useEffect(() => {
     setOrderCopied(false);
   }, [basketItems]);
@@ -84,16 +101,14 @@ const BasketModal = ({
     
     let itemTotal = basePrice + addOnsTotal + regularExtrasTotal + incrementalExtrasTotal + saucesTotal;
     
-    // For combo deals, don't double the price - it's already the total for both dishes
+    // For combo deals
     if (item.isCombo && item.combo2) {
-      // Add extras/sauces from second dish only
       const addOnsTotal2 = item.combo2.addOns.reduce((sum, addon) => sum + addon.price, 0);
       const regularExtrasTotal2 = item.combo2.extraPls?.reduce((sum, addon) => {
         if (addon.isIncremental) return sum;
         return sum + addon.price;
       }, 0) || 0;
       
-      // Calculate incremental extras for combo2
       let incrementalExtrasTotal2 = 0;
       if (item.combo2.incrementalExtras && item.combo2.incrementalExtras.size > 0) {
         item.combo2.extraPls?.forEach(addon => {
@@ -335,6 +350,50 @@ const BasketModal = ({
     message += '📞 Contact: [Please add your phone number]';
 
     return message;
+  };
+
+  // Function to handle sending message via LIFF
+  const handleLiffSendMessage = async () => {
+    setIsGeneratingOrder(true);
+    const message = generateOrderMessage();
+
+    if (!liff.isLoggedIn()) {
+      // Safety check, though isInClient usually implies logged in
+      toast({
+        title: "Error",
+        description: "You must be logged into LINE to send this order.",
+        variant: "destructive",
+      });
+      setIsGeneratingOrder(false);
+      return;
+    }
+
+    try {
+      await liff.sendMessages([
+        {
+          type: 'text',
+          text: message,
+        },
+      ]);
+      
+      toast({
+        title: "Order Sent!",
+        description: "Your order has been sent successfully.",
+      });
+      
+      // Close the LIFF window after sending
+      liff.closeWindow();
+      
+    } catch (error) {
+      console.error("LIFF send error", error);
+      toast({
+        title: "Sending failed",
+        description: "Could not send message automatically. Please use the copy button.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGeneratingOrder(false);
+    }
   };
 
   const handleCopyOrder = async () => {
@@ -609,58 +668,74 @@ const BasketModal = ({
           </div>
 
           <div className="space-y-3">
-            {/* Step 1: Copy Order */}
-            <div className={cn("space-y-2", orderCopied && "opacity-60")}>
-              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                <span className={cn(
-                  "flex items-center justify-center w-5 h-5 rounded-full text-xs",
-                  orderCopied ? "bg-green-500 text-white" : "bg-primary text-primary-foreground"
-                )}>
-                  {orderCopied ? '✓' : '1'}
-                </span>
-                <span>{orderCopied ? t('order.copied').replace(' ✅', '') : t('order.copyFirst.step')}</span>
-              </div>
+            {/* Conditional Rendering: Check if in LINE (LIFF) or Browser */}
+            {isLiff ? (
+              // --- LIFF FLOW (One Click Send) ---
               <Button 
-                onClick={handleCopyOrder}
-                variant={orderCopied ? "outline" : "default"}
-                className="w-full"
-                disabled={isGeneratingOrder || orderCopied}
+                onClick={handleLiffSendMessage}
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold h-12 text-lg"
+                disabled={isGeneratingOrder}
               >
-                {orderCopied ? '✓ ' : '📋 '}{t('order.copyOrder')}
+                <Send className="mr-2 h-5 w-5" />
+                Send Order to LINE
               </Button>
-            </div>
+            ) : (
+              // --- BROWSER FLOW (Copy & Paste) ---
+              <>
+                {/* Step 1: Copy Order */}
+                <div className={cn("space-y-2", orderCopied && "opacity-60")}>
+                  <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                    <span className={cn(
+                      "flex items-center justify-center w-5 h-5 rounded-full text-xs",
+                      orderCopied ? "bg-green-500 text-white" : "bg-primary text-primary-foreground"
+                    )}>
+                      {orderCopied ? '✓' : '1'}
+                    </span>
+                    <span>{orderCopied ? t('order.copied').replace(' ✅', '') : t('order.copyFirst.step')}</span>
+                  </div>
+                  <Button 
+                    onClick={handleCopyOrder}
+                    variant={orderCopied ? "outline" : "default"}
+                    className="w-full"
+                    disabled={isGeneratingOrder || orderCopied}
+                  >
+                    {orderCopied ? '✓ ' : '📋 '}{t('order.copyOrder')}
+                  </Button>
+                </div>
 
-            {/* Step 2: Send via LINE or Instagram */}
-            <div className={cn("space-y-2", !orderCopied && "opacity-40")}>
-              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs">
-                  2
-                </span>
-                <span>{t('order.sendOrder.step')}</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Button 
-                  onClick={handleLineOrder}
-                  className="bg-[#06C755] hover:bg-[#05b34c] text-white"
-                  disabled={!orderCopied}
-                >
-                  <MessageCircle className="h-4 w-4 mr-1" />
-                  LINE
-                </Button>
-                <Button 
-                  onClick={handleInstagramOrder}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-                  disabled={!orderCopied}
-                >
-                  <Instagram className="h-4 w-4 mr-1" />
-                  Instagram
-                </Button>
-              </div>
-            </div>
+                {/* Step 2: Send via LINE or Instagram */}
+                <div className={cn("space-y-2", !orderCopied && "opacity-40")}>
+                  <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                    <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs">
+                      2
+                    </span>
+                    <span>{t('order.sendOrder.step')}</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button 
+                      onClick={handleLineOrder}
+                      className="bg-[#06C755] hover:bg-[#05b34c] text-white"
+                      disabled={!orderCopied}
+                    >
+                      <MessageCircle className="h-4 w-4 mr-1" />
+                      LINE
+                    </Button>
+                    <Button 
+                      onClick={handleInstagramOrder}
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                      disabled={!orderCopied}
+                    >
+                      <Instagram className="h-4 w-4 mr-1" />
+                      Instagram
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           <p className="text-xs text-muted-foreground text-center mt-4">
-            {t('order.instructions')}
+            {isLiff ? "Tap above to send your order instantly!" : t('order.instructions')}
           </p>
         </div>
       </DialogContent>
