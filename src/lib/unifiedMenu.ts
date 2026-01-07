@@ -172,6 +172,31 @@ export const filterUnifiedMenu = (
 };
 
 /**
+ * Get available categories for a specific brand
+ * Returns only categories that have at least one dish for that brand
+ */
+export const getAvailableCategoriesForBrand = (
+  menu: UnifiedDish[],
+  brand: Restaurant | 'all'
+): UnifiedCategory[] => {
+  if (brand === 'all') {
+    return [...UNIFIED_CATEGORIES];
+  }
+  
+  const brandDishes = menu.filter(dish => dish.restaurant === brand);
+  const availableCategories = new Set<string>();
+  
+  brandDishes.forEach(dish => {
+    availableCategories.add(dish.unifiedCategory);
+  });
+  
+  // Return categories in the original order, filtering to only available ones
+  return UNIFIED_CATEGORIES.filter(
+    cat => cat === 'ALL' || availableCategories.has(cat)
+  );
+};
+
+/**
  * Search unified menu
  */
 export const searchUnifiedMenu = (

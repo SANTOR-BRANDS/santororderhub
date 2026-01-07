@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Restaurant } from '@/types/menu';
 import { cn } from '@/lib/utils';
 import { Languages, Filter, X } from 'lucide-react';
@@ -8,7 +9,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { UNIFIED_CATEGORIES, UnifiedCategory, getRestaurantInfo } from '@/lib/unifiedMenu';
+import { UNIFIED_CATEGORIES, UnifiedCategory, getRestaurantInfo, getUnifiedMenu, getAvailableCategoriesForBrand } from '@/lib/unifiedMenu';
 
 interface UnifiedHeaderProps {
   selectedCategory: UnifiedCategory;
@@ -27,6 +28,24 @@ const UnifiedHeader = ({
 }: UnifiedHeaderProps) => {
   const { language, setLanguage, t } = useLanguage();
   
+  // Get available categories based on selected brand
+  const unifiedMenu = useMemo(() => getUnifiedMenu(), []);
+  const availableCategories = useMemo(() => 
+    getAvailableCategoriesForBrand(unifiedMenu, selectedBrand),
+    [unifiedMenu, selectedBrand]
+  );
+  
+  // Handle brand change - reset to ALL category
+  const handleBrandChange = (brand: Restaurant | 'all') => {
+    onBrandChange(brand);
+    onCategoryChange('ALL');
+  };
+  
+  // Scroll to top when logo is clicked
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
   return (
     <header className="sticky top-0 z-50 bg-gradient-santor text-santor-foreground">
       <div className="container mx-auto px-4 py-4">
@@ -34,11 +53,17 @@ const UnifiedHeader = ({
           {/* SANTOR Brand with Language Selector */}
           <div className="flex items-center justify-between">
             <div className="flex-1" />
-            <img 
-              src="/images/SAN-LOGO-001.svg" 
-              alt="SANTOR Restaurant Holdings Logo" 
-              className="h-12 md:h-14"
-            />
+            <button 
+              onClick={handleLogoClick}
+              className="cursor-pointer hover:opacity-80 transition-opacity"
+              aria-label="Scroll to top"
+            >
+              <img 
+                src="/images/SAN-LOGO-001.svg" 
+                alt="SANTOR Restaurant Holdings Logo" 
+                className="h-12 md:h-14"
+              />
+            </button>
             <nav className="flex-1 flex justify-end" aria-label="Language selection">
               <Popover>
                 <PopoverTrigger asChild>
@@ -87,7 +112,7 @@ const UnifiedHeader = ({
                 return (
                   <button
                     key={brand}
-                    onClick={() => onBrandChange(brand)}
+                    onClick={() => handleBrandChange(brand)}
                     className={cn(
                       'flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all',
                       'border border-white/20',
@@ -109,7 +134,7 @@ const UnifiedHeader = ({
                         className="h-3 w-3 ml-0.5 opacity-70 hover:opacity-100 shrink-0" 
                         onClick={(e) => {
                           e.stopPropagation();
-                          onBrandChange('all');
+                          handleBrandChange('all');
                         }}
                       />
                     )}
@@ -124,7 +149,7 @@ const UnifiedHeader = ({
       {/* Category Navigation Bar */}
       <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
         <div className="flex gap-3 sm:gap-4 overflow-x-auto px-4 py-3 scrollbar-hide snap-x snap-mandatory">
-          {UNIFIED_CATEGORIES.map((category) => {
+          {availableCategories.map((category) => {
             const isSelected = selectedCategory === category;
             return (
               <button
