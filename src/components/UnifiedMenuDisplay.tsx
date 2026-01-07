@@ -11,7 +11,8 @@ import {
   UnifiedCategory, 
   UnifiedDish,
   getRestaurantInfo,
-  SUBCATEGORY_TAGS 
+  SUBCATEGORY_TAGS,
+  UNIFIED_CATEGORIES
 } from '@/lib/unifiedMenu';
 
 interface UnifiedMenuDisplayProps {
@@ -92,7 +93,7 @@ const UnifiedMenuDisplay = ({
     }
   };
   
-  // Group dishes by category for display
+  // Group dishes by category for display (maintaining UNIFIED_CATEGORIES order)
   const groupedDishes = useMemo(() => {
     if (selectedCategory !== 'ALL') return null;
     
@@ -103,7 +104,18 @@ const UnifiedMenuDisplay = ({
       }
       groups[dish.unifiedCategory].push(dish);
     });
-    return groups;
+    
+    // Sort by UNIFIED_CATEGORIES order (excluding 'ALL')
+    const orderedCategories = UNIFIED_CATEGORIES.filter(cat => cat !== 'ALL');
+    const sortedEntries: [string, UnifiedDish[]][] = [];
+    
+    orderedCategories.forEach(category => {
+      if (groups[category] && groups[category].length > 0) {
+        sortedEntries.push([category, groups[category]]);
+      }
+    });
+    
+    return sortedEntries;
   }, [finalDishes, selectedCategory]);
   
   // Calculate pill size based on count (word-cloud style)
@@ -207,9 +219,9 @@ const UnifiedMenuDisplay = ({
         {/* Dishes Display */}
         {finalDishes.length > 0 ? (
           selectedCategory === 'ALL' && groupedDishes ? (
-            // Grouped view when showing ALL
+            // Grouped view when showing ALL - ordered by UNIFIED_CATEGORIES
             <div className="space-y-8">
-              {Object.entries(groupedDishes).map(([category, dishes]) => (
+              {groupedDishes.map(([category, dishes]) => (
                 <section key={category}>
                   <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#fd7304]">
                     {category}
