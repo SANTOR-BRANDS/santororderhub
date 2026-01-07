@@ -77,9 +77,9 @@ const UnifiedHeader = ({
           </div>
 
           {/* Brand Filter Pills */}
-          <div className="flex items-center justify-center gap-2">
-            <Filter className="h-4 w-4 opacity-70" />
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+          <div className="flex items-center justify-center gap-2 w-full">
+            <Filter className="h-4 w-4 opacity-70 shrink-0" />
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
               {BRANDS.map((brand) => {
                 const isSelected = selectedBrand === brand;
                 const info = brand === 'all' ? null : getRestaurantInfo(brand);
@@ -89,7 +89,7 @@ const UnifiedHeader = ({
                     key={brand}
                     onClick={() => onBrandChange(brand)}
                     className={cn(
-                      'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap',
+                      'flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all',
                       'border border-white/20',
                       isSelected 
                         ? 'bg-white/25 border-white/40 shadow-sm' 
@@ -100,13 +100,13 @@ const UnifiedHeader = ({
                       <img 
                         src={info.logo} 
                         alt={info.name}
-                        className="w-5 h-5 rounded-full object-cover"
+                        className="w-4 h-4 sm:w-5 sm:h-5 rounded-full object-cover shrink-0"
                       />
                     )}
-                    <span>{brand === 'all' ? 'All Kitchens' : info?.name}</span>
+                    <span className="truncate max-w-[70px] sm:max-w-none">{brand === 'all' ? 'All' : info?.name}</span>
                     {isSelected && brand !== 'all' && (
                       <X 
-                        className="h-3 w-3 ml-0.5 opacity-70 hover:opacity-100" 
+                        className="h-3 w-3 ml-0.5 opacity-70 hover:opacity-100 shrink-0" 
                         onClick={(e) => {
                           e.stopPropagation();
                           onBrandChange('all');
@@ -123,7 +123,7 @@ const UnifiedHeader = ({
       
       {/* Category Navigation Bar */}
       <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
-        <div className="flex gap-4 overflow-x-auto px-4 py-3 scrollbar-hide">
+        <div className="flex gap-3 sm:gap-4 overflow-x-auto px-4 py-3 scrollbar-hide snap-x snap-mandatory">
           {UNIFIED_CATEGORIES.map((category) => {
             const isSelected = selectedCategory === category;
             return (
@@ -131,7 +131,7 @@ const UnifiedHeader = ({
                 key={category}
                 onClick={() => onCategoryChange(category)}
                 className={cn(
-                  'text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2',
+                  'text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start',
                   isSelected 
                     ? 'text-[#fd7304] border-[#fd7304]' 
                     : 'text-gray-400 border-transparent hover:text-gray-200'
@@ -142,6 +142,8 @@ const UnifiedHeader = ({
               </button>
             );
           })}
+          {/* Spacer to ensure last item has breathing room */}
+          <div className="shrink-0 w-4" aria-hidden="true" />
         </div>
       </div>
     </header>
