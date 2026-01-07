@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BasketItem, getSaucesByRestaurant } from '@/types/menu';
 import {
   Dialog,
@@ -44,6 +44,13 @@ const BasketModal = ({
   // Initialize from LocalStorage if available
   const [address, setAddress] = useState(() => localStorage.getItem('santor-user-address') || '');
   const [phoneNumber, setPhoneNumber] = useState(() => localStorage.getItem('santor-user-phone') || '');
+  
+  // Validation error state for visual feedback
+  const [validationError, setValidationError] = useState<'address' | 'phone' | null>(null);
+  
+  // Refs for smart-focus navigation
+  const addressRef = useRef<HTMLTextAreaElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
 
   // Initialize LIFF
   useEffect(() => {
@@ -72,15 +79,40 @@ const BasketModal = ({
     setOrderCopied(false);
   }, [basketItems]);
 
-  // --- VALIDATION LOGIC ---
+  // Clear validation error when user starts typing
+  useEffect(() => {
+    if (validationError === 'address' && address.trim()) {
+      setValidationError(null);
+    }
+  }, [address, validationError]);
+
+  useEffect(() => {
+    if (validationError === 'phone') {
+      const phoneRegex = /^0\d{9}$/;
+      if (phoneNumber.trim() === '' || phoneRegex.test(phoneNumber.replace(/[- ]/g, ''))) {
+        setValidationError(null);
+      }
+    }
+  }, [phoneNumber, validationError]);
+
+  // --- SMART-FOCUS VALIDATION LOGIC ---
   const validateOrder = (): boolean => {
-    // 1. Check Address (Required)
+    setValidationError(null);
+    
+    // 1. Check Address (Required) - FIRST FAIL
     if (!address.trim()) {
+      setValidationError('address');
       toast({
         title: t('validation.addressRequired'),
         description: t('validation.addressRequiredDesc'),
         variant: "destructive",
       });
+      // Scroll to address field smoothly
+      addressRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Delay focus to allow scroll to complete before keyboard pops up
+      setTimeout(() => {
+        addressRef.current?.focus();
+      }, 400);
       return false;
     }
 
@@ -88,12 +120,19 @@ const BasketModal = ({
     // Regex: Starts with 0, followed by 9 digits (total 10)
     if (phoneNumber.trim() !== '') {
       const phoneRegex = /^0\d{9}$/;
-      if (!phoneRegex.test(phoneNumber.replace(/[- ]/g, ''))) { // strip dashes/spaces for check
+      if (!phoneRegex.test(phoneNumber.replace(/[- ]/g, ''))) {
+        setValidationError('phone');
         toast({
           title: t('validation.phoneInvalid'),
           description: t('validation.phoneInvalidDesc'),
           variant: "destructive",
         });
+        // Scroll to phone field smoothly
+        phoneRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Delay focus to allow scroll to complete
+        setTimeout(() => {
+          phoneRef.current?.focus();
+        }, 400);
         return false;
       }
     }
@@ -695,21 +734,32 @@ const BasketModal = ({
                 {t('order.deliveryDetails')}
              </h4>
              <Textarea 
+               ref={addressRef}
                placeholder={t('order.addressPlaceholder')}
                value={address}
                onChange={(e) => setAddress(e.target.value)}
-               className="resize-none text-base" 
+               className={cn(
+                 "resize-none text-base transition-all duration-200",
+                 validationError === 'address' && "border-destructive ring-2 ring-destructive/30 animate-pulse"
+               )}
                autoComplete="street-address"
              />
              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-muted-foreground" />
+                <Phone className={cn(
+                  "h-4 w-4",
+                  validationError === 'phone' ? "text-destructive" : "text-muted-foreground"
+                )} />
                 <Input 
+                   ref={phoneRef}
                    placeholder={t('order.phonePlaceholder')}
                    value={phoneNumber}
                    onChange={(e) => setPhoneNumber(e.target.value)}
                    type="tel"
                    autoComplete="tel"
-                   className="text-base"
+                   className={cn(
+                     "text-base transition-all duration-200",
+                     validationError === 'phone' && "border-destructive ring-2 ring-destructive/30 animate-pulse"
+                   )}
                 />
              </div>
           </div>
