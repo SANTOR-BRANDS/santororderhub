@@ -899,7 +899,7 @@ export const nirvanaMenu: Dish[] = [
     spicyRequired: true,
     extraOptions: [
       { id: 'NV-EXT-007', name: '🐮 Extra Premium Beef 100g', price: 80, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -911,7 +911,7 @@ export const nirvanaMenu: Dish[] = [
     spicyRequired: true,
     extraOptions: [
       { id: 'NV-EXT-006', name: '🐮 Extra Minced Beef 100g', price: 60, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -923,7 +923,7 @@ export const nirvanaMenu: Dish[] = [
     spicyRequired: true,
     extraOptions: [
       { id: 'NV-EXT-005', name: '🐷 Extra Minced Pork 100g', price: 60, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -935,7 +935,7 @@ export const nirvanaMenu: Dish[] = [
     spicyRequired: true,
     extraOptions: [
       { id: 'NV-EXT-004', name: '🐔 Extra Minced Chicken 150g', price: 60, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
 { 
@@ -961,7 +961,7 @@ export const nirvanaMenu: Dish[] = [
     isSpecial: true,
     extraOptions: [
       { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -972,7 +972,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana',
     extraOptions: [
       { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -983,7 +983,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana',
     extraOptions: [
       { id: 'NV-EXT-001', name: '🐮 Extra Premium Beef 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -993,8 +993,8 @@ export const nirvanaMenu: Dish[] = [
     category: 'GRILLED MEAT + RICE', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 60, category: 'extra-pls' },
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1004,8 +1004,8 @@ export const nirvanaMenu: Dish[] = [
     category: 'GRILLED MEAT + RICE', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 70, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'NV-EXT-003', name: '🐔 Extra Chicken 150g', price: 60, category: 'extra-pls' },
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1016,7 +1016,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana',
     extraOptions: [
       { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1027,7 +1027,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana',
     extraOptions: [
       { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1038,7 +1038,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana',
     extraOptions: [
       { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1049,7 +1049,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana',
     extraOptions: [
       { id: 'NV-EXT-002', name: '🐷 Extra Pork 20g', price: 20, category: 'extra-pls', isIncremental: true, incrementalUnit: 20, incrementalDiscount: 10 },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
 
@@ -1061,7 +1061,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'BRAISED MEAT + RICE', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1072,7 +1072,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana', 
     isSpecial: true,
     extraOptions: [
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1083,7 +1083,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana', 
     isSpecial: true,
     extraOptions: [
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
 
@@ -1205,7 +1205,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'VEGETARIAN', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1215,7 +1215,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'VEGETARIAN', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1225,7 +1225,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'VEGETARIAN', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1235,7 +1235,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'VEGETARIAN', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
 
@@ -1248,7 +1248,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana',
     extraOptions: [
       { id: 'NV-EXT-008', name: '🐟 Extra Saba Fish 140g', price: 120, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
   { 
@@ -1259,7 +1259,7 @@ export const nirvanaMenu: Dish[] = [
     restaurant: 'nirvana',
     extraOptions: [
       { id: 'NV-EXT-008', name: '🐟 Extra Saba Fish 140g', price: 120, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
 
@@ -1271,7 +1271,7 @@ export const nirvanaMenu: Dish[] = [
     category: 'OTHER', 
     restaurant: 'nirvana',
     extraOptions: [
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 20, category: 'extra-pls' }
+      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
 { 
