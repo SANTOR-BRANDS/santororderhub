@@ -78,7 +78,7 @@ export const SAUCES = [
   { id: 'RS-SAU-004', name: 'Maggie Sauce', price: 0 },
   { id: 'RS-SAU-005', name: 'Sweet Chilli Fish Sauce', price: 10 },
   { id: 'RS-SAU-006', name: '🔴 Isaan Dipping Sauce', price: 15 },
-  { id: 'RS-SAU-007', name: '🟢 Seafood Sauce', price: 20 },
+  { id: 'RS-SAU-007', name: '🟢 Seafood Sauce', price: 15 },
   { id: 'RS-SAU-008', name: '🚫 NO SAUCE', price: 0 },
 ];
 
