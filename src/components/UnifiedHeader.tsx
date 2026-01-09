@@ -35,10 +35,17 @@ const UnifiedHeader = ({
     [unifiedMenu, selectedBrand]
   );
   
-  // Handle brand change - reset to ALL category
+  // Handle brand change - reset to ALL category and scroll to top
   const handleBrandChange = (brand: Restaurant | 'all') => {
     onBrandChange(brand);
     onCategoryChange('ALL');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
+  // Handle category change - scroll to top
+  const handleCategoryChange = (category: UnifiedCategory) => {
+    onCategoryChange(category);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
   // Scroll to top when logo is clicked
@@ -154,7 +161,7 @@ const UnifiedHeader = ({
             return (
               <button
                 key={category}
-                onClick={() => onCategoryChange(category)}
+                onClick={() => handleCategoryChange(category)}
                 className={cn(
                   'text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start',
                   isSelected 
