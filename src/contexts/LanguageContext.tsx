@@ -347,6 +347,7 @@ export const translations = {
     'SAN-ADD-015': 'Dashi Soup ✨',
     'SAN-ADD-016': 'Pandan Water',
     'SAN-ADD-017': 'Add Cup with Ice +6',
+    'SAN-ADD-018': 'Fish Roe',
     
     // Sauces - Restory
     'RS-SAU-001': 'Ketchup',
@@ -786,6 +787,7 @@ export const translations = {
     'SAN-ADD-015': 'ซุปดาชิ ✨',
     'SAN-ADD-016': 'น้ำใบเตย',
     'SAN-ADD-017': 'แก้วพร้อมน้ำแข็ง +6',
+    'SAN-ADD-018': 'ไข่กุ้ง',
     
     // Sauces - SANTOR
     'SAN-SAU-001': 'ซอสมะเขือเทศ',
