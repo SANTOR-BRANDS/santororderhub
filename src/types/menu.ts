@@ -31,6 +31,7 @@ export interface AddOn {
   isIncremental?: boolean; // For beef/pork 20g increments
   incrementalUnit?: number; // 20g units
   incrementalDiscount?: number; // Discount per 100g
+  variantRestriction?: string; // Only show this add-on when specific variant is selected
 }
 
 export interface BasketItem {

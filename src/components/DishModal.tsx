@@ -151,23 +151,19 @@ const DishModal = ({
     return basePrice + extraPlsTotal + addOnsTotal + saucesTotal;
   };
 
-  // Detect if premium beef variant (RS-PKR-011) or normal beef variant (RS-PKR-012)
-  const isPremiumBeef = dish.name.includes('Premium Beef') && selectedVariant?.id === 'RS-PKR-011';
-  const isNormalBeef = dish.name.includes('Premium Beef') && selectedVariant?.id === 'RS-PKR-012';
-
-  // Filter extra options based on current selection
+  // Filter extra options based on current selection and variant restrictions
   const getFilteredExtraOptions = (dishNumber = 1) => {
     if (!dish.extraOptions) return [];
     const currentVariant = dishNumber === 1 ? selectedVariant : selectedVariant2;
-    const isPremium = dish.name.includes('Premium Beef') && currentVariant?.id === 'RS-PKR-011';
-    const isNormal = dish.name.includes('Premium Beef') && currentVariant?.id === 'RS-PKR-012';
     
     return dish.extraOptions.filter(option => {
-      if (dish.name.includes('Premium Beef')) {
-        // SAN-EXT-004 = Extra Premium Beef, only show for premium variant
-        if (option.id === 'SAN-EXT-004') return isPremium;
-        // SAN-EXT-005 = Extra Beef, only show for normal beef variant
-        if (option.id === 'SAN-EXT-005') return isNormal;
+      // Check variant restriction - only show add-on if matches selected variant
+      if (option.variantRestriction && currentVariant) {
+        return option.variantRestriction === currentVariant.id;
+      }
+      // If no restriction, always show
+      if (option.variantRestriction && !currentVariant) {
+        return false; // Hide restricted options if no variant selected
       }
       return true;
     });
@@ -307,7 +303,6 @@ const DishModal = ({
         sauce: selectedSauces.join(', '),
         needsCutlery,
         quantity,
-        isPremiumBeef,
         isCombo: true,
         combo2: {
           selectedVariant: selectedVariant2,
@@ -329,8 +324,7 @@ const DishModal = ({
         spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
         sauce: selectedSauces.join(', '),
         needsCutlery,
-        quantity,
-        isPremiumBeef
+        quantity
       };
     }
   };
