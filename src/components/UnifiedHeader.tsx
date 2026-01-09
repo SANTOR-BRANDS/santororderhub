@@ -35,17 +35,22 @@ const UnifiedHeader = ({
     [unifiedMenu, selectedBrand]
   );
   
+  // Fast scroll to top helper
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+  
   // Handle brand change - reset to ALL category and scroll to top
   const handleBrandChange = (brand: Restaurant | 'all') => {
     onBrandChange(brand);
     onCategoryChange('ALL');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   };
   
   // Handle category change - scroll to top
   const handleCategoryChange = (category: UnifiedCategory) => {
     onCategoryChange(category);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   };
   
   // Scroll to top when logo is clicked
