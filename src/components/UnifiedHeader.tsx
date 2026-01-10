@@ -40,10 +40,14 @@ const UnifiedHeader = ({
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
   
-  // Handle brand change - reset to ALL category and scroll to top
+  // Handle brand change - keep category if available, otherwise reset to ALL
   const handleBrandChange = (brand: Restaurant | 'all') => {
+    const newAvailableCategories = getAvailableCategoriesForBrand(unifiedMenu, brand);
     onBrandChange(brand);
-    onCategoryChange('ALL');
+    // Only reset to ALL if current category isn't available for new brand
+    if (!newAvailableCategories.includes(selectedCategory)) {
+      onCategoryChange('ALL');
+    }
     scrollToTop();
   };
   
