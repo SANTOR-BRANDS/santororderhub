@@ -43,15 +43,28 @@ const CATEGORY_MAPPING: Record<string, string> = {
 };
 
 // Subcategory tags for filtering within main categories
-export const SUBCATEGORY_TAGS: Record<string, { tag: string; keywords: string[] }[]> = {
+export const SUBCATEGORY_TAGS: Record<string, { tag: string; keywords: string[]; excludeKeywords?: string[] }[]> = {
+  'ALL': [
+    { tag: 'Mala', keywords: ['mala'] },
+    { tag: 'Stir-Fried', keywords: ['fried rice', 'stir-fried', 'stir fried'], excludeKeywords: ['krapao', 'pad kra pao'] },
+    { tag: 'Deep-Fried', keywords: ['karaage', 'katsu', 'tonkatsu', 'torikatsu', 'crunchy', 'crispy'], excludeKeywords: ['fried rice'] },
+    { tag: 'Grilled', keywords: ['grilled', 'grill'] },
+    { tag: 'Braised', keywords: ['braised'] },
+    { tag: 'Curry', keywords: ['curry'] },
+    { tag: 'Pad Krapao', keywords: ['krapao', 'pad kra pao'] },
+    { tag: 'Korean', keywords: ['korean', 'mama'] },
+    { tag: 'Egg', keywords: ['omelette', 'egg'] },
+    { tag: 'Salmon', keywords: ['salmon'] },
+  ],
   'RICE': [
     { tag: 'Mala', keywords: ['mala'] },
-    { tag: 'Fried', keywords: ['fried', 'karaage', 'katsu', 'tonkatsu', 'torikatsu', 'crunchy'] },
+    { tag: 'Stir-Fried', keywords: ['fried rice', 'stir-fried', 'stir fried'], excludeKeywords: ['krapao', 'pad kra pao'] },
+    { tag: 'Deep-Fried', keywords: ['karaage', 'katsu', 'tonkatsu', 'torikatsu', 'crunchy', 'crispy'], excludeKeywords: ['fried rice'] },
     { tag: 'Grilled', keywords: ['grilled', 'grill'] },
     { tag: 'Curry', keywords: ['curry'] },
     { tag: 'Pad Krapao', keywords: ['krapao', 'pad kra pao'] },
     { tag: 'Donburi', keywords: ['don', 'donburi'] },
-    { tag: 'Omelette', keywords: ['omelette', 'egg'] },
+    { tag: 'Egg', keywords: ['omelette', 'egg'] },
     { tag: 'Salmon', keywords: ['salmon'] },
   ],
   'NOODLES': [

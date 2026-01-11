@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Restaurant, Dish } from '@/types/menu';
 import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
-import { Search, X } from 'lucide-react';
+import { Search, X, Dices } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { 
   getUnifiedMenu, 
@@ -51,12 +51,24 @@ const UnifiedMenuDisplay = ({
     if (!tags) return [];
     
     return tags.map(tagInfo => {
-      const count = searchedDishes.filter(dish => 
-        tagInfo.keywords.some(kw => 
-          dish.name.toLowerCase().includes(kw.toLowerCase()) ||
-          dish.originalCategory.toLowerCase().includes(kw.toLowerCase())
-        )
-      ).length;
+      const count = searchedDishes.filter(dish => {
+        const nameLC = dish.name.toLowerCase();
+        const categoryLC = dish.originalCategory.toLowerCase();
+        
+        // Check if any keyword matches
+        const matchesKeyword = tagInfo.keywords.some(kw => 
+          nameLC.includes(kw.toLowerCase()) ||
+          categoryLC.includes(kw.toLowerCase())
+        );
+        
+        // Check if any exclude keyword matches
+        const matchesExclude = tagInfo.excludeKeywords?.some(kw => 
+          nameLC.includes(kw.toLowerCase()) ||
+          categoryLC.includes(kw.toLowerCase())
+        ) ?? false;
+        
+        return matchesKeyword && !matchesExclude;
+      }).length;
       return { ...tagInfo, count };
     }).filter(t => t.count > 0).sort((a, b) => b.count - a.count);
   }, [searchedDishes, selectedCategory]);
@@ -68,12 +80,22 @@ const UnifiedMenuDisplay = ({
     const tagInfo = subcategoryTagsWithCounts.find(t => t.tag === selectedSubcategory);
     if (!tagInfo) return searchedDishes;
     
-    return searchedDishes.filter(dish =>
-      tagInfo.keywords.some(kw => 
-        dish.name.toLowerCase().includes(kw.toLowerCase()) ||
-        dish.originalCategory.toLowerCase().includes(kw.toLowerCase())
-      )
-    );
+    return searchedDishes.filter(dish => {
+      const nameLC = dish.name.toLowerCase();
+      const categoryLC = dish.originalCategory.toLowerCase();
+      
+      const matchesKeyword = tagInfo.keywords.some(kw => 
+        nameLC.includes(kw.toLowerCase()) ||
+        categoryLC.includes(kw.toLowerCase())
+      );
+      
+      const matchesExclude = tagInfo.excludeKeywords?.some(kw => 
+        nameLC.includes(kw.toLowerCase()) ||
+        categoryLC.includes(kw.toLowerCase())
+      ) ?? false;
+      
+      return matchesKeyword && !matchesExclude;
+    });
   }, [searchedDishes, selectedSubcategory, subcategoryTagsWithCounts]);
   
   // Reset subcategory when main category changes
@@ -81,17 +103,17 @@ const UnifiedMenuDisplay = ({
     setSelectedSubcategory(null);
   }, [selectedCategory]);
   
-  // Get featured/special dish for promo
-  const featuredDish = useMemo(() => {
-    const specials = unifiedMenu.filter(d => d.isSpecial);
-    return specials[0] || unifiedMenu.find(d => d.id === 'RS-DON-001');
+  // Get dishes eligible for "Surprise Me" (exclude toppings)
+  const surpriseMeDishes = useMemo(() => {
+    return unifiedMenu.filter(d => d.unifiedCategory !== 'TOPPINGS');
   }, [unifiedMenu]);
   
-  const handleFeaturedClick = () => {
-    if (featuredDish) {
-      onDishSelect(featuredDish);
+  const handleSurpriseMe = useCallback(() => {
+    if (surpriseMeDishes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * surpriseMeDishes.length);
+      onDishSelect(surpriseMeDishes[randomIndex]);
     }
-  };
+  }, [surpriseMeDishes, onDishSelect]);
   
   // Group dishes by category for display (maintaining UNIFIED_CATEGORIES order)
   const groupedDishes = useMemo(() => {
@@ -139,6 +161,19 @@ const UnifiedMenuDisplay = ({
           </p>
         </section>
 
+        {/* Surprise Me Button */}
+        {!searchQuery && selectedCategory === 'ALL' && surpriseMeDishes.length > 0 && (
+          <button 
+            onClick={handleSurpriseMe}
+            className="w-full rounded-lg mb-4 px-4 py-3 text-center transition-all hover:scale-[1.01] cursor-pointer bg-gradient-to-r from-[#8B1538] to-[#fd7304] text-white flex items-center justify-center gap-3"
+            aria-label="Surprise me with a random dish"
+          >
+            <Dices className="h-5 w-5" />
+            <span className="font-bold text-sm md:text-base">Surprise Me!</span>
+            <span className="text-xs opacity-80 hidden sm:inline">— Pick a random dish</span>
+          </button>
+        )}
+
         {/* Search Bar */}
         <search role="search" className="relative mb-4">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" aria-hidden="true" />
@@ -185,35 +220,6 @@ const UnifiedMenuDisplay = ({
               })}
             </div>
           </div>
-        )}
-
-        {/* Featured Banner */}
-        {featuredDish && !searchQuery && selectedCategory === 'ALL' && (
-          <button 
-            onClick={handleFeaturedClick}
-            className="w-full rounded-lg mb-6 p-4 md:p-6 text-center transition-all hover:scale-[1.02] cursor-pointer bg-gradient-to-r from-[#8B1538] to-[#fd7304] text-white"
-            aria-label="Today's special offer - Click to view dish"
-          >
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <span className="text-xl">🔥</span>
-              <h2 className="text-lg md:text-xl font-bold">Today's Special</h2>
-            </div>
-            <p className="opacity-90 text-sm md:text-base">
-              {featuredDish.name} - Try our signature dish!
-            </p>
-            {featuredDish.restaurant && (
-              <div className="mt-2 flex items-center justify-center gap-2">
-                <img 
-                  src={getRestaurantInfo(featuredDish.restaurant).logo}
-                  alt={getRestaurantInfo(featuredDish.restaurant).name}
-                  className="w-5 h-5 rounded-full object-cover"
-                />
-                <span className="text-xs opacity-80">
-                  from {getRestaurantInfo(featuredDish.restaurant).name}
-                </span>
-              </div>
-            )}
-          </button>
         )}
 
         {/* Dishes Display */}
