@@ -45,7 +45,13 @@ const UnifiedMenuDisplay = ({
   );
   
   // Get available subcategory tags for current category with counts
+  // In ALL view, group tags by their parent category
   const subcategoryTagsWithCounts = useMemo(() => {
+    if (selectedCategory === 'ALL') {
+      // For ALL view, return tags grouped by category
+      return [];
+    }
+    
     const categoryKey = selectedCategory as string;
     const tags = SUBCATEGORY_TAGS[categoryKey];
     if (!tags) return [];
@@ -59,6 +65,32 @@ const UnifiedMenuDisplay = ({
       ).length;
       return { ...tagInfo, count };
     }).filter(t => t.count > 0).sort((a, b) => b.count - a.count);
+  }, [searchedDishes, selectedCategory]);
+  
+  // Get subcategory tags per category for ALL view
+  const subcategoryTagsByCategory = useMemo(() => {
+    if (selectedCategory !== 'ALL') return {};
+    
+    const result: Record<string, { tag: string; keywords: string[]; count: number }[]> = {};
+    
+    Object.entries(SUBCATEGORY_TAGS).forEach(([category, tags]) => {
+      const categoryDishes = searchedDishes.filter(d => d.unifiedCategory === category);
+      const tagsWithCounts = tags.map(tagInfo => {
+        const count = categoryDishes.filter(dish => 
+          tagInfo.keywords.some(kw => 
+            dish.name.toLowerCase().includes(kw.toLowerCase()) ||
+            dish.originalCategory.toLowerCase().includes(kw.toLowerCase())
+          )
+        ).length;
+        return { ...tagInfo, count };
+      }).filter(t => t.count > 0).sort((a, b) => b.count - a.count);
+      
+      if (tagsWithCounts.length > 0) {
+        result[category] = tagsWithCounts;
+      }
+    });
+    
+    return result;
   }, [searchedDishes, selectedCategory]);
   
   // Apply subcategory filter
@@ -221,19 +253,43 @@ const UnifiedMenuDisplay = ({
           selectedCategory === 'ALL' && groupedDishes ? (
             // Grouped view when showing ALL - ordered by UNIFIED_CATEGORIES
             <div className="space-y-8">
-              {groupedDishes.map(([category, dishes]) => (
-                <section key={category}>
-                  <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#fd7304]">
-                    {category}
-                    <span className="text-sm font-normal text-gray-400">({dishes.length})</span>
-                  </h2>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-                    {dishes.map(dish => (
-                      <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />
-                    ))}
-                  </div>
-                </section>
-              ))}
+              {groupedDishes.map(([category, dishes]) => {
+                const categoryTags = subcategoryTagsByCategory[category];
+                const maxCount = categoryTags ? Math.max(...categoryTags.map(t => t.count), 1) : 1;
+                
+                return (
+                  <section key={category}>
+                    <h2 className="text-xl font-bold mb-3 flex items-center gap-2 text-[#fd7304]">
+                      {category}
+                      <span className="text-sm font-normal text-gray-400">({dishes.length})</span>
+                    </h2>
+                    
+                    {/* Subcategory pills for this category */}
+                    {categoryTags && categoryTags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {categoryTags.map(({ tag, count }) => (
+                          <span
+                            key={tag}
+                            className={cn(
+                              'rounded-full bg-white/10 text-gray-300',
+                              count / maxCount > 0.7 ? 'text-sm px-3 py-1' : 'text-xs px-2.5 py-0.5'
+                            )}
+                          >
+                            {tag}
+                            <span className="ml-1 opacity-60">({count})</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                      {dishes.map(dish => (
+                        <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
             </div>
           ) : (
             // Flat grid when filtering by category
