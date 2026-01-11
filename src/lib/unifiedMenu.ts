@@ -46,12 +46,12 @@ const CATEGORY_MAPPING: Record<string, string> = {
 export const SUBCATEGORY_TAGS: Record<string, { tag: string; keywords: string[] }[]> = {
   'RICE': [
     { tag: 'Mala', keywords: ['mala'] },
-    { tag: 'Fried', keywords: ['fried', 'karaage', 'katsu', 'tonkatsu', 'torikatsu', 'crunchy'] },
+    { tag: 'Fried', keywords: ['karaage', 'katsu', 'tonkatsu', 'torikatsu', 'crunchy'] },
+    { tag: 'Stir-fried', keywords: ['stir-fried', 'stir fried', 'pad krapao', 'krapao'] },
     { tag: 'Grilled', keywords: ['grilled', 'grill'] },
     { tag: 'Curry', keywords: ['curry'] },
-    { tag: 'Pad Krapao', keywords: ['krapao', 'pad kra pao'] },
     { tag: 'Donburi', keywords: ['don', 'donburi'] },
-    { tag: 'Omelette', keywords: ['omelette', 'egg'] },
+    { tag: 'Egg', keywords: ['omelette', 'egg'] },
     { tag: 'Salmon', keywords: ['salmon'] },
   ],
   'NOODLES': [
