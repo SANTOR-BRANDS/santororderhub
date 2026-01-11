@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Restaurant } from '@/types/menu';
 import { cn } from '@/lib/utils';
-import { Languages, Filter, X } from 'lucide-react';
+import { Globe, Filter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -86,11 +86,11 @@ const UnifiedHeader = ({
                   <Button 
                     variant="ghost" 
                     size="sm"
-                    className="text-inherit hover:bg-white/10"
+                    className="text-inherit hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5"
                     aria-label="Change language"
                   >
-                    <Languages className="h-4 w-4 mr-2" />
-                    {language === 'en' ? 'EN' : 'ไทย'}
+                    <Globe className="h-4 w-4 mr-1.5" />
+                    <span className="font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-32 p-2" align="end">
