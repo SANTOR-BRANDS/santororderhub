@@ -41,6 +41,72 @@ export type Database = {
         }
         Relationships: []
       }
+      menu_categories: {
+        Row: {
+          code: string
+          created_at: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      menu_items: {
+        Row: {
+          created_at: string | null
+          full_code: string
+          id: string
+          menu_category_id: string | null
+          name: string
+          product_id: string | null
+          restaurant_code: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          full_code: string
+          id?: string
+          menu_category_id?: string | null
+          name: string
+          product_id?: string | null
+          restaurant_code?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          full_code?: string
+          id?: string
+          menu_category_id?: string | null
+          name?: string
+          product_id?: string | null
+          restaurant_code?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_items_menu_category_id_fkey"
+            columns: ["menu_category_id"]
+            isOneToOne: false
+            referencedRelation: "menu_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "menu_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_categories: {
         Row: {
           code: string
