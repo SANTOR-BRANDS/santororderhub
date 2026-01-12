@@ -100,6 +100,41 @@ export const translations = {
     
     // Categories
     'category.all': 'ALL',
+    'category.comboDeals': 'COMBO DEALS',
+    'category.rice': 'RICE',
+    'category.noodles': 'NOODLES',
+    'category.freshSeafood': 'FRESH SEAFOOD',
+    'category.vegetarian': 'VEGETARIAN',
+    'category.toppings': 'TOPPINGS',
+    'category.drinks': 'DRINKS',
+    'category.desserts': 'DESSERTS',
+    
+    // Subcategory tags
+    'subcategory.mala': 'Mala',
+    'subcategory.stirFried': 'Stir-Fried',
+    'subcategory.fried': 'Fried',
+    'subcategory.grilled': 'Grilled',
+    'subcategory.braised': 'Braised',
+    'subcategory.curry': 'Curry',
+    'subcategory.padKrapao': 'Pad Krapao',
+    'subcategory.korean': 'Korean',
+    'subcategory.egg': 'Egg',
+    'subcategory.salmon': 'Salmon',
+    'subcategory.donburi': 'Donburi',
+    'subcategory.soup': 'Soup',
+    'subcategory.clear': 'Clear',
+    
+    // Unified Menu UI
+    'menu.heroTitle': 'Order from many restaurants, ONE DELIVERY',
+    'menu.heroSubtitle': 'Browse all dishes • Mix & match from different kitchens',
+    'menu.surpriseMe': 'Surprise Me!',
+    'menu.surpriseMeSubtitle': '— Pick a random dish',
+    'menu.searchPlaceholder': 'Search dishes...',
+    'menu.noDishes': 'No dishes found',
+    'menu.adjustFilters': 'Try adjusting your search or filter criteria',
+    'menu.showingDishes': 'Showing {count} dishes',
+    'menu.fromRestaurant': 'from {restaurant}',
+    'menu.all': 'All',
     
     // Common
     'common.price': '฿',
@@ -540,6 +575,41 @@ export const translations = {
     
     // Categories
     'category.all': 'ทั้งหมด',
+    'category.comboDeals': 'ชุดคอมโบ',
+    'category.rice': 'ข้าว',
+    'category.noodles': 'เส้น',
+    'category.freshSeafood': 'อาหารทะเลสด',
+    'category.vegetarian': 'มังสวิรัติ',
+    'category.toppings': 'ท็อปปิ้ง',
+    'category.drinks': 'เครื่องดื่ม',
+    'category.desserts': 'ของหวาน',
+    
+    // Subcategory tags
+    'subcategory.mala': 'หม่าล่า',
+    'subcategory.stirFried': 'ผัด',
+    'subcategory.fried': 'ทอด',
+    'subcategory.grilled': 'ย่าง',
+    'subcategory.braised': 'ตุ๋น',
+    'subcategory.curry': 'แกงกะหรี่',
+    'subcategory.padKrapao': 'ผัดกะเพรา',
+    'subcategory.korean': 'เกาหลี',
+    'subcategory.egg': 'ไข่',
+    'subcategory.salmon': 'แซลมอน',
+    'subcategory.donburi': 'ข้าวหน้า',
+    'subcategory.soup': 'ก๋วยเตี๋ยว',
+    'subcategory.clear': 'ล้าง',
+    
+    // Unified Menu UI
+    'menu.heroTitle': 'สั่งจากหลายร้าน ส่งครั้งเดียว',
+    'menu.heroSubtitle': 'ดูเมนูทั้งหมด • ผสมเมนูจากหลายครัว',
+    'menu.surpriseMe': 'สุ่มเมนู!',
+    'menu.surpriseMeSubtitle': '— สุ่มเลือกเมนู',
+    'menu.searchPlaceholder': 'ค้นหาเมนู...',
+    'menu.noDishes': 'ไม่พบเมนู',
+    'menu.adjustFilters': 'ลองปรับการค้นหาหรือตัวกรอง',
+    'menu.showingDishes': 'แสดง {count} เมนู',
+    'menu.fromRestaurant': 'จาก {restaurant}',
+    'menu.all': 'ทั้งหมด',
     
     // Common
     'common.price': '฿',

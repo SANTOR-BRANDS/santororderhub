@@ -11,6 +11,19 @@ import {
 import { useLanguage } from '@/contexts/LanguageContext';
 import { UNIFIED_CATEGORIES, UnifiedCategory, getRestaurantInfo, getUnifiedMenu, getAvailableCategoriesForBrand } from '@/lib/unifiedMenu';
 
+// Map category names to translation keys
+const CATEGORY_TRANSLATION_KEYS: Record<string, string> = {
+  'ALL': 'category.all',
+  'COMBO DEALS': 'category.comboDeals',
+  'RICE': 'category.rice',
+  'NOODLES': 'category.noodles',
+  'FRESH SEAFOOD': 'category.freshSeafood',
+  'VEGETARIAN': 'category.vegetarian',
+  'TOPPINGS': 'category.toppings',
+  'DRINKS': 'category.drinks',
+  'DESSERTS': 'category.desserts',
+};
+
 interface UnifiedHeaderProps {
   selectedCategory: UnifiedCategory;
   onCategoryChange: (category: UnifiedCategory) => void;
@@ -144,7 +157,7 @@ const UnifiedHeader = ({
                         className="w-4 h-4 sm:w-5 sm:h-5 rounded-full object-cover shrink-0"
                       />
                     )}
-                    <span className="truncate max-w-[70px] sm:max-w-none">{brand === 'all' ? 'All' : info?.name}</span>
+                    <span className="truncate max-w-[70px] sm:max-w-none">{brand === 'all' ? t('menu.all') : info?.name}</span>
                     {isSelected && brand !== 'all' && (
                       <X 
                         className="h-3 w-3 ml-0.5 opacity-70 hover:opacity-100 shrink-0" 
@@ -167,6 +180,8 @@ const UnifiedHeader = ({
         <div className="flex gap-3 sm:gap-4 overflow-x-auto px-4 py-3 scrollbar-hide snap-x snap-mandatory">
           {availableCategories.map((category) => {
             const isSelected = selectedCategory === category;
+            const translationKey = CATEGORY_TRANSLATION_KEYS[category];
+            const displayCategory = translationKey ? t(translationKey) : category;
             return (
               <button
                 key={category}
@@ -179,7 +194,7 @@ const UnifiedHeader = ({
                 )}
                 aria-current={isSelected ? 'true' : undefined}
               >
-                {getCategoryEmoji(category)} {category}
+                {getCategoryEmoji(category)} {displayCategory}
               </button>
             );
           })}
