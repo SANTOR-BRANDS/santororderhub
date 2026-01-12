@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
 import { Search, X, Dices } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   getUnifiedMenu, 
   filterUnifiedMenu, 
@@ -14,6 +15,35 @@ import {
   SUBCATEGORY_TAGS,
   UNIFIED_CATEGORIES
 } from '@/lib/unifiedMenu';
+
+// Map subcategory tag names to translation keys
+const SUBCATEGORY_TRANSLATION_KEYS: Record<string, string> = {
+  'Mala': 'subcategory.mala',
+  'Stir-Fried': 'subcategory.stirFried',
+  'Fried': 'subcategory.fried',
+  'Grilled': 'subcategory.grilled',
+  'Braised': 'subcategory.braised',
+  'Curry': 'subcategory.curry',
+  'Pad Krapao': 'subcategory.padKrapao',
+  'Korean': 'subcategory.korean',
+  'Egg': 'subcategory.egg',
+  'Salmon': 'subcategory.salmon',
+  'Donburi': 'subcategory.donburi',
+  'Soup': 'subcategory.soup',
+};
+
+// Map category names to translation keys
+const CATEGORY_TRANSLATION_KEYS: Record<string, string> = {
+  'ALL': 'category.all',
+  'COMBO DEALS': 'category.comboDeals',
+  'RICE': 'category.rice',
+  'NOODLES': 'category.noodles',
+  'FRESH SEAFOOD': 'category.freshSeafood',
+  'VEGETARIAN': 'category.vegetarian',
+  'TOPPINGS': 'category.toppings',
+  'DRINKS': 'category.drinks',
+  'DESSERTS': 'category.desserts',
+};
 
 interface UnifiedMenuDisplayProps {
   selectedCategory: UnifiedCategory;
@@ -26,6 +56,7 @@ const UnifiedMenuDisplay = ({
   selectedBrand,
   onDishSelect,
 }: UnifiedMenuDisplayProps) => {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   
@@ -155,9 +186,9 @@ const UnifiedMenuDisplay = ({
       <div className="container mx-auto px-4 py-6">
         {/* Hero Section */}
         <section className="text-center mb-6">
-          <h1 className="text-2xl md:text-4xl font-serif mb-2">Order from many restaurants, ONE DELIVERY</h1>
+          <h1 className="text-2xl md:text-4xl font-serif mb-2">{t('menu.heroTitle')}</h1>
           <p className="text-gray-400 text-sm md:text-base">
-            Browse all dishes • Mix & match from different kitchens
+            {t('menu.heroSubtitle')}
           </p>
         </section>
 
@@ -166,11 +197,11 @@ const UnifiedMenuDisplay = ({
           <button 
             onClick={handleSurpriseMe}
             className="w-full rounded-lg mb-4 px-4 py-3 text-center transition-all hover:scale-[1.01] cursor-pointer bg-gradient-to-r from-[#8B1538] to-[#fd7304] text-white flex items-center justify-center gap-3"
-            aria-label="Surprise me with a random dish"
+            aria-label={t('menu.surpriseMe')}
           >
             <Dices className="h-5 w-5" />
-            <span className="font-bold text-sm md:text-base">Surprise Me!</span>
-            <span className="text-xs opacity-80 hidden sm:inline">— Pick a random dish</span>
+            <span className="font-bold text-sm md:text-base">{t('menu.surpriseMe')}</span>
+            <span className="text-xs opacity-80 hidden sm:inline">{t('menu.surpriseMeSubtitle')}</span>
           </button>
         )}
 
@@ -178,10 +209,10 @@ const UnifiedMenuDisplay = ({
         <search role="search" className="relative mb-4">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" aria-hidden="true" />
           <Input 
-            placeholder="Search dishes..." 
+            placeholder={t('menu.searchPlaceholder')} 
             value={searchQuery} 
             onChange={e => setSearchQuery(e.target.value)}
-            aria-label="Search dishes" 
+            aria-label={t('menu.searchPlaceholder')} 
             className="pl-10 bg-white/10 border-gray-600 text-white placeholder:text-gray-400 rounded-lg"
           />
         </search>
@@ -196,11 +227,13 @@ const UnifiedMenuDisplay = ({
                   className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600 transition-all"
                 >
                   <X className="h-3 w-3" />
-                  Clear
+                  {t('subcategory.clear')}
                 </button>
               )}
               {subcategoryTagsWithCounts.map(({ tag, count }) => {
                 const isSelected = selectedSubcategory === tag;
+                const translationKey = SUBCATEGORY_TRANSLATION_KEYS[tag];
+                const displayTag = translationKey ? t(translationKey) : tag;
                 return (
                   <button
                     key={tag}
@@ -213,7 +246,7 @@ const UnifiedMenuDisplay = ({
                         : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
                     )}
                   >
-                    {tag}
+                    {displayTag}
                     <span className="ml-1.5 opacity-60">({count})</span>
                   </button>
                 );
@@ -227,19 +260,23 @@ const UnifiedMenuDisplay = ({
           selectedCategory === 'ALL' && groupedDishes ? (
             // Grouped view when showing ALL - ordered by UNIFIED_CATEGORIES
             <div className="space-y-8">
-              {groupedDishes.map(([category, dishes]) => (
-                <section key={category}>
-                  <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#fd7304]">
-                    {category}
-                    <span className="text-sm font-normal text-gray-400">({dishes.length})</span>
-                  </h2>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-                    {dishes.map(dish => (
-                      <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />
-                    ))}
-                  </div>
-                </section>
-              ))}
+              {groupedDishes.map(([category, dishes]) => {
+                const translationKey = CATEGORY_TRANSLATION_KEYS[category];
+                const displayCategory = translationKey ? t(translationKey) : category;
+                return (
+                  <section key={category}>
+                    <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#fd7304]">
+                      {displayCategory}
+                      <span className="text-sm font-normal text-gray-400">({dishes.length})</span>
+                    </h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                      {dishes.map(dish => (
+                        <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
             </div>
           ) : (
             // Flat grid when filtering by category
@@ -252,9 +289,9 @@ const UnifiedMenuDisplay = ({
         ) : (
           <section className="text-center py-12">
             <div className="text-6xl mb-4" role="img" aria-label="Search icon">🔍</div>
-            <h2 className="text-xl font-semibold mb-2">No dishes found</h2>
+            <h2 className="text-xl font-semibold mb-2">{t('menu.noDishes')}</h2>
             <p className="text-gray-400">
-              Try adjusting your search or filter criteria
+              {t('menu.adjustFilters')}
             </p>
           </section>
         )}
@@ -262,8 +299,8 @@ const UnifiedMenuDisplay = ({
         {/* Results count */}
         {finalDishes.length > 0 && (
           <div className="text-center mt-8 text-gray-500 text-sm">
-            Showing {finalDishes.length} dishes
-            {selectedBrand !== 'all' && ` from ${getRestaurantInfo(selectedBrand).name}`}
+            {t('menu.showingDishes').replace('{count}', finalDishes.length.toString())}
+            {selectedBrand !== 'all' && ` ${t('menu.fromRestaurant').replace('{restaurant}', getRestaurantInfo(selectedBrand).name)}`}
           </div>
         )}
       </div>
