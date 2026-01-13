@@ -58,6 +58,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
           ) : dish.image ? (
             <OptimizedImage
               src={dish.image}
+              fallbackSrc={dish.imageFallback}
               alt={`${dish.name} - ${dish.category} dish`}
               className="hover:scale-105 transition-smooth"
               containerClassName={cn(

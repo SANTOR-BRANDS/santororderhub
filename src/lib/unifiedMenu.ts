@@ -1,6 +1,6 @@
 import { Dish, Restaurant } from '@/types/menu';
 import { restoryMenu, nirvanaMenu, mejaiMenu } from '@/data/menuData';
-import { getDishImage } from '@/lib/dishImages';
+import { getDishImage, getDishImageFallback } from '@/lib/dishImages';
 
 // Unified category mapping - maps original categories to unified types
 const CATEGORY_MAPPING: Record<string, string> = {
@@ -110,7 +110,8 @@ const getAllMenusWithImages = (): Dish[] => {
   
   return allMenus.map(dish => ({
     ...dish,
-    image: getDishImage(dish.id) || dish.image,
+    image: getDishImage(dish.id),
+    imageFallback: getDishImageFallback(dish.id),
   }));
 };
 
