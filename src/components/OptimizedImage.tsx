@@ -4,7 +4,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 interface OptimizedImageProps {
   src: string;
-  fallbackSrc?: string;
   alt: string;
   className?: string;
   containerClassName?: string;
@@ -13,26 +12,13 @@ interface OptimizedImageProps {
 
 const OptimizedImage = ({ 
   src, 
-  fallbackSrc,
   alt, 
   className,
   containerClassName,
   fallbackIcon = '🍽️'
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState(src);
-  const [hasTriedFallback, setHasTriedFallback] = useState(false);
   const [hasError, setHasError] = useState(false);
-
-  const handleError = () => {
-    // If WebP fails and we have a PNG fallback, try that
-    if (!hasTriedFallback && fallbackSrc) {
-      setCurrentSrc(fallbackSrc);
-      setHasTriedFallback(true);
-    } else {
-      setHasError(true);
-    }
-  };
 
   if (hasError) {
     return (
@@ -59,7 +45,7 @@ const OptimizedImage = ({
       
       {/* Actual image */}
       <img 
-        src={currentSrc} 
+        src={src} 
         alt={alt}
         className={cn(
           'w-full h-full object-cover transition-opacity duration-300',
@@ -68,7 +54,7 @@ const OptimizedImage = ({
         )}
         loading="lazy"
         onLoad={() => setIsLoaded(true)}
-        onError={handleError}
+        onError={() => setHasError(true)}
       />
     </div>
   );
