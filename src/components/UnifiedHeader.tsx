@@ -130,10 +130,9 @@ const UnifiedHeader = ({
             </nav>
           </div>
 
-          {/* Brand Filter Pills */}
-          <div className="flex items-center justify-center gap-2 w-full">
-            <Filter className="h-4 w-4 opacity-70 shrink-0" />
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
+          {/* Brand Filter - Full Width Grid */}
+          <nav className="w-full" aria-label="Restaurant filter">
+            <div className="grid grid-cols-4 gap-2 sm:gap-3">
               {BRANDS.map((brand) => {
                 const isSelected = selectedBrand === brand;
                 const info = brand === 'all' ? null : getRestaurantInfo(brand);
@@ -143,35 +142,48 @@ const UnifiedHeader = ({
                     key={brand}
                     onClick={() => handleBrandChange(brand)}
                     className={cn(
-                      'flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all',
-                      'border border-white/20',
+                      'relative flex flex-col items-center justify-center gap-1.5 py-3 sm:py-4 rounded-xl transition-all',
+                      'border-2',
                       isSelected 
-                        ? 'bg-white/25 border-white/40 shadow-sm' 
-                        : 'hover:bg-white/10 hover:border-white/30'
+                        ? 'bg-white/20 border-white/60 shadow-lg' 
+                        : 'bg-white/5 border-white/15 hover:bg-white/10 hover:border-white/30'
                     )}
                   >
-                    {info && (
-                      <img 
-                        src={info.logo} 
-                        alt={info.name}
-                        className="w-4 h-4 sm:w-5 sm:h-5 rounded-full object-cover shrink-0"
-                      />
-                    )}
-                    <span className="truncate max-w-[70px] sm:max-w-none">{brand === 'all' ? t('menu.all') : info?.name}</span>
-                    {isSelected && brand !== 'all' && (
-                      <X 
-                        className="h-3 w-3 ml-0.5 opacity-70 hover:opacity-100 shrink-0" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleBrandChange('all');
-                        }}
-                      />
+                    {/* Logo or Icon */}
+                    <div className={cn(
+                      'w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center overflow-hidden',
+                      brand === 'all' ? 'bg-white/20' : 'bg-white'
+                    )}>
+                      {info ? (
+                        <img 
+                          src={info.logo} 
+                          alt={info.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Filter className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                      )}
+                    </div>
+                    
+                    {/* Brand Name */}
+                    <span className={cn(
+                      'text-[10px] sm:text-xs font-semibold text-center leading-tight px-1',
+                      isSelected ? 'text-white' : 'text-white/80'
+                    )}>
+                      {brand === 'all' ? t('menu.all') : info?.name}
+                    </span>
+                    
+                    {/* Selected indicator */}
+                    {isSelected && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#fd7304] rounded-full flex items-center justify-center">
+                        <span className="text-white text-[10px]">✓</span>
+                      </div>
                     )}
                   </button>
                 );
               })}
             </div>
-          </div>
+          </nav>
         </div>
       </div>
       
