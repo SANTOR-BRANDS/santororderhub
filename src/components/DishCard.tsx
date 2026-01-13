@@ -1,8 +1,9 @@
 import { Dish } from '@/types/menu';
-import { Card, CardContent } from '@/components/ui/card';
+import { CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import KitchenBadge from './KitchenBadge';
+import OptimizedImage from './OptimizedImage';
 
 interface DishCardProps {
   dish: Dish;
@@ -54,37 +55,35 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
                 </div>
               </div>
             </div>
-          ) : (
-            <>
-              {dish.image ? (
-                <img 
-                  src={dish.image} 
-                  alt={`${dish.name} - ${dish.category} dish`}
-                  className="w-full h-full object-cover transition-smooth hover:scale-105"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling!.classList.remove('hidden');
-                  }}
-                />
-              ) : null}
-              <div className={cn(
-                'w-full h-full flex items-center justify-center text-muted-foreground',
+          ) : dish.image ? (
+            <OptimizedImage
+              src={dish.image}
+              alt={`${dish.name} - ${dish.category} dish`}
+              className="hover:scale-105 transition-smooth"
+              containerClassName={cn(
                 dish.restaurant === 'restory' 
                   ? 'bg-restory/10' 
                   : dish.restaurant === 'mejai hai yum'
                   ? 'bg-mejai-accent/20'
-                  : 'bg-nirvana-accent/10',
-                dish.image ? 'hidden' : ''
-              )}>
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center" role="img" aria-label="Dish placeholder">
-                    🍽️
-                  </div>
-                  <span className="text-xs">No Image</span>
+                  : 'bg-nirvana-accent/10'
+              )}
+            />
+          ) : (
+            <div className={cn(
+              'w-full h-full flex items-center justify-center text-muted-foreground',
+              dish.restaurant === 'restory' 
+                ? 'bg-restory/10' 
+                : dish.restaurant === 'mejai hai yum'
+                ? 'bg-mejai-accent/20'
+                : 'bg-nirvana-accent/10'
+            )}>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center" role="img" aria-label="Dish placeholder">
+                  🍽️
                 </div>
+                <span className="text-xs">No Image</span>
               </div>
-            </>
+            </div>
           )}
           
           {/* Kitchen Badge - shows which restaurant the dish is from */}
