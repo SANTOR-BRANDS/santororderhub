@@ -130,9 +130,9 @@ const UnifiedHeader = ({
             </nav>
           </div>
 
-          {/* Brand Filter - Full Width Grid */}
+          {/* Brand Filter - Compact Grid */}
           <nav className="w-full" aria-label="Restaurant filter">
-            <div className="grid grid-cols-4 gap-2 sm:gap-3">
+            <div className="grid grid-cols-4 gap-2">
               {BRANDS.map((brand) => {
                 const isSelected = selectedBrand === brand;
                 const info = brand === 'all' ? null : getRestaurantInfo(brand);
@@ -142,17 +142,17 @@ const UnifiedHeader = ({
                     key={brand}
                     onClick={() => handleBrandChange(brand)}
                     className={cn(
-                      'relative flex flex-col items-center justify-center gap-1.5 py-3 sm:py-4 rounded-xl transition-all',
-                      'border-2',
+                      'relative flex flex-col items-center justify-center gap-1 py-2 rounded-lg transition-all',
                       isSelected 
-                        ? 'bg-white/20 border-white/60 shadow-lg' 
-                        : 'bg-white/5 border-white/15 hover:bg-white/10 hover:border-white/30'
+                        ? 'bg-white/15' 
+                        : 'hover:bg-white/10'
                     )}
                   >
-                    {/* Logo or Icon */}
+                    {/* Logo Circle - Fixed size */}
                     <div className={cn(
-                      'w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center overflow-hidden',
-                      brand === 'all' ? 'bg-white/20' : 'bg-white'
+                      'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center overflow-hidden shrink-0',
+                      brand === 'all' ? 'bg-white/20' : 'bg-white',
+                      isSelected && 'ring-2 ring-white/60'
                     )}>
                       {info ? (
                         <img 
@@ -161,24 +161,17 @@ const UnifiedHeader = ({
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <Filter className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                        <Filter className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                       )}
                     </div>
                     
                     {/* Brand Name */}
                     <span className={cn(
-                      'text-[10px] sm:text-xs font-semibold text-center leading-tight px-1',
-                      isSelected ? 'text-white' : 'text-white/80'
+                      'text-[10px] sm:text-xs font-medium text-center leading-tight',
+                      isSelected ? 'text-white' : 'text-white/70'
                     )}>
                       {brand === 'all' ? t('menu.all') : info?.name}
                     </span>
-                    
-                    {/* Selected indicator */}
-                    {isSelected && (
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#fd7304] rounded-full flex items-center justify-center">
-                        <span className="text-white text-[10px]">✓</span>
-                      </div>
-                    )}
                   </button>
                 );
               })}
