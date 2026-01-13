@@ -1,5 +1,8 @@
-export const getDishImage = (dishId: string): string | undefined => {
-  // Map dish ID to image path in public/images folder
-  // All images are .png
+// Prefers WebP, falls back to PNG
+export const getDishImage = (dishId: string): string => {
+  return `/images/${dishId}.webp`;
+};
+
+export const getDishImageFallback = (dishId: string): string => {
   return `/images/${dishId}.png`;
 };

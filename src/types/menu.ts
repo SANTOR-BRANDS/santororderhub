@@ -17,6 +17,7 @@ export interface Dish {
   isSpecial?: boolean;
   spicyRequired?: boolean;
   image?: string;
+  imageFallback?: string; // PNG fallback when WebP not available
   variants?: DishVariant[];
   extraOptions?: AddOn[];
   isAvailable?: boolean;
