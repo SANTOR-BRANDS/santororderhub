@@ -130,10 +130,10 @@ const UnifiedHeader = ({
             </nav>
           </div>
 
-          {/* Brand Filter Pills */}
-          <div className="flex items-center justify-center gap-2 w-full">
+          {/* Brand Filter */}
+          <div className="flex items-center justify-center gap-3 w-full">
             <Filter className="h-4 w-4 opacity-70 shrink-0" />
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
+            <div className="flex items-center justify-center gap-3 sm:gap-4">
               {BRANDS.map((brand) => {
                 const isSelected = selectedBrand === brand;
                 const info = brand === 'all' ? null : getRestaurantInfo(brand);
@@ -143,24 +143,35 @@ const UnifiedHeader = ({
                     key={brand}
                     onClick={() => handleBrandChange(brand)}
                     className={cn(
-                      'flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all',
-                      'border border-white/20',
+                      'flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
                       isSelected 
-                        ? 'bg-white/25 border-white/40 shadow-sm' 
-                        : 'hover:bg-white/10 hover:border-white/30'
+                        ? 'bg-white/20' 
+                        : 'hover:bg-white/10'
                     )}
                   >
-                    {info && (
-                      <img 
-                        src={info.logo} 
-                        alt={info.name}
-                        className="w-4 h-4 sm:w-5 sm:h-5 rounded-full object-cover shrink-0"
-                      />
+                    {info ? (
+                      <div className={cn(
+                        'w-7 h-7 rounded-full overflow-hidden shrink-0 flex items-center justify-center bg-white/10',
+                        isSelected && 'ring-2 ring-white/60'
+                      )}>
+                        <img 
+                          src={info.logo} 
+                          alt={info.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className={cn(
+                        'w-7 h-7 rounded-full shrink-0 flex items-center justify-center bg-white/10 text-xs',
+                        isSelected && 'ring-2 ring-white/60'
+                      )}>
+                        ✦
+                      </div>
                     )}
-                    <span className="truncate max-w-[70px] sm:max-w-none">{brand === 'all' ? t('menu.all') : info?.name}</span>
+                    <span className="hidden sm:inline">{brand === 'all' ? t('menu.all') : info?.name}</span>
                     {isSelected && brand !== 'all' && (
                       <X 
-                        className="h-3 w-3 ml-0.5 opacity-70 hover:opacity-100 shrink-0" 
+                        className="h-3.5 w-3.5 opacity-70 hover:opacity-100 shrink-0 hidden sm:block" 
                         onClick={(e) => {
                           e.stopPropagation();
                           handleBrandChange('all');
