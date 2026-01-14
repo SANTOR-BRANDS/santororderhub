@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Restaurant } from '@/types/menu';
 import { cn } from '@/lib/utils';
-import { Globe, Filter, X } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -131,53 +131,41 @@ const UnifiedHeader = ({
           </div>
 
           {/* Brand Filter */}
-          <div className="flex items-center justify-center gap-3 w-full">
-            <Filter className="h-4 w-4 opacity-70 shrink-0" />
-            <div className="flex items-center justify-center gap-3 sm:gap-4">
+          <div className="flex items-center justify-center w-full px-2">
+            <div className="flex items-center justify-between w-full max-w-md gap-2">
               {BRANDS.map((brand) => {
                 const isSelected = selectedBrand === brand;
                 const info = brand === 'all' ? null : getRestaurantInfo(brand);
+                const displayName = brand === 'all' ? t('menu.all') : info?.name;
                 
                 return (
                   <button
                     key={brand}
                     onClick={() => handleBrandChange(brand)}
                     className={cn(
-                      'flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+                      'flex-1 flex flex-col items-center gap-1.5 py-2 px-1 rounded-xl transition-all',
                       isSelected 
                         ? 'bg-white/20' 
                         : 'hover:bg-white/10'
                     )}
                   >
-                    {info ? (
-                      <div className={cn(
-                        'w-7 h-7 rounded-full overflow-hidden shrink-0 flex items-center justify-center bg-white/10',
-                        isSelected && 'ring-2 ring-white/60'
-                      )}>
+                    <div className={cn(
+                      'w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 flex items-center justify-center bg-white/10',
+                      isSelected && 'ring-2 ring-white/70 ring-offset-2 ring-offset-transparent'
+                    )}>
+                      {info ? (
                         <img 
                           src={info.logo} 
                           alt={info.name}
                           className="w-full h-full object-cover"
                         />
-                      </div>
-                    ) : (
-                      <div className={cn(
-                        'w-7 h-7 rounded-full shrink-0 flex items-center justify-center bg-white/10 text-xs',
-                        isSelected && 'ring-2 ring-white/60'
-                      )}>
-                        ✦
-                      </div>
-                    )}
-                    <span className="hidden sm:inline">{brand === 'all' ? t('menu.all') : info?.name}</span>
-                    {isSelected && brand !== 'all' && (
-                      <X 
-                        className="h-3.5 w-3.5 opacity-70 hover:opacity-100 shrink-0 hidden sm:block" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleBrandChange('all');
-                        }}
-                      />
-                    )}
+                      ) : (
+                        <span className="text-lg">✦</span>
+                      )}
+                    </div>
+                    <span className="text-[10px] sm:text-xs font-medium text-center leading-tight line-clamp-1">
+                      {displayName}
+                    </span>
                   </button>
                 );
               })}
