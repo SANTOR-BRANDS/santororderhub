@@ -77,8 +77,8 @@ const UnifiedHeader = ({
   
   return (
     <header className="sticky top-0 z-50 bg-gradient-santor text-santor-foreground">
-      <div className="container mx-auto px-2 py-2">
-        <div className="flex flex-col gap-2">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex flex-col gap-4">
           {/* SANTOR Brand with Language Selector */}
           <div className="flex items-center justify-between">
             <div className="flex-1" />
@@ -90,7 +90,7 @@ const UnifiedHeader = ({
               <img 
                 src="/images/SAN-LOGO-001.svg" 
                 alt="SANTOR Restaurant Holdings Logo" 
-                className="h-10 md:h-12"
+                className="h-12 md:h-14"
               />
             </button>
             <nav className="flex-1 flex justify-end" aria-label="Language selection">
@@ -99,11 +99,11 @@ const UnifiedHeader = ({
                   <Button 
                     variant="ghost" 
                     size="sm"
-                    className="text-inherit hover:bg-white/20 border border-white/30 rounded-full px-2 py-1"
+                    className="text-inherit hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5"
                     aria-label="Change language"
                   >
-                    <Globe className="h-3.5 w-3.5 mr-1" />
-                    <span className="text-xs font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
+                    <Globe className="h-4 w-4 mr-1.5" />
+                    <span className="font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-32 p-2" align="end">
@@ -130,8 +130,8 @@ const UnifiedHeader = ({
             </nav>
           </div>
 
-          {/* Brand Filter - Compact horizontal scrollable */}
-          <div className="flex items-center justify-center gap-1 overflow-x-auto scrollbar-hide">
+          {/* Brand Filter - Compact horizontal layout */}
+          <div className="flex items-center justify-center gap-3">
             {BRANDS.map((brand) => {
               const isSelected = selectedBrand === brand;
               const info = brand === 'all' ? null : getRestaurantInfo(brand);
@@ -142,15 +142,15 @@ const UnifiedHeader = ({
                   key={brand}
                   onClick={() => handleBrandChange(brand)}
                   className={cn(
-                    'flex items-center gap-1 px-2 py-1 rounded-full shrink-0',
+                    'flex items-center gap-1.5 px-2.5 py-1.5 rounded-full transition-all',
                     isSelected 
-                      ? 'bg-white/25' 
-                      : 'bg-transparent'
+                      ? 'bg-white/20' 
+                      : 'hover:bg-white/10'
                   )}
                 >
                   <div className={cn(
-                    'w-5 h-5 rounded-full overflow-hidden shrink-0 flex items-center justify-center',
-                    isSelected ? 'ring-2 ring-white' : 'bg-white/10'
+                    'w-6 h-6 rounded-full overflow-hidden shrink-0 flex items-center justify-center bg-white/10',
+                    isSelected && 'ring-2 ring-white/70'
                   )}>
                     {info ? (
                       <img 
@@ -159,13 +159,10 @@ const UnifiedHeader = ({
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-[10px]">✦</span>
+                      <span className="text-xs">✦</span>
                     )}
                   </div>
-                  <span className={cn(
-                    'text-[11px] font-medium whitespace-nowrap',
-                    isSelected ? 'text-white' : 'text-white/70'
-                  )}>
+                  <span className="text-xs font-medium whitespace-nowrap">
                     {displayName}
                   </span>
                 </button>
