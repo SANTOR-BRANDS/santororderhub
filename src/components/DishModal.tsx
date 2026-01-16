@@ -728,10 +728,10 @@ const DishModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0">
-        <div className="max-h-[90vh] overflow-hidden">
-          <ScrollArea className="max-h-[85vh] overflow-y-auto">
-            <div className="p-6">
+      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col">
+        <div className="flex-1 overflow-hidden flex flex-col">
+          <ScrollArea className="flex-1 overflow-y-auto">
+            <div className="p-6 pb-4">
               <DialogHeader className="mb-6">
                 <DialogDescription className="sr-only">
                   Customize your dish options, add-ons, and preferences
@@ -837,59 +837,60 @@ const DishModal = ({
                 </>
               )}
 
-              {/* Quantity and Total */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <Label className="text-base font-semibold">Quantity</Label>
-                  <div className="flex items-center gap-3">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))} 
-                      disabled={quantity <= 1}
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="font-semibold w-8 text-center">{quantity}</span>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => setQuantity(quantity + 1)}
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between text-lg font-bold">
-                  <span>Total</span>
-                  <span className={cn(`text-${theme.accent}`)}>
-                    ฿{getTotalPrice()}
-                  </span>
-                </div>
-
-                <div className="flex gap-3">
-                  <Button 
-                    onClick={handleAddToBasket}
-                    variant="outline"
-                    className="flex-1 gap-2"
-                    size="lg"
-                  >
-                    <ShoppingCart className="h-4 w-4" />
-                    Add to Basket
-                  </Button>
-                  <Button 
-                    onClick={handleOrderNow}
-                    className={cn('flex-1 gap-2', theme.button)} 
-                    size="lg"
-                  >
-                    <Zap className="h-4 w-4" />
-                    Order Now
-                  </Button>
-                </div>
-              </div>
             </div>
           </ScrollArea>
+          
+          {/* Sticky Footer - Quantity, Total, and Buttons */}
+          <div className="sticky bottom-0 bg-background border-t border-border p-4 space-y-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+            <div className="flex items-center justify-between">
+              <Label className="text-base font-semibold">Quantity</Label>
+              <div className="flex items-center gap-3">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))} 
+                  disabled={quantity <= 1}
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <span className="font-semibold w-8 text-center">{quantity}</span>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-lg font-bold">
+              <span>Total</span>
+              <span className={cn(`text-${theme.accent}`)}>
+                ฿{getTotalPrice()}
+              </span>
+            </div>
+
+            <div className="flex gap-3">
+              <Button 
+                onClick={handleAddToBasket}
+                variant="outline"
+                className="flex-1 gap-2"
+                size="lg"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Add to Basket
+              </Button>
+              <Button 
+                onClick={handleOrderNow}
+                className={cn('flex-1 gap-2', theme.button)} 
+                size="lg"
+              >
+                <Zap className="h-4 w-4" />
+                Order Now
+              </Button>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
