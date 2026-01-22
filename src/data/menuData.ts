@@ -402,7 +402,7 @@ export const restoryMenu: Dish[] = [
   { 
     id: 'RS-KOR-003', 
     name: 'Spicy Korean Mama with Crunchy Fried Chicken + Boiled Egg', 
-    price: 159, 
+    price: 149, 
     category: 'KOREAN SPICY NOODLES', 
     restaurant: 'restory',
     extraOptions: [
