@@ -70,64 +70,45 @@ const UnifiedHeader = ({
     scrollToTop();
   };
   
-  // Scroll to top when logo is clicked
-  const handleLogoClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  
   return (
     <header className="sticky top-0 z-50 bg-gradient-santor text-santor-foreground">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex flex-col gap-4">
-          {/* SANTOR Brand with Language Selector */}
-          <div className="flex items-center justify-between">
-            <div className="flex-1" />
-            <button 
-              onClick={handleLogoClick}
-              className="cursor-pointer hover:opacity-80 transition-opacity"
-              aria-label="Scroll to top"
-            >
-              <img 
-                src="/images/SAN-LOGO-001.svg" 
-                alt="SANTOR Restaurant Holdings Logo" 
-                className="h-12 md:h-14"
-              />
-            </button>
-            <nav className="flex-1 flex justify-end" aria-label="Language selection">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button 
-                    variant="ghost" 
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex flex-col gap-3">
+          {/* Language Selector - Top Right */}
+          <div className="flex items-center justify-end">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  className="text-inherit hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5"
+                  aria-label="Change language"
+                >
+                  <Globe className="h-4 w-4 mr-1.5" />
+                  <span className="font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-32 p-2" align="end">
+                <div className="flex flex-col gap-1">
+                  <Button
+                    variant={language === 'en' ? 'secondary' : 'ghost'}
                     size="sm"
-                    className="text-inherit hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5"
-                    aria-label="Change language"
+                    className="w-full justify-start"
+                    onClick={() => setLanguage('en')}
                   >
-                    <Globe className="h-4 w-4 mr-1.5" />
-                    <span className="font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
+                    English
                   </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-32 p-2" align="end">
-                  <div className="flex flex-col gap-1">
-                    <Button
-                      variant={language === 'en' ? 'secondary' : 'ghost'}
-                      size="sm"
-                      className="w-full justify-start"
-                      onClick={() => setLanguage('en')}
-                    >
-                      English
-                    </Button>
-                    <Button
-                      variant={language === 'th' ? 'secondary' : 'ghost'}
-                      size="sm"
-                      className="w-full justify-start"
-                      onClick={() => setLanguage('th')}
-                    >
-                      ไทย
-                    </Button>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </nav>
+                  <Button
+                    variant={language === 'th' ? 'secondary' : 'ghost'}
+                    size="sm"
+                    className="w-full justify-start"
+                    onClick={() => setLanguage('th')}
+                  >
+                    ไทย
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
 
           {/* Brand Filter */}
