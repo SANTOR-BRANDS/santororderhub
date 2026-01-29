@@ -170,7 +170,7 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
 
           {/* Copyright */}
           <div className="mt-8 pt-8 border-t border-white/20 text-center text-sm opacity-90">
-            <p>&copy; {new Date().getFullYear()} SANTOR. {t('footer.copyright')}</p>
+            <p>&copy; {new Date().getFullYear()} Powered by SANTOR. {t('footer.copyright')}</p>
           </div>
         </div>
       </footer>
