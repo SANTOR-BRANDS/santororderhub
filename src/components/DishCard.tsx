@@ -13,8 +13,9 @@ interface DishCardProps {
 const DishCard = ({ dish, onClick }: DishCardProps) => {
   const { t } = useLanguage();
   const isUnavailable = dish.isAvailable === false;
-  const dishName = t(dish.id) || dish.name;
-  
+  const translated = t(dish.id);
+  const dishName = (!translated || translated === dish.id) ? dish.name : translated;
+
   return (
     <article 
       className={cn(
