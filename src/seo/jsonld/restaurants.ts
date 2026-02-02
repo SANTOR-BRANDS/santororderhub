@@ -40,12 +40,12 @@ export const nirvanaSchema = {
   "menu": "https://www.santorbrands.com/#nirvana"
 };
 
-export const mejaiSchema = {
+export const smoodySchema = {
   ...baseRestaurantData,
   "@type": "Restaurant",
-  "name": "Mejai Hai Yum",
-  "description": "Fresh salmon specialties and authentic Thai yum dishes",
+  "name": "Smoody",
+  "description": "Healthy bowls, smoothies, and overnight oats",
   "url": "https://www.santorbrands.com",
-  "servesCuisine": ["Thai", "Seafood"],
-  "menu": "https://www.santorbrands.com/#mejai"
+  "servesCuisine": ["Healthy", "Smoothies", "Bowls"],
+  "menu": "https://www.santorbrands.com/#smoody"
 };

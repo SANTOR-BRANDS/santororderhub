@@ -31,7 +31,7 @@ interface UnifiedHeaderProps {
   onBrandChange: (brand: Restaurant | 'all') => void;
 }
 
-const BRANDS: (Restaurant | 'all')[] = ['all', 'restory', 'nirvana', 'mejai hai yum'];
+const BRANDS: (Restaurant | 'all')[] = ['all', 'restory', 'nirvana', 'smoody'];
 
 const UnifiedHeader = ({ 
   selectedCategory,

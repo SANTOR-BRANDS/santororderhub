@@ -4,7 +4,7 @@
 
 export { organizationSchema } from './organization';
 export { websiteSchema } from './website';
-export { restorySchema, nirvanaSchema, mejaiSchema } from './restaurants';
+export { restorySchema, nirvanaSchema, smoodySchema } from './restaurants';
 export { faqSchema } from './faq';
 export {
   generateBreadcrumbSchema,
