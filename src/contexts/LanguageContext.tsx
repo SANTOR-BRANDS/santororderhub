@@ -30,8 +30,8 @@ export const translations = {
     'restaurant.restory.desc': 'Asian Fusion - Cooked to Order',
     'restaurant.nirvana': 'Nirvana',
     'restaurant.nirvana.desc': 'Authentic Flavors',
-    'restaurant.mejai': 'Mejai Hai Yum',
-    'restaurant.mejai.desc': 'Fresh Salmon & Thai Yum',
+    'restaurant.smoody': 'Smoody',
+    'restaurant.smoody.desc': 'Healthy Bowls & Smoothies',
     'restaurant.chanwan': 'Chan Wan (soon)',
     
     // Basket
@@ -135,6 +135,9 @@ export const translations = {
     'menu.showingDishes': 'Showing {count} dishes',
     'menu.fromRestaurant': 'from {restaurant}',
     'menu.all': 'All',
+    'menu.comingSoon': 'Coming Soon!',
+    'menu.comingSoonDesc': 'We\'re working on something delicious. Stay tuned!',
+    'menu.upcomingCategories': 'Upcoming Menu Categories',
     
     // Common
     'common.price': '฿',
@@ -505,8 +508,8 @@ export const translations = {
     'restaurant.restory.desc': 'อาหารฟิวชั่นเอเชีย - ทำสด',
     'restaurant.nirvana': 'Nirvana',
     'restaurant.nirvana.desc': 'รสชาติแท้',
-    'restaurant.mejai': 'เมจัย ไหหยำ',
-    'restaurant.mejai.desc': 'แซลมอนสด & ยำไทย',
+    'restaurant.smoody': 'Smoody',
+    'restaurant.smoody.desc': 'โบวล์สุขภาพ & สมูทตี้',
     'restaurant.chanwan': 'Chan Wan (เร็วๆ นี้)',
     
     // Basket
@@ -610,6 +613,9 @@ export const translations = {
     'menu.showingDishes': 'แสดง {count} เมนู',
     'menu.fromRestaurant': 'จาก {restaurant}',
     'menu.all': 'ทั้งหมด',
+    'menu.comingSoon': 'เร็วๆ นี้!',
+    'menu.comingSoonDesc': 'เรากำลังเตรียมเมนูอร่อยๆ รอติดตามนะคะ!',
+    'menu.upcomingCategories': 'หมวดหมู่เมนูที่กำลังจะมา',
     
     // Common
     'common.price': '฿',

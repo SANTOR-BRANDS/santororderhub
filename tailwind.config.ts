@@ -67,12 +67,12 @@ export default {
           secondary: "hsl(var(--nirvana-secondary))",
           background: "hsl(var(--nirvana-background))",
         },
-        mejai: {
-          DEFAULT: "hsl(var(--mejai-primary))",
-          foreground: "hsl(var(--mejai-primary-foreground))",
-          secondary: "hsl(var(--mejai-secondary))",
-          accent: "hsl(var(--mejai-accent))",
-          background: "hsl(var(--mejai-background))",
+        smoody: {
+          DEFAULT: "hsl(var(--smoody-primary))",
+          foreground: "hsl(var(--smoody-primary-foreground))",
+          secondary: "hsl(var(--smoody-secondary))",
+          accent: "hsl(var(--smoody-accent))",
+          background: "hsl(var(--smoody-background))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -89,7 +89,7 @@ export default {
         'gradient-santor': 'var(--gradient-santor)',
         'gradient-restory': 'var(--gradient-restory)',
         'gradient-nirvana': 'var(--gradient-nirvana)',
-        'gradient-mejai': 'var(--gradient-mejai)',
+        'gradient-smoody': 'var(--gradient-smoody)',
       },
       boxShadow: {
         'elegant': 'var(--shadow-elegant)',

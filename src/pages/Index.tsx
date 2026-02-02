@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SEOHead } from '@/seo/components/SEOHead';
 import { getMetadata } from '@/seo/metadata';
-import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, mejaiSchema } from '@/seo/jsonld';
+import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, smoodySchema } from '@/seo/jsonld';
 import { UnifiedCategory } from '@/lib/unifiedMenu';
 
 const Index = () => {
@@ -86,7 +86,7 @@ const Index = () => {
     ...getMetadata('home'),
     structuredData: {
       "@context": "https://schema.org",
-      "@graph": [organizationSchema, websiteSchema, restorySchema, nirvanaSchema, mejaiSchema]
+      "@graph": [organizationSchema, websiteSchema, restorySchema, nirvanaSchema, smoodySchema]
     }
   };
 

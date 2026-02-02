@@ -15,6 +15,7 @@ import {
   SUBCATEGORY_TAGS,
   UNIFIED_CATEGORIES
 } from '@/lib/unifiedMenu';
+import { SMOODY_CATEGORIES } from '@/data/menuData';
 
 // Map subcategory tag names to translation keys
 const SUBCATEGORY_TRANSLATION_KEYS: Record<string, string> = {
@@ -180,6 +181,47 @@ const UnifiedMenuDisplay = ({
   };
   
   const maxTagCount = Math.max(...subcategoryTagsWithCounts.map(t => t.count), 1);
+  
+  // Check if Smoody is selected - show Coming Soon
+  if (selectedBrand === 'smoody') {
+    return (
+      <div className="min-h-screen pb-20 bg-smoody-background text-smoody-primary">
+        <div className="container mx-auto px-4 py-6">
+          {/* Hero Section */}
+          <section className="text-center mb-6">
+            <h1 className="text-2xl md:text-4xl font-serif mb-2">🥤 Smoody</h1>
+            <p className="text-smoody-secondary text-sm md:text-base">
+              Healthy Bowls & Smoothies
+            </p>
+          </section>
+
+          {/* Coming Soon Section */}
+          <section className="text-center py-12 bg-white/50 rounded-xl border border-smoody-accent/30">
+            <div className="text-6xl mb-4" role="img" aria-label="Coming soon">🚀</div>
+            <h2 className="text-2xl font-bold mb-4 text-smoody-primary">{t('menu.comingSoon') || 'Coming Soon!'}</h2>
+            <p className="text-smoody-secondary mb-8 max-w-md mx-auto">
+              {t('menu.comingSoonDesc') || 'We\'re working on something delicious. Stay tuned!'}
+            </p>
+            
+            {/* Smoody Categories Preview */}
+            <div className="mt-8">
+              <h3 className="text-lg font-semibold mb-4 text-smoody-primary">{t('menu.upcomingCategories') || 'Upcoming Menu Categories'}</h3>
+              <div className="flex flex-wrap justify-center gap-3">
+                {SMOODY_CATEGORIES.map(category => (
+                  <span 
+                    key={category} 
+                    className="px-4 py-2 bg-smoody-primary/10 text-smoody-primary rounded-full text-sm font-medium"
+                  >
+                    {category}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="min-h-screen pb-20 bg-[#1a1a1a] text-white">

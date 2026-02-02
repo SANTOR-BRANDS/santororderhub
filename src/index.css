@@ -56,18 +56,18 @@
     --nirvana-secondary: 0 0% 15%;
     --nirvana-background: 0 0% 5%;
 
-    /* Mejai Hai Yum Theme */
-    --mejai-primary: 45 99% 58%;
-    --mejai-primary-foreground: 0 0% 100%;
-    --mejai-secondary: 45 99% 50%;
-    --mejai-accent: 45 99% 65%;
-    --mejai-background: 45 99% 95%;
+    /* Smoody Theme - HEX #66015c = HSL 304 99% 18% */
+    --smoody-primary: 304 99% 18%;
+    --smoody-primary-foreground: 0 0% 100%;
+    --smoody-secondary: 304 99% 25%;
+    --smoody-accent: 304 99% 35%;
+    --smoody-background: 304 20% 95%;
 
     /* Gradients */
     --gradient-santor: linear-gradient(135deg, hsl(var(--santor-primary)), hsl(var(--santor-secondary)));
     --gradient-restory: linear-gradient(135deg, hsl(var(--restory-primary)), hsl(var(--restory-secondary)));
     --gradient-nirvana: linear-gradient(135deg, hsl(var(--nirvana-primary)), hsl(var(--nirvana-secondary)));
-    --gradient-mejai: linear-gradient(135deg, hsl(var(--mejai-primary)), hsl(var(--mejai-secondary)));
+    --gradient-smoody: linear-gradient(135deg, hsl(var(--smoody-primary)), hsl(var(--smoody-secondary)));
 
     /* Shadows */
     --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.1);

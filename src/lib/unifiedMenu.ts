@@ -1,5 +1,5 @@
 import { Dish, Restaurant } from '@/types/menu';
-import { restoryMenu, nirvanaMenu, mejaiMenu } from '@/data/menuData';
+import { restoryMenu, nirvanaMenu, smoodyMenu, SMOODY_CATEGORIES } from '@/data/menuData';
 import { getDishImage } from '@/lib/dishImages';
 
 // Unified category mapping - maps original categories to unified types
@@ -77,7 +77,7 @@ export const SUBCATEGORY_TAGS: Record<string, { tag: string; keywords: string[];
 };
 
 // Priority order: Restory > Nirvana > MHY
-const RESTAURANT_PRIORITY: Restaurant[] = ['restory', 'nirvana', 'mejai hai yum'];
+const RESTAURANT_PRIORITY: Restaurant[] = ['restory', 'nirvana', 'smoody'];
 
 export const UNIFIED_CATEGORIES = [
   'ALL',
@@ -105,7 +105,7 @@ const getAllMenusWithImages = (): Dish[] => {
   const allMenus = [
     ...restoryMenu,
     ...nirvanaMenu,
-    ...mejaiMenu,
+    ...smoodyMenu,
   ];
   
   return allMenus.map(dish => ({
@@ -242,10 +242,10 @@ export const getRestaurantInfo = (restaurant: Restaurant) => {
       logo: '/images/NV-LOGO-001.webp',
       color: '#ffd93d',
     },
-    'mejai hai yum': {
-      name: 'Mejai Hai Yum',
-      logo: '/images/MHY-LOGO-001.webp',
-      color: '#fec428',
+    'smoody': {
+      name: 'Smoody',
+      logo: '/images/SM-LOGO-001.webp',
+      color: '#66015c',
     },
   };
   return info[restaurant];

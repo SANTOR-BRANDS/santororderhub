@@ -24,9 +24,9 @@ const themeColors: Record<Restaurant, {
     accent: 'nirvana-accent',
     color: '#ffd93d'
   },
-  'mejai hai yum': {
-    accent: 'mejai',
-    color: '#fec428'
+  smoody: {
+    accent: 'smoody',
+    color: '#66015c'
   }
 };
 const MenuDisplay = ({
@@ -49,13 +49,13 @@ const MenuDisplay = ({
   const getBackgroundClass = () => {
     if (restaurant === 'nirvana') return 'bg-nirvana-secondary';
     if (restaurant === 'restory') return 'bg-nirvana-secondary text-white';
-    if (restaurant === 'mejai hai yum') return 'bg-mejai-background';
+    if (restaurant === 'smoody') return 'bg-smoody-background';
     return 'bg-white';
   };
   
   const getPromoBannerClass = () => {
     if (restaurant === 'restory') return 'bg-gradient-restory text-restory-foreground';
-    if (restaurant === 'mejai hai yum') return 'bg-gradient-mejai text-mejai-foreground';
+    if (restaurant === 'smoody') return 'bg-gradient-smoody text-smoody-foreground';
     return 'bg-white text-black';
   };
   

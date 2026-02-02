@@ -793,6 +793,22 @@ export const restoryMenu: Dish[] = [
     ]
   },
 
+  // FRESH SALMON
+  { 
+    id: 'MHY-SAL-001', 
+    name: 'Fresh Salmon Sashimi 100g', 
+    price: 180, 
+    category: 'FRESH SALMON', 
+    restaurant: 'restory'
+  },
+  { 
+    id: 'MHY-SAL-002', 
+    name: 'Pickled Brown Salmon 100g', 
+    price: 120, 
+    category: 'FRESH SALMON', 
+    restaurant: 'restory'
+  },
+
   // TOPPINGS
   { 
     id: 'SAN-ADD-004', 
@@ -1381,103 +1397,18 @@ export const nirvanaMenu: Dish[] = [
   },
 ];
 
-export const mejaiMenu: Dish[] = [
-  // FRESH SALMON
-  { 
-    id: 'MHY-SAL-001', 
-    name: 'Fresh Salmon Sashimi 100g', 
-    price: 180, 
-    category: 'FRESH SALMON', 
-    restaurant: 'mejai hai yum'
-  },
-  { 
-    id: 'MHY-SAL-002', 
-    name: 'Pickled Brown Salmon 100g', 
-    price: 120, 
-    category: 'FRESH SALMON', 
-    restaurant: 'mejai hai yum'
-  },
+// Smoody menu - Coming Soon
+export const SMOODY_CATEGORIES = [
+  'PROMOTIONS',
+  'SIGNATURE BOWLS',
+  'GREEK YO',
+  'SMOOTHIES',
+  'OVERNIGHT OATS',
+] as const;
 
-  // TOPPINGS
-  { 
-    id: 'SAN-ADD-004', 
-    name: 'Fish Roe', 
-    price: 40, 
-    category: 'TOPPINGS', 
-    restaurant: 'mejai hai yum'
-  },
-  { 
-    id: 'SAN-ADD-001', 
-    name: 'Pickled Egg Yolk ⭐️', 
-    price: 25, 
-    category: 'TOPPINGS', 
-    restaurant: 'mejai hai yum'
-  },
-  
-// DRINKS
-  {
-    id: 'SAN-DRI-009',
-    name: 'Fresh Coconut',
-    price: 29,
-    category: 'DRINKS',
-    restaurant: 'mejai hai yum',
-    extraOptions: [
-      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
-    ]
-  },
-  { 
-    id: 'SAN-DRI-001', 
-    name: 'Pandan Water', 
-    price: 15, 
-    category: 'DRINKS', 
-    restaurant: 'mejai hai yum',
-    extraOptions: [
-      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
-    ]
-  },
-  { 
-    id: 'SAN-DRI-003', 
-    name: 'Mont Fleur Water', 
-    price: 20, 
-    category: 'DRINKS', 
-    restaurant: 'mejai hai yum',
-    extraOptions: [
-      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
-    ]
-  },
-  { 
-    id: 'SAN-DRI-007', 
-    name: 'Thai Red Tea', 
-    price: 49, 
-    category: 'DRINKS', 
-    restaurant: 'mejai hai yum',
-    extraOptions: [
-      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
-    ]
-  },
-  { 
-    id: 'SAN-DRI-008', 
-    name: 'Peach Green Tea ✨', 
-    price: 49, 
-    category: 'DRINKS', 
-    restaurant: 'mejai hai yum',
-    extraOptions: [
-      { id: 'SAN-ADD-017', name: 'Add Cup with Ice', price: 6, category: 'other' }
-    ]
-  },
+export const smoodyMenu: Dish[] = [];
 
-  // DESSERT
-  { 
-    id: 'SAN-DES-001', 
-    name: 'Vanilla Ice Cream Toast (NEW)', 
-    price: 89, 
-    category: 'DESSERT', 
-    restaurant: 'mejai hai yum',
-    extraOptions: [
-      { id: 'SAN-EXT-007', name: 'EXTRA: Extra Ice Cream (1 Scoop)', price: 30, category: 'extra-pls' }
-    ]
-  },
-];
+// Salmon dishes moved to restoryMenu above
 
 export const addOns: AddOn[] = [
   // Add-ons
@@ -1531,7 +1462,7 @@ export const getMenuByRestaurant = (restaurant: Restaurant): Dish[] => {
   } else if (restaurant === 'nirvana') {
     menu = nirvanaMenu;
   } else {
-    menu = mejaiMenu;
+    menu = smoodyMenu;
   }
   
   // Apply images to dishes based on their ID
