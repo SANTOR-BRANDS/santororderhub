@@ -157,7 +157,7 @@ const UnifiedHeader = ({
       
       {/* Category Navigation Bar */}
       <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
-        <div className="flex gap-4 sm:gap-5 overflow-x-auto px-4 py-4 scrollbar-hide snap-x snap-mandatory">
+        <div className="flex gap-3 sm:gap-4 overflow-x-auto px-4 py-3 scrollbar-hide snap-x snap-mandatory">
           {availableCategories.map((category) => {
             const isSelected = selectedCategory === category;
             const translationKey = CATEGORY_TRANSLATION_KEYS[category];
@@ -167,7 +167,7 @@ const UnifiedHeader = ({
                 key={category}
                 onClick={() => handleCategoryChange(category)}
                 className={cn(
-                  'text-sm sm:text-base md:text-lg font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start',
+                  'text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start',
                   isSelected 
                     ? 'text-[#fd7304] border-[#fd7304]' 
                     : 'text-gray-400 border-transparent hover:text-gray-200'
