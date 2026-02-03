@@ -9,7 +9,7 @@ const AnnouncementBanner = () => {
         {/* Duplicate content for seamless loop */}
         {[...Array(4)].map((_, i) => (
           <span key={i} className="text-xs sm:text-sm font-medium tracking-wide">
-            🚚 {t('banner.announcement')} ✨
+            {t('banner.announcement')}
           </span>
         ))}
       </div>
