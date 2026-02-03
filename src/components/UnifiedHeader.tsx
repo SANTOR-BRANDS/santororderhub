@@ -157,7 +157,7 @@ const UnifiedHeader = ({
       
       {/* Category Navigation Bar */}
       <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
-        <div className="flex gap-3 sm:gap-4 overflow-x-auto px-4 py-3 scrollbar-hide snap-x snap-mandatory">
+        <div className="flex gap-3 sm:gap-4 overflow-x-auto px-6 py-3 scrollbar-hide snap-x snap-mandatory">
           {availableCategories.map((category) => {
             const isSelected = selectedCategory === category;
             const translationKey = CATEGORY_TRANSLATION_KEYS[category];

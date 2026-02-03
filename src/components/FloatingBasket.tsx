@@ -26,24 +26,24 @@ const FloatingBasket = ({ basketItems, onOpenBasket }: FloatingBasketProps) => {
   if (itemCount === 0) return null;
 
   return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-black/80 to-transparent">
       <Button
         onClick={onOpenBasket}
         className={cn(
-          'relative bg-santor text-santor-foreground hover:bg-santor-secondary',
-          'shadow-modal px-6 py-3 rounded-full transition-bounce',
-          'border border-white/20'
+          'w-full bg-santor text-santor-foreground hover:bg-santor-secondary',
+          'shadow-modal py-4 rounded-xl transition-bounce',
+          'border border-white/20 flex items-center justify-center gap-3'
         )}
         size="lg"
       >
-        <ShoppingBag className="h-5 w-5 mr-2" />
-        <span className="font-semibold">
+        <ShoppingBag className="h-6 w-6" />
+        <span className="font-bold text-base">
           {itemCount} item{itemCount > 1 ? 's' : ''} • ฿{totalPrice}
         </span>
         
         {itemCount > 0 && (
           <Badge 
-            className="absolute -top-2 -right-2 bg-red-500 text-white border-0 min-w-6 h-6 flex items-center justify-center text-xs font-bold"
+            className="absolute top-1 right-3 bg-red-500 text-white border-0 min-w-6 h-6 flex items-center justify-center text-xs font-bold"
           >
             {itemCount > 99 ? '99+' : itemCount}
           </Badge>

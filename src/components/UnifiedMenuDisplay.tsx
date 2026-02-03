@@ -224,16 +224,8 @@ const UnifiedMenuDisplay = ({
   }
   
   return (
-    <div className="min-h-screen pb-20 bg-[#1a1a1a] text-white">
-      <div className="container mx-auto px-4 py-6">
-        {/* Hero Section */}
-        <section className="text-center mb-6">
-          <h1 className="text-2xl md:text-4xl font-serif mb-2">{t('menu.heroTitle')}</h1>
-          <p className="text-gray-400 text-sm md:text-base">
-            {t('menu.heroSubtitle')}
-          </p>
-        </section>
-
+    <div className="min-h-screen pb-24 bg-[#1a1a1a] text-white">
+      <div className="container mx-auto px-4 py-4">
         {/* Surprise Me Button */}
         {!searchQuery && selectedCategory === 'ALL' && surpriseMeDishes.length > 0 && (
           <button 
