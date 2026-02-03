@@ -145,6 +145,20 @@
 }
 
 @layer utilities {
+  /* Marquee animation for announcement banner */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
+  }
+
   .sparkle-border {
     position: relative;
     z-index: 0;

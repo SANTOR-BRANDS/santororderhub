@@ -12,6 +12,9 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const translations = {
   en: {
+    // Banner
+    'banner.announcement': 'Order from many restaurants, ONE DELIVERY',
+    
     // Header
     'header.welcome': 'Welcome to SANTOR',
     'header.tagline': 'We believe good food is the foundation of happiness',
@@ -490,6 +493,9 @@ export const translations = {
     'terms.contact.content': 'For questions about these Terms of Service, please contact us through our contact page.',
   },
   th: {
+    // Banner
+    'banner.announcement': 'สั่งจากหลายร้าน ส่งครั้งเดียว',
+    
     // Header
     'header.welcome': 'ยินดีต้อนรับสู่ SANTOR',
     'header.tagline': 'เราเชื่อว่าอาหารดีคือรากฐานของความสุข',

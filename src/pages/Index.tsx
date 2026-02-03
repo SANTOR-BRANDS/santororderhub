@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Restaurant, Dish, BasketItem } from '@/types/menu';
+import AnnouncementBanner from '@/components/AnnouncementBanner';
 import UnifiedHeader from '@/components/UnifiedHeader';
 import UnifiedMenuDisplay from '@/components/UnifiedMenuDisplay';
 import DishModal from '@/components/DishModal';
@@ -93,6 +94,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
       <SEOHead metadata={homeMetadata} />
+      <AnnouncementBanner />
       <UnifiedHeader 
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
