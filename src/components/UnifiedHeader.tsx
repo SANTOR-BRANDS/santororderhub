@@ -119,7 +119,7 @@ const UnifiedHeader = ({
           const isSelected = selectedCategory === category;
           const translationKey = CATEGORY_TRANSLATION_KEYS[category];
           const displayCategory = translationKey ? t(translationKey) : category;
-          return <button key={category} onClick={() => handleCategoryChange(category)} className={cn('text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start', isSelected ? 'text-[#fd7304] border-[#fd7304]' : 'text-gray-400 border-transparent hover:text-gray-200')} aria-current={isSelected ? 'true' : undefined}>
+          return <button key={category} onClick={() => handleCategoryChange(category)} className={cn("sm:text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start text-sm", isSelected ? 'text-[#fd7304] border-[#fd7304]' : 'text-gray-400 border-transparent hover:text-gray-200')} aria-current={isSelected ? 'true' : undefined}>
                 {getCategoryEmoji(category)} {displayCategory}
               </button>;
         })}
