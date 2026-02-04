@@ -98,7 +98,7 @@ const UnifiedHeader = ({
               const isSelected = selectedBrand === brand;
               const info = brand === 'all' ? null : getRestaurantInfo(brand);
               const displayName = brand === 'all' ? t('menu.all') : info?.name;
-              return <button key={brand} onClick={() => handleBrandChange(brand)} className={cn('flex-1 flex flex-col items-center gap-1.5 py-2 px-1 rounded-xl transition-all', isSelected ? 'bg-white/20' : 'hover:bg-white/10')}>
+              return <button key={brand} onClick={() => handleBrandChange(brand)} className={cn("flex-1 flex flex-col items-center gap-1.5 rounded-xl transition-all px-0 py-0", isSelected ? 'bg-white/20' : 'hover:bg-white/10')}>
                     <div className={cn('w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 flex items-center justify-center bg-white/10', isSelected && 'ring-2 ring-white/70 ring-offset-2 ring-offset-transparent')}>
                       {info ? <img src={info.logo} alt={info.name} className="w-full h-full object-cover" /> : <span className="text-lg">✦</span>}
                     </div>
