@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Dish, AddOn, SPICY_LEVELS, getSaucesByRestaurant, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
+import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -10,7 +11,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { Plus, Minus, ShoppingCart, Zap } from 'lucide-react';
+import { Plus, Minus, ShoppingCart, Zap, Gift } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DishModalProps {
@@ -38,6 +39,7 @@ const DishModal = ({
   const [needsCutlery, setNeedsCutlery] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [selectedFreeToppings, setSelectedFreeToppings] = useState<string[]>([]);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -66,6 +68,7 @@ const DishModal = ({
       setSelectedSauces([]);
       setNeedsCutlery(false);
       setQuantity(1);
+      setSelectedFreeToppings([]);
 
       // Reset combo state for dish 2
       if (isCombo) {
@@ -98,13 +101,26 @@ const DishModal = ({
     return basePrice - discount;
   };
 
+  const isSmoody = dish.restaurant === 'smoody';
+
   const getThemeStyles = () => {
-    return dish.restaurant === 'restory' ? {
-      accent: 'restory',
-      bg: 'bg-restory/5',
-      border: 'border-restory/20',
-      button: 'bg-restory text-restory-foreground hover:bg-restory-secondary'
-    } : {
+    if (dish.restaurant === 'restory') {
+      return {
+        accent: 'restory',
+        bg: 'bg-restory/5',
+        border: 'border-restory/20',
+        button: 'bg-restory text-restory-foreground hover:bg-restory-secondary'
+      };
+    }
+    if (dish.restaurant === 'smoody') {
+      return {
+        accent: 'smoody-accent',
+        bg: 'bg-smoody-accent/5',
+        border: 'border-smoody-accent/20',
+        button: 'bg-smoody-accent text-white hover:bg-smoody-accent/90'
+      };
+    }
+    return {
       accent: 'nirvana-accent',
       bg: 'bg-nirvana-accent/5',
       border: 'border-nirvana-accent/20',
@@ -237,7 +253,8 @@ const DishModal = ({
     // TOPPINGS items don't require any selections
     if (dish.category === 'TOPPINGS') return true;
     
-    // DRINKS, FRESH SALMON, and DESSERT don't require sauce
+    // Smoody, DRINKS, FRESH SALMON, and DESSERT don't require sauce
+    if (isSmoody) return true;
     const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT';
     const hasSauce = requiresSauce ? selectedSauces.length > 0 : true;
     const hasSpicyLevel = !dish.spicyRequired || spicyLevel !== undefined;
@@ -255,6 +272,8 @@ const DishModal = ({
     
     // TOPPINGS items don't require any selections
     if (dish.category === 'TOPPINGS') return true;
+    // Smoody dishes don't require sauce
+    if (isSmoody) return true;
 
     const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT';
 
@@ -324,7 +343,8 @@ const DishModal = ({
         spicyLevel: dish.spicyRequired ? spicyLevel : undefined,
         sauce: selectedSauces.join(', '),
         needsCutlery,
-        quantity
+        quantity,
+        ...(selectedFreeToppings.length > 0 ? { freeToppings: selectedFreeToppings } : {}),
       };
     }
   };
@@ -349,6 +369,7 @@ const DishModal = ({
   // Filter add-ons by restaurant prefix
   const restaurantPrefix = dish.restaurant === 'nirvana' ? 'NV-' : 
                           dish.restaurant === 'restory' ? 'RS-' : 
+                          dish.restaurant === 'smoody' ? 'SM-' :
                           'MHY-';
   
   const filteredAddOns = addOns.filter(addon => 
@@ -360,6 +381,138 @@ const DishModal = ({
     acc[addon.category].push(addon);
     return acc;
   }, {} as Record<string, AddOn[]>);
+
+  // Smoody grouped extras category config
+  const SMOODY_EXTRA_CATEGORIES: { key: string; label: string; emoji: string }[] = [
+    { key: 'sm-greek-yo', label: 'GREEK YOGURT', emoji: '🫐' },
+    { key: 'sm-fruits', label: 'FRESH FRUITS', emoji: '🍓' },
+    { key: 'sm-nuts', label: 'NUTS & SEEDS', emoji: '🥜' },
+    { key: 'sm-sauce', label: 'SAUCES', emoji: '🍯' },
+  ];
+
+  // Render Smoody grouped extras
+  const renderSmoodyGroupedExtras = (dishNumber = 1) => {
+    const filteredExtras = getFilteredExtraOptions(dishNumber);
+    if (filteredExtras.length === 0) return null;
+    const currentExtraPls = dishNumber === 1 ? selectedExtraPls : selectedExtraPls2;
+
+    const grouped = filteredExtras.reduce((acc, addon) => {
+      if (!acc[addon.category]) acc[addon.category] = [];
+      acc[addon.category].push(addon);
+      return acc;
+    }, {} as Record<string, AddOn[]>);
+
+    return (
+      <div className="mb-6">
+        <Label className="text-base font-semibold mb-3">EXTRA TOPPINGS</Label>
+        {SMOODY_EXTRA_CATEGORIES.map(({ key, label, emoji }) => {
+          const items = grouped[key];
+          if (!items || items.length === 0) return null;
+          return (
+            <div key={key} className="mb-4">
+              <div className="text-sm font-semibold text-muted-foreground mb-1 px-1">
+                {emoji} {label}
+              </div>
+              <div className="space-y-1">
+                {items.map(addon => (
+                  <Label
+                    key={addon.id}
+                    htmlFor={`extra-${addon.id}-${dishNumber}`}
+                    className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        id={`extra-${addon.id}-${dishNumber}`}
+                        checked={currentExtraPls.some(a => a.id === addon.id)}
+                        onCheckedChange={() => toggleExtraPls(addon, dishNumber)}
+                      />
+                      <span className="text-sm">{addon.name}</span>
+                    </div>
+                    <span className="text-sm text-muted-foreground">+{addon.price}</span>
+                  </Label>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  // Render free toppings section for Smoody Greek Yo variants
+  const renderFreeToppingsSection = (dishNumber = 1) => {
+    const currentVariant = dishNumber === 1 ? selectedVariant : selectedVariant2;
+    const limit = currentVariant?.freeToppingsLimit;
+    if (!limit || !isSmoody) return null;
+
+    const toppingsByCategory = SMOODY_FREE_TOPPINGS.reduce((acc, t) => {
+      if (!acc[t.category]) acc[t.category] = [];
+      acc[t.category].push(t);
+      return acc;
+    }, {} as Record<string, typeof SMOODY_FREE_TOPPINGS>);
+
+    const categoryLabels: Record<string, { label: string; emoji: string }> = {
+      fruits: { label: 'FRUITS', emoji: '🍓' },
+      nuts: { label: 'NUTS & SEEDS', emoji: '🥜' },
+      sauce: { label: 'SAUCES', emoji: '🍯' },
+    };
+
+    return (
+      <div className="mb-6 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+        <Label className="text-base font-semibold mb-1 flex items-center gap-2">
+          <Gift className="h-4 w-4 text-green-500" />
+          FREE TOPPINGS — Pick {limit}
+        </Label>
+        <p className="text-xs text-muted-foreground mb-3">
+          {selectedFreeToppings.length}/{limit} selected
+        </p>
+        {Object.entries(toppingsByCategory).map(([cat, toppings]) => {
+          const info = categoryLabels[cat];
+          if (!info) return null;
+          return (
+            <div key={cat} className="mb-3">
+              <div className="text-sm font-semibold text-muted-foreground mb-1 px-1">
+                {info.emoji} {info.label}
+              </div>
+              <div className="space-y-1">
+                {toppings.map(topping => {
+                  const isSelected = selectedFreeToppings.includes(topping.id);
+                  const atLimit = selectedFreeToppings.length >= limit && !isSelected;
+                  return (
+                    <Label
+                      key={topping.id}
+                      htmlFor={`free-${topping.id}-${dishNumber}`}
+                      className={cn(
+                        "flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors",
+                        atLimit && "opacity-40 pointer-events-none"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Checkbox
+                          id={`free-${topping.id}-${dishNumber}`}
+                          checked={isSelected}
+                          disabled={atLimit}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setSelectedFreeToppings(prev => [...prev, topping.id]);
+                            } else {
+                              setSelectedFreeToppings(prev => prev.filter(id => id !== topping.id));
+                            }
+                          }}
+                        />
+                        <span className="text-sm">{topping.name}</span>
+                      </div>
+                      <span className="text-xs font-medium text-green-500">FREE</span>
+                    </Label>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   // Component for rendering customization options
   const renderCustomizationOptions = (dishNumber = 1) => {
@@ -391,8 +544,11 @@ const DishModal = ({
             <RadioGroup 
               value={currentSelectedVariant?.id || ''} 
               onValueChange={(value) => {
-                const variant = dish.variants?.find(v => v.id === value);
+              const variant = dish.variants?.find(v => v.id === value);
                 setCurrentSelectedVariant(variant || null);
+
+                // Reset free toppings when variant changes (Smoody)
+                if (isSmoody) setSelectedFreeToppings([]);
                 
                 // Clear incompatible beef extras when variant changes
                 if (dish.name.includes('Premium Beef')) {
@@ -442,82 +598,89 @@ const DishModal = ({
           </div>
         )}
 
+        {/* Free Toppings Section (Smoody Greek Yo) */}
+        {isSmoody && renderFreeToppingsSection(dishNumber)}
+
         {/* EXTRA Section */}
-        {getFilteredExtraOptions(dishNumber).length > 0 && (
-          <div className="mb-6">
-            <Label className="text-base font-semibold mb-3">
-              EXTRA
-            </Label>
-            <div className="space-y-1">
-              {getFilteredExtraOptions(dishNumber).map(addon => {
-                if (addon.isIncremental) {
-                  const qty = currentIncrementalQuantities.get(addon.id) || 0;
-                  const totalGrams = qty * (addon.incrementalUnit || 20);
-                  const totalPrice = calculateIncrementalPrice(addon, qty);
+        {isSmoody ? (
+          renderSmoodyGroupedExtras(dishNumber)
+        ) : (
+          getFilteredExtraOptions(dishNumber).length > 0 && (
+            <div className="mb-6">
+              <Label className="text-base font-semibold mb-3">
+                EXTRA
+              </Label>
+              <div className="space-y-1">
+                {getFilteredExtraOptions(dishNumber).map(addon => {
+                  if (addon.isIncremental) {
+                    const qty = currentIncrementalQuantities.get(addon.id) || 0;
+                    const totalGrams = qty * (addon.incrementalUnit || 20);
+                    const totalPrice = calculateIncrementalPrice(addon, qty);
+                    
+                    return (
+                      <div key={addon.id} className="flex items-center justify-between py-2.5 px-3 border rounded-lg">
+                        <div className="flex-1">
+                          <span className="text-sm font-medium">{t(addon.id)}</span>
+                          {qty > 0 && (
+                            <div className="text-xs text-muted-foreground mt-1">
+                              {totalGrams}g • ฿{totalPrice}
+                              {totalGrams >= 100 && (
+                                <span className="ml-2 text-green-600">
+                                  (-฿{Math.floor(totalGrams / 100) * (addon.incrementalDiscount || 10)} discount)
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => updateIncrementalQuantity(addon, -1, dishNumber)}
+                            disabled={qty === 0}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+                          <span className="w-8 text-center font-medium">{qty}</span>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => updateIncrementalQuantity(addon, 1, dishNumber)}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  }
                   
                   return (
-                    <div key={addon.id} className="flex items-center justify-between py-2.5 px-3 border rounded-lg">
-                      <div className="flex-1">
-                        <span className="text-sm font-medium">{t(addon.id)}</span>
-                        {qty > 0 && (
-                          <div className="text-xs text-muted-foreground mt-1">
-                            {totalGrams}g • ฿{totalPrice}
-                            {totalGrams >= 100 && (
-                              <span className="ml-2 text-green-600">
-                                (-฿{Math.floor(totalGrams / 100) * (addon.incrementalDiscount || 10)} discount)
-                              </span>
-                            )}
-                          </div>
-                        )}
+                    <Label 
+                      key={addon.id} 
+                      htmlFor={`extra-${addon.id}-${dishNumber}`}
+                      className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Checkbox 
+                          id={`extra-${addon.id}-${dishNumber}`} 
+                          checked={currentSelectedExtraPls.some(a => a.id === addon.id)} 
+                          onCheckedChange={() => toggleExtraPls(addon, dishNumber)} 
+                        />
+                        <span className="text-sm">{t(addon.id)}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8"
-                          onClick={() => updateIncrementalQuantity(addon, -1, dishNumber)}
-                          disabled={qty === 0}
-                        >
-                          <Minus className="h-4 w-4" />
-                        </Button>
-                        <span className="w-8 text-center font-medium">{qty}</span>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8"
-                          onClick={() => updateIncrementalQuantity(addon, 1, dishNumber)}
-                        >
-                          <Plus className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
+                      <span className="text-sm text-muted-foreground">
+                        {addon.price > 0 ? `+${addon.price}` : '+0'}
+                      </span>
+                    </Label>
                   );
-                }
-                
-                return (
-                  <Label 
-                    key={addon.id} 
-                    htmlFor={`extra-${addon.id}-${dishNumber}`}
-                    className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Checkbox 
-                        id={`extra-${addon.id}-${dishNumber}`} 
-                        checked={currentSelectedExtraPls.some(a => a.id === addon.id)} 
-                        onCheckedChange={() => toggleExtraPls(addon, dishNumber)} 
-                      />
-                      <span className="text-sm">{t(addon.id)}</span>
-                    </div>
-                    <span className="text-sm text-muted-foreground">
-                      {addon.price > 0 ? `+${addon.price}` : '+0'}
-                    </span>
-                  </Label>
-                );
-              })}
+                })}
+              </div>
             </div>
-          </div>
+          )
         )}
 
         {/* Spicy Level - Required for Pad Krapao only */}
@@ -556,8 +719,8 @@ const DishModal = ({
           </div>
         )}
 
-        {/* Add-ons - Skip for DRINKS, FRESH SALMON, and DESSERT */}
-        {dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
+        {/* Add-ons - Skip for Smoody, DRINKS, FRESH SALMON, and DESSERT */}
+        {!isSmoody && dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
           <div key={category} className="mb-6">
             <Label className="text-base font-semibold mb-3">
               {category === 'other' ? 'ADD-ONS' : 
@@ -591,8 +754,8 @@ const DishModal = ({
           </div>
         ))}
 
-        {/* Sauce Selection - Required (Skip for DRINKS, FRESH SALMON, and DESSERT) */}
-        {dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && (
+        {/* Sauce Selection - Required (Skip for Smoody, DRINKS, FRESH SALMON, and DESSERT) */}
+        {!isSmoody && dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && (
         <div 
           ref={currentSauceRef}
           className={cn(
