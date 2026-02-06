@@ -1,5 +1,6 @@
 import { Dish, AddOn, Restaurant } from '@/types/menu';
 import { getDishImage } from '@/lib/dishImages';
+import { smoodyMenu as smoodyMenuData } from '@/data/smoodyData';
 
 export const restoryMenu: Dish[] = [
   // COMBO DEALS
@@ -1397,16 +1398,18 @@ export const nirvanaMenu: Dish[] = [
   },
 ];
 
-// Smoody menu - Coming Soon
+// Smoody menu categories
 export const SMOODY_CATEGORIES = [
   'PROMOTIONS',
   'SIGNATURE BOWLS',
   'GREEK YO',
+  'D.I.Y',
   'SMOOTHIES',
   'OVERNIGHT OATS',
+  'DRINKS',
 ] as const;
 
-export const smoodyMenu: Dish[] = [];
+export const smoodyMenu = smoodyMenuData;
 
 // Salmon dishes moved to restoryMenu above
 

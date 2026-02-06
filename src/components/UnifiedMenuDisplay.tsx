@@ -15,7 +15,7 @@ import {
   SUBCATEGORY_TAGS,
   UNIFIED_CATEGORIES
 } from '@/lib/unifiedMenu';
-import { SMOODY_CATEGORIES } from '@/data/menuData';
+import { SMOODY_COMING_SOON } from '@/data/smoodyData';
 
 // Map subcategory tag names to translation keys
 const SUBCATEGORY_TRANSLATION_KEYS: Record<string, string> = {
@@ -42,6 +42,8 @@ const CATEGORY_TRANSLATION_KEYS: Record<string, string> = {
   'FRESH SEAFOOD': 'category.freshSeafood',
   'VEGETARIAN': 'category.vegetarian',
   'TOPPINGS': 'category.toppings',
+  'SIGNATURE BOWLS': 'category.signatureBowls',
+  'GREEK YO': 'category.greekYo',
   'DRINKS': 'category.drinks',
   'DESSERTS': 'category.desserts',
 };
@@ -182,46 +184,7 @@ const UnifiedMenuDisplay = ({
   
   const maxTagCount = Math.max(...subcategoryTagsWithCounts.map(t => t.count), 1);
   
-  // Check if Smoody is selected - show Coming Soon
-  if (selectedBrand === 'smoody') {
-    return (
-      <div className="min-h-screen pb-20 bg-smoody-background text-smoody-primary">
-        <div className="container mx-auto px-4 py-6">
-          {/* Hero Section */}
-          <section className="text-center mb-6">
-            <h1 className="text-2xl md:text-4xl font-serif mb-2">🥤 Smoody</h1>
-            <p className="text-smoody-secondary text-sm md:text-base">
-              Healthy Bowls & Smoothies
-            </p>
-          </section>
-
-          {/* Coming Soon Section */}
-          <section className="text-center py-12 bg-white/50 rounded-xl border border-smoody-accent/30">
-            <div className="text-6xl mb-4" role="img" aria-label="Coming soon">🚀</div>
-            <h2 className="text-2xl font-bold mb-4 text-smoody-primary">{t('menu.comingSoon') || 'Coming Soon!'}</h2>
-            <p className="text-smoody-secondary mb-8 max-w-md mx-auto">
-              {t('menu.comingSoonDesc') || 'We\'re working on something delicious. Stay tuned!'}
-            </p>
-            
-            {/* Smoody Categories Preview */}
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold mb-4 text-smoody-primary">{t('menu.upcomingCategories') || 'Upcoming Menu Categories'}</h3>
-              <div className="flex flex-wrap justify-center gap-3">
-                {SMOODY_CATEGORIES.map(category => (
-                  <span 
-                    key={category} 
-                    className="px-4 py-2 bg-smoody-primary/10 text-smoody-primary rounded-full text-sm font-medium"
-                  >
-                    {category}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    );
-  }
+  // Smoody menu items are now integrated into the unified menu flow
   
   return (
     <div className="min-h-screen pb-24 bg-[#1a1a1a] text-white">
@@ -335,6 +298,21 @@ const UnifiedMenuDisplay = ({
           <div className="text-center mt-8 text-gray-500 text-sm">
             {t('menu.showingDishes').replace('{count}', finalDishes.length.toString())}
             {selectedBrand !== 'all' && ` ${t('menu.fromRestaurant').replace('{restaurant}', getRestaurantInfo(selectedBrand).name)}`}
+          </div>
+        )}
+
+        {/* Coming Soon categories for Smoody */}
+        {selectedBrand === 'smoody' && (
+          <div className="mt-8 text-center py-8 bg-white/5 rounded-xl border border-smoody-accent/20">
+            <div className="text-4xl mb-3">🚀</div>
+            <h3 className="text-lg font-bold mb-2 text-white">More Coming Soon!</h3>
+            <div className="flex flex-wrap justify-center gap-2 mt-4">
+              {SMOODY_COMING_SOON.map(cat => (
+                <span key={cat} className="px-3 py-1.5 bg-white/10 text-gray-300 rounded-full text-sm font-medium">
+                  {cat}
+                </span>
+              ))}
+            </div>
           </div>
         )}
       </div>
