@@ -11,6 +11,8 @@ import { UNIFIED_CATEGORIES, UnifiedCategory, getRestaurantInfo, getUnifiedMenu,
 const CATEGORY_TRANSLATION_KEYS: Record<string, string> = {
   'ALL': 'category.all',
   'COMBO DEALS': 'category.comboDeals',
+  'SIGNATURE BOWLS': 'category.signatureBowls',
+  'GREEK YO': 'category.greekYo',
   'RICE': 'category.rice',
   'NOODLES': 'category.noodles',
   'FRESH SEAFOOD': 'category.freshSeafood',
@@ -133,6 +135,8 @@ const getCategoryEmoji = (category: UnifiedCategory): string => {
   const emojis: Record<UnifiedCategory, string> = {
     'ALL': '🍽️',
     'COMBO DEALS': '🔥',
+    'SIGNATURE BOWLS': '🥣',
+    'GREEK YO': '🫐',
     'RICE': '🍚',
     'NOODLES': '🍜',
     'FRESH SEAFOOD': '🐟',
