@@ -5,6 +5,7 @@ export interface DishVariant {
   name: string;
   price: number;
   isDefault?: boolean;
+  freeToppingsLimit?: number;
 }
 
 export interface Dish {
@@ -27,7 +28,7 @@ export interface AddOn {
   id: string;
   name: string;
   price: number;
-  category: 'meat' | 'egg' | 'sauce' | 'other' | 'fried-egg' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette' | 'extra-pls';
+  category: 'meat' | 'egg' | 'sauce' | 'other' | 'fried-egg' | 'thai-omelette' | 'creamy-omelette' | 'soft-omelette' | 'extra-pls' | 'sm-fruits' | 'sm-nuts' | 'sm-sauce' | 'sm-greek-yo';
   isIncremental?: boolean; // For beef/pork 20g increments
   incrementalUnit?: number; // 20g units
   incrementalDiscount?: number; // Discount per 100g
@@ -46,6 +47,7 @@ export interface BasketItem {
   needsCutlery: boolean;
   quantity: number;
   isPremiumBeef?: boolean;
+  freeToppings?: string[];
   // For combo deals (2x Pad Krapao)
   isCombo?: boolean;
   combo2?: {

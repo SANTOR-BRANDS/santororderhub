@@ -1,5 +1,5 @@
 import { Dish, Restaurant } from '@/types/menu';
-import { restoryMenu, nirvanaMenu, smoodyMenu, SMOODY_CATEGORIES } from '@/data/menuData';
+import { restoryMenu, nirvanaMenu, smoodyMenu } from '@/data/menuData';
 import { getDishImage } from '@/lib/dishImages';
 
 // Unified category mapping - maps original categories to unified types
@@ -40,6 +40,10 @@ const CATEGORY_MAPPING: Record<string, string> = {
   
   // Combos - treat as featured
   'COMBO DEALS': 'COMBO DEALS',
+
+  // Smoody categories
+  'SIGNATURE BOWLS': 'SIGNATURE BOWLS',
+  'GREEK YO': 'GREEK YO',
 };
 
 // Subcategory tags for filtering within main categories
@@ -82,6 +86,8 @@ const RESTAURANT_PRIORITY: Restaurant[] = ['restory', 'nirvana', 'smoody'];
 export const UNIFIED_CATEGORIES = [
   'ALL',
   'COMBO DEALS',
+  'SIGNATURE BOWLS',
+  'GREEK YO',
   'RICE',
   'NOODLES',
   'FRESH SEAFOOD',
