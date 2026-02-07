@@ -15,6 +15,8 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Drop console.log in production builds (using built-in esbuild)
+  esbuild: mode === 'production' ? { drop: ['console'] } : undefined,
   build: {
     // Optimize chunk splitting
     rollupOptions: {
@@ -28,12 +30,5 @@ export default defineConfig(({ mode }) => ({
     },
     // Warn on large chunks
     chunkSizeWarningLimit: 1000,
-    // Enable minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: mode === 'production',
-      },
-    },
   },
 }));
