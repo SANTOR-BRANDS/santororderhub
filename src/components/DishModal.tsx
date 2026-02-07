@@ -13,7 +13,6 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { Plus, Minus, ShoppingCart, Zap, Gift } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-
 interface DishModalProps {
   dish: Dish | null;
   isOpen: boolean;
@@ -21,7 +20,6 @@ interface DishModalProps {
   onAddToBasket: (item: BasketItem) => void;
   onOrderNow?: (item: BasketItem) => void;
 }
-
 const DishModal = ({
   dish,
   isOpen,
@@ -29,7 +27,9 @@ const DishModal = ({
   onAddToBasket,
   onOrderNow
 }: DishModalProps) => {
-  const { t } = useLanguage();
+  const {
+    t
+  } = useLanguage();
   const [selectedVariant, setSelectedVariant] = useState<DishVariant | null>(null);
   const [selectedExtraPls, setSelectedExtraPls] = useState<AddOn[]>([]);
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]);
@@ -55,7 +55,6 @@ const DishModal = ({
   const [incrementalQuantities2, setIncrementalQuantities2] = useState<Map<string, number>>(new Map());
   const [spicyLevel2, setSpicyLevel2] = useState<number | undefined>(undefined);
   const [selectedSauces2, setSelectedSauces2] = useState<string[]>([]);
-
   useEffect(() => {
     if (dish && isOpen) {
       // Set default variant
@@ -81,9 +80,7 @@ const DishModal = ({
       }
     }
   }, [dish, isOpen]);
-
   if (!dish) return null;
-
   const isCombo = dish.name.includes('2x Pad Krapao');
   const SAUCES = dish.customSauces || getSaucesByRestaurant(dish.restaurant);
 
@@ -92,17 +89,13 @@ const DishModal = ({
     if (!addon.isIncremental || !addon.incrementalUnit || !addon.incrementalDiscount) {
       return addon.price * quantity;
     }
-    
     const totalGrams = addon.incrementalUnit * quantity;
     const basePrice = addon.price * quantity;
     const discountSets = Math.floor(totalGrams / 100); // Every 100g gets discount
     const discount = discountSets * addon.incrementalDiscount;
-    
     return basePrice - discount;
   };
-
   const isSmoody = dish.restaurant === 'smoody';
-
   const getThemeStyles = () => {
     if (dish.restaurant === 'restory') {
       return {
@@ -127,12 +120,10 @@ const DishModal = ({
       button: 'bg-nirvana-accent text-nirvana-primary hover:bg-nirvana-accent/90'
     };
   };
-
   const theme = getThemeStyles();
-
   const getCurrentPrice = () => {
     const basePrice = selectedVariant?.price || dish.price;
-    
+
     // Calculate extras with incremental pricing
     const extraPlsTotal = selectedExtraPls.reduce((sum, addon) => {
       if (addon.isIncremental) {
@@ -141,13 +132,11 @@ const DishModal = ({
       }
       return sum + addon.price;
     }, 0);
-    
     const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
     const saucesTotal = selectedSauces.reduce((sum, sauceId) => {
       const sauce = SAUCES.find(s => s.id === sauceId);
       return sum + (sauce?.price || 0);
     }, 0);
-
     if (isCombo) {
       // For combo, add the second dish's extras
       const extraPlsTotal2 = selectedExtraPls2.reduce((sum, addon) => {
@@ -171,7 +160,6 @@ const DishModal = ({
   const getFilteredExtraOptions = (dishNumber = 1) => {
     if (!dish.extraOptions) return [];
     const currentVariant = dishNumber === 1 ? selectedVariant : selectedVariant2;
-    
     return dish.extraOptions.filter(option => {
       // Check variant restriction - only show add-on if matches selected variant
       if (option.variantRestriction && currentVariant) {
@@ -184,35 +172,22 @@ const DishModal = ({
       return true;
     });
   };
-
   const toggleExtraPls = (addon: AddOn, dishNumber = 1) => {
     // Incremental items are handled differently
     if (addon.isIncremental) return;
-    
     if (dishNumber === 1) {
-      setSelectedExtraPls(prev => 
-        prev.find(a => a.id === addon.id) 
-          ? prev.filter(a => a.id !== addon.id) 
-          : [...prev, addon]
-      );
+      setSelectedExtraPls(prev => prev.find(a => a.id === addon.id) ? prev.filter(a => a.id !== addon.id) : [...prev, addon]);
     } else {
-      setSelectedExtraPls2(prev => 
-        prev.find(a => a.id === addon.id) 
-          ? prev.filter(a => a.id !== addon.id) 
-          : [...prev, addon]
-      );
+      setSelectedExtraPls2(prev => prev.find(a => a.id === addon.id) ? prev.filter(a => a.id !== addon.id) : [...prev, addon]);
     }
   };
-
   const updateIncrementalQuantity = (addon: AddOn, delta: number, dishNumber = 1) => {
     const currentMap = dishNumber === 1 ? incrementalQuantities : incrementalQuantities2;
     const setMap = dishNumber === 1 ? setIncrementalQuantities : setIncrementalQuantities2;
     const currentExtras = dishNumber === 1 ? selectedExtraPls : selectedExtraPls2;
     const setExtras = dishNumber === 1 ? setSelectedExtraPls : setSelectedExtraPls2;
-    
     const currentQty = currentMap.get(addon.id) || 0;
     const newQty = Math.max(0, currentQty + delta);
-    
     const newMap = new Map(currentMap);
     if (newQty > 0) {
       newMap.set(addon.id, newQty);
@@ -225,34 +200,22 @@ const DishModal = ({
       // Remove from extras if quantity is 0
       setExtras(prev => prev.filter(a => a.id !== addon.id));
     }
-    
     setMap(newMap);
   };
-
   const toggleAddOn = (addon: AddOn, dishNumber = 1) => {
     if (dishNumber === 1) {
-      setSelectedAddOns(prev => 
-        prev.find(a => a.id === addon.id) 
-          ? prev.filter(a => a.id !== addon.id) 
-          : [...prev, addon]
-      );
+      setSelectedAddOns(prev => prev.find(a => a.id === addon.id) ? prev.filter(a => a.id !== addon.id) : [...prev, addon]);
     } else {
-      setSelectedAddOns2(prev => 
-        prev.find(a => a.id === addon.id) 
-          ? prev.filter(a => a.id !== addon.id) 
-          : [...prev, addon]
-      );
+      setSelectedAddOns2(prev => prev.find(a => a.id === addon.id) ? prev.filter(a => a.id !== addon.id) : [...prev, addon]);
     }
   };
-
   const getTotalPrice = () => {
     return getCurrentPrice() * quantity;
   };
-
   const canAddToBasket = () => {
     // TOPPINGS items don't require any selections
     if (dish.category === 'TOPPINGS') return true;
-    
+
     // Smoody, DRINKS, FRESH SALMON, and DESSERT don't require sauce
     if (isSmoody) return true;
     const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT';
@@ -269,25 +232,30 @@ const DishModal = ({
   // Validate and scroll to first error
   const validateAndScrollToError = (): boolean => {
     setValidationError(null);
-    
+
     // TOPPINGS items don't require any selections
     if (dish.category === 'TOPPINGS') return true;
     // Smoody dishes don't require sauce
     if (isSmoody) return true;
-
     const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT';
 
     // Check spicy level first for dish 1
     if (dish.spicyRequired && spicyLevel === undefined) {
       setValidationError('spicy1');
-      spicyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      spicyRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
       return false;
     }
 
     // Check sauce for dish 1
     if (requiresSauce && selectedSauces.length === 0) {
       setValidationError('sauce1');
-      sauceRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      sauceRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
       return false;
     }
 
@@ -295,20 +263,23 @@ const DishModal = ({
     if (isCombo) {
       if (dish.spicyRequired && spicyLevel2 === undefined) {
         setValidationError('spicy2');
-        spicy2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        spicy2Ref.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
         return false;
       }
-
       if (requiresSauce && selectedSauces2.length === 0) {
         setValidationError('sauce2');
-        sauce2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        sauce2Ref.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
         return false;
       }
     }
-
     return true;
   };
-
   const createBasketItem = (): BasketItem => {
     if (isCombo) {
       return {
@@ -344,18 +315,18 @@ const DishModal = ({
         sauce: selectedSauces.join(', '),
         needsCutlery,
         quantity,
-        ...(selectedFreeToppings.length > 0 ? { freeToppings: selectedFreeToppings } : {}),
+        ...(selectedFreeToppings.length > 0 ? {
+          freeToppings: selectedFreeToppings
+        } : {})
       };
     }
   };
-
   const handleAddToBasket = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
     onAddToBasket(basketItem);
     onClose();
   };
-
   const handleOrderNow = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
@@ -367,15 +338,8 @@ const DishModal = ({
   };
 
   // Filter add-ons by restaurant prefix
-  const restaurantPrefix = dish.restaurant === 'nirvana' ? 'NV-' : 
-                          dish.restaurant === 'restory' ? 'RS-' : 
-                          dish.restaurant === 'smoody' ? 'SM-' :
-                          'MHY-';
-  
-  const filteredAddOns = addOns.filter(addon => 
-    addon.id.startsWith(restaurantPrefix) || addon.id.startsWith('SAN-')
-  );
-  
+  const restaurantPrefix = dish.restaurant === 'nirvana' ? 'NV-' : dish.restaurant === 'restory' ? 'RS-' : dish.restaurant === 'smoody' ? 'SM-' : 'MHY-';
+  const filteredAddOns = addOns.filter(addon => addon.id.startsWith(restaurantPrefix) || addon.id.startsWith('SAN-'));
   const addOnsByCategory = filteredAddOns.reduce((acc, addon) => {
     if (!acc[addon.category]) acc[addon.category] = [];
     acc[addon.category].push(addon);
@@ -383,60 +347,63 @@ const DishModal = ({
   }, {} as Record<string, AddOn[]>);
 
   // Smoody grouped extras category config
-  const SMOODY_EXTRA_CATEGORIES: { key: string; label: string; emoji: string }[] = [
-    { key: 'sm-greek-yo', label: 'GREEK YO', emoji: '🍨' },
-    { key: 'sm-fruits', label: 'FRESH FRUITS', emoji: '🍓' },
-    { key: 'sm-nuts', label: 'NUTS & SEEDS', emoji: '🥜' },
-    { key: 'sm-sauce', label: 'SAUCES', emoji: '🍯' },
-  ];
+  const SMOODY_EXTRA_CATEGORIES: {
+    key: string;
+    label: string;
+    emoji: string;
+  }[] = [{
+    key: 'sm-greek-yo',
+    label: 'GREEK YO',
+    emoji: '🍨'
+  }, {
+    key: 'sm-fruits',
+    label: 'FRESH FRUITS',
+    emoji: '🍓'
+  }, {
+    key: 'sm-nuts',
+    label: 'NUTS & SEEDS',
+    emoji: '🥜'
+  }, {
+    key: 'sm-sauce',
+    label: 'SAUCES',
+    emoji: '🍯'
+  }];
 
   // Render Smoody grouped extras
   const renderSmoodyGroupedExtras = (dishNumber = 1) => {
     const filteredExtras = getFilteredExtraOptions(dishNumber);
     if (filteredExtras.length === 0) return null;
     const currentExtraPls = dishNumber === 1 ? selectedExtraPls : selectedExtraPls2;
-
     const grouped = filteredExtras.reduce((acc, addon) => {
       if (!acc[addon.category]) acc[addon.category] = [];
       acc[addon.category].push(addon);
       return acc;
     }, {} as Record<string, AddOn[]>);
-
-    return (
-      <div className="mb-6">
+    return <div className="mb-6">
         <Label className="text-base font-semibold mb-3">EXTRA TOPPINGS</Label>
-        {SMOODY_EXTRA_CATEGORIES.map(({ key, label, emoji }) => {
-          const items = grouped[key];
-          if (!items || items.length === 0) return null;
-          return (
-            <div key={key} className="mb-4">
-              <div className="text-sm font-semibold text-muted-foreground mb-1 px-1">
+        {SMOODY_EXTRA_CATEGORIES.map(({
+        key,
+        label,
+        emoji
+      }) => {
+        const items = grouped[key];
+        if (!items || items.length === 0) return null;
+        return <div key={key} className="mb-4">
+              <div className="text-sm font-semibold text-muted-foreground mb-1 px-1 my-[6px]">
                 {emoji} {label}
               </div>
               <div className="space-y-1">
-                {items.map(addon => (
-                  <Label
-                    key={addon.id}
-                    htmlFor={`extra-${addon.id}-${dishNumber}`}
-                    className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
-                  >
+                {items.map(addon => <Label key={addon.id} htmlFor={`extra-${addon.id}-${dishNumber}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
                     <div className="flex items-center gap-3">
-                      <Checkbox
-                        id={`extra-${addon.id}-${dishNumber}`}
-                        checked={currentExtraPls.some(a => a.id === addon.id)}
-                        onCheckedChange={() => toggleExtraPls(addon, dishNumber)}
-                      />
+                      <Checkbox id={`extra-${addon.id}-${dishNumber}`} checked={currentExtraPls.some(a => a.id === addon.id)} onCheckedChange={() => toggleExtraPls(addon, dishNumber)} />
                       <span className="text-sm">{addon.name}</span>
                     </div>
                     <span className="text-sm text-muted-foreground">+{addon.price}</span>
-                  </Label>
-                ))}
+                  </Label>)}
               </div>
-            </div>
-          );
-        })}
-      </div>
-    );
+            </div>;
+      })}
+      </div>;
   };
 
   // Render free toppings section for Smoody Greek Yo variants
@@ -444,21 +411,29 @@ const DishModal = ({
     const currentVariant = dishNumber === 1 ? selectedVariant : selectedVariant2;
     const limit = currentVariant?.freeToppingsLimit;
     if (!limit || !isSmoody) return null;
-
     const toppingsByCategory = SMOODY_FREE_TOPPINGS.reduce((acc, t) => {
       if (!acc[t.category]) acc[t.category] = [];
       acc[t.category].push(t);
       return acc;
     }, {} as Record<string, typeof SMOODY_FREE_TOPPINGS>);
-
-    const categoryLabels: Record<string, { label: string; emoji: string }> = {
-      fruits: { label: 'FRUITS', emoji: '🍓' },
-      nuts: { label: 'NUTS & SEEDS', emoji: '🥜' },
-      sauce: { label: 'SAUCES', emoji: '🍯' },
+    const categoryLabels: Record<string, {
+      label: string;
+      emoji: string;
+    }> = {
+      fruits: {
+        label: 'FRUITS',
+        emoji: '🍓'
+      },
+      nuts: {
+        label: 'NUTS & SEEDS',
+        emoji: '🥜'
+      },
+      sauce: {
+        label: 'SAUCES',
+        emoji: '🍯'
+      }
     };
-
-    return (
-      <div className="mb-6 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+    return <div className="mb-6 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
         <Label className="text-base font-semibold mb-1 flex items-center gap-2">
           <Gift className="h-4 w-4 text-green-500" />
           FREE TOPPINGS — Pick {limit}
@@ -467,51 +442,34 @@ const DishModal = ({
           {selectedFreeToppings.length}/{limit} selected
         </p>
         {Object.entries(toppingsByCategory).map(([cat, toppings]) => {
-          const info = categoryLabels[cat];
-          if (!info) return null;
-          return (
-            <div key={cat} className="mb-3">
+        const info = categoryLabels[cat];
+        if (!info) return null;
+        return <div key={cat} className="mb-3">
               <div className="text-sm font-semibold text-muted-foreground mb-1 px-1">
                 {info.emoji} {info.label}
               </div>
               <div className="space-y-1">
                 {toppings.map(topping => {
-                  const isSelected = selectedFreeToppings.includes(topping.id);
-                  const atLimit = selectedFreeToppings.length >= limit && !isSelected;
-                  return (
-                    <Label
-                      key={topping.id}
-                      htmlFor={`free-${topping.id}-${dishNumber}`}
-                      className={cn(
-                        "flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors",
-                        atLimit && "opacity-40 pointer-events-none"
-                      )}
-                    >
+              const isSelected = selectedFreeToppings.includes(topping.id);
+              const atLimit = selectedFreeToppings.length >= limit && !isSelected;
+              return <Label key={topping.id} htmlFor={`free-${topping.id}-${dishNumber}`} className={cn("flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors", atLimit && "opacity-40 pointer-events-none")}>
                       <div className="flex items-center gap-3">
-                        <Checkbox
-                          id={`free-${topping.id}-${dishNumber}`}
-                          checked={isSelected}
-                          disabled={atLimit}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setSelectedFreeToppings(prev => [...prev, topping.id]);
-                            } else {
-                              setSelectedFreeToppings(prev => prev.filter(id => id !== topping.id));
-                            }
-                          }}
-                        />
+                        <Checkbox id={`free-${topping.id}-${dishNumber}`} checked={isSelected} disabled={atLimit} onCheckedChange={checked => {
+                    if (checked) {
+                      setSelectedFreeToppings(prev => [...prev, topping.id]);
+                    } else {
+                      setSelectedFreeToppings(prev => prev.filter(id => id !== topping.id));
+                    }
+                  }} />
                         <span className="text-sm">{topping.name}</span>
                       </div>
                       <span className="text-xs font-medium text-green-500">FREE</span>
-                    </Label>
-                  );
-                })}
+                    </Label>;
+            })}
               </div>
-            </div>
-          );
-        })}
-      </div>
-    );
+            </div>;
+      })}
+      </div>;
   };
 
   // Component for rendering customization options
@@ -525,372 +483,235 @@ const DishModal = ({
     const setCurrentSelectedVariant = dishNumber === 1 ? setSelectedVariant : setSelectedVariant2;
     const setCurrentSpicyLevel = dishNumber === 1 ? setSpicyLevel : setSpicyLevel2;
     const setCurrentSelectedSauces = dishNumber === 1 ? setSelectedSauces : setSelectedSauces2;
-    
+
     // Refs and error states for this dish number
     const currentSpicyRef = dishNumber === 1 ? spicyRef : spicy2Ref;
     const currentSauceRef = dishNumber === 1 ? sauceRef : sauce2Ref;
     const spicyHasError = validationError === (dishNumber === 1 ? 'spicy1' : 'spicy2');
     const sauceHasError = validationError === (dishNumber === 1 ? 'sauce1' : 'sauce2');
-
-    return (
-      <>
+    return <>
         {/* Main Dish Variation - Required */}
-        {dish.variants && dish.variants.length > 0 && (
-          <div className="mb-6">
+        {dish.variants && dish.variants.length > 0 && <div className="mb-6">
             <Label className="text-base font-semibold mb-3 flex items-center gap-2">
               CHOOSE OPTION <span className="text-red-500">*</span>
               <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
             </Label>
-            <RadioGroup 
-              value={currentSelectedVariant?.id || ''} 
-              onValueChange={(value) => {
-              const variant = dish.variants?.find(v => v.id === value);
-                setCurrentSelectedVariant(variant || null);
+            <RadioGroup value={currentSelectedVariant?.id || ''} onValueChange={value => {
+          const variant = dish.variants?.find(v => v.id === value);
+          setCurrentSelectedVariant(variant || null);
 
-                // Reset free toppings when variant changes (Smoody)
-                if (isSmoody) setSelectedFreeToppings([]);
-                
-                // Clear incompatible beef extras when variant changes
-                if (dish.name.includes('Premium Beef')) {
-                  if (dishNumber === 1) {
-                    setSelectedExtraPls(prev => prev.filter(addon => 
-                      addon.id !== 'SAN-EXT-004' && addon.id !== 'SAN-EXT-005'
-                    ));
-                    setIncrementalQuantities(prev => {
-                      const newMap = new Map(prev);
-                      newMap.delete('SAN-EXT-004');
-                      newMap.delete('SAN-EXT-005');
-                      return newMap;
-                    });
-                  } else {
-                    setSelectedExtraPls2(prev => prev.filter(addon => 
-                      addon.id !== 'SAN-EXT-004' && addon.id !== 'SAN-EXT-005'
-                    ));
-                    setIncrementalQuantities2(prev => {
-                      const newMap = new Map(prev);
-                      newMap.delete('SAN-EXT-004');
-                      newMap.delete('SAN-EXT-005');
-                      return newMap;
-                    });
-                  }
-                }
-              }} 
-              className="space-y-1"
-            >
-              {dish.variants.map(variant => (
-                <Label 
-                  key={variant.id} 
-                  htmlFor={`variant-${variant.id}-${dishNumber}`}
-                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
-                >
+          // Reset free toppings when variant changes (Smoody)
+          if (isSmoody) setSelectedFreeToppings([]);
+
+          // Clear incompatible beef extras when variant changes
+          if (dish.name.includes('Premium Beef')) {
+            if (dishNumber === 1) {
+              setSelectedExtraPls(prev => prev.filter(addon => addon.id !== 'SAN-EXT-004' && addon.id !== 'SAN-EXT-005'));
+              setIncrementalQuantities(prev => {
+                const newMap = new Map(prev);
+                newMap.delete('SAN-EXT-004');
+                newMap.delete('SAN-EXT-005');
+                return newMap;
+              });
+            } else {
+              setSelectedExtraPls2(prev => prev.filter(addon => addon.id !== 'SAN-EXT-004' && addon.id !== 'SAN-EXT-005'));
+              setIncrementalQuantities2(prev => {
+                const newMap = new Map(prev);
+                newMap.delete('SAN-EXT-004');
+                newMap.delete('SAN-EXT-005');
+                return newMap;
+              });
+            }
+          }
+        }} className="space-y-1">
+              {dish.variants.map(variant => <Label key={variant.id} htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
                   <div className="flex items-center gap-3">
                     <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
                     <span>{t(variant.id) === variant.id ? variant.name : t(variant.id)}</span>
                   </div>
-                  {!isSmoody && variant.price !== dish.price && (
-                    <span className="text-sm text-muted-foreground">
+                  {!isSmoody && variant.price !== dish.price && <span className="text-sm text-muted-foreground">
                       {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
-                    </span>
-                  )}
-                </Label>
-              ))}
+                    </span>}
+                </Label>)}
             </RadioGroup>
-          </div>
-        )}
+          </div>}
 
         {/* Free Toppings Section (Smoody Greek Yo) */}
         {isSmoody && renderFreeToppingsSection(dishNumber)}
 
         {/* EXTRA Section */}
-        {isSmoody ? (
-          renderSmoodyGroupedExtras(dishNumber)
-        ) : (
-          getFilteredExtraOptions(dishNumber).length > 0 && (
-            <div className="mb-6">
+        {isSmoody ? renderSmoodyGroupedExtras(dishNumber) : getFilteredExtraOptions(dishNumber).length > 0 && <div className="mb-6">
               <Label className="text-base font-semibold mb-3">
                 EXTRA
               </Label>
               <div className="space-y-1">
                 {getFilteredExtraOptions(dishNumber).map(addon => {
-                  if (addon.isIncremental) {
-                    const qty = currentIncrementalQuantities.get(addon.id) || 0;
-                    const totalGrams = qty * (addon.incrementalUnit || 20);
-                    const totalPrice = calculateIncrementalPrice(addon, qty);
-                    
-                    return (
-                      <div key={addon.id} className="flex items-center justify-between py-2.5 px-3 border rounded-lg">
+            if (addon.isIncremental) {
+              const qty = currentIncrementalQuantities.get(addon.id) || 0;
+              const totalGrams = qty * (addon.incrementalUnit || 20);
+              const totalPrice = calculateIncrementalPrice(addon, qty);
+              return <div key={addon.id} className="flex items-center justify-between py-2.5 px-3 border rounded-lg">
                         <div className="flex-1">
                           <span className="text-sm font-medium">{t(addon.id)}</span>
-                          {qty > 0 && (
-                            <div className="text-xs text-muted-foreground mt-1">
+                          {qty > 0 && <div className="text-xs text-muted-foreground mt-1">
                               {totalGrams}g • ฿{totalPrice}
-                              {totalGrams >= 100 && (
-                                <span className="ml-2 text-green-600">
+                              {totalGrams >= 100 && <span className="ml-2 text-green-600">
                                   (-฿{Math.floor(totalGrams / 100) * (addon.incrementalDiscount || 10)} discount)
-                                </span>
-                              )}
-                            </div>
-                          )}
+                                </span>}
+                            </div>}
                         </div>
                         <div className="flex items-center gap-2">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => updateIncrementalQuantity(addon, -1, dishNumber)}
-                            disabled={qty === 0}
-                          >
+                          <Button type="button" variant="outline" size="icon" className="h-8 w-8" onClick={() => updateIncrementalQuantity(addon, -1, dishNumber)} disabled={qty === 0}>
                             <Minus className="h-4 w-4" />
                           </Button>
                           <span className="w-8 text-center font-medium">{qty}</span>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => updateIncrementalQuantity(addon, 1, dishNumber)}
-                          >
+                          <Button type="button" variant="outline" size="icon" className="h-8 w-8" onClick={() => updateIncrementalQuantity(addon, 1, dishNumber)}>
                             <Plus className="h-4 w-4" />
                           </Button>
                         </div>
-                      </div>
-                    );
-                  }
-                  
-                  return (
-                    <Label 
-                      key={addon.id} 
-                      htmlFor={`extra-${addon.id}-${dishNumber}`}
-                      className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
-                    >
+                      </div>;
+            }
+            return <Label key={addon.id} htmlFor={`extra-${addon.id}-${dishNumber}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
                       <div className="flex items-center gap-3">
-                        <Checkbox 
-                          id={`extra-${addon.id}-${dishNumber}`} 
-                          checked={currentSelectedExtraPls.some(a => a.id === addon.id)} 
-                          onCheckedChange={() => toggleExtraPls(addon, dishNumber)} 
-                        />
+                        <Checkbox id={`extra-${addon.id}-${dishNumber}`} checked={currentSelectedExtraPls.some(a => a.id === addon.id)} onCheckedChange={() => toggleExtraPls(addon, dishNumber)} />
                         <span className="text-sm">{t(addon.id)}</span>
                       </div>
                       <span className="text-sm text-muted-foreground">
                         {addon.price > 0 ? `+${addon.price}` : '+0'}
                       </span>
-                    </Label>
-                  );
-                })}
+                    </Label>;
+          })}
               </div>
-            </div>
-          )
-        )}
+            </div>}
 
         {/* Spicy Level - Required for Pad Krapao only */}
-        {dish.spicyRequired && (
-          <div 
-            ref={currentSpicyRef}
-            className={cn(
-              "mb-6 p-3 rounded-lg transition-all duration-300",
-              spicyHasError && "border-2 border-red-500 bg-red-500/10 animate-pulse"
-            )}
-          >
+        {dish.spicyRequired && <div ref={currentSpicyRef} className={cn("mb-6 p-3 rounded-lg transition-all duration-300", spicyHasError && "border-2 border-red-500 bg-red-500/10 animate-pulse")}>
             <Label className="text-base font-semibold mb-3 flex items-center gap-2">
               SPICY LEVEL <span className="text-red-500">*</span>
               <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
               {spicyHasError && <span className="text-red-500 text-xs ml-2">Please select</span>}
             </Label>
-            <RadioGroup 
-              value={currentSpicyLevel?.toString() || ''} 
-              onValueChange={(value) => {
-                setCurrentSpicyLevel(Number(value));
-                if (spicyHasError) setValidationError(null);
-              }}
-              className="space-y-1"
-            >
-              {SPICY_LEVELS.map(level => (
-                <Label 
-                  key={level.level} 
-                  htmlFor={`spicy-${level.level}-${dishNumber}`}
-                  className="flex items-center gap-3 cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
-                >
+            <RadioGroup value={currentSpicyLevel?.toString() || ''} onValueChange={value => {
+          setCurrentSpicyLevel(Number(value));
+          if (spicyHasError) setValidationError(null);
+        }} className="space-y-1">
+              {SPICY_LEVELS.map(level => <Label key={level.level} htmlFor={`spicy-${level.level}-${dishNumber}`} className="flex items-center gap-3 cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
                   <RadioGroupItem value={level.level.toString()} id={`spicy-${level.level}-${dishNumber}`} />
                   <span>{t(`SAN-SPI-00${level.level + 1}`)}</span>
-                </Label>
-              ))}
+                </Label>)}
             </RadioGroup>
-          </div>
-        )}
+          </div>}
 
         {/* Add-ons - Skip for Smoody, DRINKS, FRESH SALMON, and DESSERT */}
-        {!isSmoody && dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => (
-          <div key={category} className="mb-6">
+        {!isSmoody && dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && Object.entries(addOnsByCategory).map(([category, categoryAddOns]) => <div key={category} className="mb-6">
             <Label className="text-base font-semibold mb-3">
-              {category === 'other' ? 'ADD-ONS' : 
-               category === 'fried-egg' ? 'FRIED EGG 🍳' : 
-               category === 'thai-omelette' ? 'THAI STYLE OMELETTE 🍳' : 
-               category === 'creamy-omelette' ? 'CREAMY OMELETTE 🍳' : 
-               category === 'soft-omelette' ? 'SOFT OMELETTE 🍳' : 
-               category.toUpperCase()}
+              {category === 'other' ? 'ADD-ONS' : category === 'fried-egg' ? 'FRIED EGG 🍳' : category === 'thai-omelette' ? 'THAI STYLE OMELETTE 🍳' : category === 'creamy-omelette' ? 'CREAMY OMELETTE 🍳' : category === 'soft-omelette' ? 'SOFT OMELETTE 🍳' : category.toUpperCase()}
             </Label>
             <div className="space-y-1">
-              {categoryAddOns.map(addon => (
-                <Label 
-                  key={addon.id} 
-                  htmlFor={`${addon.id}-${dishNumber}`}
-                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
-                >
+              {categoryAddOns.map(addon => <Label key={addon.id} htmlFor={`${addon.id}-${dishNumber}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
                   <div className="flex items-center gap-3">
-                    <Checkbox 
-                      id={`${addon.id}-${dishNumber}`} 
-                      checked={currentSelectedAddOns.some(a => a.id === addon.id)} 
-                      onCheckedChange={() => toggleAddOn(addon, dishNumber)} 
-                    />
+                    <Checkbox id={`${addon.id}-${dishNumber}`} checked={currentSelectedAddOns.some(a => a.id === addon.id)} onCheckedChange={() => toggleAddOn(addon, dishNumber)} />
                     <span className="text-sm">{t(addon.id)}</span>
                   </div>
                   <span className="text-sm text-muted-foreground">
                     {addon.price > 0 ? `+${addon.price}` : '+0'}
                   </span>
-                </Label>
-              ))}
+                </Label>)}
             </div>
-          </div>
-        ))}
+          </div>)}
 
         {/* Sauce Selection - Required (Skip for Smoody, DRINKS, FRESH SALMON, and DESSERT) */}
-        {!isSmoody && dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && (
-        <div 
-          ref={currentSauceRef}
-          className={cn(
-            "mb-6 p-3 rounded-lg transition-all duration-300",
-            sauceHasError && "border-2 border-red-500 bg-red-500/10 animate-pulse"
-          )}
-        >
+        {!isSmoody && dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && <div ref={currentSauceRef} className={cn("mb-6 p-3 rounded-lg transition-all duration-300", sauceHasError && "border-2 border-red-500 bg-red-500/10 animate-pulse")}>
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             SELECT SAUCE <span className="text-red-500">*</span>
             <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
             {sauceHasError && <span className="text-red-500 text-xs ml-2">Please select</span>}
           </Label>
-          {dish.customSauces ? (
-            // Radio buttons for dishes with custom sauces (single selection)
-            <RadioGroup 
-              value={currentSelectedSauces[0] || ''} 
-              onValueChange={(value) => {
-                setCurrentSelectedSauces([value]);
-                if (sauceHasError) setValidationError(null);
-              }}
-              className="space-y-1"
-            >
-              {dish.customSauces.map(sauce => (
-                <Label 
-                  key={sauce.id} 
-                  htmlFor={`${sauce.id}-${dishNumber}`}
-                  className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors"
-                >
+          {dish.customSauces ?
+        // Radio buttons for dishes with custom sauces (single selection)
+        <RadioGroup value={currentSelectedSauces[0] || ''} onValueChange={value => {
+          setCurrentSelectedSauces([value]);
+          if (sauceHasError) setValidationError(null);
+        }} className="space-y-1">
+              {dish.customSauces.map(sauce => <Label key={sauce.id} htmlFor={`${sauce.id}-${dishNumber}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
                   <div className="flex items-center gap-3">
                     <RadioGroupItem value={sauce.id} id={`${sauce.id}-${dishNumber}`} />
                     <span>{t(sauce.id)}</span>
                   </div>
-                  {sauce.price > 0 && (
-                    <span className="text-sm text-muted-foreground">
+                  {sauce.price > 0 && <span className="text-sm text-muted-foreground">
                       +{sauce.price}
-                    </span>
-                  )}
-                </Label>
-              ))}
-            </RadioGroup>
-          ) : (
-            // Checkboxes for regular dishes (multiple selection allowed)
-            <div className="space-y-1">
+                    </span>}
+                </Label>)}
+            </RadioGroup> :
+        // Checkboxes for regular dishes (multiple selection allowed)
+        <div className="space-y-1">
               {SAUCES.map(sauce => {
-                const isFreeSauce = sauce.price === 0;
-                const isNoSauce = sauce.id === 'SAN-SAU-008';
-                const noSauceSelected = currentSelectedSauces.includes('SAN-SAU-008');
-                const selectedFreeSauce = currentSelectedSauces.find(id => {
-                  const s = SAUCES.find(s => s.id === id);
-                  return s && s.price === 0 && s.id !== 'SAN-SAU-008';
-                });
-
-                let disabled = false;
-                if (isNoSauce) {
-                  disabled = false;
-                } else if (noSauceSelected) {
-                  disabled = true;
-                } else if (isFreeSauce) {
-                  disabled = selectedFreeSauce && selectedFreeSauce !== sauce.id;
-                } else {
-                  disabled = false;
-                }
-
-                return (
-                  <Label
-                    key={sauce.id}
-                    htmlFor={`${sauce.id}-${dishNumber}`}
-                    className={cn(
-                      "flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors",
-                      disabled && "opacity-40 pointer-events-none"
-                    )}
-                  >
+            const isFreeSauce = sauce.price === 0;
+            const isNoSauce = sauce.id === 'SAN-SAU-008';
+            const noSauceSelected = currentSelectedSauces.includes('SAN-SAU-008');
+            const selectedFreeSauce = currentSelectedSauces.find(id => {
+              const s = SAUCES.find(s => s.id === id);
+              return s && s.price === 0 && s.id !== 'SAN-SAU-008';
+            });
+            let disabled = false;
+            if (isNoSauce) {
+              disabled = false;
+            } else if (noSauceSelected) {
+              disabled = true;
+            } else if (isFreeSauce) {
+              disabled = selectedFreeSauce && selectedFreeSauce !== sauce.id;
+            } else {
+              disabled = false;
+            }
+            return <Label key={sauce.id} htmlFor={`${sauce.id}-${dishNumber}`} className={cn("flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors", disabled && "opacity-40 pointer-events-none")}>
                     <div className="flex items-center gap-3">
-                      <Checkbox
-                        id={`${sauce.id}-${dishNumber}`}
-                        checked={currentSelectedSauces.includes(sauce.id)}
-                        disabled={disabled}
-                        onCheckedChange={(checked) => {
-                          // Clear validation error when user selects
-                          if (sauceHasError) setValidationError(null);
-                          
-                          // Don't allow changes if disabled (no sauce is selected)
-                          if (disabled) return;
-                          
-                          if (isNoSauce) {
-                            if (checked) {
-                              setCurrentSelectedSauces(['SAN-SAU-008']);
-                            } else {
-                              setCurrentSelectedSauces([]);
-                            }
-                            return;
-                          }
-                          if (isFreeSauce) {
-                            if (checked) {
-                              // Keep paid sauces, remove other free sauces, add this free sauce
-                              const paidSauces = currentSelectedSauces.filter(id => {
-                                const s = SAUCES.find(s => s.id === id);
-                                return s && s.price > 0;
-                              });
-                              setCurrentSelectedSauces([...paidSauces, sauce.id]);
-                            } else {
-                              setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-                            }
-                            return;
-                          }
-                          // For paid sauces, don't allow selection if no sauce is selected
-                          if (noSauceSelected) return;
-                          
-                          if (checked) {
-                            setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'SAN-SAU-008'), sauce.id]);
-                          } else {
-                            setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
-                          }
-                        }}
-                      />
+                      <Checkbox id={`${sauce.id}-${dishNumber}`} checked={currentSelectedSauces.includes(sauce.id)} disabled={disabled} onCheckedChange={checked => {
+                  // Clear validation error when user selects
+                  if (sauceHasError) setValidationError(null);
+
+                  // Don't allow changes if disabled (no sauce is selected)
+                  if (disabled) return;
+                  if (isNoSauce) {
+                    if (checked) {
+                      setCurrentSelectedSauces(['SAN-SAU-008']);
+                    } else {
+                      setCurrentSelectedSauces([]);
+                    }
+                    return;
+                  }
+                  if (isFreeSauce) {
+                    if (checked) {
+                      // Keep paid sauces, remove other free sauces, add this free sauce
+                      const paidSauces = currentSelectedSauces.filter(id => {
+                        const s = SAUCES.find(s => s.id === id);
+                        return s && s.price > 0;
+                      });
+                      setCurrentSelectedSauces([...paidSauces, sauce.id]);
+                    } else {
+                      setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                    }
+                    return;
+                  }
+                  // For paid sauces, don't allow selection if no sauce is selected
+                  if (noSauceSelected) return;
+                  if (checked) {
+                    setCurrentSelectedSauces(prev => [...prev.filter(id => id !== 'SAN-SAU-008'), sauce.id]);
+                  } else {
+                    setCurrentSelectedSauces(prev => prev.filter(id => id !== sauce.id));
+                  }
+                }} />
                       <span>{t(sauce.id)}</span>
                     </div>
-                    {sauce.price > 0 && (
-                      <span className="text-sm text-muted-foreground">
+                    {sauce.price > 0 && <span className="text-sm text-muted-foreground">
                         +{sauce.price}
-                      </span>
-                    )}
-                  </Label>
-                );
-              })}
-            </div>
-          )}
-        </div>
-        )}
-      </>
-    );
+                      </span>}
+                  </Label>;
+          })}
+            </div>}
+        </div>}
+      </>;
   };
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+  return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col">
         <div className="flex-1 overflow-hidden flex flex-col">
           <ScrollArea className="flex-1 overflow-y-auto">
@@ -901,22 +722,11 @@ const DishModal = ({
                 </DialogDescription>
                 {/* Dish Image */}
                 <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
-                  {dish.image ? (
-                    <img 
-                      src={dish.image} 
-                      alt={dish.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling!.classList.remove('hidden');
-                      }}
-                    />
-                  ) : null}
-                  <div className={cn(
-                    'w-full h-full flex items-center justify-center text-muted-foreground',
-                    theme.bg,
-                    dish.image ? 'hidden' : ''
-                  )}>
+                  {dish.image ? <img src={dish.image} alt={dish.name} className="w-full h-full object-cover" onError={e => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling!.classList.remove('hidden');
+                }} /> : null}
+                  <div className={cn('w-full h-full flex items-center justify-center text-muted-foreground', theme.bg, dish.image ? 'hidden' : '')}>
                     <div className="text-center">
                       <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
                         🍽️
@@ -931,11 +741,9 @@ const DishModal = ({
                   {dish.isSpecial && <span className="ml-2">⭐</span>}
                 </DialogTitle>
                 
-                {dish.description && (
-                  <p className="text-sm text-muted-foreground mt-2">
+                {dish.description && <p className="text-sm text-muted-foreground mt-2">
                     {dish.description}
-                  </p>
-                )}
+                  </p>}
                 
                 <div className="flex items-center justify-between mt-4">
                   <Badge variant="secondary" className="capitalize">
@@ -948,10 +756,8 @@ const DishModal = ({
               </DialogHeader>
 
               {/* Simplified view for TOPPINGS - only quantity selection */}
-              {dish.category !== 'TOPPINGS' && (
-                <>
-                  {isCombo ? (
-                    <>
+              {dish.category !== 'TOPPINGS' && <>
+                  {isCombo ? <>
                       <div className="mb-8">
                         <h3 className="text-lg font-bold mb-4 text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                           🍽️ DISH 1 CUSTOMIZATION
@@ -967,23 +773,15 @@ const DishModal = ({
                         </h3>
                         {renderCustomizationOptions(2)}
                       </div>
-                    </>
-                  ) : (
-                    renderCustomizationOptions(1)
-                  )}
+                    </> : renderCustomizationOptions(1)}
 
                   {/* Cutlery - Required (Skip for DRINKS) */}
-                  {dish.category !== 'DRINKS' && (
-                  <div className="mb-6">
+                  {dish.category !== 'DRINKS' && <div className="mb-6">
                      <Label className="text-base font-semibold mb-3 flex items-center gap-2">
                       {t('dish.cutleryQuestion')} <span className="text-red-500">*</span>
                       <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
                     </Label>
-                    <RadioGroup 
-                      value={needsCutlery.toString()} 
-                      onValueChange={(value) => setNeedsCutlery(value === 'true')} 
-                      className="gap-2"
-                    >
+                    <RadioGroup value={needsCutlery.toString()} onValueChange={value => setNeedsCutlery(value === 'true')} className="gap-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="true" id="cutlery-yes" />
                         <Label htmlFor="cutlery-yes">{t('dish.cutleryYes')}</Label>
@@ -993,12 +791,10 @@ const DishModal = ({
                         <Label htmlFor="cutlery-no">{t('dish.cutleryNo')}</Label>
                       </div>
                     </RadioGroup>
-                  </div>
-                  )}
+                  </div>}
 
                   <Separator className="my-6" />
-                </>
-              )}
+                </>}
 
             </div>
           </ScrollArea>
@@ -1008,20 +804,11 @@ const DishModal = ({
             <div className="flex items-center justify-between">
               <Label className="text-base font-semibold">Quantity</Label>
               <div className="flex items-center gap-3">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))} 
-                  disabled={quantity <= 1}
-                >
+                <Button variant="outline" size="sm" onClick={() => setQuantity(Math.max(1, quantity - 1))} disabled={quantity <= 1}>
                   <Minus className="h-4 w-4" />
                 </Button>
                 <span className="font-semibold w-8 text-center">{quantity}</span>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => setQuantity(quantity + 1)}
-                >
+                <Button variant="outline" size="sm" onClick={() => setQuantity(quantity + 1)}>
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
@@ -1035,20 +822,11 @@ const DishModal = ({
             </div>
 
             <div className="flex gap-3">
-              <Button 
-                onClick={handleAddToBasket}
-                variant="outline"
-                className="flex-1 gap-2"
-                size="lg"
-              >
+              <Button onClick={handleAddToBasket} variant="outline" className="flex-1 gap-2" size="lg">
                 <ShoppingCart className="h-4 w-4" />
                 Add to Basket
               </Button>
-              <Button 
-                onClick={handleOrderNow}
-                className={cn('flex-1 gap-2', theme.button)} 
-                size="lg"
-              >
+              <Button onClick={handleOrderNow} className={cn('flex-1 gap-2', theme.button)} size="lg">
                 <Zap className="h-4 w-4" />
                 Order Now
               </Button>
@@ -1056,8 +834,6 @@ const DishModal = ({
           </div>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
-
 export default DishModal;
