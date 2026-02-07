@@ -30,7 +30,7 @@ const KitchenBadge = ({
         alt={info.name}
         className={cn(
           'rounded-full object-cover',
-          size === 'sm' ? 'w-4 h-4' : 'w-5 h-5'
+          size === 'sm' ? 'w-5 h-5' : 'w-6 h-6'
         )}
       />
       {showName && (
