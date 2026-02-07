@@ -384,7 +384,7 @@ const DishModal = ({
 
   // Smoody grouped extras category config
   const SMOODY_EXTRA_CATEGORIES: { key: string; label: string; emoji: string }[] = [
-    { key: 'sm-greek-yo', label: 'GREEK YOGURT', emoji: '🫐' },
+    { key: 'sm-greek-yo', label: 'GREEK YO', emoji: '🍨' },
     { key: 'sm-fruits', label: 'FRESH FRUITS', emoji: '🍓' },
     { key: 'sm-nuts', label: 'NUTS & SEEDS', emoji: '🥜' },
     { key: 'sm-sauce', label: 'SAUCES', emoji: '🍯' },
@@ -587,7 +587,7 @@ const DishModal = ({
                     <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
                     <span>{t(variant.id) === variant.id ? variant.name : t(variant.id)}</span>
                   </div>
-                  {variant.price !== dish.price && (
+                  {!isSmoody && variant.price !== dish.price && (
                     <span className="text-sm text-muted-foreground">
                       {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
                     </span>

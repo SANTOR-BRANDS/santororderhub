@@ -3,7 +3,7 @@ import { Dish, AddOn } from '@/types/menu';
 // Smoody paid extras (available for all Smoody dishes)
 export const SMOODY_PAID_EXTRAS: AddOn[] = [
   // Greek Yogurt
-  { id: 'EXT-GRK-001', name: 'Greek Yo Extra Scoop', price: 60, category: 'sm-greek-yo' },
+  { id: 'EXT-GRK-001', name: 'Greek Yo Extra Scoop', price: 69, category: 'sm-greek-yo' },
 
   // Fresh Fruits
   { id: 'EXT-FRU-001', name: 'Banana', price: 15, category: 'sm-fruits' },

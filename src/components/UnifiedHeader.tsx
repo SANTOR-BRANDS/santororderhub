@@ -135,8 +135,8 @@ const getCategoryEmoji = (category: UnifiedCategory): string => {
   const emojis: Record<UnifiedCategory, string> = {
     'ALL': '🍽️',
     'COMBO DEALS': '🔥',
-    'SIGNATURE BOWLS': '🥣',
-    'GREEK YO': '🫐',
+    'SIGNATURE BOWLS': '✨',
+    'GREEK YO': '🍨',
     'RICE': '🍚',
     'NOODLES': '🍜',
     'FRESH SEAFOOD': '🐟',
