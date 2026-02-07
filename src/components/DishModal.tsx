@@ -737,7 +737,10 @@ const DishModal = ({
                 </div>
 
                 <DialogTitle className="text-xl font-bold">
-                  {t(dish.id)}
+                  {(() => {
+                    const translated = t(dish.id);
+                    return (!translated || translated === dish.id) ? dish.name : translated;
+                  })()}
                   {dish.isSpecial && <span className="ml-2">⭐</span>}
                 </DialogTitle>
                 

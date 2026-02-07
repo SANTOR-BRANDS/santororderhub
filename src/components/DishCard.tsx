@@ -114,14 +114,7 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
             </span>
           </div>
           
-          {dish.description && (
-            <p className={cn(
-              "text-xs mb-2 line-clamp-2",
-              dish.restaurant === 'smoody' ? 'text-black/70' : 'text-muted-foreground'
-            )}>
-              {dish.description}
-            </p>
-          )}
+          {/* Description only shown in DishModal, not on cards */}
 
           <div className="flex items-center justify-between">
             <span className={cn(
