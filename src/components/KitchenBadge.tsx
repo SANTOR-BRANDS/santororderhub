@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Restaurant } from '@/types/menu';
 import { getRestaurantInfo } from '@/lib/unifiedMenu';
 import { cn } from '@/lib/utils';
@@ -16,6 +17,7 @@ const KitchenBadge = ({
   className 
 }: KitchenBadgeProps) => {
   const info = getRestaurantInfo(restaurant);
+  const [imgError, setImgError] = useState(false);
   
   return (
     <div 
@@ -25,14 +27,24 @@ const KitchenBadge = ({
         className
       )}
     >
-      <img 
-        src={info.logo}
-        alt={info.name}
-        className={cn(
-          'rounded-full object-cover',
+      {imgError ? (
+        <span className={cn(
+          'flex items-center justify-center rounded-full bg-white/20 text-[8px] font-bold text-white',
           size === 'sm' ? 'w-5 h-5' : 'w-6 h-6'
-        )}
-      />
+        )}>
+          {info.name.charAt(0)}
+        </span>
+      ) : (
+        <img 
+          src={info.logo}
+          alt={info.name}
+          onError={() => setImgError(true)}
+          className={cn(
+            'rounded-full object-cover',
+            size === 'sm' ? 'w-5 h-5' : 'w-6 h-6'
+          )}
+        />
+      )}
       {showName && (
         <span className={cn(
           'text-white font-medium',
