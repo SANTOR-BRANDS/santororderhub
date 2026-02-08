@@ -74,6 +74,13 @@ const BasketModal = ({
     localStorage.setItem('santor-user-phone', phoneNumber);
   }, [phoneNumber]);
 
+  // Helper: resolve a translated name, falling back to the human-readable name
+  // when the translation key returns the raw ID code
+  const resolveName = (id: string, fallbackName: string) => {
+    const translated = t(id);
+    return (!translated || translated === id) ? fallbackName : translated;
+  };
+
   // Reset orderCopied when basket changes
   useEffect(() => {
     setOrderCopied(false);
@@ -240,9 +247,7 @@ const BasketModal = ({
         // Format combo dish 1
         extras += `  🍽️ ${t('basket.dish')} 1:\n`;
         if (item.selectedVariant) {
-          const variantName = t(item.selectedVariant.id) === item.selectedVariant.id 
-            ? item.selectedVariant.name 
-            : t(item.selectedVariant.id);
+          const variantName = resolveName(item.selectedVariant.id, item.selectedVariant.name);
           extras += `    - ${t('basket.variation')}: ${variantName}\n`;
         }
         if (item.spicyLevel !== undefined) {
@@ -253,7 +258,7 @@ const BasketModal = ({
           const sauceDetails = sauceIds.map(id => {
             const sauce = SAUCES.find(s => s.id === id);
             if (sauce) {
-              const sauceName = t(sauce.id) || sauce.name;
+              const sauceName = resolveName(sauce.id, sauce.name);
               return sauce.price > 0 ? `${sauceName} (+฿${sauce.price})` : sauceName;
             }
             return null;
@@ -262,14 +267,14 @@ const BasketModal = ({
         }
         if (item.addOns.length > 0) {
           const addOnDetails = item.addOns.map(addon => {
-            const addonName = t(addon.id) || addon.name;
+            const addonName = resolveName(addon.id, addon.name);
             return `${addonName} (+฿${addon.price})`;
           }).join(', ');
           extras += `    - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.extraPls && item.extraPls.length > 0) {
           const extraDetails = item.extraPls.map(extra => {
-            const extraName = t(extra.id) || extra.name;
+            const extraName = resolveName(extra.id, extra.name);
             if (extra.isIncremental && item.incrementalExtras) {
               const qty = item.incrementalExtras.get(extra.id) || 0;
               if (qty > 0) {
@@ -289,9 +294,7 @@ const BasketModal = ({
         // Format combo dish 2
         extras += `  🍽️ ${t('basket.dish')} 2:\n`;
         if (item.combo2.selectedVariant) {
-          const variantName = t(item.combo2.selectedVariant.id) === item.combo2.selectedVariant.id 
-            ? item.combo2.selectedVariant.name 
-            : t(item.combo2.selectedVariant.id);
+          const variantName = resolveName(item.combo2.selectedVariant.id, item.combo2.selectedVariant.name);
           extras += `    - ${t('basket.variation')}: ${variantName}\n`;
         }
         if (item.combo2.spicyLevel !== undefined) {
@@ -302,7 +305,7 @@ const BasketModal = ({
           const sauceDetails = sauceIds.map(id => {
             const sauce = SAUCES.find(s => s.id === id);
             if (sauce) {
-              const sauceName = t(sauce.id) || sauce.name;
+              const sauceName = resolveName(sauce.id, sauce.name);
               return sauce.price > 0 ? `${sauceName} (+฿${sauce.price})` : sauceName;
             }
             return null;
@@ -311,14 +314,14 @@ const BasketModal = ({
         }
         if (item.combo2.addOns.length > 0) {
           const addOnDetails = item.combo2.addOns.map(addon => {
-            const addonName = t(addon.id) || addon.name;
+            const addonName = resolveName(addon.id, addon.name);
             return `${addonName} (+฿${addon.price})`;
           }).join(', ');
           extras += `    - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.combo2.extraPls && item.combo2.extraPls.length > 0) {
           const extraDetails = item.combo2.extraPls.map(extra => {
-            const extraName = t(extra.id) || extra.name;
+            const extraName = resolveName(extra.id, extra.name);
             if (extra.isIncremental && item.combo2!.incrementalExtras) {
               const qty = item.combo2!.incrementalExtras.get(extra.id) || 0;
               if (qty > 0) {
@@ -344,9 +347,7 @@ const BasketModal = ({
       } else {
         // Regular dish format
         if (item.selectedVariant) {
-          const variantName = t(item.selectedVariant.id) === item.selectedVariant.id 
-            ? item.selectedVariant.name 
-            : t(item.selectedVariant.id);
+          const variantName = resolveName(item.selectedVariant.id, item.selectedVariant.name);
           extras += `  - ${t('basket.variation')}: ${variantName}\n`;
         }
         if (item.spicyLevel !== undefined) {
@@ -357,7 +358,7 @@ const BasketModal = ({
           const sauceDetails = sauceIds.map(id => {
             const sauce = SAUCES.find(s => s.id === id);
             if (sauce) {
-              const sauceName = t(sauce.id) || sauce.name;
+              const sauceName = resolveName(sauce.id, sauce.name);
               return sauce.price > 0 ? `${sauceName} (+฿${sauce.price})` : sauceName;
             }
             return null;
@@ -366,14 +367,14 @@ const BasketModal = ({
         }
         if (item.addOns.length > 0) {
           const addOnDetails = item.addOns.map(addon => {
-            const addonName = t(addon.id) || addon.name;
+            const addonName = resolveName(addon.id, addon.name);
             return `${addonName} (+฿${addon.price})`;
           }).join(', ');
           extras += `  - ${t('basket.addOns')}: ${addOnDetails}\n`;
         }
         if (item.extraPls && item.extraPls.length > 0) {
           const extraDetails = item.extraPls.map(extra => {
-            const extraName = t(extra.id) || extra.name;
+            const extraName = resolveName(extra.id, extra.name);
             if (extra.isIncremental && item.incrementalExtras) {
               const qty = item.incrementalExtras.get(extra.id) || 0;
               if (qty > 0) {
@@ -404,7 +405,7 @@ const BasketModal = ({
       message += '🧡 *RESTORY*\n';
       restoryItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
-        message += `• ${t(item.dish.id)} (฿${basePrice})\n`;
+        message += `• ${resolveName(item.dish.id, item.dish.name)} (฿${basePrice})\n`;
         message += formatItemExtras(item);
       });
     }
@@ -413,7 +414,7 @@ const BasketModal = ({
       message += '⚫ *NIRVANA*\n';
       nirvanaItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
-        message += `• ${t(item.dish.id)} (฿${basePrice})\n`;
+        message += `• ${resolveName(item.dish.id, item.dish.name)} (฿${basePrice})\n`;
         message += formatItemExtras(item);
       });
     }
@@ -422,7 +423,7 @@ const BasketModal = ({
       message += '🥤 *SMOODY*\n';
       smoodyItems.forEach(item => {
         const basePrice = item.selectedVariant?.price || item.dish.price;
-        message += `• ${t(item.dish.id)} (฿${basePrice})\n`;
+        message += `• ${resolveName(item.dish.id, item.dish.name)} (฿${basePrice})\n`;
         message += formatItemExtras(item);
       });
     }
@@ -566,7 +567,7 @@ const BasketModal = ({
               <div key={item.id} className="border rounded-lg p-4">
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h4 className="font-semibold text-sm">{t(item.dish.id)}</h4>
+                    <h4 className="font-semibold text-sm">{resolveName(item.dish.id, item.dish.name)}</h4>
                     <Badge 
                       variant="outline" 
                       className={cn(
@@ -596,7 +597,7 @@ const BasketModal = ({
                       {/* Combo Dish 1 */}
                       <div className="font-semibold text-foreground">🍽️ {t('basket.dish')} 1:</div>
                       {item.selectedVariant && (
-                        <div className="pl-3">{t('basket.variation')}: {t(item.selectedVariant.id) === item.selectedVariant.id ? item.selectedVariant.name : t(item.selectedVariant.id)}</div>
+                        <div className="pl-3">{t('basket.variation')}: {resolveName(item.selectedVariant.id, item.selectedVariant.name)}</div>
                       )}
                       {item.spicyLevel !== undefined && (
                         <div className="pl-3">{t('basket.spicyLevel')}: {item.spicyLevel}</div>
@@ -605,16 +606,16 @@ const BasketModal = ({
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
                         const sauceNames = item.sauce.split(', ').filter(id => id).map(id => {
                           const sauce = SAUCES.find(s => s.id === id);
-                          return sauce ? (t(sauce.id) || sauce.name) : null;
+                          return sauce ? resolveName(sauce.id, sauce.name) : null;
                         }).filter(Boolean).join(', ');
                         return <div className="pl-3">{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.addOns.length > 0 && (
-                        <div className="pl-3">{t('basket.addOns')}: {item.addOns.map(addon => t(addon.id) || addon.name).join(', ')}</div>
+                        <div className="pl-3">{t('basket.addOns')}: {item.addOns.map(addon => resolveName(addon.id, addon.name)).join(', ')}</div>
                       )}
                       {item.extraPls && item.extraPls.length > 0 && (
                         <div className="pl-3">{t('basket.extra')}: {item.extraPls.map(extra => {
-                          const extraName = t(extra.id) || extra.name;
+                          const extraName = resolveName(extra.id, extra.name);
                           if (extra.isIncremental && item.incrementalExtras) {
                             const qty = item.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
@@ -629,7 +630,7 @@ const BasketModal = ({
                       {/* Combo Dish 2 */}
                       <div className="font-semibold text-foreground mt-2">🍽️ {t('basket.dish')} 2:</div>
                       {item.combo2.selectedVariant && (
-                        <div className="pl-3">{t('basket.variation')}: {t(item.combo2.selectedVariant.id) === item.combo2.selectedVariant.id ? item.combo2.selectedVariant.name : t(item.combo2.selectedVariant.id)}</div>
+                        <div className="pl-3">{t('basket.variation')}: {resolveName(item.combo2.selectedVariant.id, item.combo2.selectedVariant.name)}</div>
                       )}
                       {item.combo2.spicyLevel !== undefined && (
                         <div className="pl-3">{t('basket.spicyLevel')}: {item.combo2.spicyLevel}</div>
@@ -638,16 +639,16 @@ const BasketModal = ({
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
                         const sauceNames = item.combo2.sauce.split(', ').filter(id => id).map(id => {
                           const sauce = SAUCES.find(s => s.id === id);
-                          return sauce ? (t(sauce.id) || sauce.name) : null;
+                          return sauce ? resolveName(sauce.id, sauce.name) : null;
                         }).filter(Boolean).join(', ');
                         return <div className="pl-3">{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.combo2.addOns.length > 0 && (
-                        <div className="pl-3">{t('basket.addOns')}: {item.combo2.addOns.map(addon => t(addon.id) || addon.name).join(', ')}</div>
+                        <div className="pl-3">{t('basket.addOns')}: {item.combo2.addOns.map(addon => resolveName(addon.id, addon.name)).join(', ')}</div>
                       )}
                       {item.combo2.extraPls && item.combo2.extraPls.length > 0 && (
                         <div className="pl-3">{t('basket.extra')}: {item.combo2.extraPls.map(extra => {
-                          const extraName = t(extra.id) || extra.name;
+                          const extraName = resolveName(extra.id, extra.name);
                           if (extra.isIncremental && item.combo2!.incrementalExtras) {
                             const qty = item.combo2!.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
@@ -664,7 +665,7 @@ const BasketModal = ({
                     <>
                       {/* Regular Item */}
                       {item.selectedVariant && (
-                        <div>{t('basket.variation')}: {t(item.selectedVariant.id) === item.selectedVariant.id ? item.selectedVariant.name : t(item.selectedVariant.id)}</div>
+                        <div>{t('basket.variation')}: {resolveName(item.selectedVariant.id, item.selectedVariant.name)}</div>
                       )}
                       {item.spicyLevel !== undefined && (
                         <div>{t('basket.spicyLevel')}: {item.spicyLevel}</div>
@@ -674,16 +675,16 @@ const BasketModal = ({
                         const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
                         const sauceNames = item.sauce.split(', ').filter(id => id).map(id => {
                           const sauce = SAUCES.find(s => s.id === id);
-                          return sauce ? (t(sauce.id) || sauce.name) : null;
+                          return sauce ? resolveName(sauce.id, sauce.name) : null;
                         }).filter(Boolean).join(', ');
                         return <div>{t('basket.sauce')}: {sauceNames || t('basket.noSauce')}</div>;
                       })()}
                       {item.addOns.length > 0 && (
-                        <div>{t('basket.addOns')}: {item.addOns.map(addon => t(addon.id) || addon.name).join(', ')}</div>
+                        <div>{t('basket.addOns')}: {item.addOns.map(addon => resolveName(addon.id, addon.name)).join(', ')}</div>
                       )}
                       {item.extraPls && item.extraPls.length > 0 && (
                         <div>{t('basket.extra')}: {item.extraPls.map(extra => {
-                          const extraName = t(extra.id) || extra.name;
+                          const extraName = resolveName(extra.id, extra.name);
                           if (extra.isIncremental && item.incrementalExtras) {
                             const qty = item.incrementalExtras.get(extra.id) || 0;
                             if (qty > 0) {
