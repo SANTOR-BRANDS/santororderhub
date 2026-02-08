@@ -137,10 +137,14 @@ const UnifiedMenuDisplay = ({
     setSelectedSubcategory(null);
   }, [selectedCategory]);
   
-  // Get dishes eligible for "Surprise Me" (exclude toppings)
+  // Get dishes eligible for "Surprise Me" (exclude toppings, respect brand filter)
   const surpriseMeDishes = useMemo(() => {
-    return unifiedMenu.filter(d => d.unifiedCategory !== 'TOPPINGS');
-  }, [unifiedMenu]);
+    return unifiedMenu.filter(d => {
+      if (d.unifiedCategory === 'TOPPINGS') return false;
+      if (selectedBrand !== 'all' && d.restaurant !== selectedBrand) return false;
+      return true;
+    });
+  }, [unifiedMenu, selectedBrand]);
   
   const handleSurpriseMe = useCallback(() => {
     if (surpriseMeDishes.length > 0) {
