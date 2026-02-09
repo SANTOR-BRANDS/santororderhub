@@ -105,14 +105,29 @@ const DishCard = ({ dish, onClick }: DishCardProps) => {
             )}>
               {dishName}
             </h3>
-            <span className={cn(
-              'font-bold text-lg whitespace-nowrap',
-              dish.restaurant === 'restory' ? 'text-restory' : 
-              dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent'
-            )}>
-              ฿{dish.price}
-            </span>
+            <div className="flex items-center gap-1.5">
+              {/* Show original price crossed out for promo items */}
+              {dish.id === 'SM-GRK-003' && (
+                <span className="text-xs text-muted-foreground line-through">฿69</span>
+              )}
+              <span className={cn(
+                'font-bold text-lg whitespace-nowrap',
+                dish.restaurant === 'restory' ? 'text-restory' : 
+                dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent'
+              )}>
+                ฿{dish.price}
+              </span>
+            </div>
           </div>
+          
+          {/* Promo badge for discounted items */}
+          {dish.id === 'SM-GRK-003' && (
+            <div className="mb-2">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/90 text-white">
+                🔥 PROMO
+              </span>
+            </div>
+          )}
           
           {/* Description only shown in DishModal, not on cards */}
 
