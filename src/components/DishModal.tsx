@@ -397,8 +397,16 @@ const DishModal = ({
                     <div className="flex items-center gap-3">
                       <Checkbox id={`extra-${addon.id}-${dishNumber}`} checked={currentExtraPls.some(a => a.id === addon.id)} onCheckedChange={() => toggleExtraPls(addon, dishNumber)} />
                       <span className="text-sm">{addon.name}</span>
+                      {addon.id === 'EXT-GRK-001' && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/90 text-white">🔥 PROMO</span>
+                      )}
                     </div>
-                    <span className="text-sm text-muted-foreground">+{addon.price}</span>
+                    <div className="flex items-center gap-1.5">
+                      {addon.id === 'EXT-GRK-001' && (
+                        <span className="text-xs text-muted-foreground line-through">+69</span>
+                      )}
+                      <span className="text-sm text-muted-foreground">+{addon.price}</span>
+                    </div>
                   </Label>)}
               </div>
             </div>;
@@ -524,15 +532,26 @@ const DishModal = ({
             }
           }
         }} className="space-y-1">
-              {dish.variants.map(variant => <Label key={variant.id} htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              {dish.variants.map(variant => {
+                const isPromoVariant = variant.id === 'SM-GRK-003-1S';
+                return <Label key={variant.id} htmlFor={`variant-${variant.id}-${dishNumber}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
                   <div className="flex items-center gap-3">
                     <RadioGroupItem value={variant.id} id={`variant-${variant.id}-${dishNumber}`} />
                     <span>{t(variant.id) === variant.id ? variant.name : t(variant.id)}</span>
+                    {isPromoVariant && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/90 text-white">🔥 PROMO</span>
+                    )}
                   </div>
-                  {!isSmoody && variant.price !== dish.price && <span className="text-sm text-muted-foreground">
-                      {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
-                    </span>}
-                </Label>)}
+                  <div className="flex items-center gap-1.5">
+                    {isPromoVariant && (
+                      <span className="text-xs text-muted-foreground line-through">฿69</span>
+                    )}
+                    {!isSmoody && variant.price !== dish.price && <span className="text-sm text-muted-foreground">
+                        {variant.price > dish.price ? `+${variant.price - dish.price}` : `-${dish.price - variant.price}`}
+                      </span>}
+                  </div>
+                </Label>;
+              })}
             </RadioGroup>
           </div>}
 

@@ -3,7 +3,7 @@ import { Dish, AddOn } from '@/types/menu';
 // Smoody paid extras (available for all Smoody dishes)
 export const SMOODY_PAID_EXTRAS: AddOn[] = [
   // Greek Yogurt
-  { id: 'EXT-GRK-001', name: 'Greek Yo Extra Scoop', price: 69, category: 'sm-greek-yo' },
+  { id: 'EXT-GRK-001', name: 'Greek Yo Extra Scoop', price: 59, category: 'sm-greek-yo' },
 
   // Fresh Fruits
   { id: 'EXT-FRU-001', name: 'Banana', price: 15, category: 'sm-fruits' },
@@ -224,7 +224,7 @@ export const smoodyMenu: Dish[] = [
     price: 59,
     category: 'GREEK YO',
     restaurant: 'smoody',
-    description: 'Our signature homemade Greek yogurt. 🔥 1 Scoop PROMO: ฿59 (normally ฿69)!',
+    description: 'Our signature homemade Greek yogurt — pure and creamy.',
     variants: [
       { id: 'SM-GRK-003-1S', name: '1 Scoop — 🔥 PROMO', price: 59, isDefault: true },
       { id: 'SM-GRK-003-1S3T', name: '1 Scoop + 3 Free Toppings', price: 89, freeToppingsLimit: 3 },
