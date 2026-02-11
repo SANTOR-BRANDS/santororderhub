@@ -57,6 +57,8 @@ export const translations = {
     
     // Header
     'header.deliveryPlaceholder': 'Set delivery address',
+    'header.setAddressPrompt': 'Enter your delivery address:',
+    'header.clickToSetAddress': 'Click to set delivery address',
     'header.searchPlaceholder': 'Search dishes...',
     'search.popular': 'Popular Searches',
     'search.recent': 'Last Orders',
@@ -100,6 +102,7 @@ export const translations = {
 
     // Dish Modal
     'dish.addToBasket': 'เพิ่มลงตะกร้า',
+    'dish.added': 'เพิ่มแล้ว!',
     'dish.unavailable': 'ไม่พร้อมให้บริการ',
     'dish.selectVariant': 'เลือกแบบ',
     'dish.spicyLevel': 'ระดับความเผ็ด',

@@ -79,12 +79,23 @@ const UnifiedHeader = ({
           {/* Top Row: Location/Delivery Address - Language */}
           <div className="flex items-center justify-between">
             {/* Location/Delivery Address */}
-            <div className="flex items-center gap-2 text-sm">
+            <button
+              onClick={() => {
+                const newAddress = prompt(t('header.setAddressPrompt', 'Enter your delivery address:'), deliveryAddress || '');
+                if (newAddress !== null && newAddress.trim()) {
+                  localStorage.setItem('santor-user-address', newAddress);
+                  // Force re-render
+                  window.dispatchEvent(new Event('storage'));
+                }
+              }}
+              className="flex items-center gap-2 text-sm hover:bg-white/10 px-2 py-1 rounded transition-colors"
+              title={t('header.clickToSetAddress', 'Click to set delivery address')}
+            >
               <MapPin className="h-4 w-4 text-white/70" />
               <span className="text-white/90 truncate max-w-[200px] sm:max-w-xs">
                 {deliveryAddress || t('header.deliveryPlaceholder', 'Set delivery address')}
               </span>
-            </div>
+            </button>
             
             {/* Language Selector */}
             <Popover>
@@ -115,31 +126,9 @@ const UnifiedHeader = ({
               placeholder={t('header.searchPlaceholder', 'Search dishes...')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
               className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/50 focus:bg-white/20 focus:border-white/40"
             />
-            
-            {/* Search Suggestions */}
-            {isSearchFocused && searchQuery.length === 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50">
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">🔥 {t('search.popular', 'Popular Searches')}</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {['Pad Thai', 'Som Tum', 'Green Curry', 'Mango Sticky Rice'].map((term) => (
-                        <button
-                          key={term}
-                          onClick={() => {
-                            setSearchQuery(term);
-                            setIsSearchFocused(false);
-                          }}
-                          className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700 transition-colors"
-                        >
-                          {term}
-                        </button>
-                      ))}
-                    </div>
+          </div>
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-gray-700 mb-2">🕒 {t('search.recent', 'Last Orders')}</h4>
