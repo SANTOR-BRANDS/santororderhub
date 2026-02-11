@@ -1156,7 +1156,7 @@ export const nirvanaMenu: Dish[] = [
 { 
     id: 'NV-GRN-005', 
     name: 'Grilled Chicken Thigh with Egg Noodles', 
-    price: 109, 
+    price: 119, 
     category: 'GRILLED MEAT + EGG NOODLES', 
     restaurant: 'nirvana',
     extraOptions: [
@@ -1166,7 +1166,7 @@ export const nirvanaMenu: Dish[] = [
 { 
     id: 'NV-GRN-006', 
     name: 'Mala Grilled Chicken Thigh with Egg Noodles', 
-    price: 119, 
+    price: 129, 
     category: 'GRILLED MEAT + EGG NOODLES', 
     restaurant: 'nirvana',
     extraOptions: [
