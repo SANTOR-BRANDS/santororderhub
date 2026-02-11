@@ -104,9 +104,8 @@ const FloatingBasket = ({ basketItems, onOpenBasket, triggerAnimation }: Floatin
           </div>
         )}
       </Button>
-      </div>
+    </div>
   );
-};
 };
 
 export default FloatingBasket;

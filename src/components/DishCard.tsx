@@ -155,9 +155,9 @@ const DishCard = ({
               'w-full mt-3 text-xs font-semibold transition-all relative overflow-hidden',
               isUnavailable && 'opacity-50 cursor-not-allowed',
               showSuccess && 'scale-105 shadow-lg',
-              dish.restaurant === 'restory' ? 'bg-restory hover:bg-restory/90 text-white',
-              dish.restaurant === 'nirvana' ? 'bg-nirvana-accent hover:bg-nirvana-accent/90 text-white',
-              dish.restaurant === 'smoody' ? 'bg-purple-600 hover:bg-purple-700 text-white'
+              dish.restaurant === 'restory' ? 'bg-restory hover:bg-restory/90 text-white' : '',
+              dish.restaurant === 'nirvana' ? 'bg-nirvana-accent hover:bg-nirvana-accent/90 text-white' : '',
+              dish.restaurant === 'smoody' ? 'bg-purple-600 hover:bg-purple-700 text-white' : ''
             )}
           >
             {showSuccess ? (

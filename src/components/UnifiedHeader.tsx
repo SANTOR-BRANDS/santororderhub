@@ -10,17 +10,34 @@ import { UNIFIED_CATEGORIES, UnifiedCategory, getRestaurantInfo, getUnifiedMenu,
 
 // Map category names to translation keys
 const CATEGORY_TRANSLATION_KEYS: Record<string, string> = {
-  'ALL': 'category.all',
-  'COMBO DEALS': 'category.comboDeals',
-  'SIGNATURE BOWLS': 'category.signatureBowls',
-  'GREEK YO': 'category.greekYo',
-  'RICE': 'category.rice',
-  'NOODLES': 'category.noodles',
-  'FRESH SEAFOOD': 'category.freshSeafood',
-  'VEGETARIAN': 'category.vegetarian',
-  'TOPPINGS': 'category.toppings',
-  'DRINKS': 'category.drinks',
-  'DESSERTS': 'category.desserts'
+  'ALL': 'categories.all',
+  'COMBO DEALS': 'categories.comboDeals',
+  'SIGNATURE BOWLS': 'categories.signatureBowls',
+  'GREEK YO': 'categories.greekYo',
+  'RICE': 'categories.rice',
+  'NOODLES': 'categories.noodles',
+  'FRESH SEAFOOD': 'categories.freshSeafood',
+  'VEGETARIAN': 'categories.vegetarian',
+  'TOPPINGS': 'categories.toppings',
+  'DRINKS': 'categories.drinks',
+  'DESSERTS': 'categories.desserts'
+};
+
+const getCategoryEmoji = (category: UnifiedCategory): string => {
+  const emojis: Record<UnifiedCategory, string> = {
+    'ALL': '🍽️',
+    'COMBO DEALS': '🔥',
+    'SIGNATURE BOWLS': '✨',
+    'GREEK YO': '🍨',
+    'RICE': '🍚',
+    'NOODLES': '🍜',
+    'FRESH SEAFOOD': '🐟',
+    'VEGETARIAN': '🌱',
+    'TOPPINGS': '🥢',
+    'DRINKS': '🧃',
+    'DESSERTS': '🍨'
+  };
+  return emojis[category];
 };
 interface UnifiedHeaderProps {
   selectedCategory: UnifiedCategory;
@@ -73,7 +90,8 @@ const UnifiedHeader = ({
     onCategoryChange(category);
     scrollToTop();
   };
-  return <header className="sticky top-0 z-50 bg-gradient-santor text-santor-foreground">
+  return (
+    <header className="sticky top-0 z-50 bg-gradient-santor text-santor-foreground">
       <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col gap-3">
           {/* Top Row: Location/Delivery Address - Language */}
@@ -123,23 +141,12 @@ const UnifiedHeader = ({
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/50" />
             <Input
               type="text"
-              placeholder={t('header.searchPlaceholder', 'Search dishes...')}
+              placeholder={t('search.placeholder', 'Search dishes or restaurants...')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/50 focus:bg-white/20 focus:border-white/40"
             />
           </div>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">🕒 {t('search.recent', 'Last Orders')}</h4>
-                    <div className="space-y-1">
-                      <div className="text-sm text-gray-600">Tom Yum Soup</div>
-                      <div className="text-sm text-gray-600">Chicken Satay</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Brand Filter */}
@@ -167,7 +174,6 @@ const UnifiedHeader = ({
             </div>
           </div>
         </div>
-      </div>
       
       {/* Category Navigation Bar */}
       <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
@@ -176,30 +182,25 @@ const UnifiedHeader = ({
           const isSelected = selectedCategory === category;
           const translationKey = CATEGORY_TRANSLATION_KEYS[category];
           const displayCategory = translationKey ? t(translationKey) : category;
-          return <button key={category} onClick={() => handleCategoryChange(category)} className={cn("sm:text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start text-sm", isSelected ? 'text-[#fd7304] border-[#fd7304]' : 'text-gray-400 border-transparent hover:text-gray-200')} aria-current={isSelected ? 'true' : undefined}>
-                {getCategoryEmoji(category)} {displayCategory}
-              </button>;
+          return (
+            <button 
+              key={category} 
+              onClick={() => handleCategoryChange(category)} 
+              className={cn(
+                "sm:text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start text-sm", 
+                isSelected ? 'text-[#fd7304] border-[#fd7304]' : 'text-gray-400 border-transparent hover:text-gray-200'
+              )} 
+              aria-current={isSelected ? 'true' : undefined}
+            >
+              {getCategoryEmoji(category)} {displayCategory}
+            </button>
+          );
         })}
           {/* Spacer to ensure last item has breathing room */}
           <div className="shrink-0 w-4" aria-hidden="true" />
         </div>
       </div>
-    </header>;
-};
-const getCategoryEmoji = (category: UnifiedCategory): string => {
-  const emojis: Record<UnifiedCategory, string> = {
-    'ALL': '🍽️',
-    'COMBO DEALS': '🔥',
-    'SIGNATURE BOWLS': '✨',
-    'GREEK YO': '🍨',
-    'RICE': '🍚',
-    'NOODLES': '🍜',
-    'FRESH SEAFOOD': '🐟',
-    'VEGETARIAN': '🌱',
-    'TOPPINGS': '🥢',
-    'DRINKS': '🧃',
-    'DESSERTS': '🍨'
-  };
-  return emojis[category];
+    </header>
+  );
 };
 export default UnifiedHeader;
