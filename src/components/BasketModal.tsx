@@ -17,6 +17,7 @@ import { Trash2, Plus, Minus, Instagram, MessageCircle, Send, MapPin, Phone } fr
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
 import liff from '@line/liff';
 
 interface BasketModalProps {
@@ -290,6 +291,13 @@ const BasketModal = ({
           }).filter(Boolean);
           extras += `    - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
         }
+        if (item.freeToppings && item.freeToppings.length > 0) {
+          const freeToppingNames = item.freeToppings.map(toppingId => {
+            const topping = SMOODY_FREE_TOPPINGS.find(t => t.id === toppingId);
+            return topping ? topping.name : toppingId;
+          }).join(', ');
+          extras += `    - 🎁 Free Toppings: ${freeToppingNames}\n`;
+        }
         
         // Format combo dish 2
         extras += `  🍽️ ${t('basket.dish')} 2:\n`;
@@ -336,6 +344,13 @@ const BasketModal = ({
             return `${extraName} (+฿${extra.price})`;
           }).filter(Boolean);
           extras += `    - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
+        }
+        if (item.combo2.freeToppings && item.combo2.freeToppings.length > 0) {
+          const freeToppingNames = item.combo2.freeToppings.map(toppingId => {
+            const topping = SMOODY_FREE_TOPPINGS.find(t => t.id === toppingId);
+            return topping ? topping.name : toppingId;
+          }).join(', ');
+          extras += `    - 🎁 Free Toppings: ${freeToppingNames}\n`;
         }
         
         extras += `  - ${t('basket.cutlery')}: ${item.needsCutlery ? t('basket.yes') : t('basket.no')}\n`;
@@ -389,6 +404,13 @@ const BasketModal = ({
             return `${extraName} (+฿${extra.price})`;
           }).filter(Boolean);
           extras += `  - ${t('basket.extra')}: ${extraDetails.join(', ')}\n`;
+        }
+        if (item.freeToppings && item.freeToppings.length > 0) {
+          const freeToppingNames = item.freeToppings.map(toppingId => {
+            const topping = SMOODY_FREE_TOPPINGS.find(t => t.id === toppingId);
+            return topping ? topping.name : toppingId;
+          }).join(', ');
+          extras += `  - 🎁 Free Toppings: ${freeToppingNames}\n`;
         }
         extras += `  - ${t('basket.cutlery')}: ${item.needsCutlery ? t('basket.yes') : t('basket.no')}\n`;
         extras += `  - Quantity: ${item.quantity}\n`;
@@ -574,7 +596,9 @@ const BasketModal = ({
                         'capitalize text-xs',
                         item.dish.restaurant === 'restory' 
                           ? 'border-restory/50 text-restory' 
-                          : 'border-nirvana-accent/50 text-nirvana-accent'
+                          : item.dish.restaurant === 'nirvana'
+                          ? 'border-nirvana-accent/50 text-nirvana-accent'
+                          : 'border-smoody-accent/50 text-smoody-accent'
                       )}
                     >
                       {item.dish.restaurant}
@@ -626,6 +650,13 @@ const BasketModal = ({
                           return extraName;
                         }).filter(Boolean).join(', ')}</div>
                       )}
+                      {item.freeToppings && item.freeToppings.length > 0 && (() => {
+                        const freeToppingNames = item.freeToppings.map(toppingId => {
+                          const topping = SMOODY_FREE_TOPPINGS.find(t => t.id === toppingId);
+                          return topping ? topping.name : toppingId;
+                        }).join(', ');
+                        return <div className="pl-3">🎁 Free Toppings: {freeToppingNames}</div>;
+                      })()}
                       
                       {/* Combo Dish 2 */}
                       <div className="font-semibold text-foreground mt-2">🍽️ {t('basket.dish')} 2:</div>
@@ -659,6 +690,13 @@ const BasketModal = ({
                           return extraName;
                         }).filter(Boolean).join(', ')}</div>
                       )}
+                      {item.combo2.freeToppings && item.combo2.freeToppings.length > 0 && (() => {
+                        const freeToppingNames = item.combo2.freeToppings.map(toppingId => {
+                          const topping = SMOODY_FREE_TOPPINGS.find(t => t.id === toppingId);
+                          return topping ? topping.name : toppingId;
+                        }).join(', ');
+                        return <div className="pl-3">🎁 Free Toppings: {freeToppingNames}</div>;
+                      })()}
                       <div className="mt-2">{t('basket.cutlery')}: {item.needsCutlery ? t('basket.yes') : t('basket.no')}</div>
                     </>
                   ) : (
@@ -695,6 +733,13 @@ const BasketModal = ({
                           return extraName;
                         }).filter(Boolean).join(', ')}</div>
                       )}
+                      {item.freeToppings && item.freeToppings.length > 0 && (() => {
+                        const freeToppingNames = item.freeToppings.map(toppingId => {
+                          const topping = SMOODY_FREE_TOPPINGS.find(t => t.id === toppingId);
+                          return topping ? topping.name : toppingId;
+                        }).join(', ');
+                        return <div>🎁 Free Toppings: {freeToppingNames}</div>;
+                      })()}
                       <div>{t('basket.cutlery')}: {item.needsCutlery ? t('basket.yes') : t('basket.no')}</div>
                     </>
                   )}
