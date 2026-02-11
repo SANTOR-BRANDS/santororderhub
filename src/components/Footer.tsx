@@ -4,14 +4,24 @@ import { Link } from 'react-router-dom';
 import ContactDialog from './ContactDialog';
 import { Restaurant } from '@/types/menu';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { getRestaurantInfo } from '@/lib/unifiedMenu';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface FooterProps {
   selectedRestaurant?: Restaurant | null;
+  onRestaurantSelect?: (restaurant: Restaurant | null) => void;
 }
 
-const Footer = ({ selectedRestaurant }: FooterProps) => {
+const Footer = ({ selectedRestaurant, onRestaurantSelect }: FooterProps) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const { t } = useLanguage();
+
+  const restaurants = [
+    { id: 'restory' as Restaurant, name: 'Restory', available: true },
+    { id: 'nirvana' as Restaurant, name: 'Nirvana', available: true },
+    { id: 'smoody' as Restaurant, name: 'Smoody', available: true },
+  ];
 
   const getFooterClasses = () => {
     if (selectedRestaurant === 'restory') {
@@ -30,6 +40,50 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
     <>
       <footer className={getFooterClasses()}>
         <div className="max-w-7xl mx-auto px-4 py-12">
+          {/* Restaurant Selection - Above main content */}
+          <div className="mb-8 text-center">
+            <h3 className="text-lg font-semibold mb-4">{t('footer.selectRestaurant', 'Choose Restaurant')}</h3>
+            <div className="flex justify-center gap-2 flex-wrap">
+              {restaurants.map(restaurant => {
+                const isSelected = selectedRestaurant === restaurant.id;
+                const info = getRestaurantInfo(restaurant.id);
+                const isNew = restaurant.id === 'smoody';
+                return (
+                  <Button
+                    key={restaurant.id}
+                    variant={isSelected ? "secondary" : "outline"}
+                    size="sm"
+                    onClick={() => onRestaurantSelect?.(isSelected ? null : restaurant.id)}
+                    disabled={!restaurant.available}
+                    className={cn(
+                      'flex items-center gap-2 px-4 py-2',
+                      isSelected ? 'bg-white/20 border-white/40' : 'bg-white/10 border-white/20 hover:bg-white/20',
+                      !restaurant.available && 'opacity-40 cursor-not-allowed'
+                    )}
+                  >
+                    {info && (
+                      <img 
+                        src={info.logo} 
+                        alt={info.name}
+                        className="w-6 h-6 rounded-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.parentElement!.insertAdjacentHTML('beforeend', `<span class="text-xs font-bold">${info.name.charAt(0)}</span>`);
+                        }}
+                      />
+                    )}
+                    <span className="text-sm">{info?.name || restaurant.name}</span>
+                    {isNew && (
+                      <span className="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full animate-pulse">
+                        NEW
+                      </span>
+                    )}
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Social Links Section - Left */}
             <div>

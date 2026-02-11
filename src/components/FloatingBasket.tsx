@@ -1,15 +1,19 @@
+import { useState, useEffect } from 'react';
 import { BasketItem, SAUCES } from '@/types/menu';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getRestaurantInfo } from '@/lib/unifiedMenu';
 
 interface FloatingBasketProps {
   basketItems: BasketItem[];
   onOpenBasket: () => void;
+  triggerAnimation?: boolean;
 }
 
-const FloatingBasket = ({ basketItems, onOpenBasket }: FloatingBasketProps) => {
+const FloatingBasket = ({ basketItems, onOpenBasket, triggerAnimation }: FloatingBasketProps) => {
+  const [isAnimating, setIsAnimating] = useState(false);
   const itemCount = basketItems.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = basketItems.reduce((total, item) => {
     const basePrice = item.selectedVariant?.price || item.dish.price;
@@ -23,6 +27,18 @@ const FloatingBasket = ({ basketItems, onOpenBasket }: FloatingBasketProps) => {
     return total + (basePrice + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
   }, 0);
 
+  // Get unique restaurants in basket for showing trust cues
+  const uniqueRestaurants = Array.from(new Set(basketItems.map(item => item.dish.restaurant)));
+
+  // Trigger animation when triggerAnimation prop changes
+  useEffect(() => {
+    if (triggerAnimation) {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 600);
+      return () => clearTimeout(timer);
+    }
+  }, [triggerAnimation]);
+
   if (itemCount === 0) return null;
 
   return (
@@ -31,15 +47,47 @@ const FloatingBasket = ({ basketItems, onOpenBasket }: FloatingBasketProps) => {
         onClick={onOpenBasket}
         className={cn(
           'w-full bg-santor text-santor-foreground hover:bg-santor-secondary',
-          'shadow-modal py-4 rounded-xl transition-bounce',
-          'border border-white/20 flex items-center justify-center gap-3'
+          'shadow-modal py-4 rounded-xl transition-all duration-300',
+          'border border-white/20 flex items-center justify-between gap-3 px-4',
+          isAnimating && 'animate-bounce scale-105'
         )}
         size="lg"
       >
-        <ShoppingBag className="h-6 w-6" />
-        <span className="font-bold text-base">
-          {itemCount} item{itemCount > 1 ? 's' : ''} • ฿{totalPrice}
-        </span>
+        <div className="flex items-center gap-3">
+          <ShoppingBag className="h-6 w-6" />
+          <span className="font-bold text-base">
+            {itemCount} item{itemCount > 1 ? 's' : ''} • ฿{totalPrice}
+          </span>
+        </div>
+        
+        {/* Restaurant Logos - Trust Cue */}
+        <div className="flex items-center gap-1">
+          {uniqueRestaurants.slice(0, 3).map(restaurant => {
+            const info = getRestaurantInfo(restaurant);
+            if (!info) return null;
+            return (
+              <div
+                key={restaurant}
+                className="w-6 h-6 rounded-full overflow-hidden border border-white/30 bg-white/10 flex items-center justify-center"
+                title={info.name}
+              >
+                <img 
+                  src={info.logo} 
+                  alt={info.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML = `<span class="text-xs font-bold text-white">${info.name.charAt(0)}</span>`;
+                  }}
+                />
+              </div>
+            );
+          })}
+          {uniqueRestaurants.length > 3 && (
+            <span className="text-xs text-white/70 ml-1">+{uniqueRestaurants.length - 3}</span>
+          )}
+        </div>
         
         {itemCount > 0 && (
           <Badge 

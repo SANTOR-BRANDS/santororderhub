@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Restaurant, Dish, BasketItem } from '@/types/menu';
-import AnnouncementBanner from '@/components/AnnouncementBanner';
 import UnifiedHeader from '@/components/UnifiedHeader';
 import UnifiedMenuDisplay from '@/components/UnifiedMenuDisplay';
 import DishModal from '@/components/DishModal';
@@ -41,9 +40,13 @@ const Index = () => {
     return [];
   });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
+  const [triggerCartAnimation, setTriggerCartAnimation] = useState(false);
 
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
+    // Trigger animation on floating basket
+    setTriggerCartAnimation(true);
+    setTimeout(() => setTriggerCartAnimation(false), 100);
   };
 
   const handleUpdateQuantity = (itemId: string, quantity: number) => {
@@ -94,7 +97,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
       <SEOHead metadata={homeMetadata} />
-      <AnnouncementBanner />
       <UnifiedHeader 
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
@@ -107,6 +109,7 @@ const Index = () => {
           selectedCategory={selectedCategory}
           selectedBrand={selectedBrand}
           onDishSelect={setSelectedDish}
+          onAddToBasket={handleAddToBasket}
         />
       </main>
 
@@ -129,9 +132,13 @@ const Index = () => {
       <FloatingBasket 
         basketItems={basketItems} 
         onOpenBasket={() => setIsBasketOpen(true)} 
+        triggerAnimation={triggerCartAnimation}
       />
       
-      <Footer selectedRestaurant={null} />
+      <Footer selectedRestaurant={null} onRestaurantSelect={(restaurant) => {
+        // Handle restaurant selection logic here if needed
+        console.log('Selected restaurant:', restaurant);
+      }} />
     </div>
   );
 };

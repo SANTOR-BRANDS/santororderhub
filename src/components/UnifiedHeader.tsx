@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Restaurant } from '@/types/menu';
 import { cn } from '@/lib/utils';
-import { Globe } from 'lucide-react';
+import { Globe, MapPin, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { UNIFIED_CATEGORIES, UnifiedCategory, getRestaurantInfo, getUnifiedMenu, getAvailableCategoriesForBrand } from '@/lib/unifiedMenu';
@@ -39,6 +40,10 @@ const UnifiedHeader = ({
     setLanguage,
     t
   } = useLanguage();
+  
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [deliveryAddress] = useState(() => localStorage.getItem('santor-user-address') || '');
 
   // Get available categories based on selected brand
   const unifiedMenu = useMemo(() => getUnifiedMenu(), []);
@@ -71,8 +76,17 @@ const UnifiedHeader = ({
   return <header className="sticky top-0 z-50 bg-gradient-santor text-santor-foreground">
       <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col gap-3">
-          {/* Language Selector - Top Right */}
-          <div className="flex items-center justify-end">
+          {/* Top Row: Location/Delivery Address - Language */}
+          <div className="flex items-center justify-between">
+            {/* Location/Delivery Address */}
+            <div className="flex items-center gap-2 text-sm">
+              <MapPin className="h-4 w-4 text-white/70" />
+              <span className="text-white/90 truncate max-w-[200px] sm:max-w-xs">
+                {deliveryAddress || t('header.deliveryPlaceholder', 'Set delivery address')}
+              </span>
+            </div>
+            
+            {/* Language Selector */}
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="ghost" size="sm" className="text-inherit hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5" aria-label="Change language">
@@ -91,6 +105,52 @@ const UnifiedHeader = ({
                 </div>
               </PopoverContent>
             </Popover>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/50" />
+            <Input
+              type="text"
+              placeholder={t('header.searchPlaceholder', 'Search dishes...')}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
+              className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/50 focus:bg-white/20 focus:border-white/40"
+            />
+            
+            {/* Search Suggestions */}
+            {isSearchFocused && searchQuery.length === 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50">
+                <div className="space-y-3">
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-700 mb-2">🔥 {t('search.popular', 'Popular Searches')}</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {['Pad Thai', 'Som Tum', 'Green Curry', 'Mango Sticky Rice'].map((term) => (
+                        <button
+                          key={term}
+                          onClick={() => {
+                            setSearchQuery(term);
+                            setIsSearchFocused(false);
+                          }}
+                          className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700 transition-colors"
+                        >
+                          {term}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-700 mb-2">🕒 {t('search.recent', 'Last Orders')}</h4>
+                    <div className="space-y-1">
+                      <div className="text-sm text-gray-600">Tom Yum Soup</div>
+                      <div className="text-sm text-gray-600">Chicken Satay</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Brand Filter */}

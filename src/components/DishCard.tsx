@@ -1,20 +1,52 @@
-import { Dish } from '@/types/menu';
+import { Dish, DishVariant, BasketItem, AddOn } from '@/types/menu';
 import { CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import KitchenBadge from './KitchenBadge';
 import OptimizedImage from './OptimizedImage';
+import { ShoppingCart } from 'lucide-react';
+import { getSaucesByRestaurant } from '@/types/menu';
+import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
+
 interface DishCardProps {
   dish: Dish;
   onClick: (dish: Dish) => void;
+  onAddToBasket?: (item: BasketItem) => void;
 }
 const DishCard = ({
   dish,
-  onClick
+  onClick,
+  onAddToBasket
 }: DishCardProps) => {
   const {
     t
   } = useLanguage();
+
+  const handleQuickAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click
+    if (onAddToBasket && !isUnavailable) {
+      const selectedVariant = dish.variants?.find(v => v.isDefault) || dish.variants?.[0] || null;
+      const SAUCES = getSaucesByRestaurant(dish.restaurant);
+      
+      const basketItem: BasketItem = {
+        id: `${dish.id}-${Date.now()}`,
+        dish,
+        selectedVariant,
+        addOns: [],
+        extraPls: [],
+        spicyLevel: dish.spicyRequired ? 2 : undefined,
+        sauce: SAUCES.filter(s => s.price === 0 && s.id !== 'SAN-SAU-008' && s.id !== 'NV-SAU-005')[0]?.id || '',
+        needsCutlery: false,
+        quantity: 1,
+        ...(selectedVariant?.freeToppingsLimit && dish.restaurant === 'smoody' ? {
+          freeToppings: []
+        } : {})
+      };
+      
+      onAddToBasket(basketItem);
+    }
+  };
   const isUnavailable = dish.isAvailable === false;
   const translated = t(dish.id);
   const dishName = !translated || translated === dish.id ? dish.name : translated;
@@ -52,19 +84,47 @@ const DishCard = ({
             </h3>
             <div className="flex items-center gap-1.5">
               {/* Show original price crossed out for promo items */}
-              {dish.id === 'SM-GRK-003' && <span className="text-xs line-through text-center text-red-600 font-medium">฿69</span>}
-              <span className={cn('font-bold text-lg whitespace-nowrap', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent')}>
-                ฿{dish.price}
-              </span>
+              {(() => {
+                const isPromo = dish.id === 'SM-GRK-003';
+                const originalPrice = isPromo ? 69 : null;
+                const currentPrice = dish.price;
+                
+                return (
+                  <>
+                    {isPromo && originalPrice && (
+                      <span className="text-xs line-through text-red-600 font-medium">
+                        ฿{originalPrice}
+                      </span>
+                    )}
+                    <span className={cn(
+                      'font-bold text-lg whitespace-nowrap',
+                      dish.restaurant === 'restory' ? 'text-restory' : 
+                      dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 
+                      'text-nirvana-accent',
+                      isPromo && 'text-red-600'
+                    )}>
+                      ฿{currentPrice}
+                    </span>
+                  </>
+                );
+              })()}
             </div>
           </div>
           
           {/* Promo badge for discounted items */}
-          {dish.id === 'SM-GRK-003' && <div className="mb-2">
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/90 text-white">
-                🔥 PROMO
-              </span>
-            </div>}
+          {(() => {
+            const isPromo = dish.id === 'SM-GRK-003';
+            if (isPromo) {
+              return (
+                <div className="mb-2">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/90 text-white animate-pulse">
+                    🔥 PROMO
+                  </span>
+                </div>
+              );
+            }
+            return null;
+          })()}
           
           {/* Description only shown in DishModal, not on cards */}
 
@@ -78,6 +138,23 @@ const DishCard = ({
                 {dish.isSpecial && <span className="text-xs" role="img" aria-label="Special dish">⭐</span>}
               </div>}
           </div>
+          
+          {/* Add to Cart Button */}
+          <Button 
+            onClick={handleQuickAddToCart}
+            disabled={isUnavailable}
+            size="sm"
+            className={cn(
+              'w-full mt-3 text-xs font-semibold transition-all',
+              isUnavailable && 'opacity-50 cursor-not-allowed',
+              dish.restaurant === 'restory' && 'bg-restory hover:bg-restory/90 text-white',
+              dish.restaurant === 'nirvana' && 'bg-nirvana-accent hover:bg-nirvana-accent/90 text-white',
+              dish.restaurant === 'smoody' && 'bg-smoody-primary hover:bg-smoody-primary/90 text-white'
+            )}
+          >
+            <ShoppingCart className="h-3 w-3 mr-1" />
+            {isUnavailable ? t('dish.unavailable', 'Unavailable') : t('dish.addToBasket', 'Add to Basket')}
+          </Button>
         </div>
       </CardContent>
     </article>;
