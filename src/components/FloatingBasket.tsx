@@ -104,24 +104,9 @@ const FloatingBasket = ({ basketItems, onOpenBasket, triggerAnimation }: Floatin
           </div>
         )}
       </Button>
-    </div>
+      </div>
   );
-          })}
-          {uniqueRestaurants.length > 3 && (
-            <span className="text-xs text-white/70 ml-1">+{uniqueRestaurants.length - 3}</span>
-          )}
-        </div>
-        
-        {itemCount > 0 && (
-          <Badge 
-            className="absolute top-1 right-3 bg-red-500 text-white border-0 min-w-6 h-6 flex items-center justify-center text-xs font-bold"
-          >
-            {itemCount > 99 ? '99+' : itemCount}
-          </Badge>
-        )}
-      </Button>
-    </div>
-  );
+};
 };
 
 export default FloatingBasket;
