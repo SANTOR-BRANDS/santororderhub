@@ -70,7 +70,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
               return (
                 <div
                   key={restaurant}
-                  className="w-7 h-7 rounded-full border-2 border-white overflow-hidden bg-white shadow-sm"
+                  className="w-7 h-7 rounded-full overflow-hidden bg-white shadow-sm"
                   title={info?.name}
                 >
                   <img

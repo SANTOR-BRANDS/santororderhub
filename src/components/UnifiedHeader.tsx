@@ -91,11 +91,11 @@ const UnifiedHeader = ({
             {/* Address Button - Left */}
             <button
               onClick={openAddressModal}
-              className="flex items-center gap-2 text-sm text-white/90 hover:text-white transition-colors cursor-pointer"
+              className="flex items-center gap-2 text-sm text-white/90 hover:text-white hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5 transition-colors cursor-pointer"
               aria-label="Set delivery address"
             >
               <MapPin className="h-4 w-4 shrink-0" />
-              <span className="truncate max-w-[200px] sm:max-w-[250px]">
+              <span className="truncate max-w-[180px] sm:max-w-[220px]">
                 {getAddressDisplay()}
               </span>
             </button>
