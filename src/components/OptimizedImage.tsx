@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -10,6 +10,20 @@ interface OptimizedImageProps {
   fallbackIcon?: string;
 }
 
+/**
+ * Attempts to get a fallback image URL if the primary format fails
+ * Tries: .webp → .png → .jpg
+ */
+const getFallbackSrc = (src: string): string | null => {
+  if (src.endsWith('.webp')) {
+    return src.replace('.webp', '.png');
+  }
+  if (src.endsWith('.png')) {
+    return src.replace('.png', '.jpg');
+  }
+  return null;
+};
+
 const OptimizedImage = ({ 
   src, 
   alt, 
@@ -19,6 +33,26 @@ const OptimizedImage = ({
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState(src);
+  const [fallbackAttempted, setFallbackAttempted] = useState(false);
+
+  const handleError = useCallback(() => {
+    // Try fallback format if available and not already attempted
+    if (!fallbackAttempted) {
+      const fallback = getFallbackSrc(currentSrc);
+      if (fallback && fallback !== currentSrc) {
+        setCurrentSrc(fallback);
+        setFallbackAttempted(true);
+        return;
+      }
+    }
+    // If no fallback or fallback also failed, show error state
+    setHasError(true);
+  }, [currentSrc, fallbackAttempted]);
+
+  const handleLoad = useCallback(() => {
+    setIsLoaded(true);
+  }, []);
 
   if (hasError) {
     return (
@@ -45,7 +79,7 @@ const OptimizedImage = ({
       
       {/* Actual image */}
       <img 
-        src={src} 
+        src={currentSrc} 
         alt={alt}
         className={cn(
           'w-full h-full object-cover transition-opacity duration-300',
@@ -53,8 +87,9 @@ const OptimizedImage = ({
           className
         )}
         loading="lazy"
-        onLoad={() => setIsLoaded(true)}
-        onError={() => setHasError(true)}
+        decoding="async"
+        onLoad={handleLoad}
+        onError={handleError}
       />
     </div>
   );
