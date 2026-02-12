@@ -9,6 +9,7 @@ import FloatingBasket from '@/components/FloatingBasket';
 import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAddress } from '@/contexts/AddressContext';
 import { SEOHead } from '@/seo/components/SEOHead';
 import { getMetadata } from '@/seo/metadata';
 import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, smoodySchema } from '@/seo/jsonld';
@@ -41,12 +42,11 @@ interface SerializedBasketItem {
 
 const Index = () => {
   const { t } = useLanguage();
+  const { address, setAddress, openAddressModal, isAddressModalOpen, setIsAddressModalOpen } = useAddress();
   const [selectedCategory, setSelectedCategory] = useState<UnifiedCategory>('ALL');
   const [selectedBrand, setSelectedBrand] = useState<Restaurant | 'all'>('all');
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [address, setAddress] = useState(() => localStorage.getItem('santor-user-address') || '');
-  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [basketShakeTrigger, setBasketShakeTrigger] = useState(0);
   const floatingBasketRef = useRef<HTMLDivElement>(null);
   
@@ -72,11 +72,6 @@ const Index = () => {
     return [];
   });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
-
-  // Save address to localStorage when it changes
-  useEffect(() => {
-    localStorage.setItem('santor-user-address', address);
-  }, [address]);
 
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
@@ -148,8 +143,6 @@ const Index = () => {
         onBrandChange={setSelectedBrand}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        address={address}
-        onAddressClick={() => setIsAddressModalOpen(true)}
       />
 
       <main>

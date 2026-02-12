@@ -17,7 +17,9 @@ import { Trash2, Plus, Minus, Instagram, MessageCircle, Send, MapPin, Phone } fr
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAddress } from '@/contexts/AddressContext';
 import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
+import { getRestaurantInfo } from '@/lib/unifiedMenu';
 import liff from '@line/liff';
 
 interface BasketModalProps {
@@ -28,27 +30,26 @@ interface BasketModalProps {
   onRemoveItem: (itemId: string) => void;
 }
 
-const BasketModal = ({ 
-  isOpen, 
-  onClose, 
-  basketItems, 
-  onUpdateQuantity, 
-  onRemoveItem 
+const BasketModal = ({
+  isOpen,
+  onClose,
+  basketItems,
+  onUpdateQuantity,
+  onRemoveItem
 }: BasketModalProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
+  const { address, setAddress } = useAddress();
   const [isGeneratingOrder, setIsGeneratingOrder] = useState(false);
   const [orderCopied, setOrderCopied] = useState(false);
   const [isLiff, setIsLiff] = useState(false);
 
-  // -- NEW STATE FOR ADDRESS & PHONE --
-  // Initialize from LocalStorage if available
-  const [address, setAddress] = useState(() => localStorage.getItem('santor-user-address') || '');
+  // -- PHONE STATE (local to basket) --
   const [phoneNumber, setPhoneNumber] = useState(() => localStorage.getItem('santor-user-phone') || '');
-  
+
   // Validation error state for visual feedback
   const [validationError, setValidationError] = useState<'address' | 'phone' | null>(null);
-  
+
   // Refs for smart-focus navigation
   const addressRef = useRef<HTMLTextAreaElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
@@ -66,11 +67,7 @@ const BasketModal = ({
     initLiff();
   }, []);
 
-  // Save Address/Phone to LocalStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('santor-user-address', address);
-  }, [address]);
-
+  // Save Phone to LocalStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('santor-user-phone', phoneNumber);
   }, [phoneNumber]);
@@ -229,6 +226,35 @@ const BasketModal = ({
 
   const getTotalPrice = () => {
     return basketItems.reduce((total, item) => total + getItemTotalPrice(item), 0);
+  };
+
+  // Get unique restaurants from basket items
+  const getUniqueRestaurants = () => {
+    const restaurants = new Set(basketItems.map(item => item.dish.restaurant));
+    return Array.from(restaurants);
+  };
+
+  // Calculate total savings from promotions
+  const getTotalSavings = () => {
+    let savings = 0;
+    basketItems.forEach(item => {
+      // Check for promotional pricing (SM-GRK-003 has promotional variants)
+      if (item.dish.id === 'SM-GRK-003') {
+        // Original price would be 69, promo is 59 for 1 scoop
+        const originalPrice = 69;
+        const currentPrice = item.selectedVariant?.price || item.dish.price;
+        savings += (originalPrice - currentPrice) * item.quantity;
+      }
+    });
+    return savings;
+  };
+
+  // Get original price for promotional items
+  const getOriginalPrice = (item: BasketItem): number | null => {
+    if (item.dish.id === 'SM-GRK-003') {
+      return 69; // Original price before promotion
+    }
+    return null;
   };
 
   const generateOrderMessage = () => {
@@ -765,9 +791,28 @@ const BasketModal = ({
                       <Plus className="h-3 w-3" />
                     </Button>
                   </div>
-                  <span className="font-semibold">
-                    ฿{getItemTotalPrice(item)}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {(() => {
+                      const originalPrice = getOriginalPrice(item);
+                      const currentPrice = getItemTotalPrice(item);
+                      if (originalPrice && originalPrice * item.quantity > currentPrice) {
+                        return (
+                          <>
+                            <span className="text-sm text-gray-400 line-through">
+                              ฿{originalPrice * item.quantity}
+                            </span>
+                            <span className="font-semibold text-green-600">
+                              ฿{currentPrice}
+                            </span>
+                            <Badge className="bg-red-500 text-white text-xs">
+                              SAVE ฿{(originalPrice * item.quantity) - currentPrice}
+                            </Badge>
+                          </>
+                        );
+                      }
+                      return <span className="font-semibold">฿{currentPrice}</span>;
+                    })()}
+                  </div>
                 </div>
               </div>
             ))}
@@ -813,6 +858,43 @@ const BasketModal = ({
 
         <div className="p-6 pt-0 shrink-0">
           <Separator className="mb-4" />
+          
+          {/* Restaurant Logos - Trust Indicator */}
+          {basketItems.length > 0 && (
+            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-gray-200">
+              <div className="flex -space-x-2">
+                {getUniqueRestaurants().map((restaurant) => {
+                  const info = getRestaurantInfo(restaurant);
+                  return (
+                    <div
+                      key={restaurant}
+                      className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-white shadow-sm"
+                      title={info?.name}
+                    >
+                      <img
+                        src={info?.logo}
+                        alt={info?.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.parentElement!.innerHTML = `<span class="text-xs font-bold flex items-center justify-center h-full">${info?.name.charAt(0)}</span>`;
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Total Savings Display */}
+          {getTotalSavings() > 0 && (
+            <div className="flex justify-between items-center mb-2 px-3 py-2 bg-green-50 rounded-lg">
+              <span className="text-sm text-green-700 font-medium">💰 Total Saved</span>
+              <span className="text-lg font-bold text-green-600">฿{getTotalSavings()}</span>
+            </div>
+          )}
+          
           <div className="flex justify-between items-center mb-4">
             <span className="text-lg font-semibold">{t('basket.total')}</span>
             <span className="text-2xl font-bold text-primary">฿{getTotalPrice()}</span>

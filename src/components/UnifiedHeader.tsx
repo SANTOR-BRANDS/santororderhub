@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAddress } from '@/contexts/AddressContext';
 import { UNIFIED_CATEGORIES, UnifiedCategory, getRestaurantInfo, getUnifiedMenu, getAvailableCategoriesForBrand } from '@/lib/unifiedMenu';
 
 // Map category names to translation keys
@@ -30,8 +31,6 @@ interface UnifiedHeaderProps {
   onBrandChange: (brand: Restaurant | 'all') => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  address: string;
-  onAddressClick: () => void;
 }
 
 const BRANDS: (Restaurant | 'all')[] = ['all', 'restory', 'nirvana', 'smoody'];
@@ -43,10 +42,9 @@ const UnifiedHeader = ({
   onBrandChange,
   searchQuery,
   onSearchChange,
-  address,
-  onAddressClick,
 }: UnifiedHeaderProps) => {
   const { language, setLanguage, t } = useLanguage();
+  const { address, openAddressModal } = useAddress();
 
   // Get available categories based on selected brand
   const unifiedMenu = useMemo(() => getUnifiedMenu(), []);
@@ -92,8 +90,8 @@ const UnifiedHeader = ({
           <div className="flex items-center justify-between">
             {/* Address Button - Left */}
             <button
-              onClick={onAddressClick}
-              className="flex items-center gap-2 text-sm text-white/90 hover:text-white transition-colors"
+              onClick={openAddressModal}
+              className="flex items-center gap-2 text-sm text-white/90 hover:text-white transition-colors cursor-pointer"
               aria-label="Set delivery address"
             >
               <MapPin className="h-4 w-4 shrink-0" />

@@ -34,7 +34,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
         setIsShaking(true);
         const timer = setTimeout(() => {
           setIsShaking(false);
-        }, 250); // Match animation duration
+        }, 330); // Match animation duration
         return () => clearTimeout(timer);
       }
     }, [shakeTrigger]);
