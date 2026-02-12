@@ -55,8 +55,7 @@ const DishCard = ({
     }
   };
   const isUnavailable = dish.isAvailable === false;
-  const translated = t(dish.id);
-  const dishName = !translated || translated === dish.id ? dish.name : translated;
+  const dishName = dish.name;
   return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
       <CardContent className="p-0">
         {/* Dish Image */}
@@ -163,7 +162,7 @@ const DishCard = ({
             {showSuccess ? (
               <>
                 <Check className="h-3 w-3 mr-1 animate-pulse" />
-                {t('dish.added', 'Added!')}
+                {t('cart.added')}
               </>
             ) : (
               <>

@@ -115,13 +115,50 @@ const UnifiedHeader = ({
               </span>
             </button>
             
-            {/* Language Selector */}
+            
+            {/* Compact Restaurant Selector */}
+            <div className="flex items-center gap-1 bg-white/10 border border-white/20 rounded-full px-2 py-1">
+              {BRANDS.slice(0, 3).map(brand => {
+                const info = getRestaurantInfo(brand);
+                const isSelected = selectedBrand === brand;
+                return (
+                  <button
+                    key={brand}
+                    onClick={() => handleBrandChange(brand)}
+                    className={cn(
+                      'w-7 h-7 rounded-full overflow-hidden flex items-center justify-center transition-all',
+                      isSelected ? 'ring-2 ring-white/70 ring-offset-1 ring-offset-transparent' : 'hover:ring-1 hover:ring-white/40'
+                    )}
+                    title={info?.name || brand}
+                  >
+                    {info ? (
+                      <img 
+                        src={info.logo} 
+                        alt={info.name} 
+                        className="w-full h-full object-cover" 
+                        onError={(e) => { 
+                          e.currentTarget.style.display = 'none'; 
+                          e.currentTarget.parentElement!.innerHTML = `<span class="text-xs font-bold text-white">${info.name.charAt(0)}</span>`; 
+                        }} 
+                      />
+                    ) : (
+                      <span className="text-xs font-bold text-white">✦</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Language Selector - Pill Shape */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="sm" className="text-inherit hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5" aria-label="Change language">
-                  <Globe className="h-4 w-4 mr-1.5" />
+                <button
+                  className="flex items-center gap-1.5 text-sm hover:bg-white/10 px-3 py-1.5 rounded-full transition-colors border border-white/20"
+                  aria-label="Change language"
+                >
+                  <Globe className="h-4 w-4" />
                   <span className="font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
-                </Button>
+                </button>
               </PopoverTrigger>
               <PopoverContent className="w-32 p-2" align="end">
                 <div className="flex flex-col gap-1">
@@ -147,31 +184,6 @@ const UnifiedHeader = ({
               className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/50 focus:bg-white/20 focus:border-white/40"
             />
           </div>
-          </div>
-
-          {/* Brand Filter */}
-          <div className="flex items-center justify-center w-full px-2">
-            <div className="flex items-center justify-between w-full max-w-md gap-2">
-              {BRANDS.map(brand => {
-              const isSelected = selectedBrand === brand;
-              const info = brand === 'all' ? null : getRestaurantInfo(brand);
-              const displayName = brand === 'all' ? t('menu.all') : info?.name;
-              const isNew = brand === 'smoody';
-              return <button key={brand} onClick={() => handleBrandChange(brand)} className={cn('flex-1 flex flex-col items-center gap-1.5 py-2 px-1 rounded-xl transition-all relative', isSelected ? 'bg-white/20' : 'hover:bg-white/10')}>
-                    {isNew && (
-                      <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full z-10 animate-pulse">
-                        NEW
-                      </div>
-                    )}
-                    <div className={cn('w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 flex items-center justify-center bg-white/10', isSelected && 'ring-2 ring-white/70 ring-offset-2 ring-offset-transparent')}>
-                      {info ? <img src={info.logo} alt={info.name} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = `<span class="text-lg font-bold text-white">${info.name.charAt(0)}</span>`; }} /> : <span className="text-lg">✦</span>}
-                    </div>
-                    <span className="text-[10px] sm:text-xs font-medium text-center leading-tight line-clamp-1">
-                      {displayName}
-                    </span>
-                  </button>;
-            })}
-            </div>
           </div>
         </div>
       

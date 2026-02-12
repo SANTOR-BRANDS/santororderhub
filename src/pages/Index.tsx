@@ -135,10 +135,7 @@ const Index = () => {
         triggerAnimation={triggerCartAnimation}
       />
       
-      <Footer selectedRestaurant={null} onRestaurantSelect={(restaurant) => {
-        // Handle restaurant selection logic here if needed
-        console.log('Selected restaurant:', restaurant);
-      }} />
+      <Footer />
     </div>
   );
 };

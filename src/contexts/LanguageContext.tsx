@@ -62,6 +62,8 @@ export interface Translations {
   'footer.category': string
   'footer.category.all': string
   'footer.category.back': string
+  'footer.variation': string
+  'footer.addOns': string
   
   // Dish
   'dish.recommended': string
@@ -71,6 +73,16 @@ export interface Translations {
   'location.setAddress': string
   'location.addressPrompt': string
   'location.addressSet': string
+  
+  // Menu
+  'menu.all': string
+  'menu.surpriseMe': string
+  'menu.surpriseMeSubtitle': string
+  'menu.searchPlaceholder': string
+  'menu.noDishes': string
+  'menu.adjustFilters': string
+  'menu.showingDishes': string
+  'menu.fromRestaurant': string
   
   // Common
   'common.loading': string
@@ -98,12 +110,12 @@ const thaiTranslations: Record<string, string> = {
   'categories.all': 'ทั้งหมด',
   'categories.popular': 'ยอดนิยม',
   'categories.recommended': 'แนะนำ',
-  'categories.comboDeals': 'คอมโบเดล์',
-  'categories.signatureBowls': 'ซิกเนเจอร์โบวล์',
+  'categories.comboDeals': 'คอมโบ',
+  'categories.signatureBowls': 'ซิกเนเจอร์',
   'categories.greekYo': 'กรีกโย',
   'categories.rice': 'ข้าว',
   'categories.noodles': 'เส้น',
-  'categories.freshSeafood': 'อาหารทะเลสด',
+  'categories.freshSeafood': 'อาหารทะเล',
   'categories.vegetarian': 'มังสวิรัติ',
   'categories.toppings': 'ท็อปปิ้ง',
   'categories.drinks': 'เครื่องดื่ม',
@@ -136,6 +148,8 @@ const thaiTranslations: Record<string, string> = {
   'footer.category': 'หมวดหมู่',
   'footer.category.all': 'ทั้งหมด',
   'footer.category.back': 'กลับ',
+  'footer.variation': 'รูปแบบ',
+  'footer.addOns': 'เพิ่มเติม',
   
   // Dish
   'dish.recommended': 'แนะนำ',
@@ -145,6 +159,16 @@ const thaiTranslations: Record<string, string> = {
   'location.setAddress': 'ตั้งค่าที่อยู่',
   'location.addressPrompt': 'กรุณากรอกที่อยู่จัดส่งของคุณ:',
   'location.addressSet': 'ตั้งค่าที่อยู่สำเร็จแล้ว',
+  
+  // Menu
+  'menu.all': 'ทั้งหมด',
+  'menu.surpriseMe': 'สุ่มให้ฉัน!',
+  'menu.surpriseMeSubtitle': 'เมนูแนะนำพิเศษ',
+  'menu.searchPlaceholder': 'ค้นหาเมนู...',
+  'menu.noDishes': 'ไม่พบเมนู',
+  'menu.adjustFilters': 'ปรับตัวกรอง',
+  'menu.showingDishes': 'แสดง {count} เมนู',
+  'menu.fromRestaurant': 'จาก {restaurant}',
   
   // Common
   'common.loading': 'กำลังโหลด...',
@@ -172,12 +196,12 @@ const englishTranslations: Record<string, string> = {
   'categories.all': 'All',
   'categories.popular': 'Popular',
   'categories.recommended': 'Recommended',
-  'categories.comboDeals': 'Combo Deals',
-  'categories.signatureBowls': 'Signature Bowls',
+  'categories.comboDeals': 'Combos',
+  'categories.signatureBowls': 'Signatures',
   'categories.greekYo': 'Greek Yo',
   'categories.rice': 'Rice',
   'categories.noodles': 'Noodles',
-  'categories.freshSeafood': 'Fresh Seafood',
+  'categories.freshSeafood': 'Seafood',
   'categories.vegetarian': 'Vegetarian',
   'categories.toppings': 'Toppings',
   'categories.drinks': 'Drinks',
@@ -210,6 +234,8 @@ const englishTranslations: Record<string, string> = {
   'footer.category': 'Category',
   'footer.category.all': 'All',
   'footer.category.back': 'Back',
+  'footer.variation': 'Variation',
+  'footer.addOns': 'Add-ons',
   
   // Dish
   'dish.recommended': 'Recommended',
@@ -219,6 +245,16 @@ const englishTranslations: Record<string, string> = {
   'location.setAddress': 'Set Address',
   'location.addressPrompt': 'Please enter your delivery address:',
   'location.addressSet': 'Address set successfully',
+  
+  // Menu
+  'menu.all': 'All',
+  'menu.surpriseMe': 'Surprise Me!',
+  'menu.surpriseMeSubtitle': 'Special recommended dish',
+  'menu.searchPlaceholder': 'Search dishes...',
+  'menu.noDishes': 'No dishes found',
+  'menu.adjustFilters': 'Adjust filters',
+  'menu.showingDishes': 'Showing {count} dishes',
+  'menu.fromRestaurant': 'from {restaurant}',
   
   // Common
   'common.loading': 'Loading...',
