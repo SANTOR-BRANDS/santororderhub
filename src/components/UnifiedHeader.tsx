@@ -91,7 +91,7 @@ const UnifiedHeader = ({
             {/* Address Button - Left */}
             <button
               onClick={openAddressModal}
-              className="flex items-center gap-2 text-sm text-white/90 hover:text-white hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5 transition-colors cursor-pointer"
+              className="flex items-center gap-2 text-sm text-white/90 hover:text-white hover:bg-white/20 rounded-full px-3 py-1.5 transition-colors cursor-pointer"
               aria-label="Set delivery address"
             >
               <MapPin className="h-4 w-4 shrink-0" />
@@ -106,7 +106,7 @@ const UnifiedHeader = ({
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="text-inherit hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5" 
+                  className="text-inherit hover:bg-white/20 rounded-full px-3 py-1.5" 
                   aria-label="Change language"
                 >
                   <Globe className="h-4 w-4 mr-1.5" />
@@ -144,7 +144,7 @@ const UnifiedHeader = ({
               value={searchQuery} 
               onChange={e => onSearchChange(e.target.value)}
               aria-label={t('menu.searchPlaceholder') || 'Search dishes'} 
-              className="pl-10 pr-10 bg-white/10 border-gray-600 text-white placeholder:text-gray-400 rounded-lg"
+              className="pl-10 pr-10 bg-white/10 border-0 text-white placeholder:text-gray-400 rounded-lg"
             />
             {searchQuery && (
               <button

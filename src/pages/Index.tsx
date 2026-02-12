@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Restaurant, Dish, BasketItem, DishVariant, AddOn } from '@/types/menu';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 import UnifiedHeader from '@/components/UnifiedHeader';
@@ -41,15 +42,39 @@ interface SerializedBasketItem {
   };
 }
 
-const Index = () => {
+interface IndexProps {
+  initialBrand?: Restaurant;
+}
+
+const Index = ({ initialBrand }: IndexProps) => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { address, setAddress, openAddressModal, isAddressModalOpen, setIsAddressModalOpen } = useAddress();
   const [selectedCategory, setSelectedCategory] = useState<UnifiedCategory>('ALL');
-  const [selectedBrand, setSelectedBrand] = useState<Restaurant | 'all'>('all');
+  const [selectedBrand, setSelectedBrand] = useState<Restaurant | 'all'>(initialBrand || 'all');
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [basketShakeTrigger, setBasketShakeTrigger] = useState(0);
   const floatingBasketRef = useRef<HTMLDivElement>(null);
+
+  // Handle URL updates when brand changes
+  const handleBrandChange = useCallback((brand: Restaurant | 'all') => {
+    setSelectedBrand(brand);
+    if (brand === 'all') {
+      navigate('/', { replace: true });
+    } else {
+      navigate(`/${brand}`, { replace: true });
+    }
+  }, [navigate]);
+
+  // Sync URL with selected brand on mount (for direct links)
+  useEffect(() => {
+    const path = location.pathname.slice(1); // Remove leading /
+    if (['smoody', 'restory', 'nirvana'].includes(path)) {
+      setSelectedBrand(path as Restaurant);
+    }
+  }, [location.pathname]);
   
   const [basketItems, setBasketItems] = useState<BasketItem[]>(() => {
     // Load basket from localStorage on mount
@@ -141,7 +166,7 @@ const Index = () => {
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
         selectedBrand={selectedBrand}
-        onBrandChange={setSelectedBrand}
+        onBrandChange={handleBrandChange}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
