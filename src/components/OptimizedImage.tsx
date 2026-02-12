@@ -54,7 +54,24 @@ const OptimizedImage = ({
         )}
         loading="lazy"
         onLoad={() => setIsLoaded(true)}
-        onError={() => setHasError(true)}
+        onError={(e) => {
+          console.error('Image failed to load:', src, e);
+          
+          // Special handling for Smoody images
+          if (src.includes('/images/SM-')) {
+            console.log('Smoody image failed, attempting retry...');
+            // Retry the same image after a short delay
+            setTimeout(() => {
+              const img = e.currentTarget;
+              const retrySrc = src + '?retry=' + Date.now();
+              console.log('Retrying Smoody image with:', retrySrc);
+              img.src = retrySrc;
+            }, 1000);
+            return; // Don't set error state immediately
+          }
+          
+          setHasError(true);
+        }}
       />
     </div>
   );
