@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { Restaurant, Dish, BasketItem, DishVariant, AddOn } from '@/types/menu';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 import UnifiedHeader from '@/components/UnifiedHeader';
@@ -44,6 +44,12 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<UnifiedCategory>('ALL');
   const [selectedBrand, setSelectedBrand] = useState<Restaurant | 'all'>('all');
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [address, setAddress] = useState(() => localStorage.getItem('santor-user-address') || '');
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [basketShakeTrigger, setBasketShakeTrigger] = useState(0);
+  const floatingBasketRef = useRef<HTMLDivElement>(null);
+  
   const [basketItems, setBasketItems] = useState<BasketItem[]>(() => {
     // Load basket from localStorage on mount
     try {
@@ -67,8 +73,15 @@ const Index = () => {
   });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
 
+  // Save address to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('santor-user-address', address);
+  }, [address]);
+
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
+    // Trigger basket shake animation
+    setBasketShakeTrigger(prev => prev + 1);
   };
 
   const handleUpdateQuantity = (itemId: string, quantity: number) => {
@@ -133,6 +146,10 @@ const Index = () => {
         onCategoryChange={setSelectedCategory}
         selectedBrand={selectedBrand}
         onBrandChange={setSelectedBrand}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        address={address}
+        onAddressClick={() => setIsAddressModalOpen(true)}
       />
 
       <main>
@@ -140,6 +157,7 @@ const Index = () => {
           selectedCategory={selectedCategory}
           selectedBrand={selectedBrand}
           onDishSelect={setSelectedDish}
+          searchQuery={searchQuery}
         />
       </main>
 
@@ -149,6 +167,7 @@ const Index = () => {
         onClose={() => setSelectedDish(null)} 
         onAddToBasket={handleAddToBasket}
         onOrderNow={() => setIsBasketOpen(true)}
+        basketRef={floatingBasketRef}
       />
 
       <BasketModal 
@@ -160,8 +179,10 @@ const Index = () => {
       />
 
       <FloatingBasket 
+        ref={floatingBasketRef}
         basketItems={basketItems} 
-        onOpenBasket={() => setIsBasketOpen(true)} 
+        onOpenBasket={() => setIsBasketOpen(true)}
+        shakeTrigger={basketShakeTrigger}
       />
       
       <Footer selectedRestaurant={null} />

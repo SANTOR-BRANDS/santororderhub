@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 import { Dish, AddOn, SPICY_LEVELS, getSaucesByRestaurant, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
 import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
@@ -19,13 +19,15 @@ interface DishModalProps {
   onClose: () => void;
   onAddToBasket: (item: BasketItem) => void;
   onOrderNow?: (item: BasketItem) => void;
+  basketRef?: RefObject<HTMLDivElement | null>;
 }
 const DishModal = ({
   dish,
   isOpen,
   onClose,
   onAddToBasket,
-  onOrderNow
+  onOrderNow,
+  basketRef
 }: DishModalProps) => {
   const {
     t

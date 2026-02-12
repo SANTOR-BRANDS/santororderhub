@@ -1,8 +1,7 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Restaurant, Dish } from '@/types/menu';
-import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
-import { Search, X, Dices } from 'lucide-react';
+import { X, Dices } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -53,15 +52,16 @@ interface UnifiedMenuDisplayProps {
   selectedCategory: UnifiedCategory;
   selectedBrand: Restaurant | 'all';
   onDishSelect: (dish: Dish) => void;
+  searchQuery: string;
 }
 
 const UnifiedMenuDisplay = ({
   selectedCategory,
   selectedBrand,
   onDishSelect,
+  searchQuery,
 }: UnifiedMenuDisplayProps) => {
   const { t } = useLanguage();
-  const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   
@@ -208,18 +208,6 @@ const UnifiedMenuDisplay = ({
           </button>
         )}
 
-        {/* Search Bar */}
-        <search role="search" className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" aria-hidden="true" />
-          <Input 
-            placeholder={t('menu.searchPlaceholder')} 
-            value={searchQuery} 
-            onChange={e => setSearchQuery(e.target.value)}
-            aria-label={t('menu.searchPlaceholder')} 
-            className="pl-10 bg-white/10 border-gray-600 text-white placeholder:text-gray-400 rounded-lg"
-          />
-        </search>
-        
         {/* Subcategory Filter Pills - Word Cloud Style */}
         {subcategoryTagsWithCounts.length > 0 && (
           <div className="mb-6">

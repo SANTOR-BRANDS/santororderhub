@@ -122,10 +122,27 @@ export default {
             height: "0",
           },
         },
+        "basket-shake": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "10%, 30%, 50%, 70%, 90%": { transform: "translateX(-3px)" },
+          "20%, 40%, 60%, 80%": { transform: "translateX(3px)" },
+        },
+        "fly-to-basket": {
+          "0%": { 
+            transform: "scale(1) translate(0, 0)",
+            opacity: "1"
+          },
+          "100%": { 
+            transform: "scale(0.3) translate(var(--fly-x, 0), var(--fly-y, 200px))",
+            opacity: "0"
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "basket-shake": "basket-shake 0.4s ease-in-out",
+        "fly-to-basket": "fly-to-basket 0.6s ease-in-out forwards",
       },
     },
   },
