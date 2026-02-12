@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAddress } from '@/contexts/AddressContext';
+import AddressModal from '@/components/AddressModal';
 import { SEOHead } from '@/seo/components/SEOHead';
 import { getMetadata } from '@/seo/metadata';
 import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, smoodySchema } from '@/seo/jsonld';
@@ -170,6 +171,8 @@ const Index = () => {
         onUpdateQuantity={handleUpdateQuantity} 
         onRemoveItem={handleRemoveItem} 
       />
+
+      <AddressModal />
 
       <FloatingBasket 
         ref={floatingBasketRef}

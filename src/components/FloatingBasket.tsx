@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { forwardRef, useEffect, useState } from 'react';
+import { getRestaurantInfo } from '@/lib/unifiedMenu';
 
 interface FloatingBasketProps {
   basketItems: BasketItem[];
@@ -39,6 +40,12 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
       }
     }, [shakeTrigger]);
 
+    // Get unique restaurants from basket items
+    const getUniqueRestaurants = () => {
+      const restaurants = new Set(basketItems.map(item => item.dish.restaurant));
+      return Array.from(restaurants);
+    };
+
     if (itemCount === 0) return null;
 
     return (
@@ -56,6 +63,30 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
           )}
           size="lg"
         >
+          {/* Restaurant Logos - Overlapping Avatars */}
+          <div className="flex -space-x-2 mr-2">
+            {getUniqueRestaurants().map((restaurant) => {
+              const info = getRestaurantInfo(restaurant);
+              return (
+                <div
+                  key={restaurant}
+                  className="w-7 h-7 rounded-full border-2 border-white overflow-hidden bg-white shadow-sm"
+                  title={info?.name}
+                >
+                  <img
+                    src={info?.logo}
+                    alt={info?.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement!.innerHTML = `<span class="text-xs font-bold flex items-center justify-center h-full text-gray-600">${info?.name.charAt(0)}</span>`;
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
           <ShoppingBag className="h-6 w-6" />
           <span className="font-bold text-base">
             {itemCount} item{itemCount > 1 ? 's' : ''} • ฿{totalPrice}
