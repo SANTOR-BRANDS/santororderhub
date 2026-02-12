@@ -1,10 +1,11 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Restaurant, Dish } from '@/types/menu';
 import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
 import { Search, X, Dices } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useDebounce } from '@/hooks/useDebounce';
 import { 
   getUnifiedMenu, 
   filterUnifiedMenu, 
@@ -61,6 +62,7 @@ const UnifiedMenuDisplay = ({
 }: UnifiedMenuDisplayProps) => {
   const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   
   // Get the unified, de-duplicated menu
@@ -72,10 +74,10 @@ const UnifiedMenuDisplay = ({
     [unifiedMenu, selectedCategory, selectedBrand]
   );
   
-  // Apply search
+  // Apply search (uses debounced query to prevent re-renders on every keystroke)
   const searchedDishes = useMemo(() => 
-    searchUnifiedMenu(filteredByCategory, searchQuery),
-    [filteredByCategory, searchQuery]
+    searchUnifiedMenu(filteredByCategory, debouncedSearchQuery),
+    [filteredByCategory, debouncedSearchQuery]
   );
   
   // Get available subcategory tags for current category with counts
@@ -133,7 +135,7 @@ const UnifiedMenuDisplay = ({
   }, [searchedDishes, selectedSubcategory, subcategoryTagsWithCounts]);
   
   // Reset subcategory when main category changes
-  useMemo(() => {
+  useEffect(() => {
     setSelectedSubcategory(null);
   }, [selectedCategory]);
   

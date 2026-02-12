@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
-import { Restaurant, Dish, BasketItem } from '@/types/menu';
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { Restaurant, Dish, BasketItem, DishVariant, AddOn } from '@/types/menu';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 import UnifiedHeader from '@/components/UnifiedHeader';
 import UnifiedMenuDisplay from '@/components/UnifiedMenuDisplay';
@@ -14,6 +14,31 @@ import { getMetadata } from '@/seo/metadata';
 import { organizationSchema, websiteSchema, restorySchema, nirvanaSchema, smoodySchema } from '@/seo/jsonld';
 import { UnifiedCategory } from '@/lib/unifiedMenu';
 
+// Type for serialized basket item (Map becomes Record when JSON serialized)
+interface SerializedBasketItem {
+  id: string;
+  dish: Dish;
+  selectedVariant?: DishVariant;
+  addOns: AddOn[];
+  extraPls: AddOn[];
+  incrementalExtras?: Record<string, number>;
+  spicyLevel?: number;
+  sauce: string;
+  needsCutlery: boolean;
+  quantity: number;
+  isPremiumBeef?: boolean;
+  freeToppings?: string[];
+  isCombo?: boolean;
+  combo2?: {
+    selectedVariant?: DishVariant;
+    addOns: AddOn[];
+    extraPls: AddOn[];
+    incrementalExtras?: Record<string, number>;
+    spicyLevel?: number;
+    sauce: string;
+  };
+}
+
 const Index = () => {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<UnifiedCategory>('ALL');
@@ -24,9 +49,9 @@ const Index = () => {
     try {
       const saved = localStorage.getItem('santor-basket');
       if (saved) {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(saved) as SerializedBasketItem[];
         // Convert incrementalExtras from object back to Map
-        return parsed.map((item: any) => ({
+        return parsed.map((item) => ({
           ...item,
           incrementalExtras: item.incrementalExtras ? new Map(Object.entries(item.incrementalExtras)) : undefined,
           combo2: item.combo2 ? {
@@ -65,22 +90,30 @@ const Index = () => {
     window.scrollTo(0, 0);
   }, [selectedCategory]);
 
-  // Save basket to localStorage whenever it changes
+  // Save basket to localStorage with throttling (max once per second)
+  // This prevents performance issues when basket updates rapidly
   useEffect(() => {
-    try {
-      // Convert Maps to objects for JSON serialization
-      const serializable = basketItems.map(item => ({
-        ...item,
-        incrementalExtras: item.incrementalExtras ? Object.fromEntries(item.incrementalExtras) : undefined,
-        combo2: item.combo2 ? {
-          ...item.combo2,
-          incrementalExtras: item.combo2.incrementalExtras ? Object.fromEntries(item.combo2.incrementalExtras) : undefined
-        } : undefined
-      }));
-      localStorage.setItem('santor-basket', JSON.stringify(serializable));
-    } catch (error) {
-      console.error('Failed to save basket to localStorage:', error);
-    }
+    const saveBasket = () => {
+      try {
+        // Convert Maps to objects for JSON serialization
+        const serializable = basketItems.map(item => ({
+          ...item,
+          incrementalExtras: item.incrementalExtras ? Object.fromEntries(item.incrementalExtras) : undefined,
+          combo2: item.combo2 ? {
+            ...item.combo2,
+            incrementalExtras: item.combo2.incrementalExtras ? Object.fromEntries(item.combo2.incrementalExtras) : undefined
+          } : undefined
+        }));
+        localStorage.setItem('santor-basket', JSON.stringify(serializable));
+      } catch (error) {
+        console.error('Failed to save basket to localStorage:', error);
+      }
+    };
+
+    // Use setTimeout to throttle saves to max once per second
+    const timeoutId = setTimeout(saveBasket, 500);
+    
+    return () => clearTimeout(timeoutId);
   }, [basketItems]);
 
   const homeMetadata = {

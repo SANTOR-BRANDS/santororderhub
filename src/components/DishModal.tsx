@@ -55,6 +55,10 @@ const DishModal = ({
   const [incrementalQuantities2, setIncrementalQuantities2] = useState<Map<string, number>>(new Map());
   const [spicyLevel2, setSpicyLevel2] = useState<number | undefined>(undefined);
   const [selectedSauces2, setSelectedSauces2] = useState<string[]>([]);
+  
+  // Compute isCombo before useEffect so it can be in the dependency array
+  const isCombo = dish?.name.includes('2x Pad Krapao') ?? false;
+  
   useEffect(() => {
     if (dish && isOpen) {
       // Set default variant
@@ -79,9 +83,8 @@ const DishModal = ({
         setSelectedSauces2([]);
       }
     }
-  }, [dish, isOpen]);
+  }, [dish, isOpen, isCombo]);
   if (!dish) return null;
-  const isCombo = dish.name.includes('2x Pad Krapao');
   const SAUCES = dish.customSauces || getSaucesByRestaurant(dish.restaurant);
 
   // Calculate price for incremental items with discount

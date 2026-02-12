@@ -1,17 +1,20 @@
+import { memo } from 'react';
 import { Dish } from '@/types/menu';
 import { CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import KitchenBadge from './KitchenBadge';
 import OptimizedImage from './OptimizedImage';
+
 interface DishCardProps {
   dish: Dish;
   onClick: (dish: Dish) => void;
 }
-const DishCard = ({
+
+const DishCard = memo(function DishCard({
   dish,
   onClick
-}: DishCardProps) => {
+}: DishCardProps) {
   const {
     t
   } = useLanguage();
@@ -81,5 +84,6 @@ const DishCard = ({
         </div>
       </CardContent>
     </article>;
-};
+});
+
 export default DishCard;
