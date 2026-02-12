@@ -99,6 +99,14 @@ const Index = ({ initialBrand }: IndexProps) => {
   });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
 
+  const dishQuantityMap = useMemo(() => {
+    const map: Record<string, number> = {};
+    basketItems.forEach((item) => {
+      map[item.dish.id] = (map[item.dish.id] || 0) + item.quantity;
+    });
+    return map;
+  }, [basketItems]);
+
   const handleAddToBasket = (item: BasketItem) => {
     setBasketItems(prev => [...prev, item]);
     // Trigger basket shake animation
@@ -177,6 +185,7 @@ const Index = ({ initialBrand }: IndexProps) => {
           selectedBrand={selectedBrand}
           onDishSelect={setSelectedDish}
           searchQuery={searchQuery}
+          dishQuantityMap={dishQuantityMap}
         />
       </main>
 

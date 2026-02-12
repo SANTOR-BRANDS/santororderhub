@@ -5,10 +5,12 @@ import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import KitchenBadge from './KitchenBadge';
 import OptimizedImage from './OptimizedImage';
+import { Check, Plus } from 'lucide-react';
 
 interface DishCardProps {
   dish: Dish;
   onClick: (dish: Dish) => void;
+  inBasketCount?: number;
 }
 
 const PROMO_ORIGINAL_PRICES: Partial<Record<string, number>> = {
@@ -19,7 +21,8 @@ const PROMO_ORIGINAL_PRICES: Partial<Record<string, number>> = {
 
 const DishCard = memo(function DishCard({
   dish,
-  onClick
+  onClick,
+  inBasketCount = 0,
 }: DishCardProps) {
   const {
     t
@@ -89,6 +92,19 @@ const DishCard = memo(function DishCard({
                 {dish.isSpecial && <span className="text-xs" role="img" aria-label="Special dish">⭐</span>}
               </div>}
           </div>
+
+          {/* Floating add/status button */}
+          {!isUnavailable && <button
+              type="button"
+              onClick={e => {
+              e.stopPropagation();
+              onClick(dish);
+            }}
+              aria-label={inBasketCount > 0 ? `In basket: ${inBasketCount}` : 'Add to basket'}
+              className={cn('absolute bottom-3 right-3 h-8 w-8 rounded-full flex items-center justify-center shadow-md transition-all', inBasketCount > 0 ? 'bg-green-500 text-white' : 'bg-white/90 text-black hover:bg-white')}
+            >
+              {inBasketCount <= 0 ? <Plus className="h-4 w-4" /> : inBasketCount === 1 ? <Check className="h-4 w-4" /> : <span className="text-xs font-bold">{inBasketCount}</span>}
+            </button>}
         </div>
       </CardContent>
     </article>;

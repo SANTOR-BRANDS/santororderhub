@@ -53,6 +53,7 @@ interface UnifiedMenuDisplayProps {
   selectedBrand: Restaurant | 'all';
   onDishSelect: (dish: Dish) => void;
   searchQuery: string;
+  dishQuantityMap: Record<string, number>;
 }
 
 const UnifiedMenuDisplay = ({
@@ -60,6 +61,7 @@ const UnifiedMenuDisplay = ({
   selectedBrand,
   onDishSelect,
   searchQuery,
+  dishQuantityMap,
 }: UnifiedMenuDisplayProps) => {
   const { t } = useLanguage();
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -262,7 +264,7 @@ const UnifiedMenuDisplay = ({
                     </h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                       {dishes.map(dish => (
-                        <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />
+                        <DishCard key={dish.id} dish={dish} onClick={onDishSelect} inBasketCount={dishQuantityMap[dish.id] || 0} />
                       ))}
                     </div>
                   </section>
@@ -273,7 +275,7 @@ const UnifiedMenuDisplay = ({
             // Flat grid when filtering by category
             <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4" aria-label="Menu dishes">
               {finalDishes.map(dish => (
-                <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />
+                <DishCard key={dish.id} dish={dish} onClick={onDishSelect} inBasketCount={dishQuantityMap[dish.id] || 0} />
               ))}
             </section>
           )
