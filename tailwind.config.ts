@@ -122,10 +122,10 @@ export default {
             height: "0",
           },
         },
-        "basket-shake": {
-          "0%, 100%": { transform: "translateX(0)" },
-          "10%, 30%, 50%, 70%, 90%": { transform: "translateX(-3px)" },
-          "20%, 40%, 60%, 80%": { transform: "translateX(3px)" },
+        "basket-expand": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.03)" },
+          "100%": { transform: "scale(1)" },
         },
         "fly-to-basket": {
           "0%": { 
@@ -141,7 +141,7 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "basket-shake": "basket-shake 0.4s ease-in-out",
+        "basket-expand": "basket-expand 0.25s ease-out",
         "fly-to-basket": "fly-to-basket 0.6s ease-in-out forwards",
       },
     },

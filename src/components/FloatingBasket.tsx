@@ -28,13 +28,13 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
       return total + (basePrice + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
     }, 0);
 
-    // Trigger shake animation when shakeTrigger changes
+    // Trigger expand animation when shakeTrigger changes
     useEffect(() => {
       if (shakeTrigger > 0) {
         setIsShaking(true);
         const timer = setTimeout(() => {
           setIsShaking(false);
-        }, 400); // Match animation duration
+        }, 250); // Match animation duration
         return () => clearTimeout(timer);
       }
     }, [shakeTrigger]);
@@ -52,7 +52,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
             'w-full bg-santor text-santor-foreground hover:bg-santor-secondary',
             'shadow-modal py-4 rounded-xl transition-bounce',
             'border border-white/20 flex items-center justify-center gap-3',
-            isShaking && 'animate-basket-shake'
+            isShaking && 'animate-basket-expand'
           )}
           size="lg"
         >

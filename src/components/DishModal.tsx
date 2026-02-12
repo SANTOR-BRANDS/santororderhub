@@ -13,6 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { Plus, Minus, ShoppingCart, Zap, Gift } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import OptimizedImage from './OptimizedImage';
 interface DishModalProps {
   dish: Dish | null;
   isOpen: boolean;
@@ -746,18 +747,23 @@ const DishModal = ({
                 </DialogDescription>
                 {/* Dish Image */}
                 <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
-                  {dish.image ? <img src={dish.image} alt={dish.name} className="w-full h-full object-cover" onError={e => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling!.classList.remove('hidden');
-                }} /> : null}
-                  <div className={cn('w-full h-full flex items-center justify-center text-muted-foreground', theme.bg, dish.image ? 'hidden' : '')}>
-                    <div className="text-center">
-                      <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
-                        🍽️
+                  {dish.image ? (
+                    <OptimizedImage 
+                      src={dish.image} 
+                      alt={dish.name}
+                      className="w-full h-full object-cover"
+                      containerClassName={theme.bg}
+                    />
+                  ) : (
+                    <div className={cn('w-full h-full flex items-center justify-center text-muted-foreground', theme.bg)}>
+                      <div className="text-center">
+                        <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
+                          🍽️
+                        </div>
+                        <span className="text-xs">No Image</span>
                       </div>
-                      <span className="text-xs">No Image</span>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 <DialogTitle className="text-xl font-bold">
