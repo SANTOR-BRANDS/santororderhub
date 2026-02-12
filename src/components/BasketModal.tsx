@@ -240,17 +240,34 @@ const BasketModal = ({
     return 0;
   };
 
+  const getGreekYoPromoSavingsPerItem = (item: BasketItem) => {
+    // SM-GRK-003: 1 Scoop promo is 59 instead of 69 (save 10)
+    if (item.dish.id !== 'SM-GRK-003') return 0;
+
+    const variantId = item.selectedVariant?.id;
+    if (!variantId || variantId === 'SM-GRK-003-1S') {
+      return 10;
+    }
+
+    return 0;
+  };
+
   // Calculate total savings from promotions
   const getTotalSavings = () => {
     let savings = 0;
 
     basketItems.forEach((item) => {
-      // Fixed combo promo savings
-      savings += getBasePromoSavingsPerItem(item) * item.quantity;
+      // Fixed item promo savings
+      savings += (getBasePromoSavingsPerItem(item) + getGreekYoPromoSavingsPerItem(item)) * item.quantity;
 
-      // Greek Yo Extra Scoop: save 10 THB each
+      // Greek Yo Extra Scoop: save 10 THB each (can appear in addOns or extraPls)
       item.addOns.forEach((addon) => {
         if (addon.id === 'EXT-GRK-001') {
+          savings += 10 * item.quantity;
+        }
+      });
+      item.extraPls?.forEach((extra) => {
+        if (extra.id === 'EXT-GRK-001') {
           savings += 10 * item.quantity;
         }
       });
@@ -289,7 +306,7 @@ const BasketModal = ({
     const basePrice = item.selectedVariant?.price || item.dish.price;
     
     // Base price + fixed promo savings
-    originalPrice = basePrice + getBasePromoSavingsPerItem(item);
+    originalPrice = basePrice + getBasePromoSavingsPerItem(item) + getGreekYoPromoSavingsPerItem(item);
     
     // Add add-ons at full price (without discounts)
     item.addOns.forEach(addon => {
@@ -896,7 +913,7 @@ const BasketModal = ({
                               ฿{currentPrice}
                             </span>
                             <Badge className="bg-red-500 text-white text-xs">
-                              SAVE ฿{originalPrice - currentPrice}
+                              Saved ฿{originalPrice - currentPrice}
                             </Badge>
                           </>
                         );
