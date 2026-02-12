@@ -58,7 +58,7 @@ const RestaurantHeader = ({
           <div className="flex items-center justify-between">
             <div className="flex-1" />
             <button 
-              onClick={() => onRestaurantChange(null)}
+              onClick={() => onRestaurantChange(null as any)}
               className="hover:opacity-80 transition-smooth"
               aria-label="Return to SANTOR home"
             >

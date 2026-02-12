@@ -26,7 +26,7 @@ const Index = () => {
       if (saved) {
         const parsed = JSON.parse(saved);
         // Convert incrementalExtras from object back to Map
-        return parsed.map((item: BasketItem) => ({
+        return parsed.map((item: any) => ({
           ...item,
           incrementalExtras: item.incrementalExtras ? new Map(Object.entries(item.incrementalExtras)) : undefined,
           combo2: item.combo2 ? {

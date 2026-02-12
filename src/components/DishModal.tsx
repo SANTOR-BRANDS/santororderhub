@@ -79,7 +79,7 @@ const DishModal = ({
         setSelectedSauces2([]);
       }
     }
-  }, [dish, isOpen, isCombo]);
+  }, [dish, isOpen]);
   if (!dish) return null;
   const isCombo = dish.name.includes('2x Pad Krapao');
   const SAUCES = dish.customSauces || getSaucesByRestaurant(dish.restaurant);

@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react';
 import { Dish } from '@/types/menu';
 import { CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { ShoppingCart, Check } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import KitchenBadge from './KitchenBadge';
 import OptimizedImage from './OptimizedImage';
@@ -21,25 +18,6 @@ const DishCard = ({
   const isUnavailable = dish.isAvailable === false;
   const translated = t(dish.id);
   const dishName = !translated || translated === dish.id ? dish.name : translated;
-  
-  // Preload Smoody images for mobile devices
-  useEffect(() => {
-    if (dish.restaurant === 'smoody' && dish.image) {
-      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|IEMobile/.test(navigator.userAgent);
-      if (isMobile) {
-        console.log('Preloading Smoody image for mobile:', dish.image);
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image/webp';
-        link.href = dish.image;
-        document.head.appendChild(link);
-        
-        return () => {
-          document.head.removeChild(link);
-        };
-      }
-    }
-  }, [dish.id, dish.restaurant, dish.image]);
   return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
       <CardContent className="p-0">
         {/* Dish Image */}

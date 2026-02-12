@@ -11,7 +11,7 @@ export interface PageMetadata {
   ogType?: string;
   ogImage?: string;
   twitterCard?: 'summary' | 'summary_large_image';
-  structuredData?: Record<string, unknown>;
+  structuredData?: Record<string, any>;
 }
 
 export const defaultMetadata: PageMetadata = {
