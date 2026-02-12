@@ -11,6 +11,12 @@ interface DishCardProps {
   onClick: (dish: Dish) => void;
 }
 
+const PROMO_ORIGINAL_PRICES: Partial<Record<string, number>> = {
+  'SM-GRK-003': 69,
+  'RS-COM-001': 194,
+  'RS-COM-002': 248,
+};
+
 const DishCard = memo(function DishCard({
   dish,
   onClick
@@ -21,6 +27,8 @@ const DishCard = memo(function DishCard({
   const isUnavailable = dish.isAvailable === false;
   const translated = t(dish.id);
   const dishName = !translated || translated === dish.id ? dish.name : translated;
+  const originalPrice = PROMO_ORIGINAL_PRICES[dish.id];
+  const isPromo = !!originalPrice && originalPrice > dish.price;
   return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
       <CardContent className="p-0">
         {/* Dish Image */}
@@ -55,7 +63,7 @@ const DishCard = memo(function DishCard({
             </h3>
             <div className="flex items-center gap-1.5">
               {/* Show original price crossed out for promo items */}
-              {dish.id === 'SM-GRK-003' && <span className="text-xs line-through text-center text-red-600 font-medium">฿69</span>}
+              {isPromo && <span className="text-xs line-through text-center text-red-600 font-medium">฿{originalPrice}</span>}
               <span className={cn('font-bold text-lg whitespace-nowrap', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent')}>
                 ฿{dish.price}
               </span>
@@ -63,7 +71,7 @@ const DishCard = memo(function DishCard({
           </div>
           
           {/* Promo badge for discounted items */}
-          {dish.id === 'SM-GRK-003' && <div className="mb-2">
+          {isPromo && <div className="mb-2">
               <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/90 text-white">
                 🔥 PROMO
               </span>

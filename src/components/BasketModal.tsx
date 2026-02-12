@@ -326,7 +326,12 @@ const BasketModal = ({
           originalPrice += extra.price * qty;
         }
       } else {
-        originalPrice += extra.price;
+        if (extra.id === 'EXT-GRK-001') {
+          // Greek Yo Extra Scoop promo also applies when selected via extras list
+          originalPrice += extra.price + 10;
+        } else {
+          originalPrice += extra.price;
+        }
       }
     });
     
