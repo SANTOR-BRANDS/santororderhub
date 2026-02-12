@@ -23,22 +23,7 @@ const CATEGORY_TRANSLATION_KEYS: Record<string, string> = {
   'DESSERTS': 'categories.desserts'
 };
 
-const getCategoryEmoji = (category: UnifiedCategory): string => {
-  const emojis: Record<UnifiedCategory, string> = {
-    'ALL': '🍽️',
-    'COMBO DEALS': '🔥',
-    'SIGNATURE BOWLS': '✨',
-    'GREEK YO': '🍨',
-    'RICE': '🍚',
-    'NOODLES': '🍜',
-    'FRESH SEAFOOD': '🐟',
-    'VEGETARIAN': '🌱',
-    'TOPPINGS': '🥢',
-    'DRINKS': '🧃',
-    'DESSERTS': '🍨'
-  };
-  return emojis[category];
-};
+
 interface UnifiedHeaderProps {
   selectedCategory: UnifiedCategory;
   onCategoryChange: (category: UnifiedCategory) => void;
@@ -61,6 +46,7 @@ const UnifiedHeader = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [deliveryAddress] = useState(() => localStorage.getItem('santor-user-address') || '');
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
 
   // Get available categories based on selected brand
   const unifiedMenu = useMemo(() => getUnifiedMenu(), []);
@@ -114,40 +100,6 @@ const UnifiedHeader = ({
                 {deliveryAddress || t('header.deliveryPlaceholder', 'Set delivery address')}
               </span>
             </button>
-            
-            
-            {/* Compact Restaurant Selector */}
-            <div className="flex items-center gap-1 bg-white/10 border border-white/20 rounded-full px-2 py-1">
-              {BRANDS.slice(0, 3).map(brand => {
-                const info = getRestaurantInfo(brand);
-                const isSelected = selectedBrand === brand;
-                return (
-                  <button
-                    key={brand}
-                    onClick={() => handleBrandChange(brand)}
-                    className={cn(
-                      'w-7 h-7 rounded-full overflow-hidden flex items-center justify-center transition-all',
-                      isSelected ? 'ring-2 ring-white/70 ring-offset-1 ring-offset-transparent' : 'hover:ring-1 hover:ring-white/40'
-                    )}
-                    title={info?.name || brand}
-                  >
-                    {info ? (
-                      <img 
-                        src={info.logo} 
-                        alt={info.name} 
-                        className="w-full h-full object-cover" 
-                        onError={(e) => { 
-                          e.currentTarget.style.display = 'none'; 
-                          e.currentTarget.parentElement!.innerHTML = `<span class="text-xs font-bold text-white">${info.name.charAt(0)}</span>`; 
-                        }} 
-                      />
-                    ) : (
-                      <span className="text-xs font-bold text-white">✦</span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
 
             {/* Language Selector - Pill Shape */}
             <Popover>
@@ -173,6 +125,47 @@ const UnifiedHeader = ({
             </Popover>
           </div>
 
+          {/* Restaurant Selection - Above Search */}
+          <div className="flex items-center justify-center w-full">
+            <div className="flex items-center gap-3 bg-white/10 border border-white/20 rounded-full px-4 py-2">
+              {BRANDS.filter(brand => brand !== 'all').map(brand => {
+                const info = getRestaurantInfo(brand);
+                const isSelected = selectedBrand === brand;
+                const isNew = brand === 'smoody';
+                return (
+                  <button
+                    key={brand}
+                    onClick={() => handleBrandChange(brand)}
+                    className={cn(
+                      'w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transition-all relative',
+                      isSelected ? 'ring-2 ring-white/70 ring-offset-1 ring-offset-transparent' : 'hover:ring-1 hover:ring-white/40'
+                    )}
+                    title={info?.name || brand}
+                  >
+                    {isNew && (
+                      <div className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1 py-0.5 rounded-full animate-pulse z-10">
+                        NEW
+                      </div>
+                    )}
+                    {info ? (
+                      <img 
+                        src={info.logo} 
+                        alt={info.name} 
+                        className="w-full h-full object-cover" 
+                        onError={(e) => { 
+                          e.currentTarget.style.display = 'none'; 
+                          e.currentTarget.parentElement!.innerHTML = `<span class="text-xs font-bold text-white">${info.name.charAt(0)}</span>`; 
+                        }} 
+                      />
+                    ) : (
+                      <span className="text-xs font-bold text-white">✦</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/50" />
@@ -184,11 +177,10 @@ const UnifiedHeader = ({
               className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/50 focus:bg-white/20 focus:border-white/40"
             />
           </div>
-          </div>
         </div>
-      
-      {/* Category Navigation Bar */}
-      <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
+        
+        {/* Category Navigation Bar */}
+        <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
         <div className="flex gap-3 sm:gap-4 overflow-x-auto px-6 py-3 scrollbar-hide snap-x snap-mandatory mx-[12px]">
           {availableCategories.map(category => {
           const isSelected = selectedCategory === category;
@@ -204,13 +196,36 @@ const UnifiedHeader = ({
               )} 
               aria-current={isSelected ? 'true' : undefined}
             >
-              {getCategoryEmoji(category)} {displayCategory}
+              {displayCategory}
             </button>
           );
         })}
           {/* Spacer to ensure last item has breathing room */}
           <div className="shrink-0 w-4" aria-hidden="true" />
         </div>
+        </div>
+        
+        {/* Subcategories Row */}
+        {availableCategories.includes('RICE') && (
+          <div className="bg-orange-500 text-black px-6 py-2">
+            <div className="flex gap-4 overflow-x-auto scrollbar-hide">
+              <button className="whitespace-nowrap hover:underline font-medium">Egg</button>
+              <button className="whitespace-nowrap hover:underline font-medium">Fried</button>
+              <button className="whitespace-nowrap hover:underline font-medium">Steam</button>
+              <button className="whitespace-nowrap hover:underline font-medium">Clear</button>
+            </div>
+          </div>
+        )}
+        {availableCategories.includes('NOODLES') && (
+          <div className="bg-orange-500 text-black px-6 py-2">
+            <div className="flex gap-4 overflow-x-auto scrollbar-hide">
+              <button className="whitespace-nowrap hover:underline font-medium">Egg</button>
+              <button className="whitespace-nowrap hover:underline font-medium">Soup</button>
+              <button className="whitespace-nowrap hover:underline font-medium">Stir-Fried</button>
+              <button className="whitespace-nowrap hover:underline font-medium">Clear</button>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

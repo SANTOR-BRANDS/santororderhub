@@ -208,17 +208,6 @@ const UnifiedMenuDisplay = ({
           </button>
         )}
 
-        {/* Search Bar */}
-        <search role="search" className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" aria-hidden="true" />
-          <Input 
-            placeholder={t('menu.searchPlaceholder')} 
-            value={searchQuery} 
-            onChange={e => setSearchQuery(e.target.value)}
-            aria-label={t('menu.searchPlaceholder')} 
-            className="pl-10 bg-white/10 border-gray-600 text-white placeholder:text-gray-400 rounded-lg"
-          />
-        </search>
         
         {/* Subcategory Filter Pills - Word Cloud Style */}
         {subcategoryTagsWithCounts.length > 0 && (
