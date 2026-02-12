@@ -234,27 +234,118 @@ const BasketModal = ({
     return Array.from(restaurants);
   };
 
+  const getBasePromoSavingsPerItem = (item: BasketItem) => {
+    if (item.dish.id === 'RS-COM-002') return 49; // 2x Pad Krapao Minced Pork (Special)
+    if (item.dish.id === 'RS-COM-001') return 20; // Tonkatsu + Peach Tea
+    return 0;
+  };
+
   // Calculate total savings from promotions
   const getTotalSavings = () => {
     let savings = 0;
-    basketItems.forEach(item => {
-      // Check for promotional pricing (SM-GRK-003 has promotional variants)
-      if (item.dish.id === 'SM-GRK-003') {
-        // Original price would be 69, promo is 59 for 1 scoop
-        const originalPrice = 69;
-        const currentPrice = item.selectedVariant?.price || item.dish.price;
-        savings += (originalPrice - currentPrice) * item.quantity;
-      }
+
+    basketItems.forEach((item) => {
+      // Fixed combo promo savings
+      savings += getBasePromoSavingsPerItem(item) * item.quantity;
+
+      // Greek Yo Extra Scoop: save 10 THB each
+      item.addOns.forEach((addon) => {
+        if (addon.id === 'EXT-GRK-001') {
+          savings += 10 * item.quantity;
+        }
+      });
+
+      // Nirvana extra pork/beef (20g): save 10 THB per 100g
+      item.extraPls?.forEach((extra) => {
+        if (extra.isIncremental && item.incrementalExtras) {
+          const qty = item.incrementalExtras.get(extra.id) || 0;
+          if (qty > 0) {
+            const totalGrams = (extra.incrementalUnit || 20) * qty;
+            const discountSets = Math.floor(totalGrams / 100);
+            savings += discountSets * (extra.incrementalDiscount || 10) * item.quantity;
+          }
+        }
+      });
+
+      // Combo 2 incremental extras
+      item.combo2?.extraPls?.forEach((extra) => {
+        if (extra.isIncremental && item.combo2?.incrementalExtras) {
+          const qty = item.combo2.incrementalExtras.get(extra.id) || 0;
+          if (qty > 0) {
+            const totalGrams = (extra.incrementalUnit || 20) * qty;
+            const discountSets = Math.floor(totalGrams / 100);
+            savings += discountSets * (extra.incrementalDiscount || 10) * item.quantity;
+          }
+        }
+      });
     });
+
     return savings;
   };
 
-  // Get original price for promotional items
-  const getOriginalPrice = (item: BasketItem): number | null => {
-    if (item.dish.id === 'SM-GRK-003') {
-      return 69; // Original price before promotion
+  // Get item original price (for strikethrough display)
+  const getItemOriginalPrice = (item: BasketItem): number => {
+    let originalPrice = 0;
+    const basePrice = item.selectedVariant?.price || item.dish.price;
+    
+    // Base price + fixed promo savings
+    originalPrice = basePrice + getBasePromoSavingsPerItem(item);
+    
+    // Add add-ons at full price (without discounts)
+    item.addOns.forEach(addon => {
+      if (addon.id === 'EXT-GRK-001') {
+        originalPrice += addon.price + 10; // Add back the 10 THB discount
+      } else {
+        originalPrice += addon.price;
+      }
+    });
+    
+    // Add extraPls at full price (without incremental discounts)
+    item.extraPls?.forEach(extra => {
+      if (extra.isIncremental && item.incrementalExtras) {
+        const qty = item.incrementalExtras.get(extra.id) || 0;
+        if (qty > 0) {
+          // Calculate price without discount
+          originalPrice += extra.price * qty;
+        }
+      } else {
+        originalPrice += extra.price;
+      }
+    });
+    
+    // Combo 2 extras
+    if (item.isCombo && item.combo2) {
+      item.combo2.addOns.forEach(addon => {
+        originalPrice += addon.price;
+      });
+      item.combo2.extraPls?.forEach(extra => {
+        if (extra.isIncremental && item.combo2?.incrementalExtras) {
+          const qty = item.combo2.incrementalExtras.get(extra.id) || 0;
+          if (qty > 0) {
+            originalPrice += extra.price * qty;
+          }
+        } else {
+          originalPrice += extra.price;
+        }
+      });
     }
-    return null;
+    
+    // Add sauces
+    const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
+    const sauceIds = item.sauce.split(', ').filter(id => id);
+    sauceIds.forEach(sauceId => {
+      const sauce = SAUCES.find(s => s.id === sauceId);
+      if (sauce) {
+        originalPrice += sauce.price;
+      }
+    });
+    
+    return originalPrice * item.quantity;
+  };
+
+  // Calculate total original price (for strikethrough)
+  const getTotalOriginalPrice = () => {
+    return basketItems.reduce((total, item) => total + getItemOriginalPrice(item), 0);
   };
 
   const generateOrderMessage = () => {
@@ -793,19 +884,19 @@ const BasketModal = ({
                   </div>
                   <div className="flex items-center gap-2">
                     {(() => {
-                      const originalPrice = getOriginalPrice(item);
+                      const originalPrice = getItemOriginalPrice(item);
                       const currentPrice = getItemTotalPrice(item);
-                      if (originalPrice && originalPrice * item.quantity > currentPrice) {
+                      if (originalPrice > currentPrice) {
                         return (
                           <>
                             <span className="text-sm text-gray-400 line-through">
-                              ฿{originalPrice * item.quantity}
+                              ฿{originalPrice}
                             </span>
                             <span className="font-semibold text-green-600">
                               ฿{currentPrice}
                             </span>
                             <Badge className="bg-red-500 text-white text-xs">
-                              SAVE ฿{(originalPrice * item.quantity) - currentPrice}
+                              SAVE ฿{originalPrice - currentPrice}
                             </Badge>
                           </>
                         );
@@ -897,7 +988,12 @@ const BasketModal = ({
           
           <div className="flex justify-between items-center mb-4">
             <span className="text-lg font-semibold">{t('basket.total')}</span>
-            <span className="text-2xl font-bold text-primary">฿{getTotalPrice()}</span>
+            <div className="flex items-center gap-2">
+              {getTotalOriginalPrice() > getTotalPrice() && (
+                <span className="text-sm text-gray-400 line-through">฿{getTotalOriginalPrice()}</span>
+              )}
+              <span className="text-2xl font-bold text-primary">฿{getTotalPrice()}</span>
+            </div>
           </div>
 
           <div className="space-y-3">
