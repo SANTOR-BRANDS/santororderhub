@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Restaurant, Dish, BasketItem } from '@/types/menu';
+import { Restaurant, Dish } from '@/types/menu';
 import { Input } from '@/components/ui/input';
 import DishCard from './DishCard';
 import { Search, X, Dices } from 'lucide-react';
@@ -52,14 +52,12 @@ interface UnifiedMenuDisplayProps {
   selectedCategory: UnifiedCategory;
   selectedBrand: Restaurant | 'all';
   onDishSelect: (dish: Dish) => void;
-  onAddToBasket?: (item: BasketItem) => void;
 }
 
 const UnifiedMenuDisplay = ({
   selectedCategory,
   selectedBrand,
   onDishSelect,
-  onAddToBasket,
 }: UnifiedMenuDisplayProps) => {
   const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
@@ -208,6 +206,17 @@ const UnifiedMenuDisplay = ({
           </button>
         )}
 
+        {/* Search Bar */}
+        <search role="search" className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" aria-hidden="true" />
+          <Input 
+            placeholder={t('menu.searchPlaceholder')} 
+            value={searchQuery} 
+            onChange={e => setSearchQuery(e.target.value)}
+            aria-label={t('menu.searchPlaceholder')} 
+            className="pl-10 bg-white/10 border-gray-600 text-white placeholder:text-gray-400 rounded-lg"
+          />
+        </search>
         
         {/* Subcategory Filter Pills - Word Cloud Style */}
         {subcategoryTagsWithCounts.length > 0 && (
@@ -263,7 +272,7 @@ const UnifiedMenuDisplay = ({
                     </h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                       {dishes.map(dish => (
-                        <DishCard key={dish.id} dish={dish} onClick={onDishSelect} onAddToBasket={onAddToBasket} />
+                        <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />
                       ))}
                     </div>
                   </section>
@@ -274,7 +283,7 @@ const UnifiedMenuDisplay = ({
             // Flat grid when filtering by category
             <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4" aria-label="Menu dishes">
               {finalDishes.map(dish => (
-                <DishCard key={dish.id} dish={dish} onClick={onDishSelect} onAddToBasket={onAddToBasket} />
+                <DishCard key={dish.id} dish={dish} onClick={onDishSelect} />
               ))}
             </section>
           )

@@ -77,8 +77,9 @@ const BasketModal = ({
 
   // Helper: resolve a translated name, falling back to the human-readable name
   // when the translation key returns the raw ID code
-  const resolveName = (id: string, name: string) => {
-    return name;
+  const resolveName = (id: string, fallbackName: string) => {
+    const translated = t(id);
+    return (!translated || translated === id) ? fallbackName : translated;
   };
 
   // Reset orderCopied when basket changes

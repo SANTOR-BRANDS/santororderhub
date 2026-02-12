@@ -1,61 +1,23 @@
-import { useState } from 'react';
-import { Dish, DishVariant, BasketItem, AddOn } from '@/types/menu';
+import { Dish } from '@/types/menu';
 import { CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import KitchenBadge from './KitchenBadge';
 import OptimizedImage from './OptimizedImage';
-import { ShoppingCart, Check } from 'lucide-react';
-import { getSaucesByRestaurant } from '@/types/menu';
-import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
-
 interface DishCardProps {
   dish: Dish;
   onClick: (dish: Dish) => void;
-  onAddToBasket?: (item: BasketItem) => void;
 }
 const DishCard = ({
   dish,
-  onClick,
-  onAddToBasket
+  onClick
 }: DishCardProps) => {
   const {
     t
   } = useLanguage();
-  
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  const handleQuickAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click
-    if (onAddToBasket && !isUnavailable) {
-      const selectedVariant = dish.variants?.find(v => v.isDefault) || dish.variants?.[0] || null;
-      const SAUCES = getSaucesByRestaurant(dish.restaurant);
-      
-      const basketItem: BasketItem = {
-        id: `${dish.id}-${Date.now()}`,
-        dish,
-        selectedVariant,
-        addOns: [],
-        extraPls: [],
-        spicyLevel: dish.spicyRequired ? 2 : undefined,
-        sauce: SAUCES.filter(s => s.price === 0 && s.id !== 'SAN-SAU-008' && s.id !== 'NV-SAU-005')[0]?.id || '',
-        needsCutlery: false,
-        quantity: 1,
-        ...(selectedVariant?.freeToppingsLimit && dish.restaurant === 'smoody' ? {
-          freeToppings: []
-        } : {})
-      };
-      
-      onAddToBasket(basketItem);
-      
-      // Show success feedback
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 1500);
-    }
-  };
   const isUnavailable = dish.isAvailable === false;
-  const dishName = dish.name;
+  const translated = t(dish.id);
+  const dishName = !translated || translated === dish.id ? dish.name : translated;
   return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
       <CardContent className="p-0">
         {/* Dish Image */}
@@ -90,47 +52,19 @@ const DishCard = ({
             </h3>
             <div className="flex items-center gap-1.5">
               {/* Show original price crossed out for promo items */}
-              {(() => {
-                const isPromo = dish.id === 'SM-GRK-003';
-                const originalPrice = isPromo ? 69 : null;
-                const currentPrice = dish.price;
-                
-                return (
-                  <>
-                    {isPromo && originalPrice && (
-                      <span className="text-xs line-through text-red-600 font-medium">
-                        ฿{originalPrice}
-                      </span>
-                    )}
-                    <span className={cn(
-                      'font-bold text-lg whitespace-nowrap',
-                      dish.restaurant === 'restory' ? 'text-restory' : 
-                      dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 
-                      'text-nirvana-accent',
-                      isPromo && 'text-red-600'
-                    )}>
-                      ฿{currentPrice}
-                    </span>
-                  </>
-                );
-              })()}
+              {dish.id === 'SM-GRK-003' && <span className="text-xs line-through text-center text-red-600 font-medium">฿69</span>}
+              <span className={cn('font-bold text-lg whitespace-nowrap', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent')}>
+                ฿{dish.price}
+              </span>
             </div>
           </div>
           
           {/* Promo badge for discounted items */}
-          {(() => {
-            const isPromo = dish.id === 'SM-GRK-003';
-            if (isPromo) {
-              return (
-                <div className="mb-2">
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/90 text-white animate-pulse">
-                    🔥 PROMO
-                  </span>
-                </div>
-              );
-            }
-            return null;
-          })()}
+          {dish.id === 'SM-GRK-003' && <div className="mb-2">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/90 text-white">
+                🔥 PROMO
+              </span>
+            </div>}
           
           {/* Description only shown in DishModal, not on cards */}
 
@@ -144,33 +78,6 @@ const DishCard = ({
                 {dish.isSpecial && <span className="text-xs" role="img" aria-label="Special dish">⭐</span>}
               </div>}
           </div>
-          
-          {/* Add to Cart Button */}
-          <Button 
-            onClick={handleQuickAddToCart}
-            disabled={isUnavailable || showSuccess}
-            size="sm"
-            className={cn(
-              'w-full mt-3 text-xs font-semibold transition-all relative overflow-hidden',
-              isUnavailable && 'opacity-50 cursor-not-allowed',
-              showSuccess && 'scale-105 shadow-lg',
-              dish.restaurant === 'restory' ? 'bg-restory hover:bg-restory/90 text-white' : '',
-              dish.restaurant === 'nirvana' ? 'bg-nirvana-accent hover:bg-nirvana-accent/90 text-white' : '',
-              dish.restaurant === 'smoody' ? 'bg-purple-600 hover:bg-purple-700 text-white' : ''
-            )}
-          >
-            {showSuccess ? (
-              <>
-                <Check className="h-3 w-3 mr-1 animate-pulse" />
-                {t('cart.added')}
-              </>
-            ) : (
-              <>
-                <ShoppingCart className="h-3 w-3 mr-1" />
-                {isUnavailable ? t('dish.unavailable', 'Unavailable') : t('dish.addToBasket', 'Add to Basket')}
-              </>
-            )}
-          </Button>
         </div>
       </CardContent>
     </article>;

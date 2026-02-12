@@ -2,17 +2,34 @@ import { MapPin, Instagram, Facebook } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ContactDialog from './ContactDialog';
+import { Restaurant } from '@/types/menu';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const Footer = () => {
+interface FooterProps {
+  selectedRestaurant?: Restaurant | null;
+}
+
+const Footer = ({ selectedRestaurant }: FooterProps) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const { t } = useLanguage();
 
+  const getFooterClasses = () => {
+    if (selectedRestaurant === 'restory') {
+      return 'bg-gradient-restory text-white';
+    }
+    if (selectedRestaurant === 'nirvana') {
+      return 'bg-gradient-nirvana text-white';
+    }
+    if (selectedRestaurant === 'smoody') {
+      return 'bg-gradient-smoody text-white';
+    }
+    return 'bg-gradient-santor text-white';
+  };
+
   return (
     <>
-      <footer className="bg-gradient-santor text-white">
+      <footer className={getFooterClasses()}>
         <div className="max-w-7xl mx-auto px-4 py-12">
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Social Links Section - Left */}
             <div>
