@@ -1212,8 +1212,6 @@ export const nirvanaMenu: Dish[] = [
       { id: 'NV-SAU-005', name: '🚫 No Sauce', price: 0 }
     ]
   },
-  { id: 'NV-NSP-004', name: 'Beef Rice Noodle Soup', price: 159, category: 'NOODLE SOUP', restaurant: 'nirvana', isAvailable: false },
-
   // VEGETARIAN
   { 
     id: 'NV-VEG-001', 

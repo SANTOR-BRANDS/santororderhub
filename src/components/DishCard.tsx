@@ -61,8 +61,12 @@ const DishCard = memo(function DishCard({
         {/* Content */}
         <div className="p-4">
           <div className="flex justify-between items-start gap-2 mb-2">
-            <h3 className={cn('font-semibold text-sm leading-tight', dish.restaurant === 'smoody' ? 'text-black' : 'text-white', dish.isSpecial && 'text-amber-600 font-bold')}>
+            <h3 className={cn('font-semibold text-sm leading-tight line-clamp-2 min-h-[2.25rem]', dish.restaurant === 'smoody' ? 'text-black' : 'text-white', dish.isSpecial && 'text-amber-600 font-bold')}>
               {dishName}
+              {(dish.spicyRequired || dish.isSpecial) && <span className="ml-1 text-xs opacity-80 align-middle">
+                  {dish.spicyRequired && '🌶️'}
+                  {dish.isSpecial && '⭐'}
+                </span>}
             </h3>
             <div className="flex items-center gap-1.5">
               {/* Show original price crossed out for promo items */}
@@ -87,10 +91,6 @@ const DishCard = memo(function DishCard({
               {dish.category}
             </span>
             
-            {(dish.spicyRequired || dish.isSpecial) && <div className="flex gap-1">
-                {dish.spicyRequired && <span className="text-xs" role="img" aria-label="Spicy">🌶️</span>}
-                {dish.isSpecial && <span className="text-xs" role="img" aria-label="Special dish">⭐</span>}
-              </div>}
           </div>
 
           {/* Floating add/status button */}

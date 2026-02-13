@@ -737,7 +737,7 @@ const DishModal = ({
       </>;
   };
   return <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col">
+      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col [&>button]:h-11 [&>button]:w-11 [&>button]:p-2 [&>button]:rounded-full [&>button]:right-2 [&>button]:top-2 [&>button]:bg-black/40 [&>button]:border [&>button]:border-white/10 [&>button]:transition-colors [&>button:hover]:bg-red-500/20 [&>button:active]:bg-red-500/35 [&>button>svg]:h-5 [&>button>svg]:w-5">
         <div className="flex-1 overflow-hidden flex flex-col">
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
