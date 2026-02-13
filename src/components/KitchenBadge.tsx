@@ -22,8 +22,7 @@ const KitchenBadge = ({
   return (
     <div 
       className={cn(
-        'flex items-center gap-1 bg-black/60 backdrop-blur-sm rounded-full',
-        size === 'sm' ? 'px-1.5 py-0.5' : 'px-2 py-1',
+        'flex items-center gap-1',
         className
       )}
     >

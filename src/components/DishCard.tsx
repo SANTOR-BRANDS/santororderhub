@@ -32,7 +32,6 @@ const DishCard = memo(function DishCard({
   const dishName = !translated || translated === dish.id ? dish.name : translated;
   const originalPrice = PROMO_ORIGINAL_PRICES[dish.id];
   const isPromo = !!originalPrice && originalPrice > dish.price;
-  const savedAmount = isPromo ? originalPrice - dish.price : 0;
   return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
       <CardContent className="p-0">
         {/* Dish Image */}
@@ -59,9 +58,9 @@ const DishCard = memo(function DishCard({
             </div>}
 
           {/* Promo savings badge */}
-          {!isUnavailable && isPromo && <div className="absolute top-2 right-2">
-              <span className="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-500/85 text-white">
-                SAVE ฿{savedAmount}
+          {!isUnavailable && isPromo && <div className="absolute top-2.5 right-2.5">
+              <span className="inline-flex items-center leading-none text-[10px] font-semibold px-2 py-1 rounded-full bg-red-500/85 text-white">
+                🔥 PROMO
               </span>
             </div>}
         </div>
@@ -102,9 +101,9 @@ const DishCard = memo(function DishCard({
               onClick(dish);
             }}
               aria-label={inBasketCount > 0 ? `In basket: ${inBasketCount}` : 'Add to basket'}
-              className={cn('absolute bottom-3 right-3 h-8 w-8 rounded-full flex items-center justify-center shadow-md transition-all', inBasketCount > 0 ? 'bg-green-500 text-white' : 'bg-white/90 text-black hover:bg-white')}
+              className={cn('absolute bottom-3 right-3 h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center shadow-md transition-all', inBasketCount > 0 ? 'bg-green-500 text-white' : 'bg-white/90 text-black hover:bg-white')}
             >
-              {inBasketCount <= 0 ? <Plus className="h-4 w-4" /> : inBasketCount === 1 ? <Check className="h-4 w-4" /> : <span className="text-xs font-bold">{inBasketCount}</span>}
+              {inBasketCount <= 0 ? <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> : inBasketCount === 1 ? <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> : <span className="text-xs font-bold">{inBasketCount}</span>}
             </button>}
         </div>
       </CardContent>

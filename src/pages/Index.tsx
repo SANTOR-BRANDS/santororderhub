@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Restaurant, Dish, BasketItem, DishVariant, AddOn } from '@/types/menu';
-import AnnouncementBanner from '@/components/AnnouncementBanner';
 import UnifiedHeader from '@/components/UnifiedHeader';
 import UnifiedMenuDisplay from '@/components/UnifiedMenuDisplay';
 import DishModal from '@/components/DishModal';
@@ -169,7 +168,6 @@ const Index = ({ initialBrand }: IndexProps) => {
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
       <SEOHead metadata={homeMetadata} />
-      <AnnouncementBanner />
       <UnifiedHeader 
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
