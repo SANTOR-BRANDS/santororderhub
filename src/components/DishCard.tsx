@@ -32,6 +32,7 @@ const DishCard = memo(function DishCard({
   const dishName = !translated || translated === dish.id ? dish.name : translated;
   const originalPrice = PROMO_ORIGINAL_PRICES[dish.id];
   const isPromo = !!originalPrice && originalPrice > dish.price;
+  const savedAmount = isPromo ? originalPrice - dish.price : 0;
   return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
       <CardContent className="p-0">
         {/* Dish Image */}
@@ -56,6 +57,13 @@ const DishCard = memo(function DishCard({
           {!isUnavailable && <div className="absolute top-2 left-2">
               <KitchenBadge restaurant={dish.restaurant} size="sm" />
             </div>}
+
+          {/* Promo savings badge */}
+          {!isUnavailable && isPromo && <div className="absolute top-2 right-2">
+              <span className="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-500/85 text-white">
+                SAVE ฿{savedAmount}
+              </span>
+            </div>}
         </div>
 
         {/* Content */}
@@ -68,26 +76,19 @@ const DishCard = memo(function DishCard({
                   {dish.isSpecial && '⭐'}
                 </span>}
             </h3>
-            <div className="flex items-center gap-1.5">
+            <div className="flex flex-col items-end leading-tight">
               {/* Show original price crossed out for promo items */}
-              {isPromo && <span className="text-xs line-through text-center text-red-600 font-medium">฿{originalPrice}</span>}
               <span className={cn('font-bold text-lg whitespace-nowrap', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent')}>
                 ฿{dish.price}
               </span>
+              {isPromo && <span className="text-[11px] text-gray-400 line-through">฿{originalPrice}</span>}
             </div>
           </div>
           
-          {/* Promo badge for discounted items */}
-          {isPromo && <div className="mb-2">
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/90 text-white">
-                🔥 PROMO
-              </span>
-            </div>}
-          
           {/* Description only shown in DishModal, not on cards */}
 
-          <div className="flex items-center justify-between">
-            <span className={cn('text-xs px-2 py-1 rounded-full font-semibold', dish.restaurant === 'restory' ? 'bg-restory/10 text-restory-secondary' : dish.restaurant === 'smoody' ? 'bg-smoody-secondary/20 text-smoody-secondary' : 'bg-nirvana-accent/10 text-nirvana-accent')}>
+          <div className="flex items-center justify-between pr-10 sm:pr-0">
+            <span className={cn('text-xs px-2 py-1 rounded-full font-semibold max-w-[calc(100%-0.5rem)] truncate', dish.restaurant === 'restory' ? 'bg-restory/10 text-restory-secondary' : dish.restaurant === 'smoody' ? 'bg-smoody-secondary/20 text-smoody-secondary' : 'bg-nirvana-accent/10 text-nirvana-accent')}>
               {dish.category}
             </span>
             
