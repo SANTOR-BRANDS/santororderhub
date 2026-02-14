@@ -689,7 +689,7 @@ const BasketModal = ({
   if (basketItems.length === 0) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-md [&>button]:h-9 [&>button]:w-9 [&>button]:p-0 [&>button]:inline-flex [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:right-2 [&>button]:top-2 [&>button]:bg-black/45 [&>button]:border-0 [&>button]:shadow-sm [&>button]:opacity-95 [&>button]:transition-colors [&>button:hover]:bg-red-500/30 [&>button:active]:bg-red-500/45 [&>button]:focus:outline-none [&>button]:focus-visible:ring-0 [&>button>svg]:h-[18px] [&>button>svg]:w-[18px] [&>button>svg]:text-white [&>button>svg]:stroke-[2.5]">
+        <DialogContent className="max-w-md rounded-2xl">
           <DialogHeader>
             <DialogTitle>{t('basket.title')}</DialogTitle>
             <DialogDescription className="sr-only">
@@ -711,7 +711,7 @@ const BasketModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col [&>button]:h-9 [&>button]:w-9 [&>button]:p-0 [&>button]:inline-flex [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:right-2 [&>button]:top-2 [&>button]:bg-black/45 [&>button]:border-0 [&>button]:shadow-sm [&>button]:opacity-95 [&>button]:transition-colors [&>button:hover]:bg-red-500/30 [&>button:active]:bg-red-500/45 [&>button]:focus:outline-none [&>button]:focus-visible:ring-0 [&>button>svg]:h-[18px] [&>button>svg]:w-[18px] [&>button>svg]:text-white [&>button>svg]:stroke-[2.5]">
+      <DialogContent className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden">
         <DialogHeader className="p-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center justify-between">
             <span>{t('basket.title')} ({basketItems.length})</span>

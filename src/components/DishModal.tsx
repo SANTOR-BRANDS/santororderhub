@@ -64,6 +64,8 @@ const DishModal = ({
     y: number;
     dx: number;
     dy: number;
+    w: number;
+    h: number;
     image?: string;
   } | null>(null);
   
@@ -142,16 +144,20 @@ const DishModal = ({
     const source = dishImageRef.current.getBoundingClientRect();
     const target = basketRef.current.getBoundingClientRect();
 
-    const startX = source.left + source.width / 2 - 18;
-    const startY = source.top + source.height / 2 - 18;
-    const endX = target.left + target.width / 2 - 18;
-    const endY = target.top + target.height / 2 - 18;
+    const startW = source.width;
+    const startH = source.height;
+    const startX = source.left;
+    const startY = source.top;
+    const endX = target.left + target.width / 2 - startW * 0.18;
+    const endY = target.top + target.height / 2 - startH * 0.18;
 
     setFlyAnim({
       x: startX,
       y: startY,
       dx: endX - startX,
       dy: endY - startY,
+      w: startW,
+      h: startH,
       image: dish.image,
     });
 
@@ -778,7 +784,7 @@ const DishModal = ({
       </>;
   };
   return <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col [&>button]:h-9 [&>button]:w-9 [&>button]:p-0 [&>button]:inline-flex [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:right-2 [&>button]:top-2 [&>button]:bg-black/45 [&>button]:border-0 [&>button]:shadow-sm [&>button]:opacity-95 [&>button]:transition-colors [&>button:hover]:bg-red-500/30 [&>button:active]:bg-red-500/45 [&>button]:focus:outline-none [&>button]:focus-visible:ring-0 [&>button>svg]:h-[18px] [&>button>svg]:w-[18px] [&>button>svg]:text-white [&>button>svg]:stroke-[2.5]">
+      <DialogContent className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden">
         <div className="flex-1 overflow-hidden flex flex-col">
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
@@ -909,10 +915,12 @@ const DishModal = ({
         </div>
       </DialogContent>
       {flyAnim && <div
-          className="pointer-events-none fixed z-[70] h-9 w-9 overflow-hidden rounded-full border border-white/40 bg-white/90 shadow-lg animate-fly-to-basket"
+          className="pointer-events-none fixed z-[70] overflow-hidden rounded-xl border border-white/30 bg-white/90 shadow-xl animate-fly-to-basket"
           style={{
           left: `${flyAnim.x}px`,
           top: `${flyAnim.y}px`,
+          width: `${flyAnim.w}px`,
+          height: `${flyAnim.h}px`,
           ['--fly-x' as string]: `${flyAnim.dx}px`,
           ['--fly-y' as string]: `${flyAnim.dy}px`
         }}
