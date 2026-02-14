@@ -51,7 +51,7 @@ const CATEGORY_TRANSLATION_KEYS: Record<string, string> = {
 interface UnifiedMenuDisplayProps {
   selectedCategory: UnifiedCategory;
   selectedBrand: Restaurant | 'all';
-  onDishSelect: (dish: Dish) => void;
+  onDishSelect: (dish: Dish, sourceRect?: { x: number; y: number; width: number; height: number }) => void;
   searchQuery: string;
   dishQuantityMap: Record<string, number>;
 }

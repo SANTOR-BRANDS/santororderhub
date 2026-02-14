@@ -21,6 +21,7 @@ interface DishModalProps {
   onAddToBasket: (item: BasketItem) => void;
   onOrderNow?: (item: BasketItem) => void;
   basketRef?: RefObject<HTMLDivElement | null>;
+  flySourceRect?: { x: number; y: number; width: number; height: number } | null;
 }
 const DishModal = ({
   dish,
@@ -28,7 +29,8 @@ const DishModal = ({
   onClose,
   onAddToBasket,
   onOrderNow,
-  basketRef
+  basketRef,
+  flySourceRect
 }: DishModalProps) => {
   const {
     t
@@ -139,15 +141,16 @@ const DishModal = ({
   const theme = getThemeStyles();
 
   const triggerFlyToBasket = () => {
-    if (!dishImageRef.current || !basketRef?.current) return false;
+    if (!basketRef?.current) return false;
 
-    const source = dishImageRef.current.getBoundingClientRect();
+    const source = flySourceRect || (dishImageRef.current ? dishImageRef.current.getBoundingClientRect() : null);
+    if (!source) return false;
     const target = basketRef.current.getBoundingClientRect();
 
     const startW = source.width;
     const startH = source.height;
-    const startX = source.left;
-    const startY = source.top;
+    const startX = source.x;
+    const startY = source.y;
     const endX = target.left + target.width / 2 - startW * 0.18;
     const endY = target.top + target.height / 2 - startH * 0.18;
 
@@ -915,7 +918,7 @@ const DishModal = ({
         </div>
       </DialogContent>
       {flyAnim && <div
-          className="pointer-events-none fixed z-[70] overflow-hidden rounded-xl border border-white/30 bg-white/90 shadow-xl animate-fly-to-basket"
+          className="pointer-events-none fixed z-[70] overflow-hidden rounded-xl border border-white/25 bg-[#1f1f1f] shadow-xl animate-fly-to-basket"
           style={{
           left: `${flyAnim.x}px`,
           top: `${flyAnim.y}px`,
@@ -925,7 +928,15 @@ const DishModal = ({
           ['--fly-y' as string]: `${flyAnim.dy}px`
         }}
         >
-          {flyAnim.image ? <img src={flyAnim.image} alt="" className="h-full w-full object-cover" /> : <div className="flex h-full w-full items-center justify-center text-sm">🍽️</div>}
+          <div className="flex h-full w-full flex-col">
+            <div className="h-[72%] w-full overflow-hidden bg-black/20">
+              {flyAnim.image ? <img src={flyAnim.image} alt="" className="h-full w-full object-cover" /> : <div className="flex h-full w-full items-center justify-center text-sm">🍽️</div>}
+            </div>
+            <div className="flex h-[28%] items-center justify-between px-2 text-[10px] text-white/90">
+              <span className="max-w-[68%] truncate font-medium">{dish ? t(dish.id) === dish.id ? dish.name : t(dish.id) : ''}</span>
+              <span className="font-bold text-[#fd7304]">฿{dish ? selectedVariant?.price || dish.price : ''}</span>
+            </div>
+          </div>
         </div>}
     </Dialog>;
 };

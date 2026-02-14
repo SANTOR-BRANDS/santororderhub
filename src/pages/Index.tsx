@@ -53,6 +53,7 @@ const Index = ({ initialBrand }: IndexProps) => {
   const [selectedCategory, setSelectedCategory] = useState<UnifiedCategory>('ALL');
   const [selectedBrand, setSelectedBrand] = useState<Restaurant | 'all'>(initialBrand || 'all');
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
+  const [selectedDishSourceRect, setSelectedDishSourceRect] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [basketShakeTrigger, setBasketShakeTrigger] = useState(0);
   const floatingBasketRef = useRef<HTMLDivElement>(null);
@@ -127,6 +128,11 @@ const Index = ({ initialBrand }: IndexProps) => {
     setBasketItems(prev => prev.filter(item => item.id !== itemId));
   };
 
+  const handleDishSelect = useCallback((dish: Dish, sourceRect?: { x: number; y: number; width: number; height: number }) => {
+    setSelectedDish(dish);
+    setSelectedDishSourceRect(sourceRect ?? null);
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [selectedCategory]);
@@ -181,7 +187,7 @@ const Index = ({ initialBrand }: IndexProps) => {
         <UnifiedMenuDisplay 
           selectedCategory={selectedCategory}
           selectedBrand={selectedBrand}
-          onDishSelect={setSelectedDish}
+          onDishSelect={handleDishSelect}
           searchQuery={searchQuery}
           dishQuantityMap={dishQuantityMap}
         />
@@ -190,10 +196,14 @@ const Index = ({ initialBrand }: IndexProps) => {
       <DishModal 
         dish={selectedDish} 
         isOpen={!!selectedDish} 
-        onClose={() => setSelectedDish(null)} 
+        onClose={() => {
+          setSelectedDish(null);
+          setSelectedDishSourceRect(null);
+        }} 
         onAddToBasket={handleAddToBasket}
         onOrderNow={() => setIsBasketOpen(true)}
         basketRef={floatingBasketRef}
+        flySourceRect={selectedDishSourceRect}
       />
 
       <BasketModal 

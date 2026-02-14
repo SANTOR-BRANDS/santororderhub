@@ -9,7 +9,7 @@ import { Check, Plus } from 'lucide-react';
 
 interface DishCardProps {
   dish: Dish;
-  onClick: (dish: Dish) => void;
+  onClick: (dish: Dish, sourceRect?: { x: number; y: number; width: number; height: number }) => void;
   inBasketCount?: number;
 }
 
@@ -32,7 +32,16 @@ const DishCard = memo(function DishCard({
   const dishName = !translated || translated === dish.id ? dish.name : translated;
   const originalPrice = PROMO_ORIGINAL_PRICES[dish.id];
   const isPromo = !!originalPrice && originalPrice > dish.price;
-  return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer md:hover:shadow-card md:hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white md:hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background md:hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary md:hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
+  return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer md:hover:shadow-card md:hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white md:hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background md:hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary md:hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={e => {
+    if (isUnavailable) return;
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    onClick(dish, {
+      x: rect.left,
+      y: rect.top,
+      width: rect.width,
+      height: rect.height
+    });
+  }}>
       <CardContent className="p-0">
         {/* Dish Image */}
         <div className="w-full aspect-square rounded-t-lg overflow-hidden relative">
@@ -97,7 +106,18 @@ const DishCard = memo(function DishCard({
                 type="button"
                 onClick={e => {
                 e.stopPropagation();
-                onClick(dish);
+                const card = (e.currentTarget.closest('article') as HTMLElement | null);
+                if (card) {
+                  const rect = card.getBoundingClientRect();
+                  onClick(dish, {
+                    x: rect.left,
+                    y: rect.top,
+                    width: rect.width,
+                    height: rect.height
+                  });
+                } else {
+                  onClick(dish);
+                }
               }}
                 aria-label={inBasketCount > 0 ? `In basket: ${inBasketCount}` : 'Add to basket'}
                 className={cn('h-6 w-6 rounded-full flex items-center justify-center transition-all shrink-0', inBasketCount > 0 ? 'bg-green-500 text-white' : 'bg-white/90 text-black hover:bg-white')}
