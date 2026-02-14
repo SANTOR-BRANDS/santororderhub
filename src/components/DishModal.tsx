@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, RefObject } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Dish, AddOn, SPICY_LEVELS, getSaucesByRestaurant, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
 import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
@@ -20,17 +20,13 @@ interface DishModalProps {
   onClose: () => void;
   onAddToBasket: (item: BasketItem) => void;
   onOrderNow?: (item: BasketItem) => void;
-  basketRef?: RefObject<HTMLDivElement | null>;
-  flySourceRect?: { x: number; y: number; width: number; height: number } | null;
 }
 const DishModal = ({
   dish,
   isOpen,
   onClose,
   onAddToBasket,
-  onOrderNow,
-  basketRef,
-  flySourceRect
+  onOrderNow
 }: DishModalProps) => {
   const {
     t
@@ -52,7 +48,6 @@ const DishModal = ({
   const spicy2Ref = useRef<HTMLDivElement>(null);
   const sauce2Ref = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const dishImageRef = useRef<HTMLDivElement>(null);
 
   // Combo state for dish 2
   const [selectedVariant2, setSelectedVariant2] = useState<DishVariant | null>(null);
@@ -61,15 +56,6 @@ const DishModal = ({
   const [incrementalQuantities2, setIncrementalQuantities2] = useState<Map<string, number>>(new Map());
   const [spicyLevel2, setSpicyLevel2] = useState<number | undefined>(undefined);
   const [selectedSauces2, setSelectedSauces2] = useState<string[]>([]);
-  const [flyAnim, setFlyAnim] = useState<{
-    x: number;
-    y: number;
-    dx: number;
-    dy: number;
-    w: number;
-    h: number;
-    image?: string;
-  } | null>(null);
   
   // Compute isCombo before useEffect so it can be in the dependency array
   const isCombo = dish?.name.includes('2x Pad Krapao') ?? false;
@@ -140,33 +126,6 @@ const DishModal = ({
   };
   const theme = getThemeStyles();
 
-  const triggerFlyToBasket = () => {
-    if (!basketRef?.current) return false;
-
-    const source = flySourceRect || (dishImageRef.current ? dishImageRef.current.getBoundingClientRect() : null);
-    if (!source) return false;
-    const target = basketRef.current.getBoundingClientRect();
-
-    const startW = source.width;
-    const startH = source.height;
-    const startX = source.x;
-    const startY = source.y;
-    const endX = target.left + target.width / 2 - startW * 0.18;
-    const endY = target.top + target.height / 2 - startH * 0.18;
-
-    setFlyAnim({
-      x: startX,
-      y: startY,
-      dx: endX - startX,
-      dy: endY - startY,
-      w: startW,
-      h: startH,
-      image: dish.image,
-    });
-
-    setTimeout(() => setFlyAnim(null), 650);
-    return true;
-  };
   const getCurrentPrice = () => {
     const basePrice = selectedVariant?.price || dish.price;
 
@@ -370,27 +329,17 @@ const DishModal = ({
   const handleAddToBasket = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
-    const didFly = triggerFlyToBasket();
     onAddToBasket(basketItem);
-    if (didFly) {
-      setTimeout(() => onClose(), 420);
-    } else {
-      onClose();
-    }
+    onClose();
   };
   const handleOrderNow = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
-    const didFly = triggerFlyToBasket();
     onAddToBasket(basketItem);
     if (onOrderNow) {
       onOrderNow(basketItem);
     }
-    if (didFly) {
-      setTimeout(() => onClose(), 420);
-    } else {
-      onClose();
-    }
+    onClose();
   };
 
   // Filter add-ons by restaurant prefix
@@ -796,7 +745,7 @@ const DishModal = ({
                   Customize your dish options, add-ons, and preferences
                 </DialogDescription>
                 {/* Dish Image */}
-                <div ref={dishImageRef} className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
+                <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
                   {dish.image ? (
                     <OptimizedImage 
                       src={dish.image} 
@@ -917,27 +866,6 @@ const DishModal = ({
           </div>
         </div>
       </DialogContent>
-      {flyAnim && <div
-          className="pointer-events-none fixed z-[70] overflow-hidden rounded-xl border border-white/25 bg-[#1f1f1f] shadow-xl animate-fly-to-basket"
-          style={{
-          left: `${flyAnim.x}px`,
-          top: `${flyAnim.y}px`,
-          width: `${flyAnim.w}px`,
-          height: `${flyAnim.h}px`,
-          ['--fly-x' as string]: `${flyAnim.dx}px`,
-          ['--fly-y' as string]: `${flyAnim.dy}px`
-        }}
-        >
-          <div className="flex h-full w-full flex-col">
-            <div className="h-[72%] w-full overflow-hidden bg-black/20">
-              {flyAnim.image ? <img src={flyAnim.image} alt="" className="h-full w-full object-cover" /> : <div className="flex h-full w-full items-center justify-center text-sm">🍽️</div>}
-            </div>
-            <div className="flex h-[28%] items-center justify-between px-2 text-[10px] text-white/90">
-              <span className="max-w-[68%] truncate font-medium">{dish ? t(dish.id) === dish.id ? dish.name : t(dish.id) : ''}</span>
-              <span className="font-bold text-[#fd7304]">฿{dish ? selectedVariant?.price || dish.price : ''}</span>
-            </div>
-          </div>
-        </div>}
     </Dialog>;
 };
 export default DishModal;

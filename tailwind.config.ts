@@ -129,12 +129,19 @@ export default {
         },
         "fly-to-basket": {
           "0%": { 
-            transform: "scale(1) translate(0, 0)",
-            opacity: "1"
+            transform: "translate(0, 0) scale(1)",
+            opacity: "1",
+            filter: "blur(0px)"
+          },
+          "62%": {
+            transform: "translate(calc(var(--fly-x, 0) * 0.66), calc(var(--fly-y, 200px) * 0.66)) scale(0.62)",
+            opacity: "0.95",
+            filter: "blur(0.2px)"
           },
           "100%": { 
-            transform: "scale(0.3) translate(var(--fly-x, 0), var(--fly-y, 200px))",
-            opacity: "0"
+            transform: "translate(var(--fly-x, 0), var(--fly-y, 200px)) scale(0.2)",
+            opacity: "0",
+            filter: "blur(0.8px)"
           },
         },
       },
@@ -142,7 +149,7 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "basket-expand": "basket-expand 0.33s ease-out",
-        "fly-to-basket": "fly-to-basket 0.6s ease-in-out forwards",
+        "fly-to-basket": "fly-to-basket 0.76s cubic-bezier(0.2, 0.72, 0.12, 1) forwards",
       },
     },
   },

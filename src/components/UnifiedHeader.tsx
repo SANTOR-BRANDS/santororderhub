@@ -45,6 +45,7 @@ const UnifiedHeader = ({
 }: UnifiedHeaderProps) => {
   const { language, setLanguage, t } = useLanguage();
   const { address, openAddressModal } = useAddress();
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
   // Get available categories based on selected brand
   const unifiedMenu = useMemo(() => getUnifiedMenu(), []);
@@ -101,12 +102,11 @@ const UnifiedHeader = ({
             </button>
 
             {/* Language Selector - Right */}
-            <Popover>
+            <Popover open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
               <PopoverTrigger asChild>
                 <Button 
                   variant="ghost" 
-                  size="sm" 
-                  className="text-inherit hover:bg-white/20 rounded-full px-3 py-1.5" 
+                  className="h-auto text-sm text-inherit hover:bg-white/20 rounded-full px-3 py-1.5" 
                   aria-label="Change language"
                 >
                   <Globe className="h-4 w-4 mr-1.5" />
@@ -119,7 +119,10 @@ const UnifiedHeader = ({
                     variant={language === 'en' ? 'secondary' : 'ghost'} 
                     size="sm" 
                     className="w-full justify-start" 
-                    onClick={() => setLanguage('en')}
+                    onClick={() => {
+                      setLanguage('en');
+                      setIsLanguageOpen(false);
+                    }}
                   >
                     English
                   </Button>
@@ -127,7 +130,10 @@ const UnifiedHeader = ({
                     variant={language === 'th' ? 'secondary' : 'ghost'} 
                     size="sm" 
                     className="w-full justify-start" 
-                    onClick={() => setLanguage('th')}
+                    onClick={() => {
+                      setLanguage('th');
+                      setIsLanguageOpen(false);
+                    }}
                   >
                     ไทย
                   </Button>
