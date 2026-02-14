@@ -64,6 +64,7 @@ const Index = ({ initialBrand }: IndexProps) => {
     dishName: string;
     dishPrice: number;
     dishImage?: string;
+    active: boolean;
   } | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [basketShakeTrigger, setBasketShakeTrigger] = useState(0);
@@ -111,7 +112,7 @@ const Index = ({ initialBrand }: IndexProps) => {
   const [isBasketOpen, setIsBasketOpen] = useState(false);
 
   const triggerFlyToBasket = useCallback((dish: Dish) => {
-    if (!floatingBasketRef.current) return;
+    if (!floatingBasketRef.current) return false;
 
     const source = selectedDishSourceRect || {
       x: Math.max(12, (window.innerWidth - 280) / 2),
@@ -122,7 +123,7 @@ const Index = ({ initialBrand }: IndexProps) => {
     const target = floatingBasketRef.current.getBoundingClientRect();
 
     const endX = source.x;
-    const endY = target.top + target.height / 2 - source.height * 0.18;
+    const endY = target.top + target.height / 2 - source.height * 0.12;
 
     setFlyAnim({
       x: source.x,
@@ -134,9 +135,17 @@ const Index = ({ initialBrand }: IndexProps) => {
       dishName: dish.name,
       dishPrice: dish.price,
       dishImage: dish.image,
+      active: false,
     });
 
-    setTimeout(() => setFlyAnim(null), 760);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setFlyAnim((prev) => (prev ? { ...prev, active: true } : prev));
+      });
+    });
+
+    setTimeout(() => setFlyAnim(null), 820);
+    return true;
   }, [selectedDishSourceRect]);
 
   const dishQuantityMap = useMemo(() => {
@@ -148,10 +157,16 @@ const Index = ({ initialBrand }: IndexProps) => {
   }, [basketItems]);
 
   const handleAddToBasket = (item: BasketItem) => {
-    triggerFlyToBasket(item.dish);
+    const didFly = triggerFlyToBasket(item.dish);
     setBasketItems(prev => [...prev, item]);
-    // Trigger basket shake animation
-    setBasketShakeTrigger(prev => prev + 1);
+    // Trigger basket pulse near animation impact
+    if (didFly) {
+      setTimeout(() => {
+        setBasketShakeTrigger(prev => prev + 1);
+      }, 620);
+    } else {
+      setBasketShakeTrigger(prev => prev + 1);
+    }
   };
 
   const handleUpdateQuantity = (itemId: string, quantity: number) => {
@@ -264,14 +279,19 @@ const Index = ({ initialBrand }: IndexProps) => {
 
       {flyAnim && (
         <div
-          className="pointer-events-none fixed z-[70] overflow-hidden rounded-xl border border-white/25 bg-[#1f1f1f] shadow-xl animate-fly-to-basket"
+          className="pointer-events-none fixed z-[70] overflow-hidden rounded-xl border border-white/25 bg-[#1f1f1f] shadow-xl will-change-transform"
           style={{
             left: `${flyAnim.x}px`,
             top: `${flyAnim.y}px`,
             width: `${flyAnim.w}px`,
             height: `${flyAnim.h}px`,
-            ['--fly-x' as string]: `${flyAnim.dx}px`,
-            ['--fly-y' as string]: `${flyAnim.dy}px`,
+            transformOrigin: 'top center',
+            transform: flyAnim.active
+              ? `translate3d(0, ${flyAnim.dy}px, 0) scale(0.12)`
+              : 'translate3d(0, 0, 0) scale(1)',
+            opacity: flyAnim.active ? 0 : 1,
+            filter: flyAnim.active ? 'blur(2.6px)' : 'blur(0px)',
+            transition: 'transform 820ms cubic-bezier(0.16, 0.74, 0.22, 1), opacity 820ms cubic-bezier(0.16, 0.74, 0.22, 1), filter 820ms ease-out',
           }}
         >
           <div className="flex h-full w-full flex-col">
