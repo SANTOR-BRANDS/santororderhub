@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { Restaurant, Dish } from '@/types/menu';
 import DishCard from './DishCard';
 import { X, Dices } from 'lucide-react';
@@ -66,6 +66,7 @@ const UnifiedMenuDisplay = ({
   const { t } = useLanguage();
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
+  const surpriseButtonRef = useRef<HTMLButtonElement>(null);
   
   // Get the unified, de-duplicated menu
   const unifiedMenu = useMemo(() => getUnifiedMenu(), []);
@@ -153,7 +154,18 @@ const UnifiedMenuDisplay = ({
   const handleSurpriseMe = useCallback(() => {
     if (surpriseMeDishes.length > 0) {
       const randomIndex = Math.floor(Math.random() * surpriseMeDishes.length);
-      onDishSelect(surpriseMeDishes[randomIndex]);
+      const rect = surpriseButtonRef.current?.getBoundingClientRect();
+      onDishSelect(
+        surpriseMeDishes[randomIndex],
+        rect
+          ? {
+              x: rect.left,
+              y: rect.top,
+              width: rect.width,
+              height: rect.height,
+            }
+          : undefined
+      );
     }
   }, [surpriseMeDishes, onDishSelect]);
   
@@ -200,6 +212,7 @@ const UnifiedMenuDisplay = ({
         {/* Surprise Me Button */}
         {!searchQuery && selectedCategory === 'ALL' && surpriseMeDishes.length > 0 && (
           <button 
+            ref={surpriseButtonRef}
             onClick={handleSurpriseMe}
             className="w-full rounded-lg mb-4 px-4 py-3 text-center transition-all hover:scale-[1.01] cursor-pointer bg-gradient-to-r from-[#8B1538] to-[#fd7304] text-white flex items-center justify-center gap-3"
             aria-label={t('menu.surpriseMe')}

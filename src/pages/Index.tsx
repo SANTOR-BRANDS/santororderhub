@@ -111,12 +111,17 @@ const Index = ({ initialBrand }: IndexProps) => {
   const [isBasketOpen, setIsBasketOpen] = useState(false);
 
   const triggerFlyToBasket = useCallback((dish: Dish) => {
-    if (!selectedDishSourceRect || !floatingBasketRef.current) return;
+    if (!floatingBasketRef.current) return;
 
-    const source = selectedDishSourceRect;
+    const source = selectedDishSourceRect || {
+      x: Math.max(12, (window.innerWidth - 280) / 2),
+      y: 220,
+      width: Math.min(280, window.innerWidth - 24),
+      height: 220,
+    };
     const target = floatingBasketRef.current.getBoundingClientRect();
 
-    const endX = target.left + target.width / 2 - source.width * 0.18;
+    const endX = source.x;
     const endY = target.top + target.height / 2 - source.height * 0.18;
 
     setFlyAnim({
