@@ -32,7 +32,7 @@ const DishCard = memo(function DishCard({
   const dishName = !translated || translated === dish.id ? dish.name : translated;
   const originalPrice = PROMO_ORIGINAL_PRICES[dish.id];
   const isPromo = !!originalPrice && originalPrice > dish.price;
-  return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer hover:shadow-card hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
+  return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer md:hover:shadow-card md:hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white md:hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background md:hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary md:hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={() => !isUnavailable && onClick(dish)}>
       <CardContent className="p-0">
         {/* Dish Image */}
         <div className="w-full aspect-square rounded-t-lg overflow-hidden relative">
@@ -43,7 +43,7 @@ const DishCard = memo(function DishCard({
                   Currently Unavailable
                 </div>
               </div>
-            </div> : dish.image ? <OptimizedImage src={dish.image} alt={`${dish.name} - ${dish.category} dish`} className="hover:scale-105 transition-smooth" containerClassName={cn(dish.restaurant === 'restory' ? 'bg-restory/10' : dish.restaurant === 'smoody' ? 'bg-smoody-accent/20' : 'bg-nirvana-accent/10')} /> : <div className={cn('w-full h-full flex items-center justify-center text-muted-foreground', dish.restaurant === 'restory' ? 'bg-restory/10' : dish.restaurant === 'smoody' ? 'bg-smoody-accent/20' : 'bg-nirvana-accent/10')}>
+            </div> : dish.image ? <OptimizedImage src={dish.image} alt={`${dish.name} - ${dish.category} dish`} className="md:hover:scale-105 transition-smooth" containerClassName={cn(dish.restaurant === 'restory' ? 'bg-restory/10' : dish.restaurant === 'smoody' ? 'bg-smoody-accent/20' : 'bg-nirvana-accent/10')} /> : <div className={cn('w-full h-full flex items-center justify-center text-muted-foreground', dish.restaurant === 'restory' ? 'bg-restory/10' : dish.restaurant === 'smoody' ? 'bg-smoody-accent/20' : 'bg-nirvana-accent/10')}>
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center" role="img" aria-label="Dish placeholder">
                   🍽️
@@ -58,8 +58,8 @@ const DishCard = memo(function DishCard({
             </div>}
 
           {/* Promo savings badge */}
-          {!isUnavailable && isPromo && <div className="absolute top-2 right-2">
-              <span className="inline-flex h-6 items-center gap-1 rounded-full bg-red-500/85 px-2.5 text-[10px] font-semibold text-white shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
+          {!isUnavailable && isPromo && <div className="absolute top-0 right-0">
+              <span className="inline-flex h-6 items-center gap-1 rounded-bl-lg bg-red-500/90 px-2.5 text-[10px] font-semibold text-white shadow-sm border-l border-b border-white/15">
                 <span className="leading-none">🔥</span>
                 <span className="leading-none">PROMO</span>
               </span>
@@ -76,12 +76,12 @@ const DishCard = memo(function DishCard({
                   {dish.isSpecial && '⭐'}
                 </span>}
             </h3>
-            <div className="flex flex-col items-end leading-tight">
+            <div className="flex shrink-0 flex-col items-end text-right">
               {/* Show original price crossed out for promo items */}
-              <span className={cn('font-bold text-lg whitespace-nowrap', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent')}>
+              <span className={cn('font-bold text-lg leading-none whitespace-nowrap', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent')}>
                 ฿{dish.price}
               </span>
-              {isPromo && <span className="text-[11px] text-gray-400 line-through">฿{originalPrice}</span>}
+              {isPromo && <span className="mt-0.5 text-[10px] leading-none text-gray-400 line-through">฿{originalPrice}</span>}
             </div>
           </div>
           
@@ -102,9 +102,9 @@ const DishCard = memo(function DishCard({
               onClick(dish);
             }}
               aria-label={inBasketCount > 0 ? `In basket: ${inBasketCount}` : 'Add to basket'}
-              className={cn('absolute bottom-3 right-3 h-7 w-7 sm:h-8 sm:w-8 rounded-full flex items-center justify-center shadow-md transition-all', inBasketCount > 0 ? 'bg-green-500 text-white' : 'bg-white/90 text-black hover:bg-white')}
+              className={cn('absolute bottom-3 right-3 h-6 w-6 rounded-full flex items-center justify-center transition-all', inBasketCount > 0 ? 'bg-green-500 text-white' : 'bg-white/90 text-black hover:bg-white')}
             >
-              {inBasketCount <= 0 ? <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> : inBasketCount === 1 ? <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> : <span className="text-xs font-bold">{inBasketCount}</span>}
+              {inBasketCount <= 0 ? <Plus className="h-3 w-3" /> : inBasketCount === 1 ? <Check className="h-3 w-3" /> : <span className="text-[10px] font-bold leading-none">{inBasketCount}</span>}
             </button>}
         </div>
       </CardContent>
