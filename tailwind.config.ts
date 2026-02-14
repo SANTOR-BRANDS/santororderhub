@@ -123,9 +123,9 @@ export default {
           },
         },
         "basket-expand": {
-          "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.06)" },
-          "100%": { transform: "scale(1)" },
+          "0%": { boxShadow: "0 0 0 0 rgba(253, 115, 4, 0)" },
+          "50%": { boxShadow: "0 0 0 4px rgba(253, 115, 4, 0.28)" },
+          "100%": { boxShadow: "0 0 0 0 rgba(253, 115, 4, 0)" },
         },
         "fly-to-basket": {
           "0%": { 

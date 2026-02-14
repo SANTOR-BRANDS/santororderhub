@@ -50,6 +50,7 @@ const DishModal = ({
   const spicy2Ref = useRef<HTMLDivElement>(null);
   const sauce2Ref = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const dishImageRef = useRef<HTMLDivElement>(null);
 
   // Combo state for dish 2
   const [selectedVariant2, setSelectedVariant2] = useState<DishVariant | null>(null);
@@ -58,6 +59,13 @@ const DishModal = ({
   const [incrementalQuantities2, setIncrementalQuantities2] = useState<Map<string, number>>(new Map());
   const [spicyLevel2, setSpicyLevel2] = useState<number | undefined>(undefined);
   const [selectedSauces2, setSelectedSauces2] = useState<string[]>([]);
+  const [flyAnim, setFlyAnim] = useState<{
+    x: number;
+    y: number;
+    dx: number;
+    dy: number;
+    image?: string;
+  } | null>(null);
   
   // Compute isCombo before useEffect so it can be in the dependency array
   const isCombo = dish?.name.includes('2x Pad Krapao') ?? false;
@@ -127,6 +135,29 @@ const DishModal = ({
     };
   };
   const theme = getThemeStyles();
+
+  const triggerFlyToBasket = () => {
+    if (!dishImageRef.current || !basketRef?.current) return false;
+
+    const source = dishImageRef.current.getBoundingClientRect();
+    const target = basketRef.current.getBoundingClientRect();
+
+    const startX = source.left + source.width / 2 - 18;
+    const startY = source.top + source.height / 2 - 18;
+    const endX = target.left + target.width / 2 - 18;
+    const endY = target.top + target.height / 2 - 18;
+
+    setFlyAnim({
+      x: startX,
+      y: startY,
+      dx: endX - startX,
+      dy: endY - startY,
+      image: dish.image,
+    });
+
+    setTimeout(() => setFlyAnim(null), 650);
+    return true;
+  };
   const getCurrentPrice = () => {
     const basePrice = selectedVariant?.price || dish.price;
 
@@ -330,17 +361,27 @@ const DishModal = ({
   const handleAddToBasket = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
+    const didFly = triggerFlyToBasket();
     onAddToBasket(basketItem);
-    onClose();
+    if (didFly) {
+      setTimeout(() => onClose(), 420);
+    } else {
+      onClose();
+    }
   };
   const handleOrderNow = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
+    const didFly = triggerFlyToBasket();
     onAddToBasket(basketItem);
     if (onOrderNow) {
       onOrderNow(basketItem);
     }
-    onClose();
+    if (didFly) {
+      setTimeout(() => onClose(), 420);
+    } else {
+      onClose();
+    }
   };
 
   // Filter add-ons by restaurant prefix
@@ -737,7 +778,7 @@ const DishModal = ({
       </>;
   };
   return <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col [&>button]:h-10 [&>button]:w-10 [&>button]:p-0 [&>button]:inline-flex [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:right-2 [&>button]:top-2 [&>button]:bg-black/30 [&>button]:border [&>button]:border-white/10 [&>button]:shadow-none [&>button]:transition-colors [&>button:hover]:bg-red-500/20 [&>button:active]:bg-red-500/35 [&>button>svg]:h-5 [&>button>svg]:w-5 [&>button>svg]:text-white [&>button>svg]:stroke-[2.6]">
+      <DialogContent className="max-w-md max-h-[90vh] p-0 flex flex-col [&>button]:h-9 [&>button]:w-9 [&>button]:p-0 [&>button]:inline-flex [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:right-2 [&>button]:top-2 [&>button]:bg-black/45 [&>button]:border-0 [&>button]:shadow-sm [&>button]:opacity-95 [&>button]:transition-colors [&>button:hover]:bg-red-500/30 [&>button:active]:bg-red-500/45 [&>button]:focus:outline-none [&>button]:focus-visible:ring-0 [&>button>svg]:h-[18px] [&>button>svg]:w-[18px] [&>button>svg]:text-white [&>button>svg]:stroke-[2.5]">
         <div className="flex-1 overflow-hidden flex flex-col">
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
@@ -746,7 +787,7 @@ const DishModal = ({
                   Customize your dish options, add-ons, and preferences
                 </DialogDescription>
                 {/* Dish Image */}
-                <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
+                <div ref={dishImageRef} className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
                   {dish.image ? (
                     <OptimizedImage 
                       src={dish.image} 
@@ -867,6 +908,17 @@ const DishModal = ({
           </div>
         </div>
       </DialogContent>
+      {flyAnim && <div
+          className="pointer-events-none fixed z-[70] h-9 w-9 overflow-hidden rounded-full border border-white/40 bg-white/90 shadow-lg animate-fly-to-basket"
+          style={{
+          left: `${flyAnim.x}px`,
+          top: `${flyAnim.y}px`,
+          ['--fly-x' as string]: `${flyAnim.dx}px`,
+          ['--fly-y' as string]: `${flyAnim.dy}px`
+        }}
+        >
+          {flyAnim.image ? <img src={flyAnim.image} alt="" className="h-full w-full object-cover" /> : <div className="flex h-full w-full items-center justify-center text-sm">🍽️</div>}
+        </div>}
     </Dialog>;
 };
 export default DishModal;
