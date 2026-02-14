@@ -58,7 +58,7 @@ const DishCard = memo(function DishCard({
             </div>}
 
           {/* Promo savings badge */}
-          {!isUnavailable && isPromo && <div className="absolute top-0 right-0">
+          {!isUnavailable && isPromo && <div className="absolute top-0 right-0 overflow-hidden rounded-tr-lg">
               <span className="inline-flex h-6 items-center gap-1 rounded-bl-lg bg-red-500/90 px-2.5 text-[10px] font-semibold text-white shadow-sm border-l border-b border-white/15">
                 <span className="leading-none">🔥</span>
                 <span className="leading-none">PROMO</span>
@@ -87,25 +87,24 @@ const DishCard = memo(function DishCard({
           
           {/* Description only shown in DishModal, not on cards */}
 
-          <div className="flex items-center justify-between pr-10 sm:pr-0">
-            <span className={cn('text-xs px-2 py-1 rounded-full font-semibold max-w-[calc(100%-0.5rem)] truncate', dish.restaurant === 'restory' ? 'bg-restory/10 text-restory-secondary' : dish.restaurant === 'smoody' ? 'bg-smoody-secondary/20 text-smoody-secondary' : 'bg-nirvana-accent/10 text-nirvana-accent')}>
+          <div className="flex items-center justify-between">
+            <span className={cn('text-xs px-2 py-1 rounded-full font-semibold max-w-[calc(100%-2rem)] truncate', dish.restaurant === 'restory' ? 'bg-restory/10 text-restory-secondary' : dish.restaurant === 'smoody' ? 'bg-smoody-secondary/20 text-smoody-secondary' : 'bg-nirvana-accent/10 text-nirvana-accent')}>
               {dish.category}
             </span>
-            
-          </div>
 
-          {/* Floating add/status button */}
-          {!isUnavailable && <button
-              type="button"
-              onClick={e => {
-              e.stopPropagation();
-              onClick(dish);
-            }}
-              aria-label={inBasketCount > 0 ? `In basket: ${inBasketCount}` : 'Add to basket'}
-              className={cn('absolute bottom-3 right-3 h-6 w-6 rounded-full flex items-center justify-center transition-all', inBasketCount > 0 ? 'bg-green-500 text-white' : 'bg-white/90 text-black hover:bg-white')}
-            >
-              {inBasketCount <= 0 ? <Plus className="h-3 w-3" /> : inBasketCount === 1 ? <Check className="h-3 w-3" /> : <span className="text-[10px] font-bold leading-none">{inBasketCount}</span>}
-            </button>}
+            {/* Add/status button aligned with category tag */}
+            {!isUnavailable && <button
+                type="button"
+                onClick={e => {
+                e.stopPropagation();
+                onClick(dish);
+              }}
+                aria-label={inBasketCount > 0 ? `In basket: ${inBasketCount}` : 'Add to basket'}
+                className={cn('h-6 w-6 rounded-full flex items-center justify-center transition-all shrink-0', inBasketCount > 0 ? 'bg-green-500 text-white' : 'bg-white/90 text-black hover:bg-white')}
+              >
+                {inBasketCount <= 0 ? <Plus className="h-3 w-3" /> : inBasketCount === 1 ? <Check className="h-3 w-3" /> : <span className="text-[10px] font-bold leading-none">{inBasketCount}</span>}
+              </button>}
+          </div>
         </div>
       </CardContent>
     </article>;
