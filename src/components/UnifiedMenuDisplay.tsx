@@ -208,7 +208,7 @@ const UnifiedMenuDisplay = ({
   // Smoody menu items are now integrated into the unified menu flow
   
   return (
-    <div className="min-h-screen pb-24 bg-[#0F0F12] text-white touch-pan-y">
+    <div className="min-h-screen pb-24 bg-[#1a1a1a] text-white touch-pan-y">
       <div className="container mx-auto px-4 py-4">
         {/* Surprise Me Button */}
         {!searchQuery && selectedCategory === 'ALL' && surpriseMeDishes.length > 0 && (

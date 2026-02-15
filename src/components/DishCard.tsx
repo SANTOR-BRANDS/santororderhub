@@ -33,7 +33,7 @@ const DishCard = memo(function DishCard({
   const dishName = !translated || translated === dish.id ? dish.name : translated;
   const originalPrice = PROMO_ORIGINAL_PRICES[dish.id];
   const isPromo = !!originalPrice && originalPrice > dish.price;
-  return <article className={cn('bg-card text-card-foreground backdrop-blur-sm relative rounded-lg border border-border/50 transition-[transform,box-shadow,filter] duration-[70ms] ease-out transform-gpu will-change-transform', !isUnavailable && 'cursor-pointer md:hover:shadow-card md:hover:-translate-y-1 md:hover:border-border/70', !isUnavailable && isPressed && 'scale-[0.985] brightness-[0.99] shadow-sm', isUnavailable && 'opacity-60 cursor-not-allowed')} onPointerDown={() => !isUnavailable && setIsPressed(true)} onPointerUp={() => setIsPressed(false)} onPointerCancel={() => setIsPressed(false)} onPointerLeave={() => setIsPressed(false)} onClick={e => {
+  return <article className={cn('backdrop-blur-sm relative rounded-lg border transition-[transform,box-shadow,filter] duration-[70ms] ease-out transform-gpu will-change-transform', !isUnavailable && 'cursor-pointer md:hover:shadow-card md:hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white md:hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background md:hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary md:hover:border-nirvana-accent/30 border-border/50'), !isUnavailable && isPressed && 'scale-[0.985] brightness-[0.99] shadow-sm', isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onPointerDown={() => !isUnavailable && setIsPressed(true)} onPointerUp={() => setIsPressed(false)} onPointerCancel={() => setIsPressed(false)} onPointerLeave={() => setIsPressed(false)} onClick={e => {
     if (isUnavailable) return;
     setIsPressed(false);
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -47,14 +47,14 @@ const DishCard = memo(function DishCard({
       <CardContent className="p-0">
         {/* Dish Image */}
         <div className="w-full aspect-square rounded-t-lg overflow-hidden relative">
-          {isUnavailable ?               <div className="w-full h-full flex items-center justify-center bg-muted/30">
+          {isUnavailable ? <div className={cn('w-full h-full flex items-center justify-center', dish.restaurant === 'restory' ? 'bg-restory/10' : dish.restaurant === 'smoody' ? 'bg-smoody-accent/20' : 'bg-nirvana-accent/10')}>
               <div className="text-center p-6">
                 <div className="text-4xl mb-3" role="img" aria-label="Unavailable">🚫</div>
-                <div className="text-sm font-semibold text-muted-foreground">
+                <div className={cn('text-sm font-semibold', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-primary' : 'text-nirvana-accent')}>
                   Currently Unavailable
                 </div>
               </div>
-            </div> : dish.image ? <OptimizedImage src={dish.image} alt={`${dish.name} - ${dish.category} dish`} className="md:hover:scale-105 transition-smooth" containerClassName="bg-muted/30" /> : <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted/30">
+            </div> : dish.image ? <OptimizedImage src={dish.image} alt={`${dish.name} - ${dish.category} dish`} className="md:hover:scale-105 transition-smooth" containerClassName={cn(dish.restaurant === 'restory' ? 'bg-restory/10' : dish.restaurant === 'smoody' ? 'bg-smoody-accent/20' : 'bg-nirvana-accent/10')} /> : <div className={cn('w-full h-full flex items-center justify-center text-muted-foreground', dish.restaurant === 'restory' ? 'bg-restory/10' : dish.restaurant === 'smoody' ? 'bg-smoody-accent/20' : 'bg-nirvana-accent/10')}>
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center" role="img" aria-label="Dish placeholder">
                   🍽️
@@ -80,7 +80,7 @@ const DishCard = memo(function DishCard({
         {/* Content */}
         <div className="p-4">
           <div className="flex justify-between items-start gap-2 mb-2">
-            <h3 className={cn('font-semibold text-sm leading-tight line-clamp-2 min-h-[2.25rem]', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent', dish.isSpecial && 'font-bold')}>
+            <h3 className={cn('font-semibold text-sm leading-tight line-clamp-2 min-h-[2.25rem]', dish.restaurant === 'smoody' ? 'text-black' : 'text-white', dish.isSpecial && 'text-amber-600 font-bold')}>
               {dishName}
               {(dish.spicyRequired || dish.isSpecial) && <span className="ml-1 text-xs opacity-80 align-middle">
                   {dish.spicyRequired && '🌶️'}
@@ -99,7 +99,7 @@ const DishCard = memo(function DishCard({
           {/* Description only shown in DishModal, not on cards */}
 
           <div className="flex items-center justify-between">
-            <span className={cn('text-xs px-2 py-1 rounded-full font-semibold max-w-[calc(100%-2rem)] truncate', dish.restaurant === 'restory' ? 'bg-restory/20 text-restory' : dish.restaurant === 'smoody' ? 'bg-smoody-secondary/20 text-smoody-secondary' : 'bg-nirvana-accent/20 text-nirvana-accent')}>
+            <span className={cn('text-xs px-2 py-1 rounded-full font-semibold max-w-[calc(100%-2rem)] truncate', dish.restaurant === 'restory' ? 'bg-restory/10 text-restory-secondary' : dish.restaurant === 'smoody' ? 'bg-smoody-secondary/20 text-smoody-secondary' : 'bg-nirvana-accent/10 text-nirvana-accent')}>
               {dish.category}
             </span>
 

@@ -96,41 +96,32 @@
   }
 
   .dark {
-    /* Core Color Foundation - Strict Hierarchy */
-    /* Level 0 — Body background (darkest) */
-    --background: 240 6% 7%;
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    
-    /* Level 1 — Header / Section */
-    --secondary: 240 8% 9%;
-    --secondary-foreground: 210 40% 98%;
-    
-    /* Level 1.5 — Footer */
-    --footer: 240 6% 10%;
-    --footer-foreground: 210 40% 98%;
 
-    /* Level 2 — Cards / Sections */
-    --card: 240 9% 12%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
 
-    /* Level 3 — Modals / Sheets / Elevated */
-    --popover: 240 9% 15%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 240 9% 12%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 240 9% 15%;
+    --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 240 8% 18%;
-    --input: 240 8% 18%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;

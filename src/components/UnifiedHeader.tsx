@@ -84,7 +84,7 @@ const UnifiedHeader = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#141418] text-santor-foreground">
+    <header className="sticky top-0 z-50 bg-[#0f0f0f] text-santor-foreground">
       <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col gap-3">
           {/* Top Row: Address (left) + Language (right) */}
@@ -215,7 +215,7 @@ const UnifiedHeader = ({
       </div>
       
       {/* Category Navigation Bar */}
-      <div className="bg-[#141418]/95 backdrop-blur-sm border-t border-gray-700">
+      <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
         <div className="flex gap-3 sm:gap-4 overflow-x-auto px-6 py-3 scrollbar-hide snap-x snap-mandatory mx-[12px]">
           {availableCategories.map(category => {
             const isSelected = selectedCategory === category;

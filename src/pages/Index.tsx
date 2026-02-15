@@ -238,7 +238,7 @@ const Index = ({ initialBrand }: IndexProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F0F12]">
+    <div className="min-h-screen bg-[#1a1a1a]">
       <SEOHead metadata={homeMetadata} />
       <UnifiedHeader 
         selectedCategory={selectedCategory}
