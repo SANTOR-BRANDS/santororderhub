@@ -364,9 +364,9 @@ const DishModal = ({
     setTimeout(() => {
       onClose();
       if (onOrderNow) {
-        setTimeout(() => onOrderNow(basketItem), 120);
+        onOrderNow(basketItem);
       }
-    }, 250);
+    }, 280);
   };
 
   // Filter add-ons by restaurant prefix
@@ -914,26 +914,11 @@ const DishModal = ({
           </div>
           </div>
 
-          <div className={cn('absolute inset-0 bg-background transition-[opacity,transform,filter] duration-[220ms] ease-out', showBasketTransitionContent ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-[1.02] pointer-events-none')}> 
-            <div className="h-full flex flex-col p-6">
-              <div className="mb-4">
-                <h3 className="text-xl font-bold">{t('basket.title')}</h3>
-              </div>
-              <div className="rounded-lg border p-4 space-y-2 bg-card">
-                <div className="text-sm font-medium line-clamp-2">
-                  {(() => {
-                    const translated = t(dish.id);
-                    return (!translated || translated === dish.id) ? dish.name : translated;
-                  })()}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {t('basket.quantity')}: {quantity}
-                </div>
-                <div className="flex items-center justify-between pt-2 border-t">
-                  <span className="font-semibold">{t('basket.total')}</span>
-                  <span className={cn('text-lg font-bold', `text-${theme.accent}`)}>฿{getTotalPrice()}</span>
-                </div>
-              </div>
+          <div className={cn('absolute inset-0 bg-background/95 backdrop-blur-sm transition-[opacity] duration-[200ms] ease-out flex items-center justify-center', showBasketTransitionContent ? 'opacity-100' : 'opacity-0 pointer-events-none')}> 
+            <div className="text-center">
+              <div className="text-4xl mb-3">✓</div>
+              <div className="text-lg font-semibold">Added to Order</div>
+              <div className="text-sm text-muted-foreground mt-1">Opening basket...</div>
             </div>
           </div>
         </div>
