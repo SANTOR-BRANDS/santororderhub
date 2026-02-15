@@ -50,7 +50,7 @@ const DishModal = ({
   const spicy2Ref = useRef<HTMLDivElement>(null);
   const sauce2Ref = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const flySourceRef = useRef<HTMLDivElement>(null);
+  const modalContentRef = useRef<HTMLDivElement>(null);
 
   // Combo state for dish 2
   const [selectedVariant2, setSelectedVariant2] = useState<DishVariant | null>(null);
@@ -332,7 +332,7 @@ const DishModal = ({
   const handleAddToBasket = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
-    const rect = flySourceRef.current?.getBoundingClientRect();
+    const rect = modalContentRef.current?.getBoundingClientRect();
     onAddToBasket(
       basketItem,
       rect
@@ -344,7 +344,7 @@ const DishModal = ({
   const handleOrderNow = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
-    const rect = flySourceRef.current?.getBoundingClientRect();
+    const rect = modalContentRef.current?.getBoundingClientRect();
     onAddToBasket(
       basketItem,
       rect
@@ -751,11 +751,10 @@ const DishModal = ({
       </>;
   };
   return <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden">
+      <DialogContent ref={modalContentRef} className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden">
         <div className="flex-1 overflow-hidden flex flex-col">
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
-              <div ref={flySourceRef}>
               <DialogHeader className="mb-6">
                 <DialogDescription className="sr-only">
                   Customize your dish options, add-ons, and preferences
@@ -804,7 +803,6 @@ const DishModal = ({
                   </span>
                 </div>
               </DialogHeader>
-              </div>
 
               {/* Simplified view for TOPPINGS - only quantity selection */}
               {dish.category !== 'TOPPINGS' && <>
