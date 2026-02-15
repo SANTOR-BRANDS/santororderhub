@@ -689,7 +689,7 @@ const BasketModal = ({
   if (basketItems.length === 0) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-md rounded-2xl !animate-none">
+        <DialogContent className="max-w-md rounded-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-bottom-4 data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-bottom-4 duration-200">
           <DialogHeader>
             <DialogTitle>{t('basket.title')}</DialogTitle>
             <DialogDescription className="sr-only">
@@ -711,7 +711,7 @@ const BasketModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden !animate-none">
+      <DialogContent className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-bottom-4 data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-bottom-4 duration-200">
         <DialogHeader className="p-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center justify-between">
             <span>{t('basket.title')} ({basketItems.length})</span>

@@ -47,8 +47,7 @@ const DishModal = ({
   const [selectedFreeToppings, setSelectedFreeToppings] = useState<string[]>([]);
   const [isAddPressed, setIsAddPressed] = useState(false);
   const [isOrderPressed, setIsOrderPressed] = useState(false);
-  const [isOrderTransition, setIsOrderTransition] = useState(false);
-  const [showBasketTransitionContent, setShowBasketTransitionContent] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -92,9 +91,6 @@ const DishModal = ({
         setSpicyLevel2(dish.spicyRequired ? 2 : undefined);
         setSelectedSauces2([]);
       }
-
-      setIsOrderTransition(false);
-      setShowBasketTransitionContent(false);
     }
   }, [dish, isOpen, isCombo]);
   if (!dish) return null;
@@ -355,18 +351,17 @@ const DishModal = ({
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
     onAddToBasket(basketItem, undefined, { animateDrop: false });
-
-    setIsOrderTransition(true);
-    setTimeout(() => {
-      setShowBasketTransitionContent(true);
-    }, 40);
-
+    
+    // Start closing animation
+    setIsClosing(true);
+    
+    // Wait for animation to progress before opening basket
     setTimeout(() => {
       onClose();
       if (onOrderNow) {
         onOrderNow(basketItem);
       }
-    }, 280);
+    }, 220);
   };
 
   // Filter add-ons by restaurant prefix
@@ -763,10 +758,9 @@ const DishModal = ({
       </>;
   };
   return <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent ref={modalContentRef} className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden">
+      <DialogContent ref={modalContentRef} className={cn('max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden transition-[opacity,transform,filter] duration-[220ms] ease-out', isClosing && 'opacity-0 scale-[0.98] blur-[2px]')}>
         <div className="relative flex-1 overflow-hidden flex flex-col">
-          <div className={cn('pointer-events-none absolute inset-0 z-10 transition-opacity duration-[220ms] ease-out', isOrderTransition ? 'opacity-100 bg-background/10 backdrop-blur-[1.5px]' : 'opacity-0')} />
-          <div className={cn('flex-1 overflow-hidden flex flex-col transition-[opacity,transform,filter] duration-[220ms] ease-out', isOrderTransition ? 'opacity-0 scale-[0.98] blur-[1px]' : 'opacity-100 scale-100')}>
+          <div className='flex-1 overflow-hidden flex flex-col'>
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
               <DialogHeader className="mb-6">
@@ -912,14 +906,6 @@ const DishModal = ({
               </Button>
             </div>
           </div>
-          </div>
-
-          <div className={cn('absolute inset-0 bg-background/95 backdrop-blur-sm transition-[opacity] duration-[200ms] ease-out flex items-center justify-center', showBasketTransitionContent ? 'opacity-100' : 'opacity-0 pointer-events-none')}> 
-            <div className="text-center">
-              <div className="text-4xl mb-3">✓</div>
-              <div className="text-lg font-semibold">Added to Order</div>
-              <div className="text-sm text-muted-foreground mt-1">Opening basket...</div>
-            </div>
           </div>
         </div>
       </DialogContent>
