@@ -67,6 +67,7 @@ const UnifiedMenuDisplay = ({
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const surpriseButtonRef = useRef<HTMLButtonElement>(null);
+  const [isSurprisePressed, setIsSurprisePressed] = useState(false);
   
   // Get the unified, de-duplicated menu
   const unifiedMenu = useMemo(() => getUnifiedMenu(), []);
@@ -214,7 +215,11 @@ const UnifiedMenuDisplay = ({
           <button 
             ref={surpriseButtonRef}
             onClick={handleSurpriseMe}
-            className="w-full rounded-lg mb-4 px-4 py-3 text-center transition-all hover:scale-[1.01] cursor-pointer bg-gradient-to-r from-[#8B1538] to-[#fd7304] text-white flex items-center justify-center gap-3"
+            onPointerDown={() => setIsSurprisePressed(true)}
+            onPointerUp={() => setIsSurprisePressed(false)}
+            onPointerCancel={() => setIsSurprisePressed(false)}
+            onPointerLeave={() => setIsSurprisePressed(false)}
+            className={cn('w-full rounded-lg mb-4 px-4 py-3 text-center cursor-pointer bg-gradient-to-r from-[#8B1538] to-[#fd7304] text-white flex items-center justify-center gap-3 transition-[transform,box-shadow,filter] duration-[80ms] ease-out md:hover:scale-[1.01]', isSurprisePressed && 'scale-[0.97] brightness-[0.98] shadow-sm')}
             aria-label={t('menu.surpriseMe')}
           >
             <Dices className="h-5 w-5" />

@@ -41,6 +41,8 @@ const DishModal = ({
   const [quantity, setQuantity] = useState(1);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [selectedFreeToppings, setSelectedFreeToppings] = useState<string[]>([]);
+  const [isAddPressed, setIsAddPressed] = useState(false);
+  const [isOrderPressed, setIsOrderPressed] = useState(false);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -871,11 +873,28 @@ const DishModal = ({
             </div>
 
             <div className="flex gap-3">
-              <Button onClick={handleAddToBasket} variant="outline" className="flex-1 gap-2" size="lg">
+              <Button
+                onClick={handleAddToBasket}
+                onPointerDown={() => setIsAddPressed(true)}
+                onPointerUp={() => setIsAddPressed(false)}
+                onPointerCancel={() => setIsAddPressed(false)}
+                onPointerLeave={() => setIsAddPressed(false)}
+                variant="outline"
+                className={cn('flex-1 gap-2 transition-[transform,box-shadow,filter] duration-[85ms] ease-out', isAddPressed && 'scale-[0.97] brightness-[0.98] shadow-sm')}
+                size="lg"
+              >
                 <ShoppingCart className="h-4 w-4" />
                 Add to Basket
               </Button>
-              <Button onClick={handleOrderNow} className={cn('flex-1 gap-2', theme.button)} size="lg">
+              <Button
+                onClick={handleOrderNow}
+                onPointerDown={() => setIsOrderPressed(true)}
+                onPointerUp={() => setIsOrderPressed(false)}
+                onPointerCancel={() => setIsOrderPressed(false)}
+                onPointerLeave={() => setIsOrderPressed(false)}
+                className={cn('flex-1 gap-2 transition-[transform,box-shadow,filter] duration-[85ms] ease-out', theme.button, isOrderPressed && 'scale-[0.97] brightness-[0.98] shadow-sm')}
+                size="lg"
+              >
                 <Zap className="h-4 w-4" />
                 Order Now
               </Button>

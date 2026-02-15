@@ -6,7 +6,6 @@ import UnifiedMenuDisplay from '@/components/UnifiedMenuDisplay';
 import DishModal from '@/components/DishModal';
 import BasketModal from '@/components/BasketModal';
 import FloatingBasket from '@/components/FloatingBasket';
-import DishCard from '@/components/DishCard';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAddress } from '@/contexts/AddressContext';
@@ -58,6 +57,7 @@ const Index = ({ initialBrand }: IndexProps) => {
     y: number;
     dy: number;
     w: number;
+    h: number;
     dish: Dish;
     phase: 'lift' | 'drop';
     fadeOut: boolean;
@@ -120,7 +120,7 @@ const Index = ({ initialBrand }: IndexProps) => {
 
     // Spawn from center of modal source, using dish-card proportions
     const cloneW = Math.min(230, source.width * 0.72);
-    const cloneH = cloneW * 1.34;
+    const cloneH = cloneW * 1.42;
     const startX = source.x + source.width / 2 - cloneW / 2;
     const startY = source.y + source.height / 2 - cloneH / 2;
 
@@ -138,6 +138,7 @@ const Index = ({ initialBrand }: IndexProps) => {
       y: startY,
       dy: endDY,
       w: cloneW,
+      h: cloneH,
       dish,
       phase: 'lift',
       fadeOut: false,
@@ -290,6 +291,7 @@ const Index = ({ initialBrand }: IndexProps) => {
             left: `${flyAnim.x}px`,
             top: `${flyAnim.y}px`,
             width: `${flyAnim.w}px`,
+            height: `${flyAnim.h}px`,
             transformOrigin: 'center center',
             transform:
               flyAnim.phase === 'lift'
@@ -307,7 +309,24 @@ const Index = ({ initialBrand }: IndexProps) => {
                 : 'transform 500ms ease-in, filter 500ms ease-in, box-shadow 500ms ease-in, opacity 70ms linear',
           }}
         >
-          <DishCard dish={flyAnim.dish} onClick={() => {}} inBasketCount={0} />
+          <div className="h-full w-full rounded-xl bg-white text-black shadow-xl overflow-hidden">
+            <div className="w-full aspect-square overflow-hidden bg-gray-100">
+              {flyAnim.dish.image ? (
+                <img src={flyAnim.dish.image} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center text-xl">🍽️</div>
+              )}
+            </div>
+            <div className="p-2.5">
+              <div className="line-clamp-2 text-[12px] font-semibold leading-tight">
+                {(() => {
+                  const translated = t(flyAnim.dish.id);
+                  return (!translated || translated === flyAnim.dish.id) ? flyAnim.dish.name : translated;
+                })()}
+              </div>
+              <div className="mt-1 text-sm font-bold text-[#fd7304]">฿{flyAnim.dish.price}</div>
+            </div>
+          </div>
         </div>
       )}
       
