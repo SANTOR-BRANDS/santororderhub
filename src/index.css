@@ -167,6 +167,11 @@
     display: none;
   }
 
+  /* Prevent layout shift when modals open/close by reserving scrollbar space */
+  html {
+    scrollbar-gutter: stable;
+  }
+
   /* Native momentum on Radix scroll viewports (modals/panels) */
   [data-radix-scroll-area-viewport] {
     -webkit-overflow-scrolling: touch;
