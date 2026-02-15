@@ -52,7 +52,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
     return (
       <div 
         ref={ref}
-        className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-black/80 to-transparent"
+        className="fixed bottom-0 left-0 right-0 z-50 p-2 bg-gradient-to-t from-black/80 to-transparent"
       >
         <Button
           onClick={onOpenBasket}
@@ -61,13 +61,12 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
           onPointerCancel={() => setIsPressed(false)}
           onPointerLeave={() => setIsPressed(false)}
           className={cn(
-            'w-full bg-santor text-santor-foreground hover:bg-santor-secondary',
-            'shadow-modal py-4 rounded-xl transition-[transform,box-shadow,filter] duration-[85ms] ease-out',
+            'w-full max-w-[calc(100%-1rem)] mx-auto bg-santor text-santor-foreground hover:bg-santor-secondary',
+            'shadow-modal py-3 rounded-xl transition-[transform,box-shadow,filter] duration-[85ms] ease-out',
             'border border-white/20 flex items-center justify-center gap-3',
             isPressed && 'scale-[0.96] brightness-[0.97] shadow-md',
             isShaking && 'animate-basket-impact'
           )}
-          size="lg"
         >
           {/* Restaurant Logos - Overlapping Avatars */}
           <div className="flex -space-x-2 mr-2">

@@ -14,7 +14,7 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
   const { t } = useLanguage();
 
   const getFooterClasses = () => {
-    return 'bg-[#1a1a1a] text-white';
+    return 'bg-[#141418] text-white';
   };
 
   return (
