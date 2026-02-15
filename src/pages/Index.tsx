@@ -6,7 +6,6 @@ import UnifiedMenuDisplay from '@/components/UnifiedMenuDisplay';
 import DishModal from '@/components/DishModal';
 import BasketModal from '@/components/BasketModal';
 import FloatingBasket from '@/components/FloatingBasket';
-import DishCard from '@/components/DishCard';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAddress } from '@/contexts/AddressContext';
@@ -128,9 +127,9 @@ const Index = ({ initialBrand }: IndexProps) => {
     const targetCenterY = target.top + target.height / 2;
     const endDY = targetCenterY - startCenterY;
 
-    const LIFT_MS = 130;
-    const DROP_MS = 380;
-    const FADE_MS = 60;
+    const LIFT_MS = 150;
+    const DROP_MS = 300;
+    const FADE_MS = 45;
 
     setFlyAnim({
       x: startX,
@@ -169,7 +168,7 @@ const Index = ({ initialBrand }: IndexProps) => {
     if (didFly) {
       setTimeout(() => {
         setBasketShakeTrigger(prev => prev + 1);
-      }, 510);
+      }, 430);
     } else {
       setBasketShakeTrigger(prev => prev + 1);
     }
@@ -284,7 +283,7 @@ const Index = ({ initialBrand }: IndexProps) => {
 
       {flyAnim && (
         <div
-          className="pointer-events-none fixed z-[70] overflow-hidden rounded-xl border border-white/25 bg-[#1f1f1f] shadow-xl will-change-transform"
+          className="pointer-events-none fixed z-[70] overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl will-change-transform"
           style={{
             left: `${flyAnim.x}px`,
             top: `${flyAnim.y}px`,
@@ -295,18 +294,38 @@ const Index = ({ initialBrand }: IndexProps) => {
                 ? 'translate3d(0, 0, 0) scale(1.03)'
                 : `translate3d(0, ${flyAnim.dy}px, 0) scale(0.2)`,
             opacity: flyAnim.fadeOut ? 0 : 1,
-            filter: flyAnim.phase === 'drop' ? 'blur(2px)' : 'blur(0px)',
+            filter: flyAnim.phase === 'drop' ? 'blur(1.8px)' : 'blur(0px)',
             boxShadow:
               flyAnim.phase === 'lift'
                 ? '0 14px 38px rgba(0,0,0,0.45)'
-                : '0 10px 22px rgba(0,0,0,0.32)',
+                : '0 8px 18px rgba(0,0,0,0.22)',
             transition:
               flyAnim.phase === 'lift'
-                ? 'transform 130ms ease-out, box-shadow 130ms ease-out'
-                : 'transform 380ms ease-in, filter 380ms ease-in, box-shadow 380ms ease-in, opacity 60ms linear',
+                ? 'transform 150ms ease-out, box-shadow 150ms ease-out'
+                : 'transform 300ms ease-in, filter 300ms ease-in, box-shadow 300ms ease-in, opacity 45ms linear',
           }}
         >
-          <DishCard dish={flyAnim.dish} onClick={() => {}} inBasketCount={0} />
+          <div className="h-full w-full bg-white text-black">
+            <div className="w-full aspect-square overflow-hidden bg-gray-100">
+              {flyAnim.dish.image ? (
+                <img src={flyAnim.dish.image} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center text-xl">🍽️</div>
+              )}
+            </div>
+            <div className="p-2.5">
+              <div className="line-clamp-2 text-[12px] font-semibold leading-tight">
+                {(() => {
+                  const translated = t(flyAnim.dish.id);
+                  return !translated || translated === flyAnim.dish.id ? flyAnim.dish.name : translated;
+                })()}
+              </div>
+              <div className="mt-1 flex items-center justify-between">
+                <span className="rounded-full bg-black/5 px-2 py-0.5 text-[10px] font-semibold text-black/70">{flyAnim.dish.category}</span>
+                <span className="text-sm font-bold text-[#fd7304]">฿{flyAnim.dish.price}</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
       
