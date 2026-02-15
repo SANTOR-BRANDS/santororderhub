@@ -52,7 +52,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
     return (
       <div 
         ref={ref}
-        className="fixed bottom-4 left-0 right-0 z-50 flex justify-center p-2 bg-gradient-to-t from-black/80 to-transparent"
+        className="fixed bottom-4 left-0 right-0 z-50 flex justify-center px-4 bg-gradient-to-t from-black/80 to-transparent"
       >
         <Button
           onClick={onOpenBasket}
@@ -61,45 +61,58 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
           onPointerCancel={() => setIsPressed(false)}
           onPointerLeave={() => setIsPressed(false)}
           className={cn(
-            'relative w-[70%] bg-santor text-santor-foreground hover:bg-santor-secondary',
-            'shadow-modal py-4 rounded-xl transition-[transform,box-shadow,filter] duration-[85ms] ease-out',
-            'border border-white/20 flex items-center justify-center gap-3',
+            'relative w-full sm:w-[70%] max-w-md bg-santor text-santor-foreground hover:bg-santor-secondary',
+            'shadow-modal py-3 sm:py-4 rounded-xl transition-[transform,box-shadow,filter] duration-[85ms] ease-out',
+            'border border-white/20 flex items-center justify-between sm:justify-center gap-2 sm:gap-3 px-4 sm:px-6',
             isPressed && 'scale-[0.96] brightness-[0.97] shadow-md',
             isShaking && 'animate-basket-impact'
           )}
         >
-          {/* Restaurant Logos - Overlapping Avatars */}
-          <div className="flex -space-x-2 mr-2">
-            {getUniqueRestaurants().map((restaurant) => {
-              const info = getRestaurantInfo(restaurant);
-              return (
-                <div
-                  key={restaurant}
-                  className="w-7 h-7 rounded-full overflow-hidden bg-white shadow-sm"
-                  title={info?.name}
-                >
-                  <img
-                    src={info?.logo}
-                    alt={info?.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.parentElement!.innerHTML = `<span class="text-xs font-bold flex items-center justify-center h-full text-gray-600">${info?.name.charAt(0)}</span>`;
-                    }}
-                  />
+          {/* Left section: Restaurant Logos + Icon */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Restaurant Logos - Overlapping Avatars */}
+            <div className="flex -space-x-1.5 sm:-space-x-2">
+              {getUniqueRestaurants().slice(0, 3).map((restaurant) => {
+                const info = getRestaurantInfo(restaurant);
+                return (
+                  <div
+                    key={restaurant}
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full overflow-hidden bg-white shadow-sm border-2 border-santor"
+                    title={info?.name}
+                  >
+                    <img
+                      src={info?.logo}
+                      alt={info?.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.parentElement!.innerHTML = `<span class="text-[10px] sm:text-xs font-bold flex items-center justify-center h-full text-gray-600">${info?.name.charAt(0)}</span>`;
+                      }}
+                    />
+                  </div>
+                );
+              })}
+              {getUniqueRestaurants().length > 3 && (
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">
+                  +{getUniqueRestaurants().length - 3}
                 </div>
-              );
-            })}
+              )}
+            </div>
+
+            <ShoppingBag className={cn('h-5 w-5 sm:h-6 sm:w-6 shrink-0', isShaking && 'animate-basket-icon-impact')} />
           </div>
 
-          <ShoppingBag className={cn('h-6 w-6', isShaking && 'animate-basket-icon-impact')} />
-          <span className="font-bold text-base">
-            {itemCount} item{itemCount > 1 ? 's' : ''} • ฿{totalPrice}
+          {/* Center: Item count and price */}
+          <span className="font-bold text-sm sm:text-base truncate">
+            <span className="hidden sm:inline">{itemCount} item{itemCount > 1 ? 's' : ''} • </span>
+            <span className="sm:hidden">{itemCount} • </span>
+            ฿{totalPrice.toLocaleString()}
           </span>
           
+          {/* Right: Count badge */}
           {itemCount > 0 && (
             <Badge 
-              className="absolute top-1 right-3 bg-red-500 text-white border-0 min-w-6 h-6 flex items-center justify-center text-xs font-bold"
+              className="bg-red-500 text-white border-0 min-w-5 h-5 sm:min-w-6 sm:h-6 flex items-center justify-center text-[10px] sm:text-xs font-bold shrink-0"
             >
               {itemCount > 99 ? '99+' : itemCount}
             </Badge>
