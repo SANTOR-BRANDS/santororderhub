@@ -18,7 +18,7 @@ interface DishModalProps {
   dish: Dish | null;
   isOpen: boolean;
   onClose: () => void;
-  onAddToBasket: (item: BasketItem) => void;
+  onAddToBasket: (item: BasketItem, sourceRect?: { x: number; y: number; width: number; height: number }) => void;
   onOrderNow?: (item: BasketItem) => void;
 }
 const DishModal = ({
@@ -48,6 +48,7 @@ const DishModal = ({
   const spicy2Ref = useRef<HTMLDivElement>(null);
   const sauce2Ref = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const flySourceRef = useRef<HTMLDivElement>(null);
 
   // Combo state for dish 2
   const [selectedVariant2, setSelectedVariant2] = useState<DishVariant | null>(null);
@@ -329,13 +330,25 @@ const DishModal = ({
   const handleAddToBasket = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
-    onAddToBasket(basketItem);
+    const rect = flySourceRef.current?.getBoundingClientRect();
+    onAddToBasket(
+      basketItem,
+      rect
+        ? { x: rect.left, y: rect.top, width: rect.width, height: rect.height }
+        : undefined
+    );
     onClose();
   };
   const handleOrderNow = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
-    onAddToBasket(basketItem);
+    const rect = flySourceRef.current?.getBoundingClientRect();
+    onAddToBasket(
+      basketItem,
+      rect
+        ? { x: rect.left, y: rect.top, width: rect.width, height: rect.height }
+        : undefined
+    );
     if (onOrderNow) {
       onOrderNow(basketItem);
     }
@@ -745,7 +758,7 @@ const DishModal = ({
                   Customize your dish options, add-ons, and preferences
                 </DialogDescription>
                 {/* Dish Image */}
-                <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
+                <div ref={flySourceRef} className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
                   {dish.image ? (
                     <OptimizedImage 
                       src={dish.image} 

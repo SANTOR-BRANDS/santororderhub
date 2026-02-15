@@ -53,7 +53,6 @@ const Index = ({ initialBrand }: IndexProps) => {
   const [selectedCategory, setSelectedCategory] = useState<UnifiedCategory>('ALL');
   const [selectedBrand, setSelectedBrand] = useState<Restaurant | 'all'>(initialBrand || 'all');
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
-  const [selectedDishSourceRect, setSelectedDishSourceRect] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [flyAnim, setFlyAnim] = useState<{
     x: number;
     y: number;
@@ -111,10 +110,10 @@ const Index = ({ initialBrand }: IndexProps) => {
   });
   const [isBasketOpen, setIsBasketOpen] = useState(false);
 
-  const triggerFlyToBasket = useCallback((dish: Dish) => {
+  const triggerFlyToBasket = useCallback((dish: Dish, sourceRect?: { x: number; y: number; width: number; height: number }) => {
     if (!floatingBasketRef.current) return false;
 
-    const source = selectedDishSourceRect || {
+    const source = sourceRect || {
       x: Math.max(12, (window.innerWidth - 280) / 2),
       y: 220,
       width: Math.min(280, window.innerWidth - 24),
@@ -152,7 +151,7 @@ const Index = ({ initialBrand }: IndexProps) => {
 
     setTimeout(() => setFlyAnim(null), LIFT_MS + DROP_MS + 20);
     return true;
-  }, [selectedDishSourceRect]);
+  }, []);
 
   const dishQuantityMap = useMemo(() => {
     const map: Record<string, number> = {};
@@ -162,8 +161,8 @@ const Index = ({ initialBrand }: IndexProps) => {
     return map;
   }, [basketItems]);
 
-  const handleAddToBasket = (item: BasketItem) => {
-    const didFly = triggerFlyToBasket(item.dish);
+  const handleAddToBasket = (item: BasketItem, sourceRect?: { x: number; y: number; width: number; height: number }) => {
+    const didFly = triggerFlyToBasket(item.dish, sourceRect);
     setBasketItems(prev => [...prev, item]);
     // Trigger basket pulse near animation impact
     if (didFly) {
@@ -190,9 +189,9 @@ const Index = ({ initialBrand }: IndexProps) => {
     setBasketItems(prev => prev.filter(item => item.id !== itemId));
   };
 
-  const handleDishSelect = useCallback((dish: Dish, sourceRect?: { x: number; y: number; width: number; height: number }) => {
+  const handleDishSelect = useCallback((dish: Dish, _sourceRect?: { x: number; y: number; width: number; height: number }) => {
     setSelectedDish(dish);
-    setSelectedDishSourceRect(sourceRect ?? null);
+    // sourceRect is now used at add-time from modal coordinates
   }, []);
 
   useEffect(() => {
@@ -260,7 +259,6 @@ const Index = ({ initialBrand }: IndexProps) => {
         isOpen={!!selectedDish} 
         onClose={() => {
           setSelectedDish(null);
-          setSelectedDishSourceRect(null);
         }} 
         onAddToBasket={handleAddToBasket}
         onOrderNow={() => setIsBasketOpen(true)}
