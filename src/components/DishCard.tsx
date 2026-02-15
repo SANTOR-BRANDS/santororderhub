@@ -80,7 +80,7 @@ const DishCard = memo(function DishCard({
         {/* Content */}
         <div className="p-4">
           <div className="flex justify-between items-start gap-2 mb-2">
-            <h3 className={cn('font-semibold text-sm leading-tight line-clamp-2 min-h-[2.25rem] text-foreground', dish.isSpecial && 'text-amber-600 font-bold')}>
+            <h3 className={cn('font-semibold text-sm leading-tight line-clamp-2 min-h-[2.25rem]', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent', dish.isSpecial && 'font-bold')}>
               {dishName}
               {(dish.spicyRequired || dish.isSpecial) && <span className="ml-1 text-xs opacity-80 align-middle">
                   {dish.spicyRequired && '🌶️'}
@@ -89,7 +89,7 @@ const DishCard = memo(function DishCard({
             </h3>
             <div className="flex shrink-0 flex-col items-end text-right">
               {/* Show original price crossed out for promo items */}
-              <span className="font-bold text-lg leading-none whitespace-nowrap text-primary">
+              <span className={cn('font-bold text-lg leading-none whitespace-nowrap', dish.restaurant === 'restory' ? 'text-restory' : dish.restaurant === 'smoody' ? 'text-smoody-secondary' : 'text-nirvana-accent')}>
                 ฿{dish.price}
               </span>
               {isPromo && <span className="mt-0.5 text-[10px] leading-none text-gray-400 line-through">฿{originalPrice}</span>}
@@ -99,7 +99,7 @@ const DishCard = memo(function DishCard({
           {/* Description only shown in DishModal, not on cards */}
 
           <div className="flex items-center justify-between">
-            <span className="text-xs px-2 py-1 rounded-full font-semibold max-w-[calc(100%-2rem)] truncate bg-secondary text-secondary-foreground">
+            <span className={cn('text-xs px-2 py-1 rounded-full font-semibold max-w-[calc(100%-2rem)] truncate', dish.restaurant === 'restory' ? 'bg-restory/20 text-restory' : dish.restaurant === 'smoody' ? 'bg-smoody-secondary/20 text-smoody-secondary' : 'bg-nirvana-accent/20 text-nirvana-accent')}>
               {dish.category}
             </span>
 
