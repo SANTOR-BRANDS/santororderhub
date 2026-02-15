@@ -16,6 +16,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
   ({ basketItems, onOpenBasket, shakeTrigger = 0 }, ref) => {
     const itemCount = basketItems.reduce((total, item) => total + item.quantity, 0);
     const [isShaking, setIsShaking] = useState(false);
+    const [isPressed, setIsPressed] = useState(false);
     
     const totalPrice = basketItems.reduce((total, item) => {
       const basePrice = item.selectedVariant?.price || item.dish.price;
@@ -55,10 +56,15 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
       >
         <Button
           onClick={onOpenBasket}
+          onPointerDown={() => setIsPressed(true)}
+          onPointerUp={() => setIsPressed(false)}
+          onPointerCancel={() => setIsPressed(false)}
+          onPointerLeave={() => setIsPressed(false)}
           className={cn(
             'w-full bg-santor text-santor-foreground hover:bg-santor-secondary',
-            'shadow-modal py-4 rounded-xl transition-bounce',
+            'shadow-modal py-4 rounded-xl transition-[transform,box-shadow,filter] duration-[85ms] ease-out',
             'border border-white/20 flex items-center justify-center gap-3',
+            isPressed && 'scale-[0.96] brightness-[0.97] shadow-md',
             isShaking && 'animate-basket-impact'
           )}
           size="lg"

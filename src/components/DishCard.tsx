@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { Dish } from '@/types/menu';
 import { CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -28,12 +28,14 @@ const DishCard = memo(function DishCard({
     t
   } = useLanguage();
   const isUnavailable = dish.isAvailable === false;
+  const [isPressed, setIsPressed] = useState(false);
   const translated = t(dish.id);
   const dishName = !translated || translated === dish.id ? dish.name : translated;
   const originalPrice = PROMO_ORIGINAL_PRICES[dish.id];
   const isPromo = !!originalPrice && originalPrice > dish.price;
-  return <article className={cn('transition-smooth backdrop-blur-sm relative rounded-lg border', !isUnavailable && 'cursor-pointer md:hover:shadow-card md:hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white md:hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background md:hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary md:hover:border-nirvana-accent/30 border-border/50'), isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onClick={e => {
+  return <article className={cn('backdrop-blur-sm relative rounded-lg border transition-[transform,box-shadow,filter] duration-[70ms] ease-out', !isUnavailable && 'cursor-pointer md:hover:shadow-card md:hover:-translate-y-1', !isUnavailable && (dish.restaurant === 'restory' ? 'bg-nirvana-secondary text-white md:hover:border-restory/30 border-gray-700' : dish.restaurant === 'smoody' ? 'bg-smoody-background md:hover:border-smoody-primary/50 border-smoody-accent/30' : 'bg-nirvana-primary md:hover:border-nirvana-accent/30 border-border/50'), !isUnavailable && isPressed && 'scale-[0.985] brightness-[0.99] shadow-sm', isUnavailable && 'opacity-60 cursor-not-allowed', dish.restaurant === 'nirvana' && 'bg-nirvana-primary border-border/50', dish.restaurant === 'restory' && 'bg-nirvana-secondary text-white border-gray-700', dish.restaurant === 'smoody' && 'bg-smoody-background border-smoody-accent/30')} onPointerDown={() => !isUnavailable && setIsPressed(true)} onPointerUp={() => setIsPressed(false)} onPointerCancel={() => setIsPressed(false)} onPointerLeave={() => setIsPressed(false)} onClick={e => {
     if (isUnavailable) return;
+    setIsPressed(false);
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     onClick(dish, {
       x: rect.left,
@@ -106,6 +108,7 @@ const DishCard = memo(function DishCard({
                 type="button"
                 onClick={e => {
                 e.stopPropagation();
+                setIsPressed(false);
                 const card = (e.currentTarget.closest('article') as HTMLElement | null);
                 if (card) {
                   const rect = card.getBoundingClientRect();

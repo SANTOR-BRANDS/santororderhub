@@ -6,8 +6,8 @@ import UnifiedMenuDisplay from '@/components/UnifiedMenuDisplay';
 import DishModal from '@/components/DishModal';
 import BasketModal from '@/components/BasketModal';
 import FloatingBasket from '@/components/FloatingBasket';
+import DishCard from '@/components/DishCard';
 import Footer from '@/components/Footer';
-import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAddress } from '@/contexts/AddressContext';
 import AddressModal from '@/components/AddressModal';
@@ -58,8 +58,7 @@ const Index = ({ initialBrand }: IndexProps) => {
     y: number;
     dy: number;
     w: number;
-    h: number;
-    dishImage?: string;
+    dish: Dish;
     phase: 'lift' | 'drop';
     fadeOut: boolean;
   } | null>(null);
@@ -119,9 +118,9 @@ const Index = ({ initialBrand }: IndexProps) => {
     };
     const target = floatingBasketRef.current.getBoundingClientRect();
 
-    // Spawn from center of modal source, using a slightly smaller clone
-    const cloneW = source.width * 0.92;
-    const cloneH = source.height * 0.92;
+    // Spawn from center of modal source, using dish-card proportions
+    const cloneW = Math.min(230, source.width * 0.72);
+    const cloneH = cloneW * 1.34;
     const startX = source.x + source.width / 2 - cloneW / 2;
     const startY = source.y + source.height / 2 - cloneH / 2;
 
@@ -139,8 +138,7 @@ const Index = ({ initialBrand }: IndexProps) => {
       y: startY,
       dy: endDY,
       w: cloneW,
-      h: cloneH,
-      dishImage: dish.image,
+      dish,
       phase: 'lift',
       fadeOut: false,
     });
@@ -292,7 +290,6 @@ const Index = ({ initialBrand }: IndexProps) => {
             left: `${flyAnim.x}px`,
             top: `${flyAnim.y}px`,
             width: `${flyAnim.w}px`,
-            height: `${flyAnim.h}px`,
             transformOrigin: 'center center',
             transform:
               flyAnim.phase === 'lift'
@@ -310,11 +307,7 @@ const Index = ({ initialBrand }: IndexProps) => {
                 : 'transform 500ms ease-in, filter 500ms ease-in, box-shadow 500ms ease-in, opacity 70ms linear',
           }}
         >
-          {flyAnim.dishImage ? (
-            <img src={flyAnim.dishImage} alt="" className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-sm text-white">🍽️</div>
-          )}
+          <DishCard dish={flyAnim.dish} onClick={() => {}} inBasketCount={0} />
         </div>
       )}
       

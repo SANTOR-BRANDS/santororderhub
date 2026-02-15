@@ -753,12 +753,13 @@ const DishModal = ({
         <div className="flex-1 overflow-hidden flex flex-col">
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
+              <div ref={flySourceRef}>
               <DialogHeader className="mb-6">
                 <DialogDescription className="sr-only">
                   Customize your dish options, add-ons, and preferences
                 </DialogDescription>
                 {/* Dish Image */}
-                <div ref={flySourceRef}>
+                <div>
                   <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
                     {dish.image ? (
                       <OptimizedImage 
@@ -801,6 +802,7 @@ const DishModal = ({
                   </span>
                 </div>
               </DialogHeader>
+              </div>
 
               {/* Simplified view for TOPPINGS - only quantity selection */}
               {dish.category !== 'TOPPINGS' && <>
