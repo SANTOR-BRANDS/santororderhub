@@ -18,7 +18,11 @@ interface DishModalProps {
   dish: Dish | null;
   isOpen: boolean;
   onClose: () => void;
-  onAddToBasket: (item: BasketItem, sourceRect?: { x: number; y: number; width: number; height: number }) => void;
+  onAddToBasket: (
+    item: BasketItem,
+    sourceRect?: { x: number; y: number; width: number; height: number },
+    options?: { animateDrop?: boolean }
+  ) => void;
   onOrderNow?: (item: BasketItem) => void;
 }
 const DishModal = ({
@@ -43,6 +47,8 @@ const DishModal = ({
   const [selectedFreeToppings, setSelectedFreeToppings] = useState<string[]>([]);
   const [isAddPressed, setIsAddPressed] = useState(false);
   const [isOrderPressed, setIsOrderPressed] = useState(false);
+  const [isOrderTransition, setIsOrderTransition] = useState(false);
+  const [showBasketTransitionContent, setShowBasketTransitionContent] = useState(false);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -86,6 +92,9 @@ const DishModal = ({
         setSpicyLevel2(dish.spicyRequired ? 2 : undefined);
         setSelectedSauces2([]);
       }
+
+      setIsOrderTransition(false);
+      setShowBasketTransitionContent(false);
     }
   }, [dish, isOpen, isCombo]);
   if (!dish) return null;
@@ -337,24 +346,27 @@ const DishModal = ({
       basketItem,
       rect
         ? { x: rect.left, y: rect.top, width: rect.width, height: rect.height }
-        : undefined
+        : undefined,
+      { animateDrop: true }
     );
     onClose();
   };
   const handleOrderNow = () => {
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
-    const rect = modalContentRef.current?.getBoundingClientRect();
-    onAddToBasket(
-      basketItem,
-      rect
-        ? { x: rect.left, y: rect.top, width: rect.width, height: rect.height }
-        : undefined
-    );
-    if (onOrderNow) {
-      onOrderNow(basketItem);
-    }
-    onClose();
+    onAddToBasket(basketItem, undefined, { animateDrop: false });
+
+    setIsOrderTransition(true);
+    setTimeout(() => {
+      setShowBasketTransitionContent(true);
+    }, 40);
+
+    setTimeout(() => {
+      if (onOrderNow) {
+        onOrderNow(basketItem);
+      }
+      onClose();
+    }, 250);
   };
 
   // Filter add-ons by restaurant prefix
@@ -752,7 +764,8 @@ const DishModal = ({
   };
   return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent ref={modalContentRef} className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden">
-        <div className="flex-1 overflow-hidden flex flex-col">
+        <div className="relative flex-1 overflow-hidden flex flex-col">
+          <div className={cn('flex-1 overflow-hidden flex flex-col transition-[opacity,transform,filter] duration-[220ms] ease-out', isOrderTransition ? 'opacity-0 scale-[0.98] blur-[1px]' : 'opacity-100 scale-100')}>
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
               <DialogHeader className="mb-6">
@@ -890,12 +903,36 @@ const DishModal = ({
                 onPointerUp={() => setIsOrderPressed(false)}
                 onPointerCancel={() => setIsOrderPressed(false)}
                 onPointerLeave={() => setIsOrderPressed(false)}
-                className={cn('flex-1 gap-2 transition-[transform,box-shadow,filter] duration-[85ms] ease-out', theme.button, isOrderPressed && 'scale-[0.97] brightness-[0.98] shadow-sm')}
+                className={cn('flex-1 gap-2 transition-[transform,box-shadow,filter] duration-[90ms] ease-out', theme.button, isOrderPressed && 'scale-[0.96] brightness-[0.97] shadow-sm')}
                 size="lg"
               >
                 <Zap className="h-4 w-4" />
                 Order Now
               </Button>
+            </div>
+          </div>
+          </div>
+
+          <div className={cn('absolute inset-0 bg-background transition-[opacity,transform,filter] duration-[220ms] ease-out', showBasketTransitionContent ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-[1.02] pointer-events-none')}> 
+            <div className="h-full flex flex-col p-6">
+              <div className="mb-4">
+                <h3 className="text-xl font-bold">{t('basket.title')}</h3>
+              </div>
+              <div className="rounded-lg border p-4 space-y-2 bg-card">
+                <div className="text-sm font-medium line-clamp-2">
+                  {(() => {
+                    const translated = t(dish.id);
+                    return (!translated || translated === dish.id) ? dish.name : translated;
+                  })()}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {t('basket.quantity')}: {quantity}
+                </div>
+                <div className="flex items-center justify-between pt-2 border-t">
+                  <span className="font-semibold">{t('basket.total')}</span>
+                  <span className={cn('text-lg font-bold', `text-${theme.accent}`)}>฿{getTotalPrice()}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

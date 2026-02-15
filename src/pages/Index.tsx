@@ -161,8 +161,13 @@ const Index = ({ initialBrand }: IndexProps) => {
     return map;
   }, [basketItems]);
 
-  const handleAddToBasket = (item: BasketItem, sourceRect?: { x: number; y: number; width: number; height: number }) => {
-    const didFly = triggerFlyToBasket(item.dish, sourceRect);
+  const handleAddToBasket = (
+    item: BasketItem,
+    sourceRect?: { x: number; y: number; width: number; height: number },
+    options?: { animateDrop?: boolean }
+  ) => {
+    const shouldAnimateDrop = options?.animateDrop !== false;
+    const didFly = shouldAnimateDrop ? triggerFlyToBasket(item.dish, sourceRect) : false;
     setBasketItems(prev => [...prev, item]);
     // Trigger basket pulse near animation impact
     if (didFly) {
@@ -292,7 +297,7 @@ const Index = ({ initialBrand }: IndexProps) => {
             transform:
               flyAnim.phase === 'lift'
                 ? 'translate3d(0, 0, 0) scale(1.03)'
-                : `translate3d(0, ${flyAnim.dy}px, 0) scale(0.8)`,
+                : `translate3d(0, ${flyAnim.dy}px, 0) scale(0.08)`,
             opacity: flyAnim.fadeOut ? 0 : 1,
             filter: flyAnim.phase === 'drop' ? 'blur(1.8px)' : 'blur(0px)',
             boxShadow: '0 8px 18px rgba(0,0,0,0.22)',
