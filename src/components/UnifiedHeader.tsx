@@ -181,7 +181,7 @@ const UnifiedHeader = ({
                     )}
                   >
                     {isNew && (
-                      <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full z-10 animate-pulse">
+                      <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full z-10">
                         NEW
                       </div>
                     )}
@@ -200,7 +200,7 @@ const UnifiedHeader = ({
                           }} 
                         />
                       ) : (
-                        <span className="text-lg">✦</span>
+                        <span className="text-lg drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">✦</span>
                       )}
                     </div>
                     <span className="text-[10px] sm:text-xs font-medium text-center leading-tight line-clamp-1">

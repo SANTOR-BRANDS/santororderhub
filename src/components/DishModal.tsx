@@ -362,10 +362,10 @@ const DishModal = ({
     }, 40);
 
     setTimeout(() => {
-      if (onOrderNow) {
-        onOrderNow(basketItem);
-      }
       onClose();
+      if (onOrderNow) {
+        setTimeout(() => onOrderNow(basketItem), 120);
+      }
     }, 250);
   };
 
@@ -636,7 +636,7 @@ const DishModal = ({
             </div>}
 
         {/* Spicy Level - Required for Pad Krapao only */}
-        {dish.spicyRequired && <div ref={currentSpicyRef} className={cn("mb-6 p-3 rounded-lg transition-all duration-300", spicyHasError && "border-2 border-red-500 bg-red-500/10 animate-pulse")}>
+        {dish.spicyRequired && <div ref={currentSpicyRef} className={cn("mb-6 p-3 rounded-lg transition-all duration-300", spicyHasError && "border-2 border-red-500 bg-red-500/10")}>
             <Label className="text-base font-semibold mb-3 flex items-center gap-2">
               SPICY LEVEL <span className="text-red-500">*</span>
               <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
@@ -672,7 +672,7 @@ const DishModal = ({
           </div>)}
 
         {/* Sauce Selection - Required (Skip for Smoody, DRINKS, FRESH SALMON, and DESSERT) */}
-        {!isSmoody && dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && <div ref={currentSauceRef} className={cn("mb-6 p-3 rounded-lg transition-all duration-300", sauceHasError && "border-2 border-red-500 bg-red-500/10 animate-pulse")}>
+        {!isSmoody && dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT' && <div ref={currentSauceRef} className={cn("mb-6 p-3 rounded-lg transition-all duration-300", sauceHasError && "border-2 border-red-500 bg-red-500/10")}>
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             SELECT SAUCE <span className="text-red-500">*</span>
             <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
@@ -765,6 +765,7 @@ const DishModal = ({
   return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent ref={modalContentRef} className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden">
         <div className="relative flex-1 overflow-hidden flex flex-col">
+          <div className={cn('pointer-events-none absolute inset-0 z-10 transition-opacity duration-[220ms] ease-out', isOrderTransition ? 'opacity-100 bg-background/10 backdrop-blur-[1.5px]' : 'opacity-0')} />
           <div className={cn('flex-1 overflow-hidden flex flex-col transition-[opacity,transform,filter] duration-[220ms] ease-out', isOrderTransition ? 'opacity-0 scale-[0.98] blur-[1px]' : 'opacity-100 scale-100')}>
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
