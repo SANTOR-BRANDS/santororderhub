@@ -758,24 +758,26 @@ const DishModal = ({
                   Customize your dish options, add-ons, and preferences
                 </DialogDescription>
                 {/* Dish Image */}
-                <div ref={flySourceRef} className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
-                  {dish.image ? (
-                    <OptimizedImage 
-                      src={dish.image} 
-                      alt={dish.name}
-                      className="w-full h-full object-cover"
-                      containerClassName={theme.bg}
-                    />
-                  ) : (
-                    <div className={cn('w-full h-full flex items-center justify-center text-muted-foreground', theme.bg)}>
-                      <div className="text-center">
-                        <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
-                          🍽️
+                <div ref={flySourceRef}>
+                  <div className={cn('w-full h-48 rounded-lg mb-4 overflow-hidden', theme.border)}>
+                    {dish.image ? (
+                      <OptimizedImage 
+                        src={dish.image} 
+                        alt={dish.name}
+                        className="w-full h-full object-cover"
+                        containerClassName={theme.bg}
+                      />
+                    ) : (
+                      <div className={cn('w-full h-full flex items-center justify-center text-muted-foreground', theme.bg)}>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-current/10 flex items-center justify-center">
+                            🍽️
+                          </div>
+                          <span className="text-xs">No Image</span>
                         </div>
-                        <span className="text-xs">No Image</span>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
 
                 <DialogTitle className="text-xl font-bold">

@@ -59,8 +59,6 @@ const Index = ({ initialBrand }: IndexProps) => {
     dy: number;
     w: number;
     h: number;
-    dishName: string;
-    dishPrice: number;
     dishImage?: string;
     phase: 'lift' | 'drop';
     fadeOut: boolean;
@@ -121,21 +119,27 @@ const Index = ({ initialBrand }: IndexProps) => {
     };
     const target = floatingBasketRef.current.getBoundingClientRect();
 
-    // Vertical-only drop: X is locked, only Y changes
-    const endY = target.top + target.height / 2 - source.height * 0.18;
+    // Spawn from center of modal source, using a slightly smaller clone
+    const cloneW = source.width * 0.92;
+    const cloneH = source.height * 0.92;
+    const startX = source.x + source.width / 2 - cloneW / 2;
+    const startY = source.y + source.height / 2 - cloneH / 2;
+
+    // Vertical-only drop: X locked, center lands on basket center Y
+    const startCenterY = startY + cloneH / 2;
+    const targetCenterY = target.top + target.height / 2;
+    const endDY = targetCenterY - startCenterY;
 
     const LIFT_MS = 150;
     const DROP_MS = 500;
     const FADE_MS = 70;
 
     setFlyAnim({
-      x: source.x,
-      y: source.y,
-      dy: endY - source.y,
-      w: source.width,
-      h: source.height,
-      dishName: dish.name,
-      dishPrice: dish.price,
+      x: startX,
+      y: startY,
+      dy: endDY,
+      w: cloneW,
+      h: cloneH,
       dishImage: dish.image,
       phase: 'lift',
       fadeOut: false,
@@ -289,7 +293,7 @@ const Index = ({ initialBrand }: IndexProps) => {
             top: `${flyAnim.y}px`,
             width: `${flyAnim.w}px`,
             height: `${flyAnim.h}px`,
-            transformOrigin: 'top center',
+            transformOrigin: 'center center',
             transform:
               flyAnim.phase === 'lift'
                 ? 'translate3d(0, 0, 0) scale(1.03)'
@@ -306,19 +310,11 @@ const Index = ({ initialBrand }: IndexProps) => {
                 : 'transform 500ms ease-in, filter 500ms ease-in, box-shadow 500ms ease-in, opacity 70ms linear',
           }}
         >
-          <div className="flex h-full w-full flex-col">
-            <div className="h-[72%] w-full overflow-hidden bg-black/20">
-              {flyAnim.dishImage ? (
-                <img src={flyAnim.dishImage} alt="" className="h-full w-full object-cover" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center text-sm">🍽️</div>
-              )}
-            </div>
-            <div className="flex h-[28%] items-center justify-between px-2 text-[10px] text-white/90">
-              <span className="max-w-[68%] truncate font-medium">{flyAnim.dishName}</span>
-              <span className="font-bold text-[#fd7304]">฿{flyAnim.dishPrice}</span>
-            </div>
-          </div>
+          {flyAnim.dishImage ? (
+            <img src={flyAnim.dishImage} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center text-sm text-white">🍽️</div>
+          )}
         </div>
       )}
       
