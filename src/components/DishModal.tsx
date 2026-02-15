@@ -47,7 +47,8 @@ const DishModal = ({
   const [selectedFreeToppings, setSelectedFreeToppings] = useState<string[]>([]);
   const [isAddPressed, setIsAddPressed] = useState(false);
   const [isOrderPressed, setIsOrderPressed] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+  const [isOrderTransition, setIsOrderTransition] = useState(false);
+  const [showBasketTransitionContent, setShowBasketTransitionContent] = useState(false);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -91,6 +92,9 @@ const DishModal = ({
         setSpicyLevel2(dish.spicyRequired ? 2 : undefined);
         setSelectedSauces2([]);
       }
+
+      setIsOrderTransition(false);
+      setShowBasketTransitionContent(false);
     }
   }, [dish, isOpen, isCombo]);
   if (!dish) return null;
@@ -351,17 +355,18 @@ const DishModal = ({
     if (!validateAndScrollToError()) return;
     const basketItem = createBasketItem();
     onAddToBasket(basketItem, undefined, { animateDrop: false });
-    
-    // Start closing animation
-    setIsClosing(true);
-    
-    // Wait for animation to progress before opening basket
+
+    setIsOrderTransition(true);
+    setTimeout(() => {
+      setShowBasketTransitionContent(true);
+    }, 40);
+
     setTimeout(() => {
       onClose();
       if (onOrderNow) {
-        onOrderNow(basketItem);
+        setTimeout(() => onOrderNow(basketItem), 120);
       }
-    }, 220);
+    }, 250);
   };
 
   // Filter add-ons by restaurant prefix
@@ -758,9 +763,10 @@ const DishModal = ({
       </>;
   };
   return <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent ref={modalContentRef} className={cn('max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden transition-[opacity,transform,filter] duration-[220ms] ease-out', isClosing && 'opacity-0 scale-[0.98] blur-[2px]')}>
+      <DialogContent ref={modalContentRef} className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden">
         <div className="relative flex-1 overflow-hidden flex flex-col">
-          <div className='flex-1 overflow-hidden flex flex-col'>
+          <div className={cn('pointer-events-none absolute inset-0 z-10 transition-opacity duration-[220ms] ease-out', isOrderTransition ? 'opacity-100 bg-background/10 backdrop-blur-[1.5px]' : 'opacity-0')} />
+          <div className={cn('flex-1 overflow-hidden flex flex-col transition-[opacity,transform,filter] duration-[220ms] ease-out', isOrderTransition ? 'opacity-0 scale-[0.98] blur-[1px]' : 'opacity-100 scale-100')}>
           <ScrollArea className="flex-1 overflow-y-auto">
             <div className="p-6 pb-4">
               <DialogHeader className="mb-6">
@@ -906,6 +912,29 @@ const DishModal = ({
               </Button>
             </div>
           </div>
+          </div>
+
+          <div className={cn('absolute inset-0 bg-background transition-[opacity,transform,filter] duration-[220ms] ease-out', showBasketTransitionContent ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-[1.02] pointer-events-none')}> 
+            <div className="h-full flex flex-col p-6">
+              <div className="mb-4">
+                <h3 className="text-xl font-bold">{t('basket.title')}</h3>
+              </div>
+              <div className="rounded-lg border p-4 space-y-2 bg-card">
+                <div className="text-sm font-medium line-clamp-2">
+                  {(() => {
+                    const translated = t(dish.id);
+                    return (!translated || translated === dish.id) ? dish.name : translated;
+                  })()}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {t('basket.quantity')}: {quantity}
+                </div>
+                <div className="flex items-center justify-between pt-2 border-t">
+                  <span className="font-semibold">{t('basket.total')}</span>
+                  <span className={cn('text-lg font-bold', `text-${theme.accent}`)}>฿{getTotalPrice()}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </DialogContent>
