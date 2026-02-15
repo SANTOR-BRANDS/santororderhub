@@ -57,14 +57,14 @@ const Index = ({ initialBrand }: IndexProps) => {
   const [flyAnim, setFlyAnim] = useState<{
     x: number;
     y: number;
-    dx: number;
     dy: number;
     w: number;
     h: number;
     dishName: string;
     dishPrice: number;
     dishImage?: string;
-    active: boolean;
+    phase: 'lift' | 'drop';
+    fadeOut: boolean;
   } | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [basketShakeTrigger, setBasketShakeTrigger] = useState(0);
@@ -122,29 +122,35 @@ const Index = ({ initialBrand }: IndexProps) => {
     };
     const target = floatingBasketRef.current.getBoundingClientRect();
 
-    const endX = source.x;
-    const endY = target.top + target.height / 2 - source.height * 0.12;
+    // Vertical-only drop: X is locked, only Y changes
+    const endY = target.top + target.height / 2 - source.height * 0.18;
+
+    const LIFT_MS = 150;
+    const DROP_MS = 500;
+    const FADE_MS = 70;
 
     setFlyAnim({
       x: source.x,
       y: source.y,
-      dx: endX - source.x,
       dy: endY - source.y,
       w: source.width,
       h: source.height,
       dishName: dish.name,
       dishPrice: dish.price,
       dishImage: dish.image,
-      active: false,
+      phase: 'lift',
+      fadeOut: false,
     });
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setFlyAnim((prev) => (prev ? { ...prev, active: true } : prev));
-      });
-    });
+    setTimeout(() => {
+      setFlyAnim((prev) => (prev ? { ...prev, phase: 'drop' } : prev));
+    }, LIFT_MS);
 
-    setTimeout(() => setFlyAnim(null), 820);
+    setTimeout(() => {
+      setFlyAnim((prev) => (prev ? { ...prev, fadeOut: true } : prev));
+    }, LIFT_MS + DROP_MS - FADE_MS);
+
+    setTimeout(() => setFlyAnim(null), LIFT_MS + DROP_MS + 20);
     return true;
   }, [selectedDishSourceRect]);
 
@@ -163,7 +169,7 @@ const Index = ({ initialBrand }: IndexProps) => {
     if (didFly) {
       setTimeout(() => {
         setBasketShakeTrigger(prev => prev + 1);
-      }, 620);
+      }, 650);
     } else {
       setBasketShakeTrigger(prev => prev + 1);
     }
@@ -286,12 +292,20 @@ const Index = ({ initialBrand }: IndexProps) => {
             width: `${flyAnim.w}px`,
             height: `${flyAnim.h}px`,
             transformOrigin: 'top center',
-            transform: flyAnim.active
-              ? `translate3d(0, ${flyAnim.dy}px, 0) scale(0.12)`
-              : 'translate3d(0, 0, 0) scale(1)',
-            opacity: flyAnim.active ? 0 : 1,
-            filter: flyAnim.active ? 'blur(2.6px)' : 'blur(0px)',
-            transition: 'transform 820ms cubic-bezier(0.16, 0.74, 0.22, 1), opacity 820ms cubic-bezier(0.16, 0.74, 0.22, 1), filter 820ms ease-out',
+            transform:
+              flyAnim.phase === 'lift'
+                ? 'translate3d(0, 0, 0) scale(1.03)'
+                : `translate3d(0, ${flyAnim.dy}px, 0) scale(0.2)`,
+            opacity: flyAnim.fadeOut ? 0 : 1,
+            filter: flyAnim.phase === 'drop' ? 'blur(2px)' : 'blur(0px)',
+            boxShadow:
+              flyAnim.phase === 'lift'
+                ? '0 14px 38px rgba(0,0,0,0.45)'
+                : '0 10px 22px rgba(0,0,0,0.32)',
+            transition:
+              flyAnim.phase === 'lift'
+                ? 'transform 150ms ease-out, box-shadow 150ms ease-out'
+                : 'transform 500ms ease-in, filter 500ms ease-in, box-shadow 500ms ease-in, opacity 70ms linear',
           }}
         >
           <div className="flex h-full w-full flex-col">

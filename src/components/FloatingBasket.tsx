@@ -59,7 +59,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
             'w-full bg-santor text-santor-foreground hover:bg-santor-secondary',
             'shadow-modal py-4 rounded-xl transition-bounce',
             'border border-white/20 flex items-center justify-center gap-3',
-            isShaking && 'animate-basket-expand'
+            isShaking && 'animate-basket-impact'
           )}
           size="lg"
         >
@@ -87,7 +87,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
             })}
           </div>
 
-          <ShoppingBag className="h-6 w-6" />
+          <ShoppingBag className={cn('h-6 w-6', isShaking && 'animate-basket-icon-impact')} />
           <span className="font-bold text-base">
             {itemCount} item{itemCount > 1 ? 's' : ''} • ฿{totalPrice}
           </span>

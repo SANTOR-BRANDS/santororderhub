@@ -122,9 +122,14 @@ export default {
             height: "0",
           },
         },
-        "basket-expand": {
+        "basket-impact": {
           "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.06)" },
+          "50%": { transform: "scale(1.02)", boxShadow: "0 0 0 4px rgba(253, 115, 4, 0.25)" },
+          "100%": { transform: "scale(1)" },
+        },
+        "basket-icon-impact": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.1)" },
           "100%": { transform: "scale(1)" },
         },
         "fly-to-basket": {
@@ -158,7 +163,8 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "basket-expand": "basket-expand 0.33s ease-out",
+        "basket-impact": "basket-impact 0.22s ease-out",
+        "basket-icon-impact": "basket-icon-impact 0.22s ease-out",
         "fly-to-basket": "fly-to-basket 0.9s cubic-bezier(0.16, 0.74, 0.22, 1) forwards",
       },
     },
