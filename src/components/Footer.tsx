@@ -14,16 +14,7 @@ const Footer = ({ selectedRestaurant }: FooterProps) => {
   const { t } = useLanguage();
 
   const getFooterClasses = () => {
-    if (selectedRestaurant === 'restory') {
-      return 'bg-gradient-restory text-white';
-    }
-    if (selectedRestaurant === 'nirvana') {
-      return 'bg-gradient-nirvana text-white';
-    }
-    if (selectedRestaurant === 'smoody') {
-      return 'bg-gradient-smoody text-white';
-    }
-    return 'bg-gradient-santor text-white';
+    return 'bg-[#1a1a1a] text-white';
   };
 
   return (

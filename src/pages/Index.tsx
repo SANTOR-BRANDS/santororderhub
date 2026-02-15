@@ -128,8 +128,8 @@ const Index = ({ initialBrand }: IndexProps) => {
     const endDY = targetCenterY - startCenterY;
 
     const LIFT_MS = 150;
-    const DROP_MS = 300;
-    const FADE_MS = 45;
+    const DROP_MS = 200;
+    const FADE_MS = 35;
 
     setFlyAnim({
       x: startX,
@@ -168,7 +168,7 @@ const Index = ({ initialBrand }: IndexProps) => {
     if (didFly) {
       setTimeout(() => {
         setBasketShakeTrigger(prev => prev + 1);
-      }, 430);
+      }, 330);
     } else {
       setBasketShakeTrigger(prev => prev + 1);
     }
@@ -292,7 +292,7 @@ const Index = ({ initialBrand }: IndexProps) => {
             transform:
               flyAnim.phase === 'lift'
                 ? 'translate3d(0, 0, 0) scale(1.03)'
-                : `translate3d(0, ${flyAnim.dy}px, 0) scale(0.2)`,
+                : `translate3d(0, ${flyAnim.dy}px, 0) scale(0.12)`,
             opacity: flyAnim.fadeOut ? 0 : 1,
             filter: flyAnim.phase === 'drop' ? 'blur(1.8px)' : 'blur(0px)',
             boxShadow:
@@ -302,7 +302,7 @@ const Index = ({ initialBrand }: IndexProps) => {
             transition:
               flyAnim.phase === 'lift'
                 ? 'transform 150ms ease-out, box-shadow 150ms ease-out'
-                : 'transform 300ms ease-in, filter 300ms ease-in, box-shadow 300ms ease-in, opacity 45ms linear',
+                : 'transform 200ms ease-in, filter 200ms ease-in, box-shadow 200ms ease-in, opacity 35ms linear',
           }}
         >
           <div className="h-full w-full bg-white text-black">

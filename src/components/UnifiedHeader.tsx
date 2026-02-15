@@ -84,7 +84,7 @@ const UnifiedHeader = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-gradient-santor text-santor-foreground">
+    <header className="sticky top-0 z-50 bg-[#0f0f0f] text-santor-foreground">
       <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col gap-3">
           {/* Top Row: Address (left) + Language (right) */}
