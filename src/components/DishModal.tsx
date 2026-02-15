@@ -48,7 +48,6 @@ const DishModal = ({
   const [isAddPressed, setIsAddPressed] = useState(false);
   const [isOrderPressed, setIsOrderPressed] = useState(false);
   const [isOrderTransition, setIsOrderTransition] = useState(false);
-  const [showBasketTransitionContent, setShowBasketTransitionContent] = useState(false);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -94,7 +93,6 @@ const DishModal = ({
       }
 
       setIsOrderTransition(false);
-      setShowBasketTransitionContent(false);
     }
   }, [dish, isOpen, isCombo]);
   if (!dish) return null;
@@ -357,9 +355,6 @@ const DishModal = ({
     onAddToBasket(basketItem, undefined, { animateDrop: false });
 
     setIsOrderTransition(true);
-    setTimeout(() => {
-      setShowBasketTransitionContent(true);
-    }, 40);
 
     setTimeout(() => {
       onClose();
@@ -912,29 +907,6 @@ const DishModal = ({
               </Button>
             </div>
           </div>
-          </div>
-
-          <div className={cn('absolute inset-0 bg-background transition-[opacity,transform,filter] duration-[220ms] ease-out', showBasketTransitionContent ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-[1.02] pointer-events-none')}> 
-            <div className="h-full flex flex-col p-6">
-              <div className="mb-4">
-                <h3 className="text-xl font-bold">{t('basket.title')}</h3>
-              </div>
-              <div className="rounded-lg border p-4 space-y-2 bg-card">
-                <div className="text-sm font-medium line-clamp-2">
-                  {(() => {
-                    const translated = t(dish.id);
-                    return (!translated || translated === dish.id) ? dish.name : translated;
-                  })()}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {t('basket.quantity')}: {quantity}
-                </div>
-                <div className="flex items-center justify-between pt-2 border-t">
-                  <span className="font-semibold">{t('basket.total')}</span>
-                  <span className={cn('text-lg font-bold', `text-${theme.accent}`)}>฿{getTotalPrice()}</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </DialogContent>
