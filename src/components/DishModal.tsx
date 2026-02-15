@@ -356,12 +356,16 @@ const DishModal = ({
 
     setIsOrderTransition(true);
 
+    // Open basket modal FIRST, then close dish modal
+    // This ensures the dark overlay never disappears
+    if (onOrderNow) {
+      onOrderNow(basketItem);
+    }
+    
+    // Close dish modal after basket is already opening
     setTimeout(() => {
       onClose();
-      if (onOrderNow) {
-        setTimeout(() => onOrderNow(basketItem), 120);
-      }
-    }, 250);
+    }, 150);
   };
 
   // Filter add-ons by restaurant prefix
