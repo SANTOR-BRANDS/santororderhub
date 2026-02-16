@@ -41,7 +41,7 @@ const UnifiedHeader = ({
   selectedBrand,
   onBrandChange,
   searchQuery,
-  onSearchChange,
+  onSearchChange
 }: UnifiedHeaderProps) => {
   const { language, setLanguage, t } = useLanguage();
   const { address, openAddressModal } = useAddress();
@@ -84,7 +84,7 @@ const UnifiedHeader = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0f0f0f] text-santor-foreground">
+    <header className="sticky top-0 z-50 text-santor-foreground bg-[#242323]">
       <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col gap-3">
           {/* Top Row: Address (left) + Language (right) */}
@@ -93,8 +93,8 @@ const UnifiedHeader = ({
             <button
               onClick={openAddressModal}
               className="flex items-center gap-2 text-sm text-white/90 hover:text-white hover:bg-white/20 rounded-full px-3 py-1.5 transition-colors cursor-pointer"
-              aria-label="Set delivery address"
-            >
+              aria-label="Set delivery address">
+
               <MapPin className="h-4 w-4 shrink-0" />
               <span className="truncate max-w-[180px] sm:max-w-[220px]">
                 {getAddressDisplay()}
@@ -104,37 +104,37 @@ const UnifiedHeader = ({
             {/* Language Selector - Right */}
             <Popover open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
               <PopoverTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  className="h-auto text-sm text-inherit hover:bg-white/20 rounded-full px-3 py-1.5" 
-                  aria-label="Change language"
-                >
+                <Button
+                  variant="ghost"
+                  className="h-auto text-sm text-inherit hover:bg-white/20 rounded-full px-3 py-1.5"
+                  aria-label="Change language">
+
                   <Globe className="h-4 w-4 mr-1.5" />
                   <span className="font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-32 p-2" align="end">
                 <div className="flex flex-col gap-1">
-                  <Button 
-                    variant={language === 'en' ? 'secondary' : 'ghost'} 
-                    size="sm" 
-                    className="w-full justify-start" 
+                  <Button
+                    variant={language === 'en' ? 'secondary' : 'ghost'}
+                    size="sm"
+                    className="w-full justify-start"
                     onClick={() => {
                       setLanguage('en');
                       setIsLanguageOpen(false);
-                    }}
-                  >
+                    }}>
+
                     English
                   </Button>
-                  <Button 
-                    variant={language === 'th' ? 'secondary' : 'ghost'} 
-                    size="sm" 
-                    className="w-full justify-start" 
+                  <Button
+                    variant={language === 'th' ? 'secondary' : 'ghost'}
+                    size="sm"
+                    className="w-full justify-start"
                     onClick={() => {
                       setLanguage('th');
                       setIsLanguageOpen(false);
-                    }}
-                  >
+                    }}>
+
                     ไทย
                   </Button>
                 </div>
@@ -145,69 +145,69 @@ const UnifiedHeader = ({
           {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" aria-hidden="true" />
-            <Input 
-              placeholder={t('menu.searchPlaceholder') || 'Search dishes...'} 
-              value={searchQuery} 
-              onChange={e => onSearchChange(e.target.value)}
-              aria-label={t('menu.searchPlaceholder') || 'Search dishes'} 
-              className="pl-10 pr-10 bg-white/10 border-0 text-white placeholder:text-gray-400 rounded-lg"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => onSearchChange('')}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                aria-label="Clear search"
-              >
+            <Input
+              placeholder={t('menu.searchPlaceholder') || 'Search dishes...'}
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              aria-label={t('menu.searchPlaceholder') || 'Search dishes'}
+              className="pl-10 pr-10 bg-white/10 border-0 text-white placeholder:text-gray-400 rounded-lg" />
+
+            {searchQuery &&
+            <button
+              onClick={() => onSearchChange('')}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+              aria-label="Clear search">
+
                 <X className="h-4 w-4" />
               </button>
-            )}
+            }
           </div>
 
           {/* Brand Filter */}
           <div className="flex items-center justify-center w-full px-2">
             <div className="flex items-center justify-between w-full max-w-md gap-2">
-              {BRANDS.map(brand => {
+              {BRANDS.map((brand) => {
                 const isSelected = selectedBrand === brand;
                 const info = brand === 'all' ? null : getRestaurantInfo(brand);
                 const displayName = brand === 'all' ? t('menu.all') : info?.name;
                 const isNew = brand === 'smoody';
                 return (
-                  <button 
-                    key={brand} 
-                    onClick={() => handleBrandChange(brand)} 
+                  <button
+                    key={brand}
+                    onClick={() => handleBrandChange(brand)}
                     className={cn(
                       'flex-1 flex flex-col items-center gap-1.5 py-2 px-1 rounded-xl transition-all relative',
                       isSelected ? 'opacity-100' : 'opacity-85 hover:opacity-100'
-                    )}
-                  >
-                    {isNew && (
-                      <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full z-10">
+                    )}>
+
+                    {isNew &&
+                    <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full z-10">
                         NEW
                       </div>
-                    )}
+                    }
                     <div className={cn(
                       'w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 flex items-center justify-center border border-transparent',
                       isSelected && 'border-[#fd7304]/80'
                     )}>
-                      {info ? (
-                        <img 
-                          src={info.logo} 
-                          alt={info.name} 
-                          className="w-full h-full object-cover" 
-                          onError={(e) => { 
-                            e.currentTarget.style.display = 'none'; 
-                            e.currentTarget.parentElement!.innerHTML = `<span class="text-lg font-bold text-white">${info.name.charAt(0)}</span>`; 
-                          }} 
-                        />
-                      ) : (
-                        <span className="text-lg drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">✦</span>
-                      )}
+                      {info ?
+                      <img
+                        src={info.logo}
+                        alt={info.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.parentElement!.innerHTML = `<span class="text-lg font-bold text-white">${info.name.charAt(0)}</span>`;
+                        }} /> :
+
+
+                      <span className="text-lg drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">✦</span>
+                      }
                     </div>
                     <span className="text-[10px] sm:text-xs font-medium text-center leading-tight line-clamp-1">
                       {displayName}
                     </span>
-                  </button>
-                );
+                  </button>);
+
               })}
             </div>
           </div>
@@ -217,32 +217,32 @@ const UnifiedHeader = ({
       {/* Category Navigation Bar */}
       <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-gray-700">
         <div className="flex gap-3 sm:gap-4 overflow-x-auto px-6 py-3 scrollbar-hide snap-x snap-mandatory mx-[12px]">
-          {availableCategories.map(category => {
+          {availableCategories.map((category) => {
             const isSelected = selectedCategory === category;
             const translationKey = CATEGORY_TRANSLATION_KEYS[category];
             const displayCategory = translationKey ? t(translationKey) : category;
             return (
-              <button 
-                key={category} 
-                onClick={() => handleCategoryChange(category)} 
+              <button
+                key={category}
+                onClick={() => handleCategoryChange(category)}
                 className={cn(
                   "sm:text-sm md:text-base font-semibold transition-all cursor-pointer border-b-2 whitespace-nowrap pb-2 snap-start text-sm",
-                  isSelected 
-                    ? 'text-[#fd7304] border-[#fd7304]' 
-                    : 'text-gray-400 border-transparent hover:text-gray-200'
-                )} 
-                aria-current={isSelected ? 'true' : undefined}
-              >
+                  isSelected ?
+                  'text-[#fd7304] border-[#fd7304]' :
+                  'text-gray-400 border-transparent hover:text-gray-200'
+                )}
+                aria-current={isSelected ? 'true' : undefined}>
+
                 {getCategoryEmoji(category)} {displayCategory}
-              </button>
-            );
+              </button>);
+
           })}
           {/* Spacer to ensure last item has breathing room */}
           <div className="shrink-0 w-4" aria-hidden="true" />
         </div>
       </div>
-    </header>
-  );
+    </header>);
+
 };
 
 const getCategoryEmoji = (category: UnifiedCategory): string => {
