@@ -156,12 +156,14 @@ export const enTranslations = {
   'SAN-DES-001': 'Vanilla Ice Cream Toast (NEW)',
   
   // Nirvana - Pad Krapao
-  'NV-PKR-001': 'Pad Krapao Minced Beef',
+  'NV-PKR-001': 'Pad Krapao Premium Minced Beef',
+  'NV-PKR-001-PREMIUM': 'Premium Beef',
+  'NV-PKR-001-NORMAL': 'Normal Beef (-฿50)',
   'NV-PKR-002': 'Pad Krapao Minced Pork',
   'NV-PKR-003': 'Pad Krapao Minced Chicken',
   'NV-PKR-004': 'Pad Krapao Diced Chicken',
   'NV-PKR-005': 'Pad Krapao Minced Premium Beef',
-  
+
   // Nirvana - Grilled Rice Bowls
   'NV-GRR-001': '⭐️Grilled Beef on Rice',
   'NV-GRR-002': 'Mala Grilled Beef on Rice',
@@ -231,7 +233,9 @@ export const enTranslations = {
   'RS-PKR-009': 'Sliced Pork Belly (juicy and soft)',
   'RS-PKR-010': 'Pad Krapao Sliced Pork Neck (meaty and tender)',
   'RS-PKR-011': 'Pad Krapao Minced Premium Beef',
-  'RS-PKR-012': 'Pad Krapao Minced Premium Beef (Switch to Normal Beef -40THB)',
+  'RS-PKR-011-PREMIUM': 'Premium Beef',
+  'RS-PKR-011-NORMAL': 'Normal Beef (-฿30)',
+  'RS-PKR-012': 'Pad Krapao Minced Premium Beef (Switch to Normal Beef -30THB)',
   'RS-PKR-013': '✨Diced Wagyu Beef Pad Krapao ✨ (Grade A3)',
   'RS-PKR-014': 'Pad Krapao Chicken Breast',
   'RS-PKR-015': 'Pad Krapao Chicken',
@@ -249,6 +253,8 @@ export const enTranslations = {
   // Restory - Donburi
   'RS-DON-001': '⭐️Tonkatsu Don',
   'RS-DON-002': '⭐️Torikatsu Don',
+  'RS-DON-001-PORT': 'Tonkatsu Don (Pork)',
+  'RS-DON-002-CHICKEN': 'Torikatsu Don (Chicken)',
   'RS-DON-003': 'Chicken Karaage Don',
   'RS-DON-004': 'Chicken Thigh Don',
   'RS-DON-005': '👍Tonkatsu with Katsu Sauce',

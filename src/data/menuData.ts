@@ -90,14 +90,14 @@ export const restoryMenu: Dish[] = [
   },
 { 
     id: 'RS-PKR-011', 
-    name: 'Pad Krapao Minced Beef', 
-    price: 139, 
+    name: 'Pad Krapao Minced Premium Beef', 
+    price: 149, 
     category: 'PAD KRAPAO', 
     restaurant: 'restory', 
     spicyRequired: true,
     variants: [
-      { id: 'RS-PKR-011-PREMIUM', name: 'Premium Beef', price: 139, isDefault: true },
-      { id: 'RS-PKR-011-NORMAL', name: 'Normal Beef (-฿20)', price: 119 }
+      { id: 'RS-PKR-011-PREMIUM', name: 'Premium Beef', price: 149, isDefault: true },
+      { id: 'RS-PKR-011-NORMAL', name: 'Normal Beef (-฿30)', price: 119 }
     ],
     extraOptions: [
       { id: 'RS-EXT-003', name: '🐮 Extra Premium Beef (100g)', price: 80, category: 'extra-pls', variantRestriction: 'RS-PKR-011-PREMIUM' },
@@ -251,8 +251,8 @@ export const restoryMenu: Dish[] = [
     restaurant: 'restory',
     isSpecial: true,
     variants: [
-      { id: 'RS-DON-001', name: 'Tonkatsu Don 🐷', price: 139, isDefault: true },
-      { id: 'RS-DON-002', name: 'Torikatsu Don 🐔', price: 139 }
+      { id: 'RS-DON-001-PORT', name: 'Tonkatsu Don (Pork)', price: 139, isDefault: true },
+      { id: 'RS-DON-002-CHICKEN', name: 'Torikatsu Don (Chicken)', price: 139 }
     ],
     extraOptions: [
       { id: 'RS-EXT-001', name: '🐔 Extra Crunchy Chicken', price: 60, category: 'extra-pls' },
@@ -908,26 +908,19 @@ export const restoryMenu: Dish[] = [
 export const nirvanaMenu: Dish[] = [
   // PAD KRAPAO
   { 
-    id: 'NV-PKR-005', 
+    id: 'NV-PKR-001', 
     name: 'Pad Krapao Premium Minced Beef', 
     price: 149, 
     category: 'PAD KRAPAO', 
     restaurant: 'nirvana', 
     spicyRequired: true,
+    variants: [
+      { id: 'NV-PKR-001-PREMIUM', name: 'Premium Beef', price: 149, isDefault: true },
+      { id: 'NV-PKR-001-NORMAL', name: 'Normal Beef (-฿50)', price: 99 }
+    ],
     extraOptions: [
-      { id: 'NV-EXT-007', name: '🐮 Extra Premium Beef 100g', price: 80, category: 'extra-pls' },
-      { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
-    ]
-  },
-  { 
-    id: 'NV-PKR-001', 
-    name: 'Pad Krapao Minced Beef', 
-    price: 99, 
-    category: 'PAD KRAPAO', 
-    restaurant: 'nirvana', 
-    spicyRequired: true,
-    extraOptions: [
-      { id: 'NV-EXT-006', name: '🐮 Extra Minced Beef 100g', price: 60, category: 'extra-pls' },
+      { id: 'NV-EXT-007', name: '🐮 Extra Premium Beef 100g', price: 80, category: 'extra-pls', variantRestriction: 'NV-PKR-001-PREMIUM' },
+      { id: 'NV-EXT-006', name: '🐮 Extra Minced Beef 100g', price: 60, category: 'extra-pls', variantRestriction: 'NV-PKR-001-NORMAL' },
       { id: 'SAN-EXT-001', name: '🍚 Extra Jasmine Rice (200g)', price: 15, category: 'extra-pls' }
     ]
   },
