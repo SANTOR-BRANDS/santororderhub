@@ -200,7 +200,7 @@ const UnifiedHeader = ({
                         }} /> :
 
 
-                      <span className="text-lg drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">✦</span>
+                      <span className="drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)] text-2xl">✦</span>
                       }
                     </div>
                     <span className="text-[10px] sm:text-xs font-medium text-center leading-tight line-clamp-1">
