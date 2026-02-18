@@ -117,7 +117,7 @@ const FloatingBasket = memo(forwardRef<HTMLDivElement, FloatingBasketProps>(
       </div>
     );
   }
-);
+));
 
 FloatingBasket.displayName = 'FloatingBasket';
 
