@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState, memo, useMemo, useCallback } from 'react';
 import { getRestaurantInfo } from '@/lib/unifiedMenu';
 
 interface FloatingBasketProps {
@@ -12,23 +12,31 @@ interface FloatingBasketProps {
   shakeTrigger?: number;
 }
 
-const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
+const FloatingBasket = memo(forwardRef<HTMLDivElement, FloatingBasketProps>(
   ({ basketItems, onOpenBasket, shakeTrigger = 0 }, ref) => {
-    const itemCount = basketItems.reduce((total, item) => total + item.quantity, 0);
     const [isShaking, setIsShaking] = useState(false);
     const [isPressed, setIsPressed] = useState(false);
     
-    const totalPrice = basketItems.reduce((total, item) => {
-      const basePrice = item.selectedVariant?.price || item.dish.price;
-      const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
-      const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
-      const sauceIds = item.sauce.split(', ').filter(id => id);
-      const saucesTotal = sauceIds.reduce((sum, sauceId) => {
-        const sauce = SAUCES.find(s => s.id === sauceId);
-        return sum + (sauce?.price || 0);
-      }, 0);
-      return total + (basePrice + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
-    }, 0);
+    // Memoize expensive calculations
+    const itemCount = useMemo(() => 
+      basketItems.reduce((total, item) => total + item.quantity, 0),
+      [basketItems]
+    );
+    
+    const totalPrice = useMemo(() => 
+      basketItems.reduce((total, item) => {
+        const basePrice = item.selectedVariant?.price || item.dish.price;
+        const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
+        const extraPlsTotal = item.extraPls?.reduce((sum, addon) => sum + addon.price, 0) || 0;
+        const sauceIds = item.sauce.split(', ').filter(id => id);
+        const saucesTotal = sauceIds.reduce((sum, sauceId) => {
+          const sauce = SAUCES.find(s => s.id === sauceId);
+          return sum + (sauce?.price || 0);
+        }, 0);
+        return total + (basePrice + addOnsTotal + extraPlsTotal + saucesTotal) * item.quantity;
+      }, 0),
+      [basketItems]
+    );
 
     // Trigger expand animation when shakeTrigger changes
     useEffect(() => {
@@ -41,11 +49,11 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
       }
     }, [shakeTrigger]);
 
-    // Get unique restaurants from basket items
-    const getUniqueRestaurants = () => {
+    // Get unique restaurants from basket items - memoized
+    const uniqueRestaurants = useMemo(() => {
       const restaurants = new Set(basketItems.map(item => item.dish.restaurant));
       return Array.from(restaurants);
-    };
+    }, [basketItems]);
 
     if (itemCount === 0) return null;
 
@@ -71,7 +79,7 @@ const FloatingBasket = forwardRef<HTMLDivElement, FloatingBasketProps>(
         >
           {/* Restaurant Logos - Overlapping Avatars */}
           <div className="flex -space-x-2 mr-2">
-            {getUniqueRestaurants().map((restaurant) => {
+            {uniqueRestaurants.map((restaurant) => {
               const info = getRestaurantInfo(restaurant);
               return (
                 <div

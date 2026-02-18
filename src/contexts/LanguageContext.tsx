@@ -24,7 +24,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   });
 
   useEffect(() => {
-    localStorage.setItem('santor-language', language);
+    try {
+      localStorage.setItem('santor-language', language);
+    } catch (error) {
+      // Storage quota exceeded - silently fail
+      console.warn('Storage quota exceeded, language preference not saved');
+    }
   }, [language]);
 
   const setLanguage = (lang: Language) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
 import { Dish, AddOn, SPICY_LEVELS, getSaucesByRestaurant, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
 import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { Plus, Minus, ShoppingCart, Zap, Gift } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import OptimizedImage from './OptimizedImage';
+
 interface DishModalProps {
   dish: Dish | null;
   isOpen: boolean;
@@ -25,13 +26,14 @@ interface DishModalProps {
   ) => void;
   onOrderNow?: (item: BasketItem) => void;
 }
-const DishModal = ({
+
+const DishModal = memo(function DishModal({
   dish,
   isOpen,
   onClose,
   onAddToBasket,
   onOrderNow
-}: DishModalProps) => {
+}: DishModalProps) {
   const {
     t
   } = useLanguage();
@@ -919,5 +921,6 @@ const DishModal = ({
         </div>
       </DialogContent>
     </Dialog>;
-};
+});
+
 export default DishModal;

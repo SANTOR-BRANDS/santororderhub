@@ -22,7 +22,12 @@ export const AddressProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // Save to localStorage whenever address changes
   useEffect(() => {
-    localStorage.setItem('santor-user-address', address);
+    try {
+      localStorage.setItem('santor-user-address', address);
+    } catch (error) {
+      // Storage quota exceeded - silently fail
+      console.warn('Storage quota exceeded, address not saved');
+    }
   }, [address]);
 
   const setAddress = (newAddress: string) => {

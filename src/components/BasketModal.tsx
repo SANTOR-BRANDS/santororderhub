@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
 import { BasketItem, getSaucesByRestaurant } from '@/types/menu';
 import {
   Dialog,
@@ -30,13 +30,13 @@ interface BasketModalProps {
   onRemoveItem: (itemId: string) => void;
 }
 
-const BasketModal = ({
+const BasketModal = memo(function BasketModal({
   isOpen,
   onClose,
   basketItems,
   onUpdateQuantity,
   onRemoveItem
-}: BasketModalProps) => {
+}: BasketModalProps) {
   const { toast } = useToast();
   const { t } = useLanguage();
   const { address, setAddress } = useAddress();
@@ -69,7 +69,12 @@ const BasketModal = ({
 
   // Save Phone to LocalStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('santor-user-phone', phoneNumber);
+    try {
+      localStorage.setItem('santor-user-phone', phoneNumber);
+    } catch (error) {
+      // Storage quota exceeded - silently fail
+      console.warn('Storage quota exceeded, phone number not saved');
+    }
   }, [phoneNumber]);
 
   // Helper: resolve a translated name, falling back to the human-readable name
@@ -146,7 +151,7 @@ const BasketModal = ({
   };
 
   // Helper to calculate incremental extras total
-  const calculateIncrementalExtrasTotal = (item: BasketItem) => {
+  const calculateIncrementalExtrasTotal = useCallback((item: BasketItem) => {
     if (!item.incrementalExtras || item.incrementalExtras.size === 0) return 0;
     
     let total = 0;
@@ -164,10 +169,10 @@ const BasketModal = ({
     });
     
     return total;
-  };
+  }, []);
 
   // Helper to get item total price
-  const getItemTotalPrice = (item: BasketItem) => {
+  const getItemTotalPrice = useCallback((item: BasketItem) => {
     const SAUCES = getSaucesByRestaurant(item.dish.restaurant);
     const basePrice = item.selectedVariant?.price || item.dish.price;
     const addOnsTotal = item.addOns.reduce((sum, addon) => sum + addon.price, 0);
@@ -222,17 +227,18 @@ const BasketModal = ({
     }
     
     return itemTotal * item.quantity;
-  };
+  }, [calculateIncrementalExtrasTotal]);
 
-  const getTotalPrice = () => {
+  // Memoized total price calculation
+  const totalPrice = useMemo(() => {
     return basketItems.reduce((total, item) => total + getItemTotalPrice(item), 0);
-  };
+  }, [basketItems, getItemTotalPrice]);
 
-  // Get unique restaurants from basket items
-  const getUniqueRestaurants = () => {
+  // Get unique restaurants from basket items - memoized
+  const uniqueRestaurants = useMemo(() => {
     const restaurants = new Set(basketItems.map(item => item.dish.restaurant));
     return Array.from(restaurants);
-  };
+  }, [basketItems]);
 
   const getBasePromoSavingsPerItem = (item: BasketItem) => {
     if (item.dish.id === 'RS-COM-002') return 49; // 2x Pad Krapao Minced Pork (Special)
@@ -589,7 +595,7 @@ const BasketModal = ({
       });
     }
 
-    message += `💰 *Total: ฿${getTotalPrice()}*\n\n`;
+    message += `💰 *Total: ฿${totalPrice}*\n\n`;
     message += `📍 Delivery Address: ${address}\n`;
     message += `📞 Contact: ${phoneNumber || 'N/A'}`;
 
@@ -981,7 +987,7 @@ const BasketModal = ({
           {basketItems.length > 0 && (
             <div className="flex items-center gap-2 mb-3 pb-3 border-b border-gray-200">
               <div className="flex -space-x-2">
-                {getUniqueRestaurants().map((restaurant) => {
+                {uniqueRestaurants.map((restaurant) => {
                   const info = getRestaurantInfo(restaurant);
                   return (
                     <div
@@ -1016,10 +1022,10 @@ const BasketModal = ({
           <div className="flex justify-between items-center mb-4">
             <span className="text-lg font-semibold">{t('basket.total')}</span>
             <div className="flex items-center gap-2">
-              {getTotalOriginalPrice() > getTotalPrice() && (
+              {getTotalOriginalPrice() > totalPrice && (
                 <span className="text-sm text-gray-400 line-through">฿{getTotalOriginalPrice()}</span>
               )}
-              <span className="text-2xl font-bold text-primary">฿{getTotalPrice()}</span>
+              <span className="text-2xl font-bold text-primary">฿{totalPrice}</span>
             </div>
           </div>
 
@@ -1097,6 +1103,6 @@ const BasketModal = ({
       </DialogContent>
     </Dialog>
   );
-};
+});
 
 export default BasketModal;
