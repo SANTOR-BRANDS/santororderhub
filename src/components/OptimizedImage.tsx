@@ -112,6 +112,7 @@ const OptimizedImage = ({
         )}
         loading="lazy"
         decoding="async"
+        fetchPriority="low"
         onLoad={handleLoad}
         onError={handleError}
       />
