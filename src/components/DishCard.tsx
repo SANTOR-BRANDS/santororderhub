@@ -69,8 +69,8 @@ const DishCard = memo(function DishCard({
             </div>}
 
           {/* Promo savings badge */}
-          {!isUnavailable && isPromo && <div className="absolute top-0 right-0">
-              <span className="inline-flex h-6 items-center gap-1 rounded-bl-lg bg-red-500 px-2.5 text-[10px] font-semibold text-white shadow-sm border-l border-b border-white/15">
+          {!isUnavailable && isPromo && <div className="absolute top-1 right-0 pr-1">
+              <span className="inline-flex h-7 items-center gap-1 rounded-bl-lg rounded-tr-md bg-red-500 px-2.5 text-[11px] font-bold text-white shadow-md border-l border-b border-white/20">
                 <span className="leading-none">🔥</span>
                 <span className="leading-none">PROMO</span>
               </span>

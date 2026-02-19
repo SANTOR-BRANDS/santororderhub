@@ -722,7 +722,7 @@ const BasketModal = memo(function BasketModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
         className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden data-[state=open]:animate-none data-[state=closed]:animate-none"
-        overlayClassName="force-no-animation bg-black/80"
+        overlayClassName="force-no-animation bg-black/80 z-[60]"
       >
         <DialogHeader className="p-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center justify-between">
