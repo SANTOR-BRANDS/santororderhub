@@ -113,12 +113,12 @@ const UnifiedHeader = ({
                   <span className="font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-32 p-2" align="end">
+              <PopoverContent className="w-32 p-2 bg-popover border-border" align="end">
                 <div className="flex flex-col gap-1">
                   <Button
                     variant={language === 'en' ? 'secondary' : 'ghost'}
                     size="sm"
-                    className="w-full justify-start"
+                    className="w-full justify-start text-popover-foreground hover:bg-secondary hover:text-popover-foreground"
                     onClick={() => {
                       setLanguage('en');
                       setIsLanguageOpen(false);
@@ -129,7 +129,7 @@ const UnifiedHeader = ({
                   <Button
                     variant={language === 'th' ? 'secondary' : 'ghost'}
                     size="sm"
-                    className="w-full justify-start"
+                    className="w-full justify-start text-popover-foreground hover:bg-secondary hover:text-popover-foreground"
                     onClick={() => {
                       setLanguage('th');
                       setIsLanguageOpen(false);

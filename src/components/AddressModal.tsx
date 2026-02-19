@@ -18,7 +18,7 @@ export function AddressModal() {
     <Dialog open={isAddressModalOpen} onOpenChange={(open) => {
       if (!open) closeAddressModal();
     }}>
-      <DialogContent className="sm:max-w-md rounded-2xl">
+      <DialogContent className="sm:max-w-md rounded-2xl bg-popover text-popover-foreground border-border">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <MapPin className="h-5 w-5" />
@@ -30,7 +30,7 @@ export function AddressModal() {
             placeholder={t('order.addressPlaceholder') || 'Enter your delivery address...'}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="min-h-[100px] resize-none"
+            className="min-h-[100px] resize-none bg-secondary border-border text-foreground placeholder:text-muted-foreground"
             autoFocus
           />
           <Button 

@@ -347,7 +347,7 @@ export const enTranslations = {
   'SAN-SOO-004': 'Soft Omelette with Shrimp Fat + Fish Roe',
   
   // Extras
-  'SAN-EXT-001': '🍚 Extra Jasmine Rice 200g',
+  'SAN-EXT-001': '🍚 Extra Rice 200g',
   'RS-EXT-001': '🐔 Extra Chicken 150g',
   'RS-EXT-002': '🐷 Extra Pork 100g',
   'RS-EXT-003': '🐮 Extra Premium Beef 100g',
@@ -394,9 +394,9 @@ export const enTranslations = {
   'RS-SAU-003': 'Chilli Sauce',
   'RS-SAU-004': 'Maggie Sauce',
   'RS-SAU-005': 'Sweet Chilli Fish Sauce',
-  'RS-SAU-006': '🔴Isaan Dipping Sauce',
-  'RS-SAU-007': '🟢Seafood Sauce',
-  'RS-SAU-008': '🚫No Sauce',
+  'RS-SAU-006': '🔴 Isaan Dipping Sauce',
+  'RS-SAU-007': '🟢 Seafood Sauce',
+  'RS-SAU-008': '🚫 NO SAUCE',
   
   // Sauces - SANTOR
   'SAN-SAU-001': 'Ketchup',
