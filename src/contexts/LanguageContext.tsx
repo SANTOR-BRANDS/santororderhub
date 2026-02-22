@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { enTranslations, thTranslations } from '@/i18n';
+import { enTranslations, thTranslations, zhTranslations } from '@/i18n';
 
-type Language = 'en' | 'th';
+type Language = 'en' | 'th' | 'zh';
 
 interface LanguageContextType {
   language: Language;
@@ -14,6 +14,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const translations = {
   en: enTranslations,
   th: thTranslations,
+  zh: zhTranslations,
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

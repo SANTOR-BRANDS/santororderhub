@@ -78,7 +78,7 @@ const RestaurantHeader = ({
                     aria-label="Change language"
                   >
                     <Languages className="h-4 w-4 mr-2" />
-                    {language === 'en' ? 'EN' : 'ไทย'}
+                    {language === 'en' ? 'EN' : language === 'zh' ? '中文' : 'ไทย'}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-32 p-2" align="end">
@@ -98,6 +98,14 @@ const RestaurantHeader = ({
                       onClick={() => setLanguage('th')}
                     >
                       ไทย
+                    </Button>
+                    <Button
+                      variant={language === 'zh' ? 'secondary' : 'ghost'}
+                      size="sm"
+                      className="w-full justify-start"
+                      onClick={() => setLanguage('zh')}
+                    >
+                      中文
                     </Button>
                   </div>
                 </PopoverContent>

@@ -110,7 +110,7 @@ const UnifiedHeader = ({
                   aria-label="Change language">
 
                   <Globe className="h-4 w-4 mr-1.5" />
-                  <span className="font-medium">{language === 'en' ? 'EN' : 'TH'}</span>
+                  <span className="font-medium">{language === 'en' ? 'EN' : language === 'zh' ? '中文' : 'TH'}</span>
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-32 p-2 bg-popover border-border" align="end">
@@ -136,6 +136,17 @@ const UnifiedHeader = ({
                     }}>
 
                     ไทย
+                  </Button>
+                  <Button
+                    variant={language === 'zh' ? 'secondary' : 'ghost'}
+                    size="sm"
+                    className="w-full justify-start text-popover-foreground hover:bg-secondary hover:text-popover-foreground"
+                    onClick={() => {
+                      setLanguage('zh');
+                      setIsLanguageOpen(false);
+                    }}>
+
+                    中文
                   </Button>
                 </div>
               </PopoverContent>
