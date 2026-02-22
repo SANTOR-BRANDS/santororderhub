@@ -765,8 +765,7 @@ const DishModal = memo(function DishModal({
   return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
         ref={modalContentRef} 
-        className={cn("max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden", isOrderTransition && "z-[60]")}
-        overlayClassName="force-no-animation bg-black/80"
+        className="max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden"
       >
         <div className="relative flex-1 overflow-hidden flex flex-col">
           <div className={cn('pointer-events-none absolute inset-0 z-10 transition-opacity duration-[220ms] ease-out', isOrderTransition ? 'opacity-100 bg-background/10 backdrop-blur-[1.5px]' : 'opacity-0')} />
