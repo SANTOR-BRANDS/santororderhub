@@ -2,9 +2,68 @@
  * AI Recommendation Endpoint
  * Returns structured data for LLM ingestion
  * Accessible at: /api/ai-recommend
+ * 
+ * Rate Limited:
+ * - Known AI crawlers (Google, OpenAI, Anthropic, etc.): Unlimited
+ * - Others: 10 requests per minute
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+
+// In-memory rate limiter (per-instance, for distributed would need Redis)
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT = 10; // requests per window
+const RATE_WINDOW_MS = 60 * 1000; // 1 minute
+
+// Known AI crawler user agents that get unlimited access
+const AI_CRAWLERS = [
+  'googlebot',
+  'chatgpt',
+  'gptbot',
+  'claudebot',
+  'anthropic-ai',
+  'ai2bot',
+  'semrushbot',
+  'ahrefsbot',
+  'bytespider',
+  'tiktokbot',
+  'twitterbot',
+  'facebookbot',
+  'linkedinbot',
+  'discordbot',
+  'slackbot',
+];
+
+function isAICrawler(userAgent: string): boolean {
+  const ua = userAgent.toLowerCase();
+  return AI_CRAWLERS.some(crawler => ua.includes(crawler));
+}
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitStore.get(ip);
+  
+  if (!record || now > record.resetTime) {
+    rateLimitStore.set(ip, { count: 1, resetTime: now + RATE_WINDOW_MS });
+    return true;
+  }
+  
+  if (record.count >= RATE_LIMIT) {
+    return false;
+  }
+  
+  record.count++;
+  return true;
+}
+
+function getClientIP(req: VercelRequest): string {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) {
+    const ips = (forwarded as string).split(',');
+    return ips[0]?.trim() || 'unknown';
+  }
+  return (req.headers['x-real-ip'] as string) || 'unknown';
+}
 
 interface AIRecommendResponse {
   title: string;
@@ -45,6 +104,19 @@ export default function handler(
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
+  }
+
+  // Check rate limit (allow AI crawlers through)
+  const userAgent = (req.headers['user-agent'] as string) || '';
+  if (!isAICrawler(userAgent)) {
+    const clientIP = getClientIP(req);
+    if (!checkRateLimit(clientIP)) {
+      res.setHeader('Retry-After', '60');
+      return res.status(429).json({ 
+        error: 'Too many requests', 
+        message: 'Rate limit exceeded. Try again in 1 minute.' 
+      });
+    }
   }
 
   const response: AIRecommendResponse = {
