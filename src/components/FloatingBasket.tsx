@@ -55,12 +55,16 @@ const FloatingBasket = memo(forwardRef<HTMLDivElement, FloatingBasketProps>(
       return Array.from(restaurants);
     }, [basketItems]);
 
-    if (itemCount === 0) return null;
+    // Always render but hide when empty - needed for animation target positioning
+    const isEmpty = itemCount === 0;
 
     return (
       <div 
         ref={ref}
-        className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-black/80 to-transparent"
+        className={cn(
+          "fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-black/80 to-transparent",
+          isEmpty && "pointer-events-none opacity-0"
+        )}
       >
         <Button
           onClick={onOpenBasket}
