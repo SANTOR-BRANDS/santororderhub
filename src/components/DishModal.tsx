@@ -762,12 +762,7 @@ const DishModal = memo(function DishModal({
         </div>}
       </>;
   };
-  return <Dialog open={isOpen} onOpenChange={(open) => {
-      if (!open) {
-        // Prevent animation when closing - call onClose immediately without animation
-        onClose();
-      }
-    }}>
+  return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
         ref={modalContentRef} 
         className={cn("max-w-md max-h-[90vh] rounded-2xl p-0 flex flex-col overflow-hidden", isOrderTransition && "z-[60]")}
