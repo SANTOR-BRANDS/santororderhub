@@ -140,6 +140,9 @@ const Index = ({ initialBrand }: IndexProps) => {
       phase: 'lift',
       fadeOut: false,
     });
+    
+    // Debug: log the image URL
+    console.log('Animation dish image:', dish.image, 'for dish:', dish.id);
 
     setTimeout(() => {
       setFlyAnim((prev) => (prev ? { ...prev, phase: 'drop' } : prev));
