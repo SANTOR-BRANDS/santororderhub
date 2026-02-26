@@ -725,9 +725,6 @@ const DishModal = memo(function DishModal({
         {/* Free Toppings Section (Smoody Greek Yo) */}
         {isSmoody && renderFreeToppingsSection(dishNumber)}
 
-        {/* Smoody Honey/Granola/IceBag Options */}
-        {isSmoody && renderSmoodyOptions()}
-
         {/* EXTRA Section */}
         {isSmoody ? renderSmoodyGroupedExtras(dishNumber) : getFilteredExtraOptions(dishNumber).length > 0 && <div className="mb-6">
               <Label className="text-base font-semibold mb-3">
@@ -996,6 +993,9 @@ const DishModal = memo(function DishModal({
                       </div>
                     </RadioGroup>
                   </div>}
+
+                  {/* Smoody Honey/Granola/IceBag Options - After Sauce Section */}
+                  {isSmoody && renderSmoodyOptions()}
 
                   <Separator className="my-6" />
                 </>}
