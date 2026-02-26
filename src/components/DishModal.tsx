@@ -556,16 +556,20 @@ const DishModal = memo(function DishModal({
           <RadioGroup
             value={selectedGranolaOption ? "yes" : "no"}
             onValueChange={(val) => setSelectedGranolaOption(val === "yes")}
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-1"
           >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="yes" id="granola-yes" />
-              <Label htmlFor="granola-yes" className="cursor-pointer">{t('dish.smoody.yes')}</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="no" id="granola-no" />
-              <Label htmlFor="granola-no" className="cursor-pointer">{t('dish.smoody.no')}</Label>
-            </div>
+            <Label htmlFor="granola-yes" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="yes" id="granola-yes" />
+                <span className="text-sm">{t('dish.smoody.yes')}</span>
+              </div>
+            </Label>
+            <Label htmlFor="granola-no" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="no" id="granola-no" />
+                <span className="text-sm">{t('dish.smoody.no')}</span>
+              </div>
+            </Label>
           </RadioGroup>
         </div>
 
@@ -578,20 +582,26 @@ const DishModal = memo(function DishModal({
           <RadioGroup
             value={selectedHoneyOption}
             onValueChange={setSelectedHoneyOption}
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-1"
           >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="drizzle" id="honey-drizzle" />
-              <Label htmlFor="honey-drizzle" className="cursor-pointer">{t('dish.smoody.honeyDrizzle')}</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="separate" id="honey-separate" />
-              <Label htmlFor="honey-separate" className="cursor-pointer">{t('dish.smoody.honeySeparate')}</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="none" id="honey-none" />
-              <Label htmlFor="honey-none" className="cursor-pointer">{t('dish.smoody.honeyNone')}</Label>
-            </div>
+            <Label htmlFor="honey-drizzle" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="drizzle" id="honey-drizzle" />
+                <span className="text-sm">{t('dish.smoody.honeyDrizzle')}</span>
+              </div>
+            </Label>
+            <Label htmlFor="honey-separate" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="separate" id="honey-separate" />
+                <span className="text-sm">{t('dish.smoody.honeySeparate')}</span>
+              </div>
+            </Label>
+            <Label htmlFor="honey-none" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="none" id="honey-none" />
+                <span className="text-sm">{t('dish.smoody.honeyNone')}</span>
+              </div>
+            </Label>
           </RadioGroup>
         </div>
 
@@ -604,22 +614,22 @@ const DishModal = memo(function DishModal({
           <RadioGroup
             value={selectedIceBagOption ? "yes" : "no"}
             onValueChange={(val) => setSelectedIceBagOption(val === "yes")}
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-1"
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
+            <Label htmlFor="icebag-yes" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
                 <RadioGroupItem value="yes" id="icebag-yes" />
-                <Label htmlFor="icebag-yes" className="cursor-pointer">{t('dish.smoody.yes')}</Label>
+                <span className="text-sm">{t('dish.smoody.yes')}</span>
               </div>
               <span className="text-sm text-muted-foreground">+{iceBagPrice}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
+            </Label>
+            <Label htmlFor="icebag-no" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
                 <RadioGroupItem value="no" id="icebag-no" />
-                <Label htmlFor="icebag-no" className="cursor-pointer">{t('dish.smoody.no')}</Label>
+                <span className="text-sm">{t('dish.smoody.no')}</span>
               </div>
               <span className="text-sm text-muted-foreground">+0</span>
-            </div>
+            </Label>
           </RadioGroup>
         </div>
 
