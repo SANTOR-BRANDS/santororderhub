@@ -97,6 +97,7 @@ export const enTranslations = {
   'dish.smoody.honeyDrizzle': 'Drizzle with Natural Honey',
   'dish.smoody.honeySeparate': 'Separate Natural Honey',
   'dish.smoody.honeyNone': 'No Natural Honey',
+  'EXT-SAU-001': 'Extra Natural Honey (+15)',
   
   // Categories
   'category.all': 'ALL',

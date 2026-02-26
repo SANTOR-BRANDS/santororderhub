@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
 import { Dish, AddOn, SPICY_LEVELS, getSaucesByRestaurant, BasketItem, DishVariant } from '@/types/menu';
 import { addOns } from '@/data/menuData';
-import { SMOODY_FREE_TOPPINGS } from '@/data/smoodyData';
+import { SMOODY_FREE_TOPPINGS, SMOODY_PAID_EXTRAS } from '@/data/smoodyData';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -55,6 +55,11 @@ const DishModal = memo(function DishModal({
   const [selectedHoneyOption, setSelectedHoneyOption] = useState<string>('drizzle');
   const [selectedGranolaOption, setSelectedGranolaOption] = useState<boolean>(false);
   const [selectedIceBagOption, setSelectedIceBagOption] = useState<boolean>(false);
+  
+  // Smoody collapsible sections
+  const [smoodyFruitsOpen, setSmoodyFruitsOpen] = useState(false);
+  const [smoodyNutsOpen, setSmoodyNutsOpen] = useState(false);
+  const [smoodySaucesOpen, setSmoodySaucesOpen] = useState(false);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -548,119 +553,247 @@ const DishModal = memo(function DishModal({
     // Only show Granola and Natural Honey for variants WITHOUT free toppings (e.g., 1 Scoop PROMO)
     const showFreeGranolaHoney = !selectedVariant?.freeToppingsLimit;
     
+    // Get current selections for chips
+    const selectedFruits = selectedAddOns.filter(addon => addon.category === 'sm-fruits');
+    const selectedNuts = selectedAddOns.filter(addon => addon.category === 'sm-nuts');
+    const selectedSauces = selectedAddOns.filter(addon => addon.category === 'sm-sauce');
+    
+    // Get Smoody extras
+    const smoodyFruits = SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-fruits');
+    const smoodyNuts = SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-nuts');
+    const smoodySauces = SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-sauce');
+    
     return (
       <div className="space-y-6">
-        {/* Granola (required) - only show if no free toppings */}
-        {showFreeGranolaHoney && (
+        {/* Included Options (Required) */}
         <div className="mb-6">
-          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-            FREE Granola (1oz) <span className="text-red-500">*</span>
+          <Label className="text-base font-semibold mb-4 flex items-center gap-2">
+            Included Options <span className="text-red-500">*</span>
             <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
           </Label>
-          <RadioGroup
-            value={selectedGranolaOption ? "yes" : "no"}
-            onValueChange={(val) => setSelectedGranolaOption(val === "yes")}
-            className="flex flex-col gap-1"
-          >
-            <Label htmlFor="granola-yes" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="yes" id="granola-yes" />
-                <span className="text-sm">{t('dish.smoody.yes')}</span>
-              </div>
-            </Label>
-            <Label htmlFor="granola-no" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="no" id="granola-no" />
-                <span className="text-sm">{t('dish.smoody.no')}</span>
-              </div>
-            </Label>
-          </RadioGroup>
-        </div>
-        )}
-
-        {/* Natural Honey (required) - only show if no free toppings */}
-        {showFreeGranolaHoney && (
-        <div className="mb-6">
-          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-            FREE Natural Honey <span className="text-red-500">*</span>
-            <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
-          </Label>
-          <RadioGroup
-            value={selectedHoneyOption}
-            onValueChange={setSelectedHoneyOption}
-            className="flex flex-col gap-1"
-          >
-            <Label htmlFor="honey-drizzle" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="drizzle" id="honey-drizzle" />
-                <span className="text-sm">{t('dish.smoody.honeyDrizzle')}</span>
-              </div>
-            </Label>
-            <Label htmlFor="honey-separate" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="separate" id="honey-separate" />
-                <span className="text-sm">{t('dish.smoody.honeySeparate')}</span>
-              </div>
-            </Label>
-            <Label htmlFor="honey-none" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="none" id="honey-none" />
-                <span className="text-sm">{t('dish.smoody.honeyNone')}</span>
-              </div>
-            </Label>
-          </RadioGroup>
-        </div>
-        )}
-
-        {/* Ice Bag (required) */}
-        <div className="mb-6">
-          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-            Ice Bag <span className="text-red-500">*</span>
-            <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
-          </Label>
-          <RadioGroup
-            value={selectedIceBagOption ? "yes" : "no"}
-            onValueChange={(val) => setSelectedIceBagOption(val === "yes")}
-            className="flex flex-col gap-1"
-          >
-            <Label htmlFor="icebag-yes" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="yes" id="icebag-yes" />
-                <span className="text-sm">{t('dish.smoody.yes')}</span>
-              </div>
-              <span className="text-sm text-muted-foreground">+{iceBagPrice}</span>
-            </Label>
-            <Label htmlFor="icebag-no" className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="no" id="icebag-no" />
-                <span className="text-sm">{t('dish.smoody.no')}</span>
-              </div>
-              <span className="text-sm text-muted-foreground">+0</span>
-            </Label>
-          </RadioGroup>
-        </div>
-
-        {/* Need Cutlery? */}
-        <div className="mb-6">
-          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-            {t('dish.cutleryQuestion')} <span className="text-red-500">*</span>
-            <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
-          </Label>
-          <RadioGroup
-            value={needsCutlery ? "yes" : "no"}
-            onValueChange={(val) => setNeedsCutlery(val === "yes")}
-            className="gap-2"
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="yes" id="cutlery-yes" />
-              <Label htmlFor="cutlery-yes">{t('dish.cutleryYes')}</Label>
+          
+          {/* Granola - only show if no free toppings */}
+          {showFreeGranolaHoney && (
+            <div className="mb-4">
+              <div className="text-sm font-medium mb-2">Granola (1oz)</div>
+              <RadioGroup
+                value={selectedGranolaOption ? "yes" : "no"}
+                onValueChange={(val) => setSelectedGranolaOption(val === "yes")}
+                className="flex gap-2"
+              >
+                <Label htmlFor="granola-yes" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", selectedGranolaOption === true ? "border-primary bg-primary/10" : "border-border")}>
+                  <RadioGroupItem value="yes" id="granola-yes" className="sr-only" />
+                  <span className="text-sm">{t('dish.smoody.yes')}</span>
+                </Label>
+                <Label htmlFor="granola-no" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", selectedGranolaOption === false ? "border-primary bg-primary/10" : "border-border")}>
+                  <RadioGroupItem value="no" id="granola-no" className="sr-only" />
+                  <span className="text-sm">{t('dish.smoody.no')}</span>
+                </Label>
+              </RadioGroup>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="no" id="cutlery-no" />
-              <Label htmlFor="cutlery-no">{t('dish.cutleryNo')}</Label>
+          )}
+          
+          {/* Natural Honey - only show if no free toppings */}
+          {showFreeGranolaHoney && (
+            <div className="mb-4">
+              <div className="text-sm font-medium mb-2">Natural Honey</div>
+              <RadioGroup
+                value={selectedHoneyOption}
+                onValueChange={setSelectedHoneyOption}
+                className="flex flex-wrap gap-2"
+              >
+                <Label htmlFor="honey-drizzle" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", selectedHoneyOption === 'drizzle' ? "border-primary bg-primary/10" : "border-border")}>
+                  <RadioGroupItem value="drizzle" id="honey-drizzle" className="sr-only" />
+                  <span className="text-sm">Drizzle</span>
+                </Label>
+                <Label htmlFor="honey-separate" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", selectedHoneyOption === 'separate' ? "border-primary bg-primary/10" : "border-border")}>
+                  <RadioGroupItem value="separate" id="honey-separate" className="sr-only" />
+                  <span className="text-sm">Separate</span>
+                </Label>
+                <Label htmlFor="honey-none" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", selectedHoneyOption === 'none' ? "border-primary bg-primary/10" : "border-border")}>
+                  <RadioGroupItem value="none" id="honey-none" className="sr-only" />
+                  <span className="text-sm">No Honey</span>
+                </Label>
+              </RadioGroup>
             </div>
-          </RadioGroup>
+          )}
+          
+          {/* Ice Bag */}
+          <div className="mb-4">
+            <div className="text-sm font-medium mb-2">Ice Bag</div>
+            <RadioGroup
+              value={selectedIceBagOption ? "yes" : "no"}
+              onValueChange={(val) => setSelectedIceBagOption(val === "yes")}
+              className="flex gap-2"
+            >
+              <Label htmlFor="icebag-yes" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", selectedIceBagOption === true ? "border-primary bg-primary/10" : "border-border")}>
+                <RadioGroupItem value="yes" id="icebag-yes" className="sr-only" />
+                <span className="text-sm">Add (+{iceBagPrice})</span>
+              </Label>
+              <Label htmlFor="icebag-no" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", selectedIceBagOption === false ? "border-primary bg-primary/10" : "border-border")}>
+                <RadioGroupItem value="no" id="icebag-no" className="sr-only" />
+                <span className="text-sm">No</span>
+              </Label>
+            </RadioGroup>
+          </div>
+          
+          {/* Cutlery */}
+          <div>
+            <div className="text-sm font-medium mb-2">{t('dish.cutleryQuestion')}</div>
+            <RadioGroup
+              value={needsCutlery ? "yes" : "no"}
+              onValueChange={(val) => setNeedsCutlery(val === "yes")}
+              className="flex gap-2"
+            >
+              <Label htmlFor="cutlery-yes" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", needsCutlery === true ? "border-primary bg-primary/10" : "border-border")}>
+                <RadioGroupItem value="yes" id="cutlery-yes" className="sr-only" />
+                <span className="text-sm">{t('dish.cutleryYes')}</span>
+              </Label>
+              <Label htmlFor="cutlery-no" className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", needsCutlery === false ? "border-primary bg-primary/10" : "border-border")}>
+                <RadioGroupItem value="no" id="cutlery-no" className="sr-only" />
+                <span className="text-sm">{t('dish.cutleryNo')}</span>
+              </Label>
+            </RadioGroup>
+          </div>
         </div>
+        
+        {/* Extra Scoop */}
+        {smoodyFruits.length > 0 && (
+          <div className="mb-4">
+            <div className="text-sm font-medium mb-2">🍨 Extra Scoop</div>
+            <div className="flex gap-2">
+              {SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-greek-yo').map(addon => {
+                const isSelected = selectedAddOns.some(a => a.id === addon.id);
+                return (
+                  <Label key={addon.id} htmlFor={`extra-${addon.id}`} className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", isSelected ? "border-primary bg-primary/10" : "border-border")}>
+                    <Checkbox id={`extra-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedAddOns(prev => [...prev, addon]);
+                      } else {
+                        setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
+                      }
+                    }} />
+                    <span className="text-sm ml-2">{t(addon.id)}</span>
+                  </Label>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        
+        {/* Fresh Fruits - Collapsible */}
+        {smoodyFruits.length > 0 && (
+          <div className="mb-4 border rounded-lg overflow-hidden">
+            <button 
+              type="button"
+              onClick={() => setSmoodyFruitsOpen(!smoodyFruitsOpen)}
+              className="w-full flex items-center justify-between p-3 hover:bg-muted/50 transition-colors"
+            >
+              <span className="text-sm font-medium">🍓 ADD FRESH FRUITS</span>
+              <div className="flex items-center gap-2">
+                {selectedFruits.length > 0 && (
+                  <span className="text-xs bg-primary/20 px-2 py-0.5 rounded-full">{selectedFruits.length}</span>
+                )}
+                <span className="text-xs">{smoodyFruitsOpen ? '▲' : '▼'}</span>
+              </div>
+            </button>
+            {smoodyFruitsOpen && (
+              <div className="p-3 pt-0 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {smoodyFruits.map(addon => {
+                  const isSelected = selectedAddOns.some(a => a.id === addon.id);
+                  return (
+                    <Label key={addon.id} htmlFor={`fruit-${addon.id}`} className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-2 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}>
+                      <Checkbox id={`fruit-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
+                        if (checked) {
+                          setSelectedAddOns(prev => [...prev, addon]);
+                        } else {
+                          setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
+                        }
+                      }} />
+                      <span className="ml-1 truncate">{t(addon.id)}</span>
+                    </Label>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+        
+        {/* Nuts & Crunch - Collapsible */}
+        {smoodyNuts.length > 0 && (
+          <div className="mb-4 border rounded-lg overflow-hidden">
+            <button 
+              type="button"
+              onClick={() => setSmoodyNutsOpen(!smoodyNutsOpen)}
+              className="w-full flex items-center justify-between p-3 hover:bg-muted/50 transition-colors"
+            >
+              <span className="text-sm font-medium">🥜 ADD NUTS & CRUNCH</span>
+              <div className="flex items-center gap-2">
+                {selectedNuts.length > 0 && (
+                  <span className="text-xs bg-primary/20 px-2 py-0.5 rounded-full">{selectedNuts.length}</span>
+                )}
+                <span className="text-xs">{smoodyNutsOpen ? '▲' : '▼'}</span>
+              </div>
+            </button>
+            {smoodyNutsOpen && (
+              <div className="p-3 pt-0 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {smoodyNuts.map(addon => {
+                  const isSelected = selectedAddOns.some(a => a.id === addon.id);
+                  return (
+                    <Label key={addon.id} htmlFor={`nut-${addon.id}`} className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-2 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}>
+                      <Checkbox id={`nut-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
+                        if (checked) {
+                          setSelectedAddOns(prev => [...prev, addon]);
+                        } else {
+                          setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
+                        }
+                      }} />
+                      <span className="ml-1 truncate">{t(addon.id)}</span>
+                    </Label>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+        
+        {/* Sauces - Collapsible */}
+        {smoodySauces.length > 0 && (
+          <div className="mb-4 border rounded-lg overflow-hidden">
+            <button 
+              type="button"
+              onClick={() => setSmoodySaucesOpen(!smoodySaucesOpen)}
+              className="w-full flex items-center justify-between p-3 hover:bg-muted/50 transition-colors"
+            >
+              <span className="text-sm font-medium">🍯 ADD SAUCES</span>
+              <div className="flex items-center gap-2">
+                {selectedSauces.length > 0 && (
+                  <span className="text-xs bg-primary/20 px-2 py-0.5 rounded-full">{selectedSauces.length}</span>
+                )}
+                <span className="text-xs">{smoodySaucesOpen ? '▲' : '▼'}</span>
+              </div>
+            </button>
+            {smoodySaucesOpen && (
+              <div className="p-3 pt-0 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {smoodySauces.map(addon => {
+                  const isSelected = selectedAddOns.some(a => a.id === addon.id);
+                  return (
+                    <Label key={addon.id} htmlFor={`sauce-${addon.id}`} className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-2 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}>
+                      <Checkbox id={`sauce-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
+                        if (checked) {
+                          setSelectedAddOns(prev => [...prev, addon]);
+                        } else {
+                          setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
+                        }
+                      }} />
+                      <span className="ml-1 truncate">{t(addon.id)}</span>
+                    </Label>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     );
   };
@@ -739,6 +872,9 @@ const DishModal = memo(function DishModal({
               })}
             </RadioGroup>
           </div>}
+
+        {/* Smoody Required Options - After variant selection */}
+        {isSmoody && renderSmoodyOptions()}
 
         {/* Free Toppings Section (Smoody Greek Yo) */}
         {isSmoody && renderFreeToppingsSection(dishNumber)}
@@ -1011,9 +1147,6 @@ const DishModal = memo(function DishModal({
                       </div>
                     </RadioGroup>
                   </div>}
-
-                  {/* Smoody Honey/Granola/IceBag Options - After Sauce Section */}
-                  {isSmoody && renderSmoodyOptions()}
 
                   <Separator className="my-6" />
                 </>}

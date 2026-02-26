@@ -97,6 +97,7 @@ export const zhTranslations = {
   'dish.smoody.honeyDrizzle': '淋天然蜂蜜',
   'dish.smoody.honeySeparate': '分开天然蜂蜜',
   'dish.smoody.honeyNone': '不要天然蜂蜜',
+  'EXT-SAU-001': '加天然蜂蜜 (+15)',
   
   // Categories
   'category.all': '全部',
