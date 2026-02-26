@@ -98,6 +98,7 @@ export const enTranslations = {
   'dish.smoody.honeySeparate': 'Separate Natural Honey',
   'dish.smoody.honeyNone': 'No Natural Honey',
   'EXT-SAU-001': 'Extra Natural Honey (+15)',
+  'EXT-GRK-001': 'Greek Yo Extra Scoop',
   
   // Categories
   'category.all': 'ALL',

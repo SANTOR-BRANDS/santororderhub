@@ -98,6 +98,7 @@ export const thTranslations = {
   'dish.smoody.honeySeparate': 'แยกน้ำผึ้งแท้',
   'dish.smoody.honeyNone': 'ไม่เอาน้ำผึ้ง',
   'EXT-SAU-001': 'เพิ่มน้ำผึ้งแท้ (+15)',
+  'EXT-GRK-001': 'กรีกโย เพิ่มควอร์ต',
   
   // Categories
   'category.all': 'ทั้งหมด',

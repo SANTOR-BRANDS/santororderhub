@@ -657,15 +657,17 @@ const DishModal = memo(function DishModal({
           </div>
         </div>
         
-        {/* Extra Scoop */}
-        {smoodyFruits.length > 0 && (
+        {/* Extra Scoop - List style like before */}
+        {SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-greek-yo').length > 0 && (
           <div className="mb-4">
-            <div className="text-sm font-medium mb-2">🍨 Extra Scoop</div>
-            <div className="flex gap-2">
+            <Label className="text-base font-semibold mb-3">
+              🍨 Extra Scoop
+            </Label>
+            <div className="space-y-1">
               {SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-greek-yo').map(addon => {
                 const isSelected = selectedAddOns.some(a => a.id === addon.id);
-                return (
-                  <Label key={addon.id} htmlFor={`extra-${addon.id}`} className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-4 transition-colors border", isSelected ? "border-primary bg-primary/10" : "border-border")}>
+                return <Label key={addon.id} htmlFor={`extra-${addon.id}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+                  <div className="flex items-center gap-3">
                     <Checkbox id={`extra-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
                       if (checked) {
                         setSelectedAddOns(prev => [...prev, addon]);
@@ -673,9 +675,12 @@ const DishModal = memo(function DishModal({
                         setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
                       }
                     }} />
-                    <span className="text-sm ml-2">{t(addon.id)}</span>
-                  </Label>
-                );
+                    <span className="text-sm">{t(addon.id)}</span>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    +{addon.price}
+                  </span>
+                </Label>;
               })}
             </div>
           </div>
@@ -879,8 +884,8 @@ const DishModal = memo(function DishModal({
         {/* Free Toppings Section (Smoody Greek Yo) */}
         {isSmoody && renderFreeToppingsSection(dishNumber)}
 
-        {/* EXTRA Section */}
-        {isSmoody ? renderSmoodyGroupedExtras(dishNumber) : getFilteredExtraOptions(dishNumber).length > 0 && <div className="mb-6">
+        {/* EXTRA Section - Only for non-Smoody */}
+        {!isSmoody && getFilteredExtraOptions(dishNumber).length > 0 && <div className="mb-6">
               <Label className="text-base font-semibold mb-3">
                 EXTRA
               </Label>
