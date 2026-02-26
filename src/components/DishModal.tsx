@@ -611,7 +611,7 @@ const DishModal = memo(function DishModal({
                 <RadioGroupItem value="yes" id="icebag-yes" />
                 <Label htmlFor="icebag-yes" className="cursor-pointer">{t('dish.smoody.yes')}</Label>
               </div>
-              <span className="text-sm text-muted-foreground">+{iceBagPrice} THB</span>
+              <span className="text-sm text-muted-foreground">+{iceBagPrice}</span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
