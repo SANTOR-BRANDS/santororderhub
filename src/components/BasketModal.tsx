@@ -444,6 +444,22 @@ const BasketModal = memo(function BasketModal({
           extras += `    - 🎁 Free Toppings: ${freeToppingNames}\n`;
         }
         
+        // Smoody-specific options (Granola, Honey, Ice Bag)
+        if (item.honeyOption) {
+          const honeyLabels: Record<string, string> = {
+            drizzle: 'Drizzle with Natural Honey',
+            separate: 'Separate Natural Honey',
+            none: 'No Natural Honey'
+          };
+          extras += `    - 🍯 Natural Honey: ${honeyLabels[item.honeyOption] || item.honeyOption}\n`;
+        }
+        if (item.wantsGranola !== undefined) {
+          extras += `    - 🥣 Granola: ${item.wantsGranola ? 'Yes' : 'No'}\n`;
+        }
+        if (item.wantsIceBag !== undefined) {
+          extras += `    - 🧊 Ice Bag: ${item.wantsIceBag ? 'Yes (+3)' : 'No'}\n`;
+        }
+        
         // Format combo dish 2
         extras += `  🍽️ ${t('basket.dish')} 2:\n`;
         if (item.combo2.selectedVariant) {
@@ -557,6 +573,23 @@ const BasketModal = memo(function BasketModal({
           }).join(', ');
           extras += `  - 🎁 Free Toppings: ${freeToppingNames}\n`;
         }
+        
+        // Smoody-specific options
+        if (item.honeyOption) {
+          const honeyLabels: Record<string, string> = {
+            drizzle: 'Drizzle with Natural Honey',
+            separate: 'Separate Natural Honey',
+            none: 'No Natural Honey'
+          };
+          extras += `  - 🍯 Natural Honey: ${honeyLabels[item.honeyOption] || item.honeyOption}\n`;
+        }
+        if (item.wantsGranola !== undefined) {
+          extras += `  - 🥣 Granola: ${item.wantsGranola ? 'Yes' : 'No'}\n`;
+        }
+        if (item.wantsIceBag !== undefined) {
+          extras += `  - 🧊 Ice Bag: ${item.wantsIceBag ? 'Yes (+3)' : 'No'}\n`;
+        }
+        
         extras += `  - ${t('basket.cutlery')}: ${item.needsCutlery ? t('basket.yes') : t('basket.no')}\n`;
         extras += `  - Quantity: ${item.quantity}\n`;
         
@@ -806,6 +839,21 @@ const BasketModal = memo(function BasketModal({
                         }).join(', ');
                         return <div className="pl-3">🎁 Free Toppings: {freeToppingNames}</div>;
                       })()}
+                      
+                      {/* Smoody-specific options */}
+                      {item.honeyOption && (
+                        <div className="pl-3">🍯 Natural Honey: {
+                          item.honeyOption === 'drizzle' ? 'Drizzle with Natural Honey' :
+                          item.honeyOption === 'separate' ? 'Separate Natural Honey' :
+                          'No Natural Honey'
+                        }</div>
+                      )}
+                      {item.wantsGranola !== undefined && (
+                        <div className="pl-3">🥣 Granola: {item.wantsGranola ? 'Yes' : 'No'}</div>
+                      )}
+                      {item.wantsIceBag !== undefined && (
+                        <div className="pl-3">🧊 Ice Bag: {item.wantsIceBag ? 'Yes (+3)' : 'No'}</div>
+                      )}
                       
                       {/* Combo Dish 2 */}
                       <div className="font-semibold text-foreground mt-2">🍽️ {t('basket.dish')} 2:</div>
