@@ -1000,7 +1000,10 @@ const BasketModal = memo(function BasketModal({
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
-                          e.currentTarget.parentElement!.innerHTML = `<span class="text-xs font-bold flex items-center justify-center h-full">${info?.name.charAt(0)}</span>`;
+                          const span = document.createElement('span');
+                          span.className = 'text-xs font-bold flex items-center justify-center h-full';
+                          span.textContent = info?.name?.charAt(0) || '?';
+                          e.currentTarget.parentElement!.appendChild(span);
                         }}
                       />
                     </div>

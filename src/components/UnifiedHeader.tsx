@@ -207,7 +207,10 @@ const UnifiedHeader = ({
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
-                          e.currentTarget.parentElement!.innerHTML = `<span class="text-lg font-bold text-white">${info.name.charAt(0)}</span>`;
+                          const span = document.createElement('span');
+                          span.className = 'text-lg font-bold text-white';
+                          span.textContent = info.name.charAt(0);
+                          e.currentTarget.parentElement!.appendChild(span);
                         }} /> :
 
 

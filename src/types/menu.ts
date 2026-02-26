@@ -48,6 +48,10 @@ export interface BasketItem {
   quantity: number;
   isPremiumBeef?: boolean;
   freeToppings?: string[];
+  // Smoody-specific options
+  honeyOption?: 'drizzle' | 'separate' | 'none';
+  wantsGranola?: boolean;
+  wantsIceBag?: boolean;
   // For combo deals (2x Pad Krapao)
   isCombo?: boolean;
   combo2?: {

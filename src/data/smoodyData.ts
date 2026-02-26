@@ -31,7 +31,7 @@ export const SMOODY_PAID_EXTRAS: AddOn[] = [
   { id: 'EXT-NUT-011', name: 'Almonds', price: 30, category: 'sm-nuts' },
 
   // Sauces
-  { id: 'EXT-SAU-001', name: 'Longan Flower Honey', price: 15, category: 'sm-sauce' },
+  { id: 'EXT-SAU-001', name: 'Premium Honey', price: 15, category: 'sm-sauce' },
   { id: 'EXT-SAU-002', name: 'Caramel', price: 15, category: 'sm-sauce' },
   { id: 'EXT-SAU-003', name: 'Chocolate', price: 20, category: 'sm-sauce' },
   { id: 'EXT-SAU-004', name: 'Peanut Butter', price: 30, category: 'sm-sauce' },

@@ -50,6 +50,11 @@ const DishModal = memo(function DishModal({
   const [isAddPressed, setIsAddPressed] = useState(false);
   const [isOrderPressed, setIsOrderPressed] = useState(false);
   const [isOrderTransition, setIsOrderTransition] = useState(false);
+  
+  // Smoody-specific options
+  const [selectedHoneyOption, setSelectedHoneyOption] = useState<string>('drizzle');
+  const [selectedGranolaOption, setSelectedGranolaOption] = useState<boolean>(true);
+  const [selectedIceBagOption, setSelectedIceBagOption] = useState<boolean>(true);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -83,6 +88,11 @@ const DishModal = memo(function DishModal({
       setNeedsCutlery(false);
       setQuantity(1);
       setSelectedFreeToppings([]);
+      
+      // Reset Smoody-specific options
+      setSelectedHoneyOption('drizzle');
+      setSelectedGranolaOption(true);
+      setSelectedIceBagOption(true);
 
       // Reset combo state for dish 2
       if (isCombo) {
@@ -170,7 +180,11 @@ const DishModal = memo(function DishModal({
       }, 0);
       return basePrice + extraPlsTotal + addOnsTotal + saucesTotal + extraPlsTotal2 + addOnsTotal2 + saucesTotal2;
     }
-    return basePrice + extraPlsTotal + addOnsTotal + saucesTotal;
+    
+    // Add ice bag price for Smoody
+    const iceBagPrice = isSmoody && selectedIceBagOption ? 3 : 0;
+    
+    return basePrice + extraPlsTotal + addOnsTotal + saucesTotal + iceBagPrice;
   };
 
   // Filter extra options based on current selection and variant restrictions
@@ -252,8 +266,13 @@ const DishModal = memo(function DishModal({
 
     // TOPPINGS items don't require any selections
     if (dish.category === 'TOPPINGS') return true;
-    // Smoody dishes don't require sauce
-    if (isSmoody) return true;
+    
+    // Smoody-specific validation (honey, granola, icebag are required)
+    if (isSmoody) {
+      // These options are always selected by default, so validation always passes
+      return true;
+    }
+    
     const requiresSauce = dish.category !== 'DRINKS' && dish.category !== 'FRESH SALMON' && dish.category !== 'DESSERT';
 
     // Check spicy level first for dish 1
@@ -298,6 +317,12 @@ const DishModal = memo(function DishModal({
     return true;
   };
   const createBasketItem = (): BasketItem => {
+    const smoodyOptions = isSmoody ? {
+      honeyOption: selectedHoneyOption as 'drizzle' | 'separate' | 'none',
+      wantsGranola: selectedGranolaOption,
+      wantsIceBag: selectedIceBagOption,
+    } : {};
+    
     if (isCombo) {
       return {
         id: `${dish.id}-combo-${Date.now()}`,
@@ -311,6 +336,7 @@ const DishModal = memo(function DishModal({
         needsCutlery,
         quantity,
         isCombo: true,
+        ...smoodyOptions,
         combo2: {
           selectedVariant: selectedVariant2,
           addOns: selectedAddOns2,
@@ -334,7 +360,8 @@ const DishModal = memo(function DishModal({
         quantity,
         ...(selectedFreeToppings.length > 0 ? {
           freeToppings: selectedFreeToppings
-        } : {})
+        } : {}),
+        ...smoodyOptions
       };
     }
   };
@@ -512,6 +539,126 @@ const DishModal = memo(function DishModal({
       </div>;
   };
 
+  // Render Smoody-specific options section
+  const renderSmoodyOptions = () => {
+    if (!isSmoody) return null;
+    
+    const iceBagPrice = 3;
+    
+    return (
+      <div className="space-y-6">
+        {/* FREE Honey (required) */}
+        <div className="mb-6">
+          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+            FREE Honey <span className="text-red-500">*</span>
+          </Label>
+          <RadioGroup
+            value={selectedHoneyOption}
+            onValueChange={setSelectedHoneyOption}
+            className="flex flex-col gap-2"
+          >
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="drizzle" id="honey-drizzle" />
+                <span className="text-sm">Drizzle with honey</span>
+              </div>
+            </Label>
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="separate" id="honey-separate" />
+                <span className="text-sm">Separate honey</span>
+              </div>
+            </Label>
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="none" id="honey-none" />
+                <span className="text-sm">No Honey</span>
+              </div>
+            </Label>
+          </RadioGroup>
+        </div>
+
+        {/* FREE Granola (1oz) (required) */}
+        <div className="mb-6">
+          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+            FREE Granola (1oz) <span className="text-red-500">*</span>
+          </Label>
+          <RadioGroup
+            value={selectedGranolaOption ? "yes" : "no"}
+            onValueChange={(val) => setSelectedGranolaOption(val === "yes")}
+            className="flex flex-col gap-2"
+          >
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="yes" id="granola-yes" />
+                <span className="text-sm">Yes, please!</span>
+              </div>
+              <span className="text-xs font-medium text-green-500">FREE</span>
+            </Label>
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="no" id="granola-no" />
+                <span className="text-sm">No</span>
+              </div>
+            </Label>
+          </RadioGroup>
+        </div>
+
+        {/* Ice Bag (required) */}
+        <div className="mb-6">
+          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+            Ice Bag <span className="text-red-500">*</span>
+          </Label>
+          <RadioGroup
+            value={selectedIceBagOption ? "yes" : "no"}
+            onValueChange={(val) => setSelectedIceBagOption(val === "yes")}
+            className="flex flex-col gap-2"
+          >
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="yes" id="icebag-yes" />
+                <span className="text-sm">Yes, please!</span>
+              </div>
+              <span className="text-sm text-muted-foreground">+{iceBagPrice} THB</span>
+            </Label>
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="no" id="icebag-no" />
+                <span className="text-sm">No</span>
+              </div>
+              <span className="text-sm text-muted-foreground">+0</span>
+            </Label>
+          </RadioGroup>
+        </div>
+
+        {/* Need Cutlery? */}
+        <div className="mb-6">
+          <Label className="text-base font-semibold mb-3">
+            Need Cutlery?
+          </Label>
+          <RadioGroup
+            value={needsCutlery ? "yes" : "no"}
+            onValueChange={(val) => setNeedsCutlery(val === "yes")}
+            className="flex flex-col gap-2"
+          >
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="yes" id="cutlery-yes" />
+                <span className="text-sm">Yes, please</span>
+              </div>
+            </Label>
+            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <RadioGroupItem value="no" id="cutlery-no" />
+                <span className="text-sm">No</span>
+              </div>
+            </Label>
+          </RadioGroup>
+        </div>
+      </div>
+    );
+  };
+
   // Component for rendering customization options
   const renderCustomizationOptions = (dishNumber = 1) => {
     const currentSelectedVariant = dishNumber === 1 ? selectedVariant : selectedVariant2;
@@ -589,6 +736,9 @@ const DishModal = memo(function DishModal({
 
         {/* Free Toppings Section (Smoody Greek Yo) */}
         {isSmoody && renderFreeToppingsSection(dishNumber)}
+
+        {/* Smoody Honey/Granola/IceBag Options */}
+        {isSmoody && renderSmoodyOptions()}
 
         {/* EXTRA Section */}
         {isSmoody ? renderSmoodyGroupedExtras(dishNumber) : getFilteredExtraOptions(dishNumber).length > 0 && <div className="mb-6">
