@@ -550,7 +550,8 @@ const DishModal = memo(function DishModal({
         {/* Granola (required) */}
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-            Granola (1oz) <span className="text-red-500">*</span>
+            FREE Granola (1oz) <span className="text-red-500">*</span>
+            <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
           </Label>
           <RadioGroup
             value={selectedGranolaOption ? "yes" : "no"}
@@ -571,7 +572,8 @@ const DishModal = memo(function DishModal({
         {/* Natural Honey (required) */}
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-            Natural Honey <span className="text-red-500">*</span>
+            FREE Natural Honey <span className="text-red-500">*</span>
+            <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
           </Label>
           <RadioGroup
             value={selectedHoneyOption}
@@ -597,19 +599,26 @@ const DishModal = memo(function DishModal({
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             Ice Bag <span className="text-red-500">*</span>
+            <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
           </Label>
           <RadioGroup
             value={selectedIceBagOption ? "yes" : "no"}
             onValueChange={(val) => setSelectedIceBagOption(val === "yes")}
             className="flex flex-col gap-2"
           >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="yes" id="icebag-yes" />
-              <Label htmlFor="icebag-yes" className="cursor-pointer">{t('dish.smoody.yes')} +{iceBagPrice} THB</Label>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="yes" id="icebag-yes" />
+                <Label htmlFor="icebag-yes" className="cursor-pointer">{t('dish.smoody.yes')}</Label>
+              </div>
+              <span className="text-sm text-muted-foreground">+{iceBagPrice} THB</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="no" id="icebag-no" />
-              <Label htmlFor="icebag-no" className="cursor-pointer">{t('dish.smoody.no')} +0</Label>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="no" id="icebag-no" />
+                <Label htmlFor="icebag-no" className="cursor-pointer">{t('dish.smoody.no')}</Label>
+              </div>
+              <span className="text-sm text-muted-foreground">+0</span>
             </div>
           </RadioGroup>
         </div>
