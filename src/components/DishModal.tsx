@@ -53,8 +53,8 @@ const DishModal = memo(function DishModal({
   
   // Smoody-specific options
   const [selectedHoneyOption, setSelectedHoneyOption] = useState<string>('drizzle');
-  const [selectedGranolaOption, setSelectedGranolaOption] = useState<boolean>(true);
-  const [selectedIceBagOption, setSelectedIceBagOption] = useState<boolean>(true);
+  const [selectedGranolaOption, setSelectedGranolaOption] = useState<boolean>(false);
+  const [selectedIceBagOption, setSelectedIceBagOption] = useState<boolean>(false);
 
   // Refs for scrolling to error sections
   const spicyRef = useRef<HTMLDivElement>(null);
@@ -91,8 +91,8 @@ const DishModal = memo(function DishModal({
       
       // Reset Smoody-specific options
       setSelectedHoneyOption('drizzle');
-      setSelectedGranolaOption(true);
-      setSelectedIceBagOption(true);
+      setSelectedGranolaOption(false);
+      setSelectedIceBagOption(false);
 
       // Reset combo state for dish 2
       if (isCombo) {
@@ -547,60 +547,49 @@ const DishModal = memo(function DishModal({
     
     return (
       <div className="space-y-6">
-        {/* FREE Honey (required) */}
+        {/* Granola (required) */}
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-            FREE Honey <span className="text-red-500">*</span>
-          </Label>
-          <RadioGroup
-            value={selectedHoneyOption}
-            onValueChange={setSelectedHoneyOption}
-            className="flex flex-col gap-2"
-          >
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="drizzle" id="honey-drizzle" />
-                <span className="text-sm">Drizzle with honey</span>
-              </div>
-            </Label>
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="separate" id="honey-separate" />
-                <span className="text-sm">Separate honey</span>
-              </div>
-            </Label>
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="none" id="honey-none" />
-                <span className="text-sm">No Honey</span>
-              </div>
-            </Label>
-          </RadioGroup>
-        </div>
-
-        {/* FREE Granola (1oz) (required) */}
-        <div className="mb-6">
-          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
-            FREE Granola (1oz) <span className="text-red-500">*</span>
+            Granola (1oz) <span className="text-red-500">*</span>
           </Label>
           <RadioGroup
             value={selectedGranolaOption ? "yes" : "no"}
             onValueChange={(val) => setSelectedGranolaOption(val === "yes")}
             className="flex flex-col gap-2"
           >
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="yes" id="granola-yes" />
-                <span className="text-sm">Yes, please!</span>
-              </div>
-              <span className="text-xs font-medium text-green-500">FREE</span>
-            </Label>
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="no" id="granola-no" />
-                <span className="text-sm">No</span>
-              </div>
-            </Label>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="yes" id="granola-yes" />
+              <Label htmlFor="granola-yes" className="cursor-pointer">{t('dish.smoody.yes')}</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="no" id="granola-no" />
+              <Label htmlFor="granola-no" className="cursor-pointer">{t('dish.smoody.no')}</Label>
+            </div>
+          </RadioGroup>
+        </div>
+
+        {/* Natural Honey (required) */}
+        <div className="mb-6">
+          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+            Natural Honey <span className="text-red-500">*</span>
+          </Label>
+          <RadioGroup
+            value={selectedHoneyOption}
+            onValueChange={setSelectedHoneyOption}
+            className="flex flex-col gap-2"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="drizzle" id="honey-drizzle" />
+              <Label htmlFor="honey-drizzle" className="cursor-pointer">{t('dish.smoody.honeyDrizzle')}</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="separate" id="honey-separate" />
+              <Label htmlFor="honey-separate" className="cursor-pointer">{t('dish.smoody.honeySeparate')}</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="none" id="honey-none" />
+              <Label htmlFor="honey-none" className="cursor-pointer">{t('dish.smoody.honeyNone')}</Label>
+            </div>
           </RadioGroup>
         </div>
 
@@ -614,45 +603,35 @@ const DishModal = memo(function DishModal({
             onValueChange={(val) => setSelectedIceBagOption(val === "yes")}
             className="flex flex-col gap-2"
           >
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="yes" id="icebag-yes" />
-                <span className="text-sm">Yes, please!</span>
-              </div>
-              <span className="text-sm text-muted-foreground">+{iceBagPrice} THB</span>
-            </Label>
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="no" id="icebag-no" />
-                <span className="text-sm">No</span>
-              </div>
-              <span className="text-sm text-muted-foreground">+0</span>
-            </Label>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="yes" id="icebag-yes" />
+              <Label htmlFor="icebag-yes" className="cursor-pointer">{t('dish.smoody.yes')} +{iceBagPrice} THB</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="no" id="icebag-no" />
+              <Label htmlFor="icebag-no" className="cursor-pointer">{t('dish.smoody.no')} +0</Label>
+            </div>
           </RadioGroup>
         </div>
 
         {/* Need Cutlery? */}
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3">
-            Need Cutlery?
+            {t('dish.cutleryQuestion')}
           </Label>
           <RadioGroup
             value={needsCutlery ? "yes" : "no"}
             onValueChange={(val) => setNeedsCutlery(val === "yes")}
             className="flex flex-col gap-2"
           >
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="yes" id="cutlery-yes" />
-                <span className="text-sm">Yes, please</span>
-              </div>
-            </Label>
-            <Label className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="no" id="cutlery-no" />
-                <span className="text-sm">No</span>
-              </div>
-            </Label>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="yes" id="cutlery-yes" />
+              <Label htmlFor="cutlery-yes" className="cursor-pointer">{t('dish.cutleryYes')}</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="no" id="cutlery-no" />
+              <Label htmlFor="cutlery-no" className="cursor-pointer">{t('dish.cutleryNo')}</Label>
+            </div>
           </RadioGroup>
         </div>
       </div>
@@ -991,8 +970,8 @@ const DishModal = memo(function DishModal({
                       </div>
                     </> : renderCustomizationOptions(1)}
 
-                  {/* Cutlery - Required (Skip for DRINKS) */}
-                  {dish.category !== 'DRINKS' && <div className="mb-6">
+                  {/* Cutlery - Required (Skip for DRINKS and SMOODY - has its own section) */}
+                  {dish.category !== 'DRINKS' && !isSmoody && <div className="mb-6">
                      <Label className="text-base font-semibold mb-3 flex items-center gap-2">
                       {t('dish.cutleryQuestion')} <span className="text-red-500">*</span>
                       <span className="text-xs text-muted-foreground">({t('dish.required')})</span>

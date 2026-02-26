@@ -91,6 +91,13 @@ export const enTranslations = {
   'dish.notes': 'Special Notes',
   'dish.notes.placeholder': 'Any special requests...',
   
+  // Smoody options
+  'dish.smoody.yes': 'Yes, please!',
+  'dish.smoody.no': 'No',
+  'dish.smoody.honeyDrizzle': 'Drizzle with Natural Honey',
+  'dish.smoody.honeySeparate': 'Separate Natural Honey',
+  'dish.smoody.honeyNone': 'No Natural Honey',
+  
   // Categories
   'category.all': 'ALL',
   'category.comboDeals': 'COMBO DEALS',

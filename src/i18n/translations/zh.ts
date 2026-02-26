@@ -91,6 +91,13 @@ export const zhTranslations = {
   'dish.notes': '特殊要求',
   'dish.notes.placeholder': '特殊要求请填写...',
   
+  // Smoody options
+  'dish.smoody.yes': '要',
+  'dish.smoody.no': '不要',
+  'dish.smoody.honeyDrizzle': '淋天然蜂蜜',
+  'dish.smoody.honeySeparate': '分开天然蜂蜜',
+  'dish.smoody.honeyNone': '不要天然蜂蜜',
+  
   // Categories
   'category.all': '全部',
   'category.comboDeals': '套餐',

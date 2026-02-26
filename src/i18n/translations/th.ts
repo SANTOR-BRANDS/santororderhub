@@ -91,6 +91,13 @@ export const thTranslations = {
   'dish.notes': 'หมายเหตุพิเศษ',
   'dish.notes.placeholder': 'ข้อความพิเศษ...',
   
+  // Smoody options
+  'dish.smoody.yes': 'ใช่ค่ะ',
+  'dish.smoody.no': 'ไม่ค่ะ',
+  'dish.smoody.honeyDrizzle': 'ราดน้ำผึ้งแท้',
+  'dish.smoody.honeySeparate': 'แยกน้ำผึ้งแท้',
+  'dish.smoody.honeyNone': 'ไม่เอาน้ำผึ้ง',
+  
   // Categories
   'category.all': 'ทั้งหมด',
   'category.comboDeals': 'ชุดคอมโบ',
