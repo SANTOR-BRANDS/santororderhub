@@ -657,11 +657,11 @@ const DishModal = memo(function DishModal({
           </div>
         </div>
         
-        {/* Extra Scoop - List style like before */}
+        {/* Extra/Add Scoop - List style like before */}
         {SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-greek-yo').length > 0 && (
           <div className="mb-4">
             <Label className="text-base font-semibold mb-3">
-              🍨 Extra Scoop
+              {dish.id === 'SM-GRK-003' || dish.id === 'SM-SIG-001' ? `🍨 ${t('dish.smoody.extraScoop')}` : `🍨 ${t('dish.smoody.addScoop')}`}
             </Label>
             <div className="space-y-1">
               {SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-greek-yo').map(addon => {
