@@ -545,9 +545,13 @@ const DishModal = memo(function DishModal({
     
     const iceBagPrice = 3;
     
+    // Only show Granola and Natural Honey for variants WITHOUT free toppings (e.g., 1 Scoop PROMO)
+    const hasFreeToppings = selectedVariant?.freeToppingsLimit && selectedVariant.freeToppingsLimit > 0;
+    
     return (
       <div className="space-y-6">
-        {/* Granola (required) */}
+        {/* Granola (required) - only show if no free toppings */}
+        {hasFreeToppings === false && (
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             FREE Granola (1oz) <span className="text-red-500">*</span>
@@ -572,8 +576,10 @@ const DishModal = memo(function DishModal({
             </Label>
           </RadioGroup>
         </div>
+        )}
 
-        {/* Natural Honey (required) */}
+        {/* Natural Honey (required) - only show if no free toppings */}
+        {hasFreeToppings === false && (
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             FREE Natural Honey <span className="text-red-500">*</span>
@@ -604,6 +610,7 @@ const DishModal = memo(function DishModal({
             </Label>
           </RadioGroup>
         </div>
+        )}
 
         {/* Ice Bag (required) */}
         <div className="mb-6">
@@ -635,21 +642,22 @@ const DishModal = memo(function DishModal({
 
         {/* Need Cutlery? */}
         <div className="mb-6">
-          <Label className="text-base font-semibold mb-3">
-            {t('dish.cutleryQuestion')}
+          <Label className="text-base font-semibold mb-3 flex items-center gap-2">
+            {t('dish.cutleryQuestion')} <span className="text-red-500">*</span>
+            <span className="text-xs text-muted-foreground">({t('dish.required')})</span>
           </Label>
           <RadioGroup
             value={needsCutlery ? "yes" : "no"}
             onValueChange={(val) => setNeedsCutlery(val === "yes")}
-            className="flex flex-col gap-2"
+            className="gap-2"
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="yes" id="cutlery-yes" />
-              <Label htmlFor="cutlery-yes" className="cursor-pointer">{t('dish.cutleryYes')}</Label>
+              <Label htmlFor="cutlery-yes">{t('dish.cutleryYes')}</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="no" id="cutlery-no" />
-              <Label htmlFor="cutlery-no" className="cursor-pointer">{t('dish.cutleryNo')}</Label>
+              <Label htmlFor="cutlery-no">{t('dish.cutleryNo')}</Label>
             </div>
           </RadioGroup>
         </div>
