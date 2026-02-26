@@ -546,12 +546,12 @@ const DishModal = memo(function DishModal({
     const iceBagPrice = 3;
     
     // Only show Granola and Natural Honey for variants WITHOUT free toppings (e.g., 1 Scoop PROMO)
-    const hasFreeToppings = selectedVariant?.freeToppingsLimit && selectedVariant.freeToppingsLimit > 0;
+    const showFreeGranolaHoney = !selectedVariant?.freeToppingsLimit;
     
     return (
       <div className="space-y-6">
         {/* Granola (required) - only show if no free toppings */}
-        {hasFreeToppings === false && (
+        {showFreeGranolaHoney && (
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             FREE Granola (1oz) <span className="text-red-500">*</span>
@@ -579,7 +579,7 @@ const DishModal = memo(function DishModal({
         )}
 
         {/* Natural Honey (required) - only show if no free toppings */}
-        {hasFreeToppings === false && (
+        {showFreeGranolaHoney && (
         <div className="mb-6">
           <Label className="text-base font-semibold mb-3 flex items-center gap-2">
             FREE Natural Honey <span className="text-red-500">*</span>
