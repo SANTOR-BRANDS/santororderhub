@@ -248,6 +248,41 @@ const DishModal = memo(function DishModal({
   const getTotalPrice = () => {
     return getCurrentPrice() * quantity;
   };
+  
+  // Calculate savings/discounts for display
+  const getTotalSavings = () => {
+    let savings = 0;
+    
+    // Base promo savings
+    if (dish.id === 'RS-COM-002') savings += 49;
+    if (dish.id === 'RS-COM-001') savings += 20;
+    
+    // Greek Yo promo savings (1 Scoop variant)
+    if (dish.id === 'SM-GRK-003' && selectedVariant?.id === 'SM-GRK-003-1S') {
+      savings += 10;
+    }
+    
+    // Greek Yo Extra Scoop promo
+    const greekYoScoops = selectedAddOns.filter(a => a.category === 'sm-greek-yo').length;
+    if (greekYoScoops > 0 && dish.id === 'SM-GRK-003') {
+      savings += 10 * greekYoScoops;
+    }
+    
+    // Incremental discounts (beef/pork by weight)
+    incrementalQuantities.forEach((qty, addonId) => {
+      if (qty > 0) {
+        const addon = [...(dish.extraOptions || []), ...SMOODY_PAID_EXTRAS].find(a => a.id === addonId);
+        if (addon?.isIncremental) {
+          const totalGrams = qty * (addon.incrementalUnit || 20);
+          const discountSets = Math.floor(totalGrams / 100);
+          savings += discountSets * (addon.incrementalDiscount || 10);
+        }
+      }
+    });
+    
+    return savings;
+  };
+  
   const canAddToBasket = () => {
     // TOPPINGS items don't require any selections
     if (dish.category === 'TOPPINGS') return true;
@@ -657,37 +692,75 @@ const DishModal = memo(function DishModal({
           </div>
         </div>
         
-        {/* Extra/Add Scoop - List style like before */}
+        {/* Extra/Add Scoop - Chip style with quantity */}
         {SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-greek-yo').length > 0 && (
-          <div className="mb-4">
-            <Label className="text-base font-semibold mb-3">
-              {dish.id === 'SM-GRK-003' || dish.id === 'SM-SIG-001' ? `🍨 ${t('dish.smoody.extraScoop')}` : `🍨 ${t('dish.smoody.addScoop')}`}
-            </Label>
-            <div className="space-y-1">
-              {SMOODY_PAID_EXTRAS.filter(addon => addon.category === 'sm-greek-yo').map(addon => {
-                const isSelected = selectedAddOns.some(a => a.id === addon.id);
-                return <Label key={addon.id} htmlFor={`extra-${addon.id}`} className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2.5 px-3 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Checkbox id={`extra-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
-                      if (checked) {
-                        setSelectedAddOns(prev => [...prev, addon]);
-                      } else {
-                        setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
-                      }
-                    }} />
-                    <span className="text-sm">{t(addon.id)}</span>
-                    {addon.id === 'EXT-GRK-001' && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/90 text-white">🔥 PROMO</span>
-                    )}
+          <div className="mb-4 border rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between p-3">
+              <span className="text-sm font-medium">
+                {dish.id === 'SM-GRK-003' || dish.id === 'SM-SIG-001' ? `🍨 ${t('dish.smoody.extraScoop')}` : `🍨 ${t('dish.smoody.addScoop')}`}
+              </span>
+              <div className="flex items-center gap-2">
+                {selectedAddOns.some(a => a.category === 'sm-greek-yo') && (
+                  <span className="text-xs bg-primary/20 px-2 py-0.5 rounded-full">
+                    {selectedAddOns.filter(a => a.category === 'sm-greek-yo').length}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="px-3 pb-3">
+              {(() => {
+                const scoopAddon = SMOODY_PAID_EXTRAS.find(addon => addon.category === 'sm-greek-yo');
+                if (!scoopAddon) return null;
+                const qty = selectedAddOns.filter(a => a.category === 'sm-greek-yo').length;
+                return (
+                  <div className="flex items-center justify-between border rounded-lg p-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">{t(scoopAddon.id)}</span>
+                      {scoopAddon.id === 'EXT-GRK-001' && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/90 text-white">🔥 PROMO</span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {scoopAddon.id === 'EXT-GRK-001' && (
+                        <span className="text-xs text-muted-foreground line-through">+69</span>
+                      )}
+                      <div className="flex items-center gap-1">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          className="h-7 w-7"
+                          onClick={() => {
+                            const current = selectedAddOns.filter(a => a.category === 'sm-greek-yo').length;
+                            if (current > 0) {
+                              setSelectedAddOns(prev => {
+                                const without = prev.filter(a => a.category !== 'sm-greek-yo');
+                                return [...without, ...Array(current - 1).fill(scoopAddon)];
+                              });
+                            }
+                          }}
+                          disabled={qty === 0}
+                        >
+                          <Minus className="h-3 w-3" />
+                        </Button>
+                        <span className="w-6 text-center text-sm font-medium">{qty}</span>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          className="h-7 w-7"
+                          onClick={() => {
+                            setSelectedAddOns(prev => [...prev, scoopAddon]);
+                          }}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                        <span className="text-sm text-muted-foreground ml-2">+{scoopAddon.price * (qty || 0)}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    {addon.id === 'EXT-GRK-001' && (
-                      <span className="text-xs text-muted-foreground line-through">+69</span>
-                    )}
-                    <span className="text-sm text-muted-foreground">+{addon.price}</span>
-                  </div>
-                </Label>;
-              })}
+                );
+              })()}
             </div>
           </div>
         )}
@@ -1197,9 +1270,16 @@ const DishModal = memo(function DishModal({
 
             <div className="flex items-center justify-between text-lg font-bold">
               <span>Total</span>
-              <span className={cn(`text-${theme.accent}`)}>
-                ฿{getTotalPrice()}
-              </span>
+              <div className="flex items-center gap-2">
+                {getTotalSavings() > 0 && (
+                  <span className="text-sm font-normal text-green-600">
+                    Save ฿{getTotalSavings() * quantity}
+                  </span>
+                )}
+                <span className={cn(`text-${theme.accent}`)}>
+                  ฿{getTotalPrice()}
+                </span>
+              </div>
             </div>
 
             <div className="flex gap-3">
