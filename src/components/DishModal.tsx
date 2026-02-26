@@ -676,10 +676,16 @@ const DishModal = memo(function DishModal({
                       }
                     }} />
                     <span className="text-sm">{t(addon.id)}</span>
+                    {addon.id === 'EXT-GRK-001' && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/90 text-white">🔥 PROMO</span>
+                    )}
                   </div>
-                  <span className="text-sm text-muted-foreground">
-                    +{addon.price}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    {addon.id === 'EXT-GRK-001' && (
+                      <span className="text-xs text-muted-foreground line-through">+69</span>
+                    )}
+                    <span className="text-sm text-muted-foreground">+{addon.price}</span>
+                  </div>
                 </Label>;
               })}
             </div>
@@ -707,16 +713,21 @@ const DishModal = memo(function DishModal({
                 {smoodyFruits.map(addon => {
                   const isSelected = selectedAddOns.some(a => a.id === addon.id);
                   return (
-                    <Label key={addon.id} htmlFor={`fruit-${addon.id}`} className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-2 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}>
-                      <Checkbox id={`fruit-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedAddOns(prev => [...prev, addon]);
-                        } else {
+                    <button
+                      key={addon.id}
+                      type="button"
+                      onClick={() => {
+                        if (isSelected) {
                           setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
+                        } else {
+                          setSelectedAddOns(prev => [...prev, addon]);
                         }
-                      }} />
-                      <span className="ml-1 truncate">{t(addon.id)}</span>
-                    </Label>
+                      }}
+                      className={cn("flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2 px-3 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}
+                    >
+                      <span className="truncate">{t(addon.id)}</span>
+                      <span className="text-muted-foreground ml-1">{addon.price > 0 ? `+${addon.price}` : ''}</span>
+                    </button>
                   );
                 })}
               </div>
@@ -745,16 +756,21 @@ const DishModal = memo(function DishModal({
                 {smoodyNuts.map(addon => {
                   const isSelected = selectedAddOns.some(a => a.id === addon.id);
                   return (
-                    <Label key={addon.id} htmlFor={`nut-${addon.id}`} className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-2 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}>
-                      <Checkbox id={`nut-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedAddOns(prev => [...prev, addon]);
-                        } else {
+                    <button
+                      key={addon.id}
+                      type="button"
+                      onClick={() => {
+                        if (isSelected) {
                           setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
+                        } else {
+                          setSelectedAddOns(prev => [...prev, addon]);
                         }
-                      }} />
-                      <span className="ml-1 truncate">{t(addon.id)}</span>
-                    </Label>
+                      }}
+                      className={cn("flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2 px-3 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}
+                    >
+                      <span className="truncate">{t(addon.id)}</span>
+                      <span className="text-muted-foreground ml-1">{addon.price > 0 ? `+${addon.price}` : ''}</span>
+                    </button>
                   );
                 })}
               </div>
@@ -783,16 +799,21 @@ const DishModal = memo(function DishModal({
                 {smoodySauces.map(addon => {
                   const isSelected = selectedAddOns.some(a => a.id === addon.id);
                   return (
-                    <Label key={addon.id} htmlFor={`sauce-${addon.id}`} className={cn("flex items-center justify-center cursor-pointer hover:bg-muted/50 rounded-md py-2 px-2 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}>
-                      <Checkbox id={`sauce-${addon.id}`} checked={isSelected} onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedAddOns(prev => [...prev, addon]);
-                        } else {
+                    <button
+                      key={addon.id}
+                      type="button"
+                      onClick={() => {
+                        if (isSelected) {
                           setSelectedAddOns(prev => prev.filter(a => a.id !== addon.id));
+                        } else {
+                          setSelectedAddOns(prev => [...prev, addon]);
                         }
-                      }} />
-                      <span className="ml-1 truncate">{t(addon.id)}</span>
-                    </Label>
+                      }}
+                      className={cn("flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded-md py-2 px-3 transition-colors border text-xs", isSelected ? "border-primary bg-primary/10" : "border-border")}
+                    >
+                      <span className="truncate">{t(addon.id)}</span>
+                      <span className="text-muted-foreground ml-1">{addon.price > 0 ? `+${addon.price}` : ''}</span>
+                    </button>
                   );
                 })}
               </div>
