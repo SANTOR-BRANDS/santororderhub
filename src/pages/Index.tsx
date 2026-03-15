@@ -63,7 +63,28 @@ const Index = ({ initialBrand }: IndexProps) => {
   } | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [basketShakeTrigger, setBasketShakeTrigger] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const floatingBasketRef = useRef<HTMLDivElement>(null);
+
+  // Track scroll progress
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      const scrollableHeight = documentHeight - windowHeight;
+      
+      if (scrollableHeight > 0) {
+        const progress = Math.min(scrollTop / scrollableHeight, 1);
+        setScrollProgress(progress);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial calculation
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Handle URL updates when brand changes
   const handleBrandChange = useCallback((brand: Restaurant | 'all') => {
@@ -248,6 +269,14 @@ const Index = ({ initialBrand }: IndexProps) => {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
+      
+      {/* Scroll Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 z-[100] h-0.5 bg-transparent">
+        <div 
+          className="h-full bg-white transition-all duration-150 ease-out"
+          style={{ width: `${scrollProgress * 100}%` }}
+        />
+      </div>
 
       <main>
         <UnifiedMenuDisplay 
